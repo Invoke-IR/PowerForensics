@@ -2,9 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using System.Management.Automation;
 
 namespace InvokeIR.PowerForensics
 {
@@ -80,6 +82,36 @@ namespace InvokeIR.PowerForensics
 
         }
 
+        private static byte[] ReadDrive(string fileName, long offset, long sizeToRead)
+        {
+
+            // Get Handle to the specified Volume
+            SafeFileHandle hDrive = getHandle(fileName);
+
+            // Bytes must be read by sector
+            if ((sizeToRead < 1)) throw new System.ArgumentException("Size parameter cannot be null or 0 or less than 0!");
+            if (((sizeToRead % 512) != 0)) throw new System.ArgumentException("Size parameter must be divisible by 512");
+            if (((offset % 512) != 0)) throw new System.ArgumentException("Offset parameter must be divisible by 512");
+
+            // Create a FileStream to read from the specified handle
+            FileStream diskStreamToRead = new FileStream(hDrive, FileAccess.Read);
+            // Set offset to begin reading from the drive
+            diskStreamToRead.Position = offset;
+            // Create a byte array to read into
+            byte[] buf = new byte[sizeToRead];
+            // Read buf.Length bytes (sizeToRead) from offset 
+            diskStreamToRead.Read(buf, 0, buf.Length);
+            // Close handle
+            try { hDrive.Close(); }
+            catch { }
+            // Close FileStream
+            try { diskStreamToRead.Close(); }
+            catch { }
+
+            return buf;
+
+        }
+
         private static bool checkNTFS(NTFS_BPB ntfsHeader)
         {
             byte[] ntfsSig = new byte[] { 0x4E, 0x54, 0x46, 0x53, 0x20, 0x20, 0x20, 0x20 };
@@ -117,10 +149,10 @@ namespace InvokeIR.PowerForensics
             NTFSVolumeData volData = getVolumeDataInformation(volume);
 
             // Calculate byte offset to the Master File Table (MFT)
-            System.Int64 mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
+            long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Determine offset to specified MFT Record
-            Int64 offsetMFTRecord = (inode * volData.BytesPerMFTRecord) + mftOffset;
+            long offsetMFTRecord = (inode * volData.BytesPerMFTRecord) + mftOffset;
 
             // Read bytes belonging to specified MFT Record and store in byte array
             return ReadDrive(volume, offsetMFTRecord, volData.BytesPerMFTRecord);
@@ -207,12 +239,6 @@ namespace InvokeIR.PowerForensics
             {
                 NonResident NonResAttr = getNonResAttribute(AttrBytes, commonAttributeHeader, AttrName);
                 attrReturn = new AttributeReturn(NonResAttr, offset);
-                if(NonResAttr.AttributeId == (uint)ATTR_TYPE.INDEX_ALLOCATION)
-                {
-
-
-
-                }
             }
             else
             {
@@ -365,7 +391,6 @@ namespace InvokeIR.PowerForensics
                         break;
 
                     case (Int32)ATTR_TYPE.INDEX_ROOT:
-                        //Console.WriteLine(AttrHeaderResident.AttrSize);
                         ATTR_INDEX_ROOT indxRoot = new ATTR_INDEX_ROOT(AttrBytes.Skip(16 + 8).Take((int)AttrHeaderResident.AttrSize).ToArray());
                         IndexRoot indxRootAttr = new IndexRoot(commonAttributeHeader, AttrName, indxRoot, "test");
                         attrReturn = new AttributeReturn(indxRootAttr, offset);
@@ -496,11 +521,11 @@ namespace InvokeIR.PowerForensics
         }
 
         // fsstat
-        public static NTFSVolumeData getVolumeDataInformation(string fileName)
+        public static NTFSVolumeData getVolumeDataInformation(string volume)
         {
 
             // Get Handle to the specified Volume
-            SafeFileHandle hDrive = getHandle(fileName);
+            SafeFileHandle hDrive = getHandle(volume);
 
             // Create a byte array the size of the NTFS_VOLUME_DATA_BUFFER struct
             byte[] ntfsVolData = new byte[96];
@@ -524,36 +549,6 @@ namespace InvokeIR.PowerForensics
 
             // Return the NTFSVolumeData Object
             return new NTFSVolumeData(new NTFS_VOLUME_DATA_BUFFER(ntfsVolData));
-
-        }
-
-        public static byte[] ReadDrive(string fileName, long offset, long sizeToRead)
-        {
-
-            // Get Handle to the specified Volume
-            SafeFileHandle hDrive = getHandle(fileName);
-
-            // Bytes must be read by sector
-            if ((sizeToRead < 1)) throw new System.ArgumentException("Size parameter cannot be null or 0 or less than 0!");
-            if (((sizeToRead % 512) != 0)) throw new System.ArgumentException("Size parameter must be divisible by 512");
-            if (((offset % 512) != 0)) throw new System.ArgumentException("Offset parameter must be divisible by 512");
-
-            // Create a FileStream to read from the specified handle
-            FileStream diskStreamToRead = new FileStream(hDrive, FileAccess.Read);
-            // Set offset to begin reading from the drive
-            diskStreamToRead.Position = offset;
-            // Create a byte array to read into
-            byte[] buf = new byte[sizeToRead];
-            // Read buf.Length bytes (sizeToRead) from offset 
-            diskStreamToRead.Read(buf, 0, buf.Length);
-            // Close handle
-            try { hDrive.Close(); }
-            catch { }
-            // Close FileStream
-            try { diskStreamToRead.Close(); }
-            catch { }
-
-            return buf;
 
         }
 
@@ -747,5 +742,272 @@ namespace InvokeIR.PowerForensics
         #endregion publicMethods
 
     }
+
+}
+
+
+namespace InvokeIR.PowerForensics.TSK
+{
+    #region GetFSStatCommand
+    /// <summary> 
+    /// This class implements the Get-FSStat cmdlet. 
+    /// </summary> 
+
+    [Cmdlet(VerbsCommon.Get, "FSStat", SupportsShouldProcess = true)]
+    public class GetFSStatCommand : PSCmdlet
+    {
+        #region Parameters
+
+        /// <summary> 
+        /// This parameter provides the Name of the Volume
+        /// for which the NTFSVolumeData object should be
+        /// returned.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public string VolumeName
+        {
+            get { return volumeName; }
+            set { volumeName = value; }
+        }
+        private string volumeName;
+
+        #endregion Parameters
+
+        #region Cmdlet Overrides
+
+        /// <summary> 
+        /// The ProcessRecord instantiates a NTFSVolumeData objects that
+        /// corresponds to the VolumeName that is specified.
+        /// </summary> 
+    
+        protected override void ProcessRecord()
+        {
+
+            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
+            
+            if (lettersOnly.IsMatch(volumeName))
+            {
+             
+                volumeName = @"\\.\" + volumeName + ":";
+            
+            }
+
+            WriteDebug("VolumeName: " + volumeName);
+            
+            NTFSVolumeData volumeData = InvokeIR.PowerForensics.Main.getVolumeDataInformation(volumeName);
+            WriteObject(volumeData);
+
+        } // ProcessRecord 
+
+        #endregion Cmdlet Overrides
+
+    } // End GetFSstatCommand class. 
+
+    #endregion GetFSstatCommand
+
+    #region GetIStatCommand
+    /// <summary> 
+    /// This class implements the Get-IStat cmdlet. 
+    /// </summary> 
+
+    [Cmdlet(VerbsCommon.Get, "IStat", DefaultParameterSetName = "One", SupportsShouldProcess = true)]
+    public class GetIStatCommand : PSCmdlet
+    {
+        #region Parameters
+
+        /// <summary> 
+        /// This parameter provides the Name of the Volume
+        /// for which the FileRecord object should be
+        /// returned.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public string VolumeName
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+        private string volume;
+
+        /// <summary> 
+        /// This parameter provides the MFTIndexNumber for the 
+        /// FileRecord object that will be returned.
+        /// </summary> 
+
+        [Parameter(Mandatory = true, ParameterSetName = "One")]
+        public uint IndexNumber
+        {
+            get { return indexNumber; }
+            set { indexNumber = value; }
+        }
+        private uint indexNumber;
+
+        /// <summary> 
+        /// This parameter provides the FileName for the 
+        /// FileRecord object that will be returned.
+        /// </summary> 
+
+        [Parameter(Mandatory = true, ParameterSetName = "Two")]
+        public string FilePath
+        {
+            get { return filePath; }
+            set { filePath = value; }
+        }
+        private string filePath;
+
+        #endregion Parameters
+
+        #region Cmdlet Overrides
+
+        /// <summary> 
+        /// The ProcessRecord instantiates a NTFSVolumeData objects that
+        /// corresponds to the VolumeName that is specified.
+        /// </summary> 
+
+        protected override void ProcessRecord()
+        {
+
+            if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
+            {
+
+                indexNumber = InvokeIR.PowerForensics.Main.getInode(filePath); 
+
+            }
+
+            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
+
+            if (lettersOnly.IsMatch(volume))
+            {
+
+                volume = @"\\.\" + volume + ":";
+
+            }
+
+            WriteDebug("VolumeName: " + volume);
+
+            FileRecord MFTRecord = InvokeIR.PowerForensics.Main.getFileRecord(volume, indexNumber);
+            WriteObject(MFTRecord);
+
+        } // ProcessRecord 
+
+        #endregion Cmdlet Overrides
+
+    } // End GetFSstatCommand class. 
+
+    #endregion GetIStatCommand
+   
+}
+
+namespace InvokeIR.PowerForensics.DD
+{
+
+    #region ExportPowerDDCommand
+    /// <summary> 
+    /// This class implements the Export-PowerDD cmdlet. 
+    /// </summary> 
+
+    [Cmdlet("Export", "PowerDD", SupportsShouldProcess = true)]
+    public class ExportPowerDDCommand : PSCmdlet
+    {
+        #region Parameters
+
+        /// <summary> 
+        /// This parameter provides the Name of the File or Volume
+        /// that should be read from (Ex. \\.\C: or C).
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public string InFile
+        {
+            get { return inFile; }
+            set { inFile = value; }
+        }
+        private string inFile;
+
+        /// <summary> 
+        /// This parameter provides the Name of the File
+        /// that the read bytes should be output to.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public string OutFile
+        {
+            get { return outFile; }
+            set { outFile = value; }
+        }
+        private string outFile;
+
+        /// <summary> 
+        /// This parameter provides the Offset into the 
+        /// specified InFile to begin reading.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public long Offset
+        {
+            get { return offset; }
+            set { offset = value; }
+        }
+        private long offset;
+
+        /// <summary> 
+        /// This parameter provides the size of blocks to be
+        /// read from the specified InFile.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public int BlockSize
+        {
+            get { return blockSize; }
+            set { blockSize = value; }
+        }
+        private int blockSize;
+
+        /// <summary> 
+        /// This parameter provides the Count of Blocks
+        /// to read from the specified InFile.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public int Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
+        private int count;
+
+        #endregion Parameters
+
+        #region Cmdlet Overrides
+
+        /// <summary> 
+        /// The ProcessRecord instantiates a Reads bytes from the InFile
+        /// and outputs to the OutFile.
+        /// </summary> 
+
+        protected override void ProcessRecord()
+        {
+
+            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
+
+            if (lettersOnly.IsMatch(inFile))
+            {
+
+                inFile = @"\\.\" + inFile + ":";
+
+            }
+
+            WriteDebug("VolumeName: " + inFile);
+
+            InvokeIR.PowerForensics.Main.dd(inFile, outFile, offset, blockSize, count);
+
+        } // ProcessRecord 
+
+        #endregion Cmdlet Overrides
+
+    } // End ExportPowerDDCommand class. 
+
+    #endregion ExportPowerDDCommand
 
 }

@@ -244,7 +244,7 @@ namespace InvokeIR.PowerForensics
         }
     }
 
-    internal class AttributeReturn
+    class AttributeReturn
     {
         internal Attribute Attribute;
         internal int StartByte;
