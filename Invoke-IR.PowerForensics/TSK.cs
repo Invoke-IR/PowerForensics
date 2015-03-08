@@ -4,6 +4,7 @@ using System.Management.Automation;
 
 namespace InvokeIR.PowerForensics.TSK
 {
+
     #region GetFSStatCommand
     /// <summary> 
     /// This class implements the Get-FSStat cmdlet. 
