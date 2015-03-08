@@ -153,4 +153,48 @@ namespace InvokeIR.PowerForensics.TSK
 
     #endregion GetIStatCommand
 
+    #region GetICatCommand
+    /// <summary> 
+    /// This class implements the Get-ICat cmdlet. 
+    /// </summary> 
+
+    [Cmdlet(VerbsCommon.Get, "ICat", SupportsShouldProcess = true)]
+    public class GetICatCommand : PSCmdlet
+    {
+        #region Parameters
+
+        /// <summary> 
+        /// This parameter provides the FileName for the 
+        /// raw bytes that will be returned.
+        /// </summary> 
+
+        [Parameter(Mandatory = true)]
+        public string FilePath
+        {
+            get { return filePath; }
+            set { filePath = value; }
+        }
+        private string filePath;
+
+        #endregion Parameters
+
+        #region Cmdlet Overrides
+
+        /// <summary> 
+        /// The ProcessRecord outputs the raw bytes of the specified File
+        /// </summary> 
+
+        protected override void ProcessRecord()
+        {
+
+            WriteObject(InvokeIR.PowerForensics.Main.getFile(filePath));
+
+        } // ProcessRecord 
+
+        #endregion Cmdlet Overrides
+
+    } // End GetFSstatCommand class. 
+
+    #endregion GetIStatCommand
+
 }
