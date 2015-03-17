@@ -122,6 +122,278 @@ namespace InvokeIR.PowerForensics.NTFS
 
     }
 
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    struct NTFS_BPB
+    {
+        // jump instruction
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 3)]
+        internal byte[] Jmp;
+
+        // signature
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 8)]
+        internal byte[] Signature;
+
+        // BPB and extended BPB
+        internal ushort BytesPerSector;
+        internal byte SectorsPerCluster;
+        internal ushort ReservedSectors;
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 3)]
+        internal byte[] Zeros1;
+        internal ushort NotUsed1;
+        internal byte MediaDescriptor;
+        internal ushort Zeros2;
+        internal ushort SectorsPerTrack;
+        internal ushort NumberOfHeads;
+        internal uint HiddenSectors;
+        internal uint NotUsed2;
+        internal uint NotUsed3;
+        internal ulong TotalSectors;
+        internal ulong LCN_MFT;
+        internal ulong LCN_MFTMirr;
+        internal uint ClustersPerFileRecord;
+        internal uint ClustersPerIndexBlock;
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 8)]
+        internal byte[] VolumeSN;
+
+        // boot code
+        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 430)]
+        internal byte[] Code;
+
+        //0xAA55
+        internal byte _AA;
+        internal byte _55;
+
+        internal NTFS_BPB(byte[] bytes)
+        {
+            Jmp = bytes.Skip(0).Take(3).ToArray();
+            Signature = bytes.Skip(3).Take(8).ToArray();
+            BytesPerSector = BitConverter.ToUInt16(bytes, 11);
+            SectorsPerCluster = bytes[13];
+            ReservedSectors = BitConverter.ToUInt16(bytes, 14);
+            Zeros1 = bytes.Skip(16).Take(3).ToArray();
+            NotUsed1 = BitConverter.ToUInt16(bytes, 19);
+            MediaDescriptor = bytes[21];
+            Zeros2 = BitConverter.ToUInt16(bytes, 22);
+            SectorsPerTrack = BitConverter.ToUInt16(bytes, 24);
+            NumberOfHeads = BitConverter.ToUInt16(bytes, 26);
+            HiddenSectors = BitConverter.ToUInt32(bytes, 28);
+            NotUsed2 = BitConverter.ToUInt32(bytes, 32);
+            NotUsed3 = BitConverter.ToUInt32(bytes, 36);
+            TotalSectors = BitConverter.ToUInt64(bytes, 40);
+            LCN_MFT = BitConverter.ToUInt64(bytes, 48);
+            LCN_MFTMirr = BitConverter.ToUInt64(bytes, 56);
+            ClustersPerFileRecord = BitConverter.ToUInt32(bytes, 64);
+            ClustersPerIndexBlock = BitConverter.ToUInt32(bytes, 68);
+            VolumeSN = bytes.Skip(72).Take(8).ToArray();
+            Code = bytes.Skip(80).Take(430).ToArray();
+            _AA = bytes[510];
+            _55 = bytes[511];
+        }
+    }
+
+    internal class IndexEntry
+    {
+
+        enum INDEX_ENTRY_FLAG
+        {
+            SUBNODE = 0x01,     // Index entry points to a sub-node
+            LAST = 0x02         // Last index entry in the node, no Stream
+        }
+
+        internal struct INDEX_ENTRY
+        {
+            internal ulong FileReference;    // Low 6B: MFT record index, High 2B: MFT record sequence number
+            internal ushort Size;            // Length of the index entry
+            internal ushort StreamSize;      // Length of the stream
+            internal byte Flags;             // Flags
+            [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 3)]
+            internal byte[] Padding;         // Padding
+            [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 1)]
+            internal byte[] Stream;          // Stream
+            // VCN of the sub node in Index Allocation, Offset = Size - 8
+
+            internal INDEX_ENTRY(byte[] bytes)
+            {
+                FileReference = BitConverter.ToUInt64(bytes, 0);
+                Size = BitConverter.ToUInt16(bytes, 8);
+                StreamSize = BitConverter.ToUInt16(bytes, 10);
+                Flags = bytes[12];
+                Padding = bytes.Skip(13).Take(3).ToArray();
+                Stream = bytes.Skip(16).Take(StreamSize).ToArray();
+            }
+        }
+
+        struct INDEX_BLOCK
+        {
+            // Index Block Header
+            internal uint Magic;                // "INDX"
+            internal ushort OffsetOfUS;           // Offset of Update Sequence
+            internal ushort SizeOfUS;             // Size in words of Update Sequence Number & Array
+            internal ulong LSN;                  // $LogFile Sequence Number
+            internal ulong VCN;                  // VCN of this index block in the index allocation
+            // Index Header
+            internal uint EntryOffset;          // Offset of the index entries, relative to this address(0x18)
+            internal uint TotalEntrySize;       // Total size of the index entries
+            internal uint AllocEntrySize;       // Allocated size of index entries
+            internal byte NotLeaf;                // 1 if not leaf node (has children)
+            [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 3)]
+            internal byte[] Padding;              // Padding
+
+            internal INDEX_BLOCK(byte[] bytes)
+            {
+                Magic = BitConverter.ToUInt32(bytes, 0);
+                OffsetOfUS = BitConverter.ToUInt16(bytes, 4);
+                SizeOfUS = BitConverter.ToUInt16(bytes, 6);
+                LSN = BitConverter.ToUInt64(bytes, 8);
+                VCN = BitConverter.ToUInt64(bytes, 16);
+                EntryOffset = BitConverter.ToUInt32(bytes, 24);
+                TotalEntrySize = BitConverter.ToUInt32(bytes, 28);
+                AllocEntrySize = BitConverter.ToUInt32(bytes, 32);
+                NotLeaf = bytes[36];
+                Padding = bytes.Skip(37).Take(3).ToArray();
+            }
+        }
+
+        internal ulong FileIndex;
+        internal string Flags;
+        internal string Name;
+
+        internal IndexEntry(INDEX_ENTRY indxEntry, string flag, string name)
+        {
+            FileIndex = (indxEntry.FileReference & 0x0000FFFFFFFFFFFF);
+            Flags = flag;
+            Name = name;
+        }
+
+        internal static List<IndexEntry> Get(IntPtr hVolume, FileStream streamToRead, uint inode)
+        {
+
+            FileRecord fileRecord = FileRecord.Get(hVolume, streamToRead, inode);
+
+            NonResident INDX = null;
+
+            foreach (Attr attr in fileRecord.Attribute)
+            {
+                if (attr.Name == "INDEX_ALLOCATION")
+                {
+                    if (attr.NonResident)
+                    {
+                        INDX = (NonResident)attr;
+                    }
+                }
+            }
+
+            List<byte> nonResBytes = NonResident.GetContent(streamToRead, INDX);
+
+            List<IndexEntry> indxEntryList = new List<IndexEntry>();
+
+            for (int offset = 0; offset < nonResBytes.Count; offset += 4096)
+            {
+
+                byte[] indxBytes = nonResBytes.Skip(offset).Take(4096).ToArray();
+
+                INDEX_BLOCK indxBlock = new INDEX_BLOCK(indxBytes.Take(40).ToArray());
+
+                byte[] IndexAllocEntryBytes = indxBytes.Skip(64).ToArray();
+
+                int offsetIndx = 0;
+                int offsetIndxPrev = 1;
+
+                while ((offsetIndx < IndexAllocEntryBytes.Length) && (offsetIndx != offsetIndxPrev))
+                {
+
+                    INDEX_ENTRY indxEntryStruct = new INDEX_ENTRY(IndexAllocEntryBytes.Skip(offsetIndx).ToArray());
+
+                    offsetIndxPrev = offsetIndx;
+                    offsetIndx += indxEntryStruct.Size;
+                    if (indxEntryStruct.Stream.Length > 66)
+                    {
+
+                        FileName.ATTR_FILE_NAME fileNameStruct = new FileName.ATTR_FILE_NAME(indxEntryStruct.Stream);
+
+                        #region indxFlags
+
+                        StringBuilder indxFlags = new StringBuilder();
+                        if (indxEntryStruct.Flags != 0)
+                        {
+                            if ((indxEntryStruct.Flags & (int)INDEX_ENTRY_FLAG.SUBNODE) == (int)INDEX_ENTRY_FLAG.SUBNODE)
+                            {
+                                indxFlags.Append("Subnode, ");
+                            }
+                            if ((indxEntryStruct.Flags & (int)INDEX_ENTRY_FLAG.LAST) == (int)INDEX_ENTRY_FLAG.LAST)
+                            {
+                                indxFlags.Append("Last Entry, ");
+                            }
+                            indxFlags.Length -= 2;
+                        }
+
+                        #endregion indxFlags
+
+                        string Name = System.Text.Encoding.Unicode.GetString(fileNameStruct.Name);
+                        IndexEntry indxEntry = new IndexEntry(indxEntryStruct, indxFlags.ToString(), Name);
+                        indxEntryList.Add(indxEntry);
+
+                    }
+
+                }
+
+            }
+
+            return indxEntryList;
+        }
+
+    }
+
+    public class IndexNumber
+    {
+        public static uint Get(IntPtr hVolume, FileStream streamToRead, string fileName)
+        {
+
+            IntPtr hFile = Win32.getHandle(fileName);
+
+            // Check to see if file handle is valid
+            if (hFile.ToInt32() == -1)
+            {
+
+                string[] directoryArray = fileName.Split('\\');
+                string directory = null;
+                for (int i = 0; i < (directoryArray.Length - 1); i++)
+                {
+                    directory += directoryArray[i];
+                    directory += "\\";
+                }
+
+                uint dirIndex = IndexNumber.Get(hVolume, streamToRead, directory);
+
+                List<IndexEntry> indxArray = IndexEntry.Get(hVolume, streamToRead, dirIndex);
+
+                foreach (IndexEntry indxEntry in indxArray)
+                {
+                    if (indxEntry.Name == directoryArray[(directoryArray.Length - 1)])
+                    {
+                        return (uint)indxEntry.FileIndex;
+                    }
+                }
+
+            }
+
+            Win32.BY_HANDLE_FILE_INFORMATION fileInfo = new Win32.BY_HANDLE_FILE_INFORMATION();
+            bool Success = Win32.GetFileInformationByHandle(
+                hFile: hFile,
+                lpFileInformation: out fileInfo);
+
+            // Combine two 32 bit unsigned integers into one 64 bit unsigned integer
+            ulong FileIndex = fileInfo.nFileIndexHigh;
+            FileIndex = FileIndex << 32;
+            FileIndex = FileIndex + fileInfo.nFileIndexLow;
+            // Unmask relevent bytes for MFT Index Number
+            ulong Index = FileIndex & 0x0000FFFFFFFFFFFF;
+
+            return (uint)Index;
+        }
+
+    }
+
     public class FileRecord
     {
 
@@ -311,13 +583,36 @@ namespace InvokeIR.PowerForensics.NTFS
 
     #region Attributes
 
+    enum ATTR_TYPE
+    {
+        STANDARD_INFORMATION = 0x10,
+        ATTRIBUTE_LIST = 0x20,
+        FILE_NAME = 0x30,
+        OBJECT_ID = 0x40,
+        SECURITY_DESCRIPTOR = 0x50,
+        VOLUME_NAME = 0x60,
+        VOLUME_INFORMATION = 0x70,
+        DATA = 0x80,
+        INDEX_ROOT = 0x90,
+        INDEX_ALLOCATION = 0xA0,
+        BITMAP = 0xB0,
+        REPARSE_POINT = 0xC0,
+        EA_INFORMATION = 0xD0,
+        EA = 0xE0,
+        LOGGED_UTILITY_STREAM = 0x100,
+
+        ATTR_FLAG_COMPRESSED = 0x0001,
+        ATTR_FLAG_ENCRYPTED = 0x4000,
+        ATTR_FLAG_SPARSE = 0x8000
+    }
+
     class AttrHeader
     {
 
         private const byte RESIDENT = 0x00;
         private const byte NONRESIDENT = 0x01;
 
-        internal struct ATTR_HEADER_COMMON1
+        internal struct ATTR_HEADER_COMMON
         {
             internal uint ATTRType;			// Attribute Type
             internal uint TotalSize;		    // Length (including this header)
@@ -327,7 +622,7 @@ namespace InvokeIR.PowerForensics.NTFS
             internal ushort Flags;			// Flags
             internal ushort Id;				// Attribute Id
 
-            internal ATTR_HEADER_COMMON1(byte[] bytes)
+            internal ATTR_HEADER_COMMON(byte[] bytes)
             {
                 ATTRType = BitConverter.ToUInt32(bytes, 0);
                 TotalSize = BitConverter.ToUInt32(bytes, 4);
@@ -341,7 +636,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
         internal struct ATTR_HEADER_RESIDENT
         {
-            internal ATTR_HEADER_COMMON1 commonHeader;	// Common data structure
+            internal ATTR_HEADER_COMMON commonHeader;	// Common data structure
             internal uint AttrSize;		                // Length of the attribute body
             internal ushort AttrOffset;		            // Offset to the Attribute
             internal byte IndexedFlag;	                // Indexed flag
@@ -349,7 +644,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
             internal ATTR_HEADER_RESIDENT(byte[] bytes)
             {
-                commonHeader = new ATTR_HEADER_COMMON1(bytes.Take(16).ToArray());
+                commonHeader = new ATTR_HEADER_COMMON(bytes.Take(16).ToArray());
                 AttrSize = BitConverter.ToUInt32(bytes, 16);
                 AttrOffset = BitConverter.ToUInt16(bytes, 20);
                 IndexedFlag = bytes[22];
@@ -573,7 +868,7 @@ namespace InvokeIR.PowerForensics.NTFS
         private const byte ATTR_FILENAME_NAMESPACE_WIN32 = 0x01;
         private const byte ATTR_FILENAME_NAMESPACE_DOS = 0x02;
 
-        struct ATTR_FILE_NAME
+        internal struct ATTR_FILE_NAME
         {
             internal AttrHeader.ATTR_HEADER_RESIDENT header;
             internal ulong ParentRef;		    // File reference to the parent directory
@@ -881,7 +1176,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
         struct ATTR_HEADER_NON_RESIDENT
         {
-            internal AttrHeader.ATTR_HEADER_COMMON1 commonHeader;	// Common data structure
+            internal AttrHeader.ATTR_HEADER_COMMON commonHeader;	// Common data structure
             internal ulong StartVCN;		                        // Starting VCN
             internal ulong LastVCN;		                            // Last VCN
             internal ushort DataRunOffset;	                        // Offset to the Data Runs
@@ -893,7 +1188,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
             internal ATTR_HEADER_NON_RESIDENT(byte[] bytes)
             {
-                commonHeader = new AttrHeader.ATTR_HEADER_COMMON1(bytes.Take(16).ToArray());
+                commonHeader = new AttrHeader.ATTR_HEADER_COMMON(bytes.Take(16).ToArray());
                 StartVCN = BitConverter.ToUInt64(bytes, 16);
                 LastVCN = BitConverter.ToUInt64(bytes, 24);
                 DataRunOffset = BitConverter.ToUInt16(bytes, 32);
@@ -1012,7 +1307,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
         internal static AttributeReturn Get(byte[] Bytes, int offsetToATTR)
         {
-            ATTR_HEADER_COMMON commonAttributeHeader = new ATTR_HEADER_COMMON(Bytes.Skip(offsetToATTR).Take(16).ToArray());
+            AttrHeader.ATTR_HEADER_COMMON commonAttributeHeader = new AttrHeader.ATTR_HEADER_COMMON(Bytes.Skip(offsetToATTR).Take(16).ToArray());
 
             byte[] AttrBytes = Bytes.Skip(offsetToATTR).Take((int)commonAttributeHeader.TotalSize).ToArray();
             byte[] NameBytes = AttrBytes.Skip(commonAttributeHeader.NameOffset).Take(commonAttributeHeader.NameLength * 2).ToArray();
@@ -1028,7 +1323,7 @@ namespace InvokeIR.PowerForensics.NTFS
             }
             else
             {
-                ATTR_HEADER_RESIDENT AttrHeaderResident = new ATTR_HEADER_RESIDENT(commonAttributeHeader, AttrBytes.Skip(16).Take(8).ToArray());
+                AttrHeader.ATTR_HEADER_RESIDENT AttrHeaderResident = new AttrHeader.ATTR_HEADER_RESIDENT(AttrBytes.Take(24).ToArray());
 
                 #region ATTRSwitch
 

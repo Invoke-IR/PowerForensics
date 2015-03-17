@@ -47,8 +47,6 @@
     <Compile Include="Artifacts\Prefetch.cs" />
     <Compile Include="DD.cs" />
     <Compile Include="NTFS.cs" />
-    <Compile Include="NTFSClass.cs" />
-    <Compile Include="NTFSStructure.cs" />
     <Compile Include="Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TSK.cs" />

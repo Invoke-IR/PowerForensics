@@ -322,7 +322,7 @@ namespace InvokeIR.PowerForensics.TSK
             if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
             {
 
-                indexNumber = InvokeIR.PowerForensics.IndexNumber.Get(hVolume, streamToRead, filePath);
+                indexNumber = InvokeIR.PowerForensics.NTFS.IndexNumber.Get(hVolume, streamToRead, filePath);
 
             }
 
@@ -375,7 +375,7 @@ namespace InvokeIR.PowerForensics.TSK
 
             FileStream streamToRead = InvokeIR.PowerForensics.Win32.getFileStream(hVolume);
 
-            WriteObject(InvokeIR.PowerForensics.FileRecord.getFile(hVolume, streamToRead, filePath));
+            WriteObject(InvokeIR.PowerForensics.NTFS.FileRecord.getFile(hVolume, streamToRead, filePath));
 
         } // ProcessRecord 
 

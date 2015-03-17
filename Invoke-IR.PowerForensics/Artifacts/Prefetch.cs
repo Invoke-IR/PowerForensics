@@ -353,7 +353,7 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
             IntPtr hVolume = Win32.getHandle(@"\\.\C:");
             FileStream streamToRead = Win32.getFileStream(hVolume);
 
-            List<byte> fileBytes = InvokeIR.PowerForensics.FileRecord.getFile(hVolume, streamToRead, prefetchPath);
+            List<byte> fileBytes = InvokeIR.PowerForensics.NTFS.FileRecord.getFile(hVolume, streamToRead, prefetchPath);
 
             // Check for Prefetch Magic Number (Value) SCCA at offset 0x04 - 0x07
 

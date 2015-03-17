@@ -12,6 +12,26 @@ namespace InvokeIR.PowerForensics
     public static class Win32
     {
 
+
+        #region structs
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        internal struct BY_HANDLE_FILE_INFORMATION
+        {
+            internal uint dwFileAttributes;
+            internal DateTime ftCreationTime;
+            internal DateTime ftLastAccessTime;
+            internal DateTime ftLastWriteTime;
+            internal uint dwVolumeSerialNumber;
+            internal uint nFileSizeHigh;
+            internal uint nFileSizeLow;
+            internal uint nNumberOfLinks;
+            internal uint nFileIndexHigh;
+            internal uint nFileIndexLow;
+        }
+
+        #endregion structs
+
         #region PInvoke
 
         //function import
