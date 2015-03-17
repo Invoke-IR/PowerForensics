@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoke-IR.PowerForensics", "Invoke-IR.PowerForensics\Invoke-IR.PowerForensics.csproj", "{ECFF40C5-390E-4811-9254-287AAF4F2A30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerForensics", "Invoke-IR.PowerForensics\PowerForensics.csproj", "{ECFF40C5-390E-4811-9254-287AAF4F2A30}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{744BF583-5B86-4061-97D3-3C8ACF07BAEA}"
 EndProject
