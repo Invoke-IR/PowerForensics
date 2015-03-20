@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Management.Automation;
 using System.IO;
+using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS.MFT;
 
 namespace InvokeIR.PowerForensics.Artifacts.Prefetch
@@ -418,8 +419,8 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
                 string volLetter = Directory.GetCurrentDirectory().Split('\\')[0];
                 string volume = @"\\.\" + volLetter;
 
-                IntPtr hVolume = Win32.getHandle(volume);
-                FileStream streamToRead = Win32.getFileStream(hVolume);
+                IntPtr hVolume = NativeMethods.getHandle(volume);
+                FileStream streamToRead = NativeMethods.getFileStream(hVolume);
                 byte[] MFT = MasterFileTable.GetBytes(hVolume, streamToRead);
 
                 if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
@@ -9,7 +10,7 @@ namespace InvokeIR.PowerForensics.NTFS
     public class NTFSVolumeData
     {
 
-        struct NTFS_VOLUME_DATA_BUFFER
+        internal struct NTFS_VOLUME_DATA_BUFFER
         {
             internal ulong VolumeSerialNumber;
             internal long NumberSectors;
@@ -89,9 +90,9 @@ namespace InvokeIR.PowerForensics.NTFS
             int buf = new int();
 
             // Return the NTFS_VOLUME_DATA_BUFFER struct
-            var status = Win32.DeviceIoControl(
+            var status = NativeMethods.DeviceIoControl(
                 hDevice: hDrive,
-                dwIoControlCode: (uint)0x00090064,
+                dwIoControlCode: NativeMethods.NTFS_VOLUME_DATA_BUFFER,
                 InBuffer: null,
                 nInBufferSize: 0,
                 OutBuffer: ntfsVolData,

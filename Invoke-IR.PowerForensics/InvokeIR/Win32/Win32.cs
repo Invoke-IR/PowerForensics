@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-namespace InvokeIR.PowerForensics
+namespace InvokeIR.Win32
 {
 
-    public static class Win32
+    public static class NativeMethods
     {
 
         #region constants
@@ -40,7 +40,7 @@ namespace InvokeIR.PowerForensics
         #region PInvoke
 
         //function import
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr CreateFile
             (
                 string fileName,
@@ -52,20 +52,20 @@ namespace InvokeIR.PowerForensics
                 IntPtr template
             );
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern bool CloseHandle
             (
                 IntPtr hObject
             );
 
-        [DllImport("kernel32.dll", SetLastError = true)]
+        [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern bool GetFileInformationByHandle
             (
                 IntPtr hFile,
                 out BY_HANDLE_FILE_INFORMATION lpFileInformation
             );
 
-        [DllImport("Kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool DeviceIoControl
             (
                 IntPtr fileHandle, 
@@ -78,8 +78,9 @@ namespace InvokeIR.PowerForensics
                 IntPtr overlapped
             );
 
-        [DllImport("Kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern bool DeviceIoControl(
+        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool DeviceIoControl
+            (
                 IntPtr hDevice,
                 uint dwIoControlCode,
                 [MarshalAs(UnmanagedType.AsAny)]
@@ -89,7 +90,8 @@ namespace InvokeIR.PowerForensics
                 [Out] object OutBuffer,
                 int nOutBufferSize,
                 ref int lpBytesReturned,
-                [In] IntPtr lpOverlapped);
+                [In] IntPtr lpOverlapped
+            );
 
         #endregion PInvoke
 

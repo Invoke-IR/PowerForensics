@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 {
@@ -63,7 +64,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             {
                 long offset = (long)nonResAttr.StartCluster[i] * 4096;
                 long length = ((long)nonResAttr.EndCluster[i] - (long)nonResAttr.StartCluster[i]) * 4096;
-                DataBytes.AddRange(Win32.readDrive(streamToRead, offset, length));
+                DataBytes.AddRange(NativeMethods.readDrive(streamToRead, offset, length));
             }
 
             DataBytes.Take((int)nonResAttr.RealSize);
@@ -77,14 +78,14 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
             List<byte> DataBytes = new List<byte>();
 
-            IntPtr hVolume = Win32.getHandle(volume);
-            FileStream streamToRead = Win32.getFileStream(hVolume);
+            IntPtr hVolume = NativeMethods.getHandle(volume);
+            FileStream streamToRead = NativeMethods.getFileStream(hVolume);
 
             for (int i = 0; i < nonResAttr.StartCluster.Length; i++)
             {
                 long offset = (long)nonResAttr.StartCluster[i] * 4096;
                 long length = ((long)nonResAttr.EndCluster[i] - (long)nonResAttr.StartCluster[i]) * 4096;
-                DataBytes.AddRange(Win32.readDrive(streamToRead, offset, length));
+                DataBytes.AddRange(NativeMethods.readDrive(streamToRead, offset, length));
             }
 
             DataBytes.Take((int)nonResAttr.RealSize);

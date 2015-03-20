@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artifacts\Prefetch.cs" />
-    <Compile Include="DD.cs" />
+    <Compile Include="InvokeIR\PowerForensics\DD.cs" />
     <Compile Include="InvokeIR\ExternDll.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\GetFileSystemStatistics.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\GetPartitionTable.cs" />
@@ -66,8 +66,6 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSBPB.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData.cs" />
-    <Compile Include="InvokeIR\Win32\Win32Test.cs" />
-    <Compile Include="NTFSTest.cs" />
     <Compile Include="InvokeIR\Win32\Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

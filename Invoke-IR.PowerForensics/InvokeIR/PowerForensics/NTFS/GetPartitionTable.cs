@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Management.Automation;
+using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
@@ -113,7 +114,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
         public static MBR Get(FileStream streamToRead)
         {
-            byte[] MBRBytes = Win32.readDrive(streamToRead, 0, 512);
+            byte[] MBRBytes = NativeMethods.readDrive(streamToRead, 0, 512);
             return new MBR(MBRBytes);
         }
 
@@ -151,8 +152,8 @@ namespace InvokeIR.PowerForensics.NTFS
             protected override void ProcessRecord()
             {
 
-                IntPtr hDrive = Win32.getHandle(drivePath);
-                FileStream streamToRead = Win32.getFileStream(hDrive);
+                IntPtr hDrive = NativeMethods.getHandle(drivePath);
+                FileStream streamToRead = NativeMethods.getFileStream(hDrive);
 
                 MBR MasterBootRecord = MBR.Get(streamToRead);
                 foreach (MBR_PARTITION_TABLE_ENTRY partition in MasterBootRecord.partitionList)

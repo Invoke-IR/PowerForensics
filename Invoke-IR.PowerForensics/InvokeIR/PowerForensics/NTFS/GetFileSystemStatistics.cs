@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
-
+using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
@@ -53,11 +53,11 @@ namespace InvokeIR.PowerForensics.NTFS
 
             WriteDebug("VolumeName: " + volumeName);
 
-            IntPtr hVolume = Win32.getHandle(volumeName);
+            IntPtr hVolume = NativeMethods.getHandle(volumeName);
 
             WriteObject(NTFS.NTFSVolumeData.Get(hVolume));
 
-            Win32.CloseHandle(hVolume);
+            NativeMethods.CloseHandle(hVolume);
 
         } // ProcessRecord 
 

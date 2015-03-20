@@ -11,13 +11,13 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
         public static byte[] GetBytes(IntPtr hVolume, FileStream streamToRead)
         {
-            NativeMethods.NTFS_VOLUME_DATA_BUFFER volData = NativeMethods.NTFS_VOLUME_DATA_BUFFER.Get(hVolume);
+            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
-            long mftOffset = (volData.BytesPerCluster * volData.MftStartLcn);
+            long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
-            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, volData.MftValidDataLength);
+            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, (volData.MFTSize_MB * 0x100000));
 
             return mftBytes;
         }
@@ -25,15 +25,15 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
         public static byte[] GetBytes(string volume)
         {
-            IntPtr hVolume = Win32.getHandle(volume);
-            FileStream streamToRead = Win32.getFileStream(hVolume);
-            NativeMethods.NTFS_VOLUME_DATA_BUFFER volData = NativeMethods.NTFS_VOLUME_DATA_BUFFER.Get(hVolume);
+            IntPtr hVolume = NativeMethods.getHandle(volume);
+            FileStream streamToRead = NativeMethods.getFileStream(hVolume);
+            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
-            long mftOffset = (volData.BytesPerCluster * volData.MftStartLcn);
+            long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
-            byte[] mftBytes = Win32.readDrive(streamToRead, mftOffset, volData.MftValidDataLength);
+            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, (volData.MFTSize_MB * 0x100000));
 
             return mftBytes;
         }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS.MFT
 {
@@ -11,7 +12,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         
         public static int Get(FileStream streamToRead, byte[] MFT, string fileName)
         {
-            IntPtr hFile = Win32.getHandle(fileName);
+            IntPtr hFile = NativeMethods.getHandle(fileName);
 
             // Check to see if file handle is valid
             if (hFile.ToInt32() == -1)
@@ -42,8 +43,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             }
 
-            Win32.BY_HANDLE_FILE_INFORMATION fileInfo = new Win32.BY_HANDLE_FILE_INFORMATION();
-            bool Success = Win32.GetFileInformationByHandle(
+            NativeMethods.BY_HANDLE_FILE_INFORMATION fileInfo = new NativeMethods.BY_HANDLE_FILE_INFORMATION();
+            bool Success = NativeMethods.GetFileInformationByHandle(
                 hFile: hFile,
                 lpFileInformation: out fileInfo);
 
@@ -62,7 +63,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         public static int Get(string volume, string fileName)
         {
 
-            IntPtr hFile = Win32.getHandle(fileName);
+            IntPtr hFile = NativeMethods.getHandle(fileName);
 
             // Check to see if file handle is valid
             if (hFile.ToInt32() == -1)
@@ -93,8 +94,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             }
 
-            Win32.BY_HANDLE_FILE_INFORMATION fileInfo = new Win32.BY_HANDLE_FILE_INFORMATION();
-            bool Success = Win32.GetFileInformationByHandle(
+            NativeMethods.BY_HANDLE_FILE_INFORMATION fileInfo = new NativeMethods.BY_HANDLE_FILE_INFORMATION();
+            bool Success = NativeMethods.GetFileInformationByHandle(
                 hFile: hFile,
                 lpFileInformation: out fileInfo);
 
