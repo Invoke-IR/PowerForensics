@@ -39,18 +39,39 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artifacts\Prefetch.cs" />
     <Compile Include="DD.cs" />
-    <Compile Include="NTFS.cs" />
-    <Compile Include="Win32.cs" />
+    <Compile Include="InvokeIR\ExternDll.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\GetFileSystemStatistics.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\GetPartitionTable.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Attr.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeFactory.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeHeader.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Data.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\FileName.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\NonResident.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\ObjectId.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\StandardInformation.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeInformation.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeName.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\GetMFTRecord.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\GetRawContent.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexEntry.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MasterFileTable.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSBPB.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData.cs" />
+    <Compile Include="InvokeIR\Win32\Win32Test.cs" />
+    <Compile Include="NTFSTest.cs" />
+    <Compile Include="InvokeIR\Win32\Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TSK.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

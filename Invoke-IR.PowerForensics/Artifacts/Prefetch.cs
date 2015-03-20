@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Management.Automation;
 using System.IO;
+using InvokeIR.PowerForensics.NTFS.MFT;
 
 namespace InvokeIR.PowerForensics.Artifacts.Prefetch
 {
@@ -213,31 +214,6 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
             }
         }
 
-        private static string getPfName(List<byte> bytes)
-        {
-            byte[] appNameBytes = bytes.Skip(0x10).Take(0x3C).ToArray();
-            string pfAppName = null;
-            int counter = 0;
-            for (int i = 0; i < appNameBytes.Length; i++)
-            {
-                if (appNameBytes[i] != 0)
-                {
-                    string foo = Convert.ToChar(appNameBytes[i]).ToString();
-                    pfAppName = string.Concat(pfAppName, foo);
-                    counter = 0;
-                }
-                else
-                {
-                    counter++;
-                    if (counter == 2)
-                    {
-                        break;
-                    }
-                }
-            }
-            return pfAppName;
-        }
-
         private static string getPfPathHash(List<byte> bytes)
         {
             byte[] pfHashBytes = bytes.Skip(0x4C).Take(0x04).ToArray();
@@ -347,13 +323,10 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
         #endregion PrivatePrefetchMethods
 
         #region StaticPrefetchMethods
-        public static Prefetch Get(string prefetchPath)
+        public static Prefetch Get(string volume, FileStream streamToRead, byte[] MFT, string prefetchPath)
         {
 
-            IntPtr hVolume = Win32.getHandle(@"\\.\C:");
-            FileStream streamToRead = Win32.getFileStream(hVolume);
-
-            List<byte> fileBytes = InvokeIR.PowerForensics.NTFS.FileRecord.getFile(hVolume, streamToRead, prefetchPath);
+            List<byte> fileBytes = MFTRecord.getFile(volume, streamToRead, MFT, prefetchPath);
 
             // Check for Prefetch Magic Number (Value) SCCA at offset 0x04 - 0x07
 
@@ -381,7 +354,7 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
                         break;
                 }
 
-                appName = getPfName(fileBytes);
+                appName = System.Text.Encoding.Unicode.GetString((fileBytes.Skip(0x10).Take(0x3C).ToArray())).TrimEnd('\0');
                 dependencyArray = getPfDependencies(getPfDependencySection(ver, fileBytes));
                 dependencyCount = dependencyArray.Length;
 
@@ -405,18 +378,6 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
             }
         }
 
-        /*public static Prefetch[] GetInstances()
-        {
-            int numFiles = System.IO.Directory.EnumerateFiles("C:\\Windows\\Prefetch", "*.pf").Count();
-            Prefetch[] pfArray = new Prefetch[numFiles];
-            var pfFiles = System.IO.Directory.EnumerateFiles("C:\\Windows\\Prefetch", "*.pf").ToArray();
-            for (int i = 0; i < numFiles; i++)
-            {
-                Prefetch pf = Prefetch.Get(pfFiles[i]);
-                pfArray[i] = pf;
-            }
-            return pfArray;
-        }*/
 
         #endregion StaticPrefetchMethods
 
@@ -429,19 +390,6 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
         public class GetPrefetchCommand : PSCmdlet
         {
             #region Parameters
-
-            /// <summary> 
-            /// This parameter provides the list of process names on  
-            /// which the Stop-Proc cmdlet will work. 
-            /// </summary> 
-
-            [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-            public string[] ComputerName
-            {
-                get { return computerNames; }
-                set { computerNames = value; }
-            }
-            private string[] computerNames;
 
             /// <summary> 
             /// This parameter provides the list of process names on  
@@ -467,46 +415,26 @@ namespace InvokeIR.PowerForensics.Artifacts.Prefetch
             protected override void ProcessRecord()
             {
 
-                // If ComputerName is not specified on the command line set it equal to localhost
-                if (!(this.MyInvocation.BoundParameters.ContainsKey("ComputerName")))
+                string volLetter = Directory.GetCurrentDirectory().Split('\\')[0];
+                string volume = @"\\.\" + volLetter;
+
+                IntPtr hVolume = Win32.getHandle(volume);
+                FileStream streamToRead = Win32.getFileStream(hVolume);
+                byte[] MFT = MasterFileTable.GetBytes(hVolume, streamToRead);
+
+                if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
                 {
-
-                    // Create an array with one string
-                    computerNames = new string[1];
-
-                    // Add "localhost" to index 0 of new array
-                    computerNames[0] = "localhost";
-
+                    WriteObject(Prefetch.Get(volume, streamToRead, MFT, filePath));
                 }
 
-                // Iterate through hosts specified by the ComputerName parameter
-                foreach (string strComputer in computerNames)
+                else
                 {
 
-                    if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
+                    string prefetchPath = volLetter + @"\\Windows\\Prefetch";
+                    var pfFiles = System.IO.Directory.GetFiles(prefetchPath, "*.pf").ToArray();
+                    foreach(var file in pfFiles)
                     {
-
-                        WriteObject(Prefetch.Get(filePath));
-
-
-                    }
-
-                    else
-                    {
-
-                        var pfFiles = System.IO.Directory.GetFiles("C:\\Windows\\Prefetch", "*.pf").ToArray();
-                        foreach(var file in pfFiles)
-                        {
-                            WriteObject(Prefetch.Get(file));
-                        }
-                        
-                        /*foreach (Prefetch prefetch in Prefetch.GetInstances())
-                        {
-
-                            WriteObject(prefetch);
-
-                        }*/
-
+                        WriteObject(Prefetch.Get(volume, streamToRead, MFT, file));
                     }
 
                 }
