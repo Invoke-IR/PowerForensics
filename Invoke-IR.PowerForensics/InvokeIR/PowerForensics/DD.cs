@@ -7,13 +7,13 @@ namespace InvokeIR.PowerForensics
 
     public class DD
     {
-        public static void Get(string inFile, string outFile, long offset, int blockSize, int count)
+        public static void Get(string inFile, string outFile, ulong offset, uint blockSize, uint count)
         {
 
             IntPtr hVolume = NativeMethods.getHandle(inFile);
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
             
-            long sizeToRead = blockSize * count;
+            ulong sizeToRead = blockSize * count;
 
             // Read sizeToRead bytes from the Volume
             byte[] buffer = NativeMethods.readDrive(streamToRead, offset, sizeToRead);

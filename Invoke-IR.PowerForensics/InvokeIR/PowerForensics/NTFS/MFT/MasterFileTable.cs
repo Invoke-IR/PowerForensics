@@ -14,7 +14,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
-            long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
+            ulong mftOffset = ((ulong)volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
             byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, volData.MFTSize);
@@ -30,7 +30,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
-            long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
+            ulong mftOffset = ((ulong)volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
             byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, volData.MFTSize);

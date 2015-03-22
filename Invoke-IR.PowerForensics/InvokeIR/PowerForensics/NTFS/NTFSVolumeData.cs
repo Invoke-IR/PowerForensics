@@ -13,63 +13,63 @@ namespace InvokeIR.PowerForensics.NTFS
         internal struct NTFS_VOLUME_DATA_BUFFER
         {
             internal ulong VolumeSerialNumber;
-            internal long NumberSectors;
-            internal long TotalClusters;
-            internal long FreeClusters;
-            internal long TotalReserved;
+            internal ulong NumberSectors;
+            internal ulong TotalClusters;
+            internal ulong FreeClusters;
+            internal ulong TotalReserved;
             internal int BytesPerSector;
             internal int BytesPerCluster;
             internal int BytesPerFileRecordSegment;
             internal int ClustersPerFileRecordSegment;
-            internal long MftValidDataLength;
-            internal long MftStartLcn;
-            internal long Mft2StartLcn;
-            internal long MftZoneStart;
-            internal long MftZoneEnd;
+            internal ulong MftValidDataLength;
+            internal ulong MftStartLcn;
+            internal ulong Mft2StartLcn;
+            internal ulong MftZoneStart;
+            internal ulong MftZoneEnd;
 
             internal NTFS_VOLUME_DATA_BUFFER(byte[] bytes)
             {
                 VolumeSerialNumber = BitConverter.ToUInt64(bytes, 0);
-                NumberSectors = BitConverter.ToInt64(bytes, 8);
-                TotalClusters = BitConverter.ToInt64(bytes, 16);
-                FreeClusters = BitConverter.ToInt64(bytes, 24);
-                TotalReserved = BitConverter.ToInt64(bytes, 32);
+                NumberSectors = BitConverter.ToUInt64(bytes, 8);
+                TotalClusters = BitConverter.ToUInt64(bytes, 16);
+                FreeClusters = BitConverter.ToUInt64(bytes, 24);
+                TotalReserved = BitConverter.ToUInt64(bytes, 32);
                 BytesPerSector = BitConverter.ToInt32(bytes, 40);
                 BytesPerCluster = BitConverter.ToInt32(bytes, 44);
                 BytesPerFileRecordSegment = BitConverter.ToInt32(bytes, 48);
                 ClustersPerFileRecordSegment = BitConverter.ToInt32(bytes, 52);
-                MftValidDataLength = BitConverter.ToInt64(bytes, 56);
-                MftStartLcn = BitConverter.ToInt64(bytes, 64);
-                Mft2StartLcn = BitConverter.ToInt64(bytes, 72);
-                MftZoneStart = BitConverter.ToInt64(bytes, 80);
-                MftZoneEnd = BitConverter.ToInt64(bytes, 88);
+                MftValidDataLength = BitConverter.ToUInt64(bytes, 56);
+                MftStartLcn = BitConverter.ToUInt64(bytes, 64);
+                Mft2StartLcn = BitConverter.ToUInt64(bytes, 72);
+                MftZoneStart = BitConverter.ToUInt64(bytes, 80);
+                MftZoneEnd = BitConverter.ToUInt64(bytes, 88);
             }
         }
 
-        public long VolumeSize_MB;
-        public long TotalSectors;
-        public long TotalClusters;
-        public long FreeClusters;
-        public long FreeSpace_MB;
+        public ulong VolumeSize_MB;
+        public ulong TotalSectors;
+        public ulong TotalClusters;
+        public ulong FreeClusters;
+        public ulong FreeSpace_MB;
         public int BytesPerSector;
         public int BytesPerCluster;
         public int BytesPerMFTRecord;
         public int ClustersPerMFTRecord;
-        public long MFTSize_MB;
-        public long MFTSize;
-        public long MFTStartCluster;
-        public long MFTZoneClusterStart;
-        public long MFTZoneClusterEnd;
-        public long MFTZoneSize;
-        public long MFTMirrorStart;
+        public ulong MFTSize_MB;
+        public ulong MFTSize;
+        public ulong MFTStartCluster;
+        public ulong MFTZoneClusterStart;
+        public ulong MFTZoneClusterEnd;
+        public ulong MFTZoneSize;
+        public ulong MFTMirrorStart;
 
-        internal NTFSVolumeData(long totalSectors, long totalClusters, long freeClusters, int bytesPerSector, int bytesPerCluster, int bytesPerMFTRecord, int clustersPerMFTRecord, long mftValidDataLength, long mftStartCluster, long mftZoneClusterStart, long mftZoneClusterEnd, long mftMirrorStart)
+        internal NTFSVolumeData(ulong totalSectors, ulong totalClusters, ulong freeClusters, int bytesPerSector, int bytesPerCluster, int bytesPerMFTRecord, int clustersPerMFTRecord, ulong mftValidDataLength, ulong mftStartCluster, ulong mftZoneClusterStart, ulong mftZoneClusterEnd, ulong mftMirrorStart)
         {
-            VolumeSize_MB = (totalClusters * bytesPerCluster) / 0x100000;
+            VolumeSize_MB = (totalClusters * (ulong)bytesPerCluster) / 0x100000;
             TotalSectors = totalSectors;
             TotalClusters = totalClusters;
             FreeClusters = freeClusters;
-            FreeSpace_MB = ((totalClusters - freeClusters) * bytesPerCluster) / 0x100000;
+            FreeSpace_MB = ((totalClusters - freeClusters) * (ulong)bytesPerCluster) / 0x100000;
             BytesPerSector = bytesPerSector;
             BytesPerCluster = bytesPerCluster;
             BytesPerMFTRecord = bytesPerMFTRecord;
@@ -79,7 +79,7 @@ namespace InvokeIR.PowerForensics.NTFS
             MFTStartCluster = mftStartCluster;
             MFTZoneClusterStart = mftZoneClusterStart;
             MFTZoneClusterEnd = mftZoneClusterEnd;
-            MFTZoneSize = (mftZoneClusterEnd - mftZoneClusterStart) * bytesPerCluster;
+            MFTZoneSize = (mftZoneClusterEnd - mftZoneClusterStart) * (ulong)bytesPerCluster;
             MFTMirrorStart = mftMirrorStart;
         }
 

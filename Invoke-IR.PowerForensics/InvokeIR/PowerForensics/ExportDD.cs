@@ -47,12 +47,12 @@ namespace InvokeIR.PowerForensics
         /// </summary> 
 
         [Parameter(Mandatory = true)]
-        public long Offset
+        public ulong Offset
         {
             get { return offset; }
             set { offset = value; }
         }
-        private long offset;
+        private ulong offset;
 
         /// <summary> 
         /// This parameter provides the size of blocks to be
@@ -60,12 +60,12 @@ namespace InvokeIR.PowerForensics
         /// </summary> 
 
         [Parameter(Mandatory = true)]
-        public int BlockSize
+        public uint BlockSize
         {
             get { return blockSize; }
             set { blockSize = value; }
         }
-        private int blockSize;
+        private uint blockSize;
 
         /// <summary> 
         /// This parameter provides the Count of Blocks
@@ -73,12 +73,12 @@ namespace InvokeIR.PowerForensics
         /// </summary> 
 
         [Parameter(Mandatory = true)]
-        public int Count
+        public uint Count
         {
             get { return count; }
             set { count = value; }
         }
-        private int count;
+        private uint count;
 
         #endregion Parameters
 

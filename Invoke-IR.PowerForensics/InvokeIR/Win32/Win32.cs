@@ -118,7 +118,7 @@ namespace InvokeIR.Win32
             return new FileStream(hVolume, FileAccess.Read);
         }
 
-        internal static byte[] readDrive(FileStream streamToRead, long offset, long sizeToRead)
+        public static byte[] readDrive(FileStream streamToRead, ulong offset, ulong sizeToRead)
         {
 
             // Bytes must be read by sector
@@ -127,7 +127,7 @@ namespace InvokeIR.Win32
             if (((offset % 512) != 0)) throw new System.ArgumentException("Offset parameter must be divisible by 512");
 
             // Set offset to begin reading from the drive
-            streamToRead.Position = offset;
+            streamToRead.Position = (long)offset;
             // Create a byte array to read into
             byte[] buf = new byte[sizeToRead];
             // Read buf.Length bytes (sizeToRead) from offset 
