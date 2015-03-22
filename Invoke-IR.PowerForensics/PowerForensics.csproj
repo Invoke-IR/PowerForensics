@@ -43,9 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Artifacts\Prefetch.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\GetPrefetch.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Prefetch.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\GetTimezone.cs" />
     <Compile Include="InvokeIR\PowerForensics\DD.cs" />
-    <Compile Include="InvokeIR\ExternDll.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\GetBoot.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\GetMBRCodeSection.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR.cs" />
+    <Compile Include="InvokeIR\Win32\ExternDll.cs" />
+    <Compile Include="InvokeIR\PowerForensics\ExportDD.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\GetFileSystemStatistics.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\GetPartitionTable.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Attr.cs" />

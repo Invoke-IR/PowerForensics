@@ -56,6 +56,7 @@ namespace InvokeIR.PowerForensics.NTFS
         public int BytesPerMFTRecord;
         public int ClustersPerMFTRecord;
         public long MFTSize_MB;
+        public long MFTSize;
         public long MFTStartCluster;
         public long MFTZoneClusterStart;
         public long MFTZoneClusterEnd;
@@ -74,6 +75,7 @@ namespace InvokeIR.PowerForensics.NTFS
             BytesPerMFTRecord = bytesPerMFTRecord;
             ClustersPerMFTRecord = clustersPerMFTRecord;
             MFTSize_MB = (mftValidDataLength) / 0x100000;
+            MFTSize = mftValidDataLength;
             MFTStartCluster = mftStartCluster;
             MFTZoneClusterStart = mftZoneClusterStart;
             MFTZoneClusterEnd = mftZoneClusterEnd;

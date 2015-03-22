@@ -50,19 +50,39 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             internal ATTR_FILE_NAME(byte[] bytes)
             {
 
-                header = new AttrHeader.ATTR_HEADER_RESIDENT(bytes.Take(24).ToArray());
-                ParentRef = BitConverter.ToUInt64(bytes, 24);
-                CreateTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 32));
-                AlterTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 40));
-                MFTTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 48));
-                ReadTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 56));
-                AllocSize = BitConverter.ToUInt64(bytes, 64);
-                RealSize = BitConverter.ToUInt64(bytes, 72);
-                Flags = BitConverter.ToUInt32(bytes, 80);
-                ER = BitConverter.ToUInt32(bytes, 84);
-                NameLength = bytes[88];
-                NameSpace = bytes[89];
-                Name = bytes.Skip(90).ToArray();
+                if (bytes.Length < 90)
+                {
+                    header = new AttrHeader.ATTR_HEADER_RESIDENT(new byte[24]);
+                    ParentRef = BitConverter.ToUInt64(bytes, 0);
+                    CreateTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 8));
+                    AlterTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 16));
+                    MFTTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 24));
+                    ReadTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 32));
+                    AllocSize = BitConverter.ToUInt64(bytes, 40);
+                    RealSize = BitConverter.ToUInt64(bytes, 48);
+                    Flags = BitConverter.ToUInt32(bytes, 56);
+                    ER = BitConverter.ToUInt32(bytes, 60);
+                    NameLength = bytes[64];
+                    NameSpace = bytes[65];
+                    Name = bytes.Skip(66).ToArray();
+                }
+
+                else
+                {
+                    header = new AttrHeader.ATTR_HEADER_RESIDENT(bytes.Take(24).ToArray());
+                    ParentRef = BitConverter.ToUInt64(bytes, 24);
+                    CreateTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 32));
+                    AlterTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 40));
+                    MFTTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 48));
+                    ReadTime = DateTime.FromFileTime(BitConverter.ToInt64(bytes, 56));
+                    AllocSize = BitConverter.ToUInt64(bytes, 64);
+                    RealSize = BitConverter.ToUInt64(bytes, 72);
+                    Flags = BitConverter.ToUInt32(bytes, 80);
+                    ER = BitConverter.ToUInt32(bytes, 84);
+                    NameLength = bytes[88];
+                    NameSpace = bytes[89];
+                    Name = bytes.Skip(90).ToArray();
+                }
             }
         }
 

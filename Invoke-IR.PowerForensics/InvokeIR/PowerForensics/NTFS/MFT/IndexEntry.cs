@@ -89,10 +89,14 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             NonResident INDX = null;
 
+            Console.WriteLine("Count: {0}", fileRecord.Attribute.Length);
+
             foreach (Attr attr in fileRecord.Attribute)
             {
+
                 if (attr.Name == "INDEX_ALLOCATION")
                 {
+
                     if (attr.NonResident)
                     {
 
@@ -173,6 +177,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             foreach (Attr attr in fileRecord.Attribute)
             {
+
                 if (attr.Name == "INDEX_ALLOCATION")
                 {
                     if (attr.NonResident)

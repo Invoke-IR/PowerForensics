@@ -17,7 +17,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
-            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, (volData.MFTSize_MB * 0x100000));
+            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, volData.MFTSize);
 
             return mftBytes;
         }
@@ -33,7 +33,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             long mftOffset = (volData.BytesPerCluster * volData.MFTStartCluster);
 
             // Read bytes belonging to specified MFT Record and store in byte array
-            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, (volData.MFTSize_MB * 0x100000));
+            byte[] mftBytes = NativeMethods.readDrive(streamToRead, mftOffset, volData.MFTSize);
 
             return mftBytes;
         }

@@ -14,6 +14,7 @@ namespace InvokeIR.PowerForensics.NTFS
     [Cmdlet(VerbsCommon.Get, "FileSystemStat", SupportsShouldProcess = true)]
     public class GetFileSystemStatCommand : PSCmdlet
     {
+
         #region Parameters
 
         /// <summary> 

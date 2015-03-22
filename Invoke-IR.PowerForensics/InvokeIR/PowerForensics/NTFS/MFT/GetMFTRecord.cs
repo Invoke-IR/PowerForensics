@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace InvokeIR.PowerForensics.NTFS.MFT
 {
+
     #region GetMFTRecordCommand
     /// <summary> 
     /// This class implements the Get-MFTRecord cmdlet. 
@@ -90,7 +91,9 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             else if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
             {
-                WriteObject(MFTRecord.Get(mftBytes, InvokeIR.PowerForensics.NTFS.MFT.IndexNumber.Get(volume, filePath)));
+                int index = InvokeIR.PowerForensics.NTFS.MFT.IndexNumber.Get(volume, filePath);
+                Console.WriteLine(index);
+                WriteObject(MFTRecord.Get(mftBytes, index));
             }
 
             else

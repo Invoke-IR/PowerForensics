@@ -20,11 +20,11 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         {
             internal uint Magic;			// "FILE"
             internal ushort OffsetOfUS;		// Offset of Update Sequence
-            internal ushort SizeOfUS;		    // Size in words of Update Sequence Number & Array
+            internal ushort SizeOfUS;		// Size in words of Update Sequence Number & Array
             internal ulong LSN;			    // $LogFile Sequence Number
             internal ushort SeqNo;			// Sequence number
             internal ushort Hardlinks;		// Hard link count
-            internal ushort OffsetOfAttr;	    // Offset of the first Attribute
+            internal ushort OffsetOfAttr;	// Offset of the first Attribute
             internal ushort Flags;			// Flags
             internal uint RealSize;		    // Real size of the FILE record
             internal uint AllocSize;		// Allocated size of the FILE record
@@ -52,16 +52,36 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             }
         }
 
+        #region Properties
+
+        public string Name;
         public uint RecordNumber;
+        public ulong Size;
+        public DateTime AccessTime;
+        public DateTime BornTime;
+        public DateTime ChangeTime;
+        public DateTime MFTChangeTime;
+        public uint Permission;
         public ushort SequenceNumber;
         public ulong LogFileSequenceNumber;
         public ushort Links;
         public string Flags;
         public Attr[] Attribute;
 
-        internal MFTRecord(uint recordNumber, ushort sequenceNumber, ulong logFileSequenceNumber, ushort links, string flags, Attr[] attribute)
+        #endregion Properties
+
+        #region Constructors
+
+        internal MFTRecord(string name, ulong size, uint recordNumber, DateTime atime, DateTime btime, DateTime mtime, DateTime ctime, uint permission, ushort sequenceNumber, ulong logFileSequenceNumber, ushort links, string flags, Attr[] attribute)
         {
+            Name = name;
+            Size = size;
             RecordNumber = recordNumber;
+            AccessTime = atime;
+            BornTime = btime;
+            ChangeTime = mtime;
+            MFTChangeTime = ctime;
+            Permission = permission;
             SequenceNumber = sequenceNumber;
             LogFileSequenceNumber = logFileSequenceNumber;
             Links = links;
@@ -69,45 +89,36 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             Attribute = attribute;
         }
 
+        #endregion Constructors
+
         public static List<byte> getFile(string volume, FileStream streamToRead, byte[] MFT, string fileName)
         {
 
             int inode = IndexNumber.Get(streamToRead, MFT, fileName);
-            
+
             // Get the FileRecord (MFT Record Entry) for the given inode on the specified volume
             MFTRecord MFTRecord = MFTRecord.Get(MFT, inode);
 
             if (!(MFTRecord.Flags.Contains("Directory")))
             {
-
                 foreach (Attr attr in MFTRecord.Attribute)
                 {
-
                     if (attr.Name == "DATA")
                     {
-
                         if (attr.NonResident == true)
                         {
-
                             NonResident nonResAttr = (NonResident)attr;
-
                             return NonResident.GetContent(volume, nonResAttr);
-
                         }
 
                         else
                         {
-
                             Data dataAttr = (Data)attr;
                             return null;
                             //return dataAttr.RawData;
-
                         }
-
                     }
-
                 }
-
             }
 
             return null;
@@ -124,58 +135,50 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             if (!(MFTRecord.Flags.Contains("Directory")))
             {
-
                 foreach (Attr attr in MFTRecord.Attribute)
                 {
-
                     if (attr.Name == "DATA")
                     {
-
                         if (attr.NonResident == true)
                         {
-
                             NonResident nonResAttr = (NonResident)attr;
-
                             return NonResident.GetContent(volume, nonResAttr);
-
                         }
-
                         else
                         {
-
                             Data dataAttr = (Data)attr;
                             return null;
                             //return dataAttr.RawData;
-
                         }
-
                     }
-
                 }
-
             }
-
             return null;
-
         }
 
-        //Good
+        // Check that bytes actually represent and MFT Record
         private static bool checkMFTRecord(uint magic)
             {
                 return magic == 1162627398;
             }
 
-        //Good
-        private static byte[] getMFTRecordBytes(byte[] mftBytes, int inode)
-            {
+        // Get byte array representing specific MFT Record (1024 bytes in size)
+        private static byte[] getMFTRecordBytes(byte[] mftBytes, int index)
+        {
 
-                int recordOffset = inode * 1024;
-                byte[] mftRecordBytes = new byte[1024];
-                Array.Copy(mftBytes, recordOffset, mftRecordBytes, 0, 1024);
+            // Determine byte offset of MFT Record
+            int recordOffset = index * 1024;
 
-                return mftRecordBytes;
+            // Create a byte array the size of an MFT Record (1024 bytes)
+            byte[] mftRecordBytes = new byte[1024];
 
-            }
+            // Create a subarray representing the MFT Record from the MFT byte array
+            Array.Copy(mftBytes, recordOffset, mftRecordBytes, 0, 1024);
+
+            // Return the MFT Record byte array
+            return mftRecordBytes;
+
+        }
 
         //Good
         private static MFTRecord Get(byte[] recordBytes)
@@ -187,6 +190,13 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             // Check MFT Signature (FILE) to ensure bytes actually represent an MFT Record
             if (checkMFTRecord(RecordHeader.Magic))
             {
+
+                string fileName = null;
+                DateTime atime = new DateTime();
+                DateTime btime = new DateTime();
+                DateTime mtime = new DateTime();
+                DateTime ctime = new DateTime();
+                uint permission = 0;
 
                 // Unmask Header Flags
                 #region HeaderFlags
@@ -212,15 +222,47 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
                 while (offsetToATTR < (RecordHeader.RealSize - 8))
                 {
+                    int i = 0;
                     int offset = offsetToATTR;
                     Attr attr = AttributeFactory.Get(recordBytes, offset, out offsetToATTR);
-                    AttributeList.Add(attr);
+                    if(attr != null)
+                    {
+                        if(attr.Name == "STANDARD_INFORMATION")
+                        {
+                            StandardInformation stdInfo = attr as StandardInformation;
+                            atime = stdInfo.AccessTime;
+                            btime = stdInfo.CreateTime;
+                            mtime = stdInfo.FileModifiedTime;
+                            ctime = stdInfo.MFTModifiedTime;
+                            permission = stdInfo.Permission;
+                        }
+                        else if((attr.Name == "FILE_NAME") && (i < 1))
+                        {
+                            FileName fN = attr as FileName;
+                            fileName = fN.Filename;
+                            i++;
+                        }
+                        AttributeList.Add(attr);
+                    }
                 }
 
                 Attr[] AttributeArray = AttributeList.ToArray();
 
                 // Return FileRecord object
-                return new MFTRecord(RecordHeader.RecordNo, RecordHeader.SeqNo, RecordHeader.LSN, RecordHeader.Hardlinks, flagAttr.ToString(), AttributeArray);
+                return new MFTRecord(
+                    fileName, 
+                    RecordHeader.RealSize, 
+                    RecordHeader.RecordNo, 
+                    atime,
+                    btime,
+                    mtime,
+                    ctime,
+                    permission,
+                    RecordHeader.SeqNo, 
+                    RecordHeader.LSN, 
+                    RecordHeader.Hardlinks, 
+                    flagAttr.ToString(), 
+                    AttributeArray);
 
             }
 
@@ -233,53 +275,66 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         
         }
 
-        //Good
-        public static MFTRecord Get(string volume, int inode)
-        {
-            byte[] mftBytes = MasterFileTable.GetBytes(volume);
+        #region GetMethods
 
-            return MFTRecord.Get(getMFTRecordBytes(mftBytes, inode));
+        // Get an MFT record based on a byte array of the MFT and MFT Record Index
+        public static MFTRecord Get(byte[] mftBytes, int index)
+        {
+            return MFTRecord.Get(getMFTRecordBytes(mftBytes, index));
         }
 
-        //Good
-        public static MFTRecord Get(byte[] mftBytes, int inode)
+        // Get an MFT record based on the volume name (\\.\C:) and MFT Record Index
+        public static MFTRecord Get(string volume, int index)
         {
-
-            return MFTRecord.Get(getMFTRecordBytes(mftBytes, inode));
-        
+            return MFTRecord.Get(getMFTRecordBytes((MasterFileTable.GetBytes(volume)), index));
         }
 
-        //Good
-        public static MFTRecord[] GetInstances(string volume)
-        {
-            byte[] mftBytes = MasterFileTable.GetBytes(volume);
-            
-            int recordCount = mftBytes.Length / 1024;
-            MFTRecord[] recordArray = new MFTRecord[recordCount];
-            for (int i = 0; i < mftBytes.Length; i += 1024)
-            {
-                int index = i / 1024;
-                recordArray[index] = MFTRecord.Get(getMFTRecordBytes(mftBytes, index));
-            }
+        #endregion GetMethods
 
-            return recordArray;
-        
-        }
+        #region GetInstancesMethods
 
-        //Good
+        // Get all MFT Records from the MFT byte array
         public static MFTRecord[] GetInstances(byte[] mftBytes)
         {
-            int recordCount = mftBytes.Length / 1024; 
+            // Determine number of MFT Records (each record is 1024 bytes)
+            // Create an array large enough to hold each MFT Record
+            int recordCount = mftBytes.Length / 1024;
             MFTRecord[] recordArray = new MFTRecord[recordCount];
+
+            // Iterate through each index number and add MFTRecord to MFTRecord[]
             for (int i = 0; i < mftBytes.Length; i += 1024)
             {
                 int index = i / 1024;
                 recordArray[index] = MFTRecord.Get(getMFTRecordBytes(mftBytes, index));
             }
 
+            // Return MFTRecord[]
             return recordArray;
-        
         }
+
+        // Get all MFT Records for the specified volume (Ex. \\.\C:)
+        public static MFTRecord[] GetInstances(string volume)
+        {
+            // Get MFT as byte array
+            byte[] mftBytes = MasterFileTable.GetBytes(volume);
+            
+            // Determine number of MFT Records (each record is 1024 bytes)
+            // Create an array large enough to hold each MFT Record
+            int recordCount = mftBytes.Length / 1024;
+            MFTRecord[] recordArray = new MFTRecord[recordCount];
+
+            // Iterate through each index number and add MFTRecord to MFTRecord[]
+            for (int i = 0; i < mftBytes.Length; i += 1024)
+            {
+                int index = i / 1024;
+                recordArray[index] = MFTRecord.Get(getMFTRecordBytes(mftBytes, index));
+            }
+
+            // Return MFTRecord[]
+            return recordArray;
+        }
+
+        #endregion GetInstancesMethods
 
     }
 
