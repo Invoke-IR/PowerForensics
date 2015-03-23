@@ -95,7 +95,7 @@ namespace InvokeIR.Win32
 
         #endregion PInvoke
 
-        public static IntPtr getHandle(string FileName)
+        internal static IntPtr getHandle(string FileName)
         {
 
             // Get Handle to specified Volume/File/Directory
@@ -112,13 +112,13 @@ namespace InvokeIR.Win32
 
         }
 
-        public static FileStream getFileStream(IntPtr hVolume)
+        internal static FileStream getFileStream(IntPtr hVolume)
         {
             // Return a FileStream to read from the specified handle
             return new FileStream(hVolume, FileAccess.Read);
         }
 
-        public static byte[] readDrive(FileStream streamToRead, ulong offset, ulong sizeToRead)
+        internal static byte[] readDrive(FileStream streamToRead, ulong offset, ulong sizeToRead)
         {
 
             // Bytes must be read by sector

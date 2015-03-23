@@ -43,21 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\GetPrefetch.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Cmdlet\GetPrefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Prefetch.cs" />
-    <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\GetTimezone.cs" />
-    <Compile Include="InvokeIR\PowerForensics\DD.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\Cmdlet\GetTimezone.cs" />
+    <Compile Include="InvokeIR\PowerForensics\DD\DD.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\AttrDef.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\GetAttrDef.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\BootSector\GetBootSector.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\GetMBRCodeSection.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\Cmdlets\GetAttrDef.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\BootSector\Cmdlets\GetBootSector.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\Cmdlets\GetMBRCodeSection.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\MBR.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Cmdlets\GetAttributeByteArray.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\EA.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\EAInformation.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Cmdlets\GetAttribute.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\IndexRoot.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\CopyFileRaw.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetMFTRecordByteArray.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber\Cmdlet\GetMFTRecordIndex.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\USNJrnl\USNJrnl.cs" />
     <Compile Include="InvokeIR\Win32\ExternDll.cs" />
-    <Compile Include="InvokeIR\PowerForensics\ExportDD.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\GetFileSystemStatistics.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\GetPartitionTable.cs" />
+    <Compile Include="InvokeIR\PowerForensics\DD\Cmdlets\ExportDD.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData\Cmdlets\GetFileSystemStatistics.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\Cmdlets\GetPartitionTable.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Attr.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeFactory.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeHeader.cs" />
@@ -68,14 +75,14 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\StandardInformation.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeInformation.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeName.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\GetMFTRecord.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\GetRawContent.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetMFTRecord.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetContentByteArray.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexEntry.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber\IndexNumber.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MasterFileTable.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\BootSector\NTFSBPB.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData\NTFSVolumeData.cs" />
     <Compile Include="InvokeIR\Win32\Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

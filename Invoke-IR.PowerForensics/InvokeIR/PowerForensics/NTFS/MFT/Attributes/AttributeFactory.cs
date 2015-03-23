@@ -15,6 +15,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             {
                 AttrHeader.ATTR_HEADER_COMMON commonAttributeHeader = new AttrHeader.ATTR_HEADER_COMMON(Bytes.Skip(offset).Take(16).ToArray());
 
+                Console.WriteLine("Attribute: {0}", Enum.GetName(typeof(Attr.ATTR_TYPE), commonAttributeHeader.ATTRType));
+                
                 // Get byte[] representing the current attribute 
                 byte[] AttrBytes = Bytes.Skip(offset).Take((int)commonAttributeHeader.TotalSize).ToArray();
                 
@@ -48,17 +50,11 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                         case (Int32)Attr.ATTR_TYPE.STANDARD_INFORMATION:
                             return StandardInformation.Get(AttrBytes, AttrName);
 
-                        case (Int32)Attr.ATTR_TYPE.ATTRIBUTE_LIST:
-                            break;
-
                         case (Int32)Attr.ATTR_TYPE.FILE_NAME:
                             return FileName.Get(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.OBJECT_ID:
                             return ObjectId.Get(AttrBytes, AttrName);
-
-                        case (Int32)Attr.ATTR_TYPE.SECURITY_DESCRIPTOR:
-                            break;
 
                         case (Int32)Attr.ATTR_TYPE.VOLUME_NAME:
                             return VolumeName.Get(AttrBytes, AttrName);
@@ -71,6 +67,16 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
                         case (Int32)Attr.ATTR_TYPE.INDEX_ROOT:
                             //IndexRoot indxRootAttr = IndexRoot.Get(AttrBytes, commonAttributeHeader, AttrHeaderResident, AttrName);
+                            break;
+                        
+                        case (Int32)Attr.ATTR_TYPE.EA_INFORMATION:
+                            //
+                            Console.WriteLine("Attr: EA_Information {0}", commonAttributeHeader.Id);
+                            break;
+
+                        case (Int32)Attr.ATTR_TYPE.EA:
+                            //
+                            Console.WriteLine("Attr: EA {0}", commonAttributeHeader.Id);
                             break;
 
                         default:

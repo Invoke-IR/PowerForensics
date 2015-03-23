@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
 namespace InvokeIR.PowerForensics.NTFS.MFT
@@ -16,7 +17,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             DIR = 0x02	    // File record is a directory
         }
 
-        struct FILE_RECORD_HEADER
+        internal struct FILE_RECORD_HEADER
         {
             internal uint Magic;			// "FILE"
             internal ushort OffsetOfUS;		// Offset of Update Sequence
@@ -162,8 +163,27 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                 return magic == 1162627398;
             }
 
+        internal static byte[] getMFTRecordBytes(string volume, int index)
+        {
+            
+            // Get handle for volume
+            IntPtr hVolume = NativeMethods.getHandle(volume);
+            
+            // Get filestream based on hVolume
+            FileStream streamToRead = NativeMethods.getFileStream(hVolume);
+            
+            // 
+            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
+
+            ulong mftStartOffset = volData.MFTStartCluster * (ulong)volData.BytesPerCluster;
+            ulong recordOffset = mftStartOffset + ((ulong)index * 1024);
+
+            return NativeMethods.readDrive(streamToRead, recordOffset, 1024);
+
+        }
+
         // Get byte array representing specific MFT Record (1024 bytes in size)
-        private static byte[] getMFTRecordBytes(byte[] mftBytes, int index)
+        internal static byte[] getMFTRecordBytes(byte[] mftBytes, int index)
         {
 
             // Determine byte offset of MFT Record
