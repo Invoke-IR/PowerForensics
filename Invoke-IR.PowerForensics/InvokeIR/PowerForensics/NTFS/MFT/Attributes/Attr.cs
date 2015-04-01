@@ -38,6 +38,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public string Name;
         public string NameString;
         public bool NonResident;
+        public ushort AttributeId;
 
         public static byte[] GetBytes(byte[] recordBytes, uint attribute)
         {

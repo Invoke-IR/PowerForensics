@@ -69,7 +69,7 @@ namespace InvokeIR.PowerForensics.NTFS.MBR
 
             #endregion Cmdlet Overrides
 
-        } // End GetFSstatCommand class. 
+        } // End GetPartitionTableCommand class. 
 
         #endregion GetPartitionTableCommand
 

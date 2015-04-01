@@ -65,12 +65,15 @@ namespace InvokeIR.PowerForensics.Artifacts
                     // Output the Prefetch object for the corresponding file
                     WriteObject(Prefetch.Get(volume, streamToRead, MFT, filePath));
                 }
+                
+                // If file doesnt exist, throw error
                 else
                 {
                     throw new FileNotFoundException((filePath + " does not exist.  Please enter a valid file path."));
                 }
             }
-
+            
+            // If no FilePath is provided, return all Prefetch files
             else
             {
                 // Build Prefetch directory path
@@ -92,7 +95,7 @@ namespace InvokeIR.PowerForensics.Artifacts
 
         #endregion Cmdlet Overrides
 
-    } // End GetProcCommand class.
+    } // End GetPrefetchCommand class.
  
     #endregion GetPrefetchCommand
 

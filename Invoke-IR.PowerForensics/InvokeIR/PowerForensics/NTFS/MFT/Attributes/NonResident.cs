@@ -43,11 +43,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public ulong[] StartCluster;
         public ulong[] EndCluster;
 
-        internal NonResident(uint AttrType, string name, bool nonResident, ulong allocatedSize, ulong realSize, ulong iniSize, ulong[] startCluster, ulong[] endCluster)
+        internal NonResident(uint AttrType, string name, bool nonResident, ushort attributeId, ulong allocatedSize, ulong realSize, ulong iniSize, ulong[] startCluster, ulong[] endCluster)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), AttrType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             AllocatedSize = allocatedSize;
             RealSize = realSize;
             InitializedSize = iniSize;
@@ -73,7 +74,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         }
 
 
-        internal static List<byte> GetContent(string volume, NonResident nonResAttr)
+        public static List<byte> GetContent(string volume, NonResident nonResAttr)
         {
 
             List<byte> DataBytes = new List<byte>();
@@ -145,6 +146,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 nonResAttrHeader.commonHeader.ATTRType,
                 AttrName,
                 nonResAttrHeader.commonHeader.NonResident,
+                nonResAttrHeader.commonHeader.Id,
                 nonResAttrHeader.AllocSize,
                 nonResAttrHeader.RealSize,
                 nonResAttrHeader.IniSize,

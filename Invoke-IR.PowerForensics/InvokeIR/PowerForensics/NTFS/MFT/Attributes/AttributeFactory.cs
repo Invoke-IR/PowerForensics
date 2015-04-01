@@ -15,7 +15,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             {
                 AttrHeader.ATTR_HEADER_COMMON commonAttributeHeader = new AttrHeader.ATTR_HEADER_COMMON(Bytes.Skip(offset).Take(16).ToArray());
 
-                Console.WriteLine("Attribute: {0}", Enum.GetName(typeof(Attr.ATTR_TYPE), commonAttributeHeader.ATTRType));
+                //Console.WriteLine("Attribute: {0}", Enum.GetName(typeof(Attr.ATTR_TYPE), commonAttributeHeader.ATTRType));
+                //Console.WriteLine("NonResident: {0}", (commonAttributeHeader.NonResident).ToString());
                 
                 // Get byte[] representing the current attribute 
                 byte[] AttrBytes = Bytes.Skip(offset).Take((int)commonAttributeHeader.TotalSize).ToArray();
@@ -71,12 +72,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                         
                         case (Int32)Attr.ATTR_TYPE.EA_INFORMATION:
                             //
-                            Console.WriteLine("Attr: EA_Information {0}", commonAttributeHeader.Id);
+                            //Console.WriteLine("Attr: EA_Information {0}", commonAttributeHeader.Id);
                             break;
 
                         case (Int32)Attr.ATTR_TYPE.EA:
                             //
-                            Console.WriteLine("Attr: EA {0}", commonAttributeHeader.Id);
+                            //Console.WriteLine("Attr: EA {0}", commonAttributeHeader.Id);
                             break;
 
                         default:

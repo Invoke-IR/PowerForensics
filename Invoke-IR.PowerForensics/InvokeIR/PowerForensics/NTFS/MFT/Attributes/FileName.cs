@@ -93,11 +93,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public DateTime MFTModifiedTime;
         public DateTime AccessTime;
 
-        internal FileName(uint AttrType, string attrName, bool nonResident, byte[] name, ulong parentIndex, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
+        internal FileName(uint AttrType, string attrName, bool nonResident, ushort attributeId, byte[] name, ulong parentIndex, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), AttrType);
             NameString = attrName;
             NonResident = nonResident;
+            AttributeId = attributeId;
             Filename = Encoding.Unicode.GetString(name);
             ParentIndex = parentIndex;
             CreateTime = createTime;
@@ -116,6 +117,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 fileName.header.commonHeader.ATTRType,
                 attrName,
                 fileName.header.commonHeader.NonResident,
+                fileName.header.commonHeader.Id,
                 fileName.Name,
                 (fileName.ParentRef & 0x000000000000FFFF),
                 fileName.CreateTime,

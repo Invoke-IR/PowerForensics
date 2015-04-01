@@ -41,11 +41,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public uint Minor;
         public string Flags;
 
-        internal VolumeInformation(uint ATTRType, string name, bool nonResident, byte majorVersion, byte minorVersion, string flags)
+        internal VolumeInformation(uint ATTRType, string name, bool nonResident, ushort attributeId, byte majorVersion, byte minorVersion, string flags)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             Major = majorVersion;
             Minor = minorVersion;
             Flags = flags;
@@ -99,6 +100,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 volInfo.header.commonHeader.ATTRType,
                 AttrName,
                 volInfo.header.commonHeader.NonResident,
+                volInfo.header.commonHeader.Id,
                 volInfo.MajorVersion,
                 volInfo.MinorVersion,
                 volumeFlags.ToString());

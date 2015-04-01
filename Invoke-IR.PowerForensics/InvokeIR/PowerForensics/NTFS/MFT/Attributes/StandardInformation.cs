@@ -88,11 +88,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public DateTime MFTModifiedTime;
         public DateTime AccessTime;
 
-        internal StandardInformation(uint ATTRType, string name, bool nonResident, string flags, uint permission, uint ownerId, uint securityId, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
+        internal StandardInformation(uint ATTRType, string name, bool nonResident, ushort attributeId, string flags, uint permission, uint ownerId, uint securityId, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             Flags = flags;
             Permission = permission;
             OwnerId = ownerId;
@@ -177,6 +178,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 stdInfo.header.commonHeader.ATTRType,
                 AttrName,
                 stdInfo.header.commonHeader.NonResident,
+                stdInfo.header.commonHeader.Id,
                 permissionFlags.ToString(),
                 stdInfo.Permission,
                 stdInfo.OwnerId,

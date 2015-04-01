@@ -23,11 +23,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public byte[] RawData;
 
-        internal Data(uint ATTRType, string name, bool nonResident, byte[] bytes)
+        internal Data(uint ATTRType, string name, bool nonResident, ushort attributeId, byte[] bytes)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             RawData = bytes;
         }
 
@@ -40,6 +41,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 data.header.commonHeader.ATTRType,
                 attrName,
                 data.header.commonHeader.NonResident,
+                data.header.commonHeader.Id,
                 data.RawBytes);
         }
 

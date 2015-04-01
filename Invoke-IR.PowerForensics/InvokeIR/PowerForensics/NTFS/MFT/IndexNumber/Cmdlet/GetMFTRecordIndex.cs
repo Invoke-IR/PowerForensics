@@ -50,5 +50,4 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
     } // End GetProcCommand class. 
     #endregion GetMFTRecordIndexCommand
 
-
 }

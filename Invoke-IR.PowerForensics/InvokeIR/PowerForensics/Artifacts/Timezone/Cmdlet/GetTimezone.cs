@@ -29,7 +29,7 @@ namespace InvokeIR.PowerForensics.Artifacts
 
         #endregion Cmdlet Overrides
 
-    } // End GetProcCommand class. 
+    } // End GetTimeZoneCommand class. 
     
     #endregion GetTimeZoneCommand
 

@@ -14,6 +14,7 @@ namespace InvokeIR.PowerForensics.NTFS.MBR
     [Cmdlet(VerbsCommon.Get, "MBRCodeSection", SupportsShouldProcess = true)]
     public class GetMBRCodeSectionCommand : PSCmdlet
     {
+
         #region Parameters
 
         /// <summary> 
@@ -45,7 +46,8 @@ namespace InvokeIR.PowerForensics.NTFS.MBR
 
             MBR MasterBootRecord = MBR.Get(streamToRead);
 
-            WriteObject(MasterBootRecord.MBRCodeArea);
+            //WriteObject(MasterBootRecord.MBRCodeArea);
+            WriteObject(MasterBootRecord);
 
             streamToRead.Close();
 

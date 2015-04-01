@@ -29,11 +29,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public byte[] ObjectIdBytes;
 
-        internal ObjectId(uint ATTRType, string name, bool nonResident, byte[] objectId)
+        internal ObjectId(uint ATTRType, string name, bool nonResident, ushort attributeId, byte[] objectId)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             ObjectIdBytes = objectId;
         }
 
@@ -46,6 +47,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 objectId.header.commonHeader.ATTRType,
                 AttrName,
                 objectId.header.commonHeader.NonResident,
+                objectId.header.commonHeader.Id,
                 objectId.ObjectId);
 
         }

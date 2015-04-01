@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
@@ -56,6 +56,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         #region Properties
 
         public string Name;
+        public ulong ParentIndex;
         public uint RecordNumber;
         public ulong Size;
         public DateTime AccessTime;
@@ -67,15 +68,18 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         public ulong LogFileSequenceNumber;
         public ushort Links;
         public string Flags;
+        public bool Deleted;
+        public bool Directory;
         public Attr[] Attribute;
 
         #endregion Properties
 
         #region Constructors
 
-        internal MFTRecord(string name, ulong size, uint recordNumber, DateTime atime, DateTime btime, DateTime mtime, DateTime ctime, uint permission, ushort sequenceNumber, ulong logFileSequenceNumber, ushort links, string flags, Attr[] attribute)
+        internal MFTRecord(string name, ulong parentIndex, ulong size, uint recordNumber, DateTime atime, DateTime btime, DateTime mtime, DateTime ctime, uint permission, ushort sequenceNumber, ulong logFileSequenceNumber, ushort links, bool deleted, bool directory, Attr[] attribute)
         {
             Name = name;
+            ParentIndex = parentIndex;
             Size = size;
             RecordNumber = recordNumber;
             AccessTime = atime;
@@ -86,7 +90,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             SequenceNumber = sequenceNumber;
             LogFileSequenceNumber = logFileSequenceNumber;
             Links = links;
-            Flags = flags;
+            Deleted = deleted;
+            Directory = directory;
             Attribute = attribute;
         }
 
@@ -100,7 +105,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             // Get the FileRecord (MFT Record Entry) for the given inode on the specified volume
             MFTRecord MFTRecord = MFTRecord.Get(MFT, inode);
 
-            if (!(MFTRecord.Flags.Contains("Directory")))
+            if (!(MFTRecord.Directory))
             {
                 foreach (Attr attr in MFTRecord.Attribute)
                 {
@@ -134,7 +139,36 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             // Get the FileRecord (MFT Record Entry) for the given inode on the specified volume
             MFTRecord MFTRecord = MFTRecord.Get(volume, inode);
 
-            if (!(MFTRecord.Flags.Contains("Directory")))
+            if (!(MFTRecord.Directory))
+            {
+                foreach (Attr attr in MFTRecord.Attribute)
+                {
+                    if (attr.Name == "DATA")
+                    {
+                        if (attr.NonResident == true)
+                        {
+                            NonResident nonResAttr = (NonResident)attr;
+                            return NonResident.GetContent(volume, nonResAttr);
+                        }
+                        else
+                        {
+                            Data dataAttr = (Data)attr;
+                            return null;
+                            //return dataAttr.RawData;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static List<byte> getFile(string volume, int index)
+        {
+
+            // Get the FileRecord (MFT Record Entry) for the given inode on the specified volume
+            MFTRecord MFTRecord = MFTRecord.Get(volume, index);
+
+            if (!(MFTRecord.Directory))
             {
                 foreach (Attr attr in MFTRecord.Attribute)
                 {
@@ -211,28 +245,27 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             if (checkMFTRecord(RecordHeader.Magic))
             {
 
-                string fileName = null;
                 DateTime atime = new DateTime();
                 DateTime btime = new DateTime();
                 DateTime mtime = new DateTime();
                 DateTime ctime = new DateTime();
                 uint permission = 0;
+                string fileName = null;
+                ulong parentIndex = 0;
 
                 // Unmask Header Flags
                 #region HeaderFlags
 
-                StringBuilder flagAttr = new StringBuilder();
-                if (RecordHeader.Flags != 0)
+                bool deleted = true;
+                bool directory = false;
+                
+                if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.INUSE) == (ushort)FILE_RECORD_FLAG.INUSE)
                 {
-                    if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.INUSE) == (ushort)FILE_RECORD_FLAG.INUSE)
-                    {
-                        flagAttr.Append("InUse, ");
-                    }
-                    if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.DIR) == (ushort)FILE_RECORD_FLAG.DIR)
-                    {
-                        flagAttr.Append("Directory, ");
-                    }
-                    flagAttr.Length -= 2;
+                    deleted = false;
+                }
+                if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.DIR) == (ushort)FILE_RECORD_FLAG.DIR)
+                {
+                    directory = true;
                 }
 
                 #endregion HeaderFlags
@@ -260,6 +293,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                         {
                             FileName fN = attr as FileName;
                             fileName = fN.Filename;
+                            parentIndex = fN.ParentIndex;
                             i++;
                         }
                         AttributeList.Add(attr);
@@ -270,7 +304,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
                 // Return FileRecord object
                 return new MFTRecord(
-                    fileName, 
+                    fileName,
+                    parentIndex,
                     RecordHeader.RealSize, 
                     RecordHeader.RecordNo, 
                     atime,
@@ -281,7 +316,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                     RecordHeader.SeqNo, 
                     RecordHeader.LSN, 
                     RecordHeader.Hardlinks, 
-                    flagAttr.ToString(), 
+                    deleted,
+                    directory,
                     AttributeArray);
 
             }
@@ -342,7 +378,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             // Create an array large enough to hold each MFT Record
             int recordCount = mftBytes.Length / 1024;
             MFTRecord[] recordArray = new MFTRecord[recordCount];
-
+            
             // Iterate through each index number and add MFTRecord to MFTRecord[]
             for (int i = 0; i < mftBytes.Length; i += 1024)
             {

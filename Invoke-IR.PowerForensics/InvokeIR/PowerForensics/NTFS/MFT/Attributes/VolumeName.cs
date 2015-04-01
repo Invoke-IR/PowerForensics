@@ -22,11 +22,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public string VolumeNameString;
 
-        internal VolumeName(uint ATTRType, string name, bool nonResident, string volumeName)
+        internal VolumeName(uint ATTRType, string name, bool nonResident, ushort attributeId, string volumeName)
         {
             Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
             NameString = name;
             NonResident = nonResident;
+            AttributeId = attributeId;
             VolumeNameString = volumeName;
         }
 
@@ -38,6 +39,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                 volName.header.commonHeader.ATTRType,
                 AttrName,
                 volName.header.commonHeader.NonResident,
+                volName.header.commonHeader.Id,
                 volName.VolumeNameString);
 
         }
