@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InvokeIR\MD5\Cmdlets\GetMD5.cs" />
-    <Compile Include="InvokeIR\MD5\MD5Hash.cs" />
+    <Compile Include="InvokeIR\Hash\Cmdlets\GetHash.cs" />
+    <Compile Include="InvokeIR\Hash\MD5Hash.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Cmdlet\GetPrefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Prefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\Cmdlet\GetTimezone.cs" />
@@ -79,13 +79,13 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\StandardInformation.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeInformation.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\VolumeName.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetMFTRecord.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetContentByteArray.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord\Cmdlets\GetMFTRecord.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Cmdlets\GetContentRaw.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber\IndexEntry.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\IndexNumber\IndexNumber.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MasterFileTable.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\VBR\NTFSVBR.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\MFTRecord\MFTRecord.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\VBR\VBR.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData\NTFSVolumeData.cs" />
     <Compile Include="InvokeIR\Win32\Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

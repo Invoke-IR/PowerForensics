@@ -82,10 +82,10 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             Name = name;
         }
 
-        internal static List<IndexEntry> Get(FileStream streamToRead, byte[] MFT, int inode)
+        internal static List<IndexEntry> Get(FileStream streamToRead, byte[] MFT, int index)
         {
 
-            MFTRecord fileRecord = MFTRecord.Get(MFT, inode);
+            MFTRecord fileRecord = MFTRecord.Get(MFT, index, null, null);
 
             NonResident INDX = null;
 
@@ -167,11 +167,10 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             return indxEntryList;
         }
 
-
-        internal static List<IndexEntry> Get(string volume, int inode)
+        internal static List<IndexEntry> Get(string volume, int index)
         {
 
-            MFTRecord fileRecord = MFTRecord.Get(volume, inode);
+            MFTRecord fileRecord = MFTRecord.Get(MasterFileTable.GetBytes(volume), index, null, null);
 
             NonResident INDX = null;
 

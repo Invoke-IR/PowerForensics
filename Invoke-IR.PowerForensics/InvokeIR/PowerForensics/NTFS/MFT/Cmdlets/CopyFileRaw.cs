@@ -58,7 +58,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             string volume = @"\\.\" + path.Split('\\')[0];
 
             // 
-            byte[] fileBytes = MFTRecord.getFile(volume, path).ToArray();
+            byte[] fileBytes = MFTRecord.getFile(volume, path);
 
             // Open file for writing
             FileStream streamToWrite = new FileStream(destination, System.IO.FileMode.Create, System.IO.FileAccess.Write);

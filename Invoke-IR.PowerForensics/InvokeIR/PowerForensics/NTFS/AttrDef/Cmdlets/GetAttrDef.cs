@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using InvokeIR.Win32;
+using InvokeIR.PowerForensics.NTFS.MFT;
 using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
 namespace InvokeIR.PowerForensics.NTFS.AttrDef
@@ -55,11 +56,12 @@ namespace InvokeIR.PowerForensics.NTFS.AttrDef
             }
 
             IntPtr hVolume = NativeMethods.getHandle(volume);
+
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
 
             NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
             
-            MFT.MFTRecord record = MFT.MFTRecord.Get(volume, 4);
+            MFT.MFTRecord record = MFT.MFTRecord.Get(MasterFileTable.GetBytes(volume), 4, null, null);
 
             List<byte> bytes = new List<byte>();
             

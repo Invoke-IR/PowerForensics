@@ -14,9 +14,6 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             if (BitConverter.ToUInt32(Bytes.Skip(offset).Take(4).ToArray(), 0) != 0xD0)
             {
                 AttrHeader.ATTR_HEADER_COMMON commonAttributeHeader = new AttrHeader.ATTR_HEADER_COMMON(Bytes.Skip(offset).Take(16).ToArray());
-
-                //Console.WriteLine("Attribute: {0}", Enum.GetName(typeof(Attr.ATTR_TYPE), commonAttributeHeader.ATTRType));
-                //Console.WriteLine("NonResident: {0}", (commonAttributeHeader.NonResident).ToString());
                 
                 // Get byte[] representing the current attribute 
                 byte[] AttrBytes = Bytes.Skip(offset).Take((int)commonAttributeHeader.TotalSize).ToArray();

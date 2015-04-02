@@ -99,7 +99,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             NameString = attrName;
             NonResident = nonResident;
             AttributeId = attributeId;
-            Filename = Encoding.Unicode.GetString(name);
+            Filename = Encoding.Unicode.GetString(name).TrimEnd('\0');
             ParentIndex = parentIndex;
             CreateTime = createTime;
             FileModifiedTime = alterTime;
