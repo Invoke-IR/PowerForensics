@@ -10,7 +10,7 @@ namespace InvokeIR.PowerForensics.NTFS.AttrDef
 
         internal enum ATTR_DEF_ENTRY
         {
-            INDEX = 0x20,
+            INDEX = 0x02,
             ALWAYS_RESIDENT = 0x40,
             ALWAYS_NONRESIDENT = 0x80
         }
@@ -27,13 +27,13 @@ namespace InvokeIR.PowerForensics.NTFS.AttrDef
 
             internal ATTR_DEF(byte[] bytes)
             {
-                Name = Encoding.Unicode.GetString(bytes.Take(128).ToArray());
-                TypeIdentified = BitConverter.ToUInt32(bytes, 128);
-                DisplayRule = BitConverter.ToUInt32(bytes, 132);
-                CollationRule = BitConverter.ToUInt32(bytes, 136);
-                Flags = BitConverter.ToUInt32(bytes, 140);
-                MaxSize = BitConverter.ToUInt64(bytes, 144);
-                MinSize = BitConverter.ToUInt64(bytes, 152);
+                Name = Encoding.Unicode.GetString(bytes.Take(0x80).ToArray()).TrimEnd('\0');
+                TypeIdentified = BitConverter.ToUInt32(bytes, 0x80);
+                DisplayRule = BitConverter.ToUInt32(bytes, 0x84);
+                CollationRule = BitConverter.ToUInt32(bytes, 0x88);
+                Flags = BitConverter.ToUInt32(bytes, 0x8C);
+                MaxSize = BitConverter.ToUInt64(bytes, 0x90);
+                MinSize = BitConverter.ToUInt64(bytes, 0x98);
             }
 
         }

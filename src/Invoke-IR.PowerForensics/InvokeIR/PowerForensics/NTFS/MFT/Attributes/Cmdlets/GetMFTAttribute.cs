@@ -23,7 +23,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         /// returned.
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string VolumeName
         {
             get { return volume; }
@@ -36,8 +36,9 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         /// FileRecord object that will be returned.
         /// </summary> 
 
+        [Alias("IndexNumber")]
         [Parameter(Mandatory = true)]
-        public int IndexNumber
+        public int Index
         {
             get { return indexNumber; }
             set { indexNumber = value; }

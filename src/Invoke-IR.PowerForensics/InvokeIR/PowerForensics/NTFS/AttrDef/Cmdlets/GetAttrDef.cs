@@ -27,7 +27,7 @@ namespace InvokeIR.PowerForensics.NTFS.AttrDef
         /// Partition Table that will be returned.
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string VolumeName
         {
             get { return volume; }

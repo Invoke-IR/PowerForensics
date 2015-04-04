@@ -22,6 +22,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         /// returned.
         /// </summary> 
 
+        [Alias("FilePath")]
         [Parameter(Mandatory = true, Position = 0)]
         public string Path
         {

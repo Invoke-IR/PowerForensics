@@ -26,7 +26,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         /// returned.
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string VolumeName
         {
             get { return volume; }
@@ -39,8 +39,9 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         /// FileRecord object that will be returned.
         /// </summary> 
 
+        [Alias("IndexNumber")]
         [Parameter(Mandatory = true, ParameterSetName = "Index")]
-        public int IndexNumber
+        public int Index
         {
             get { return indexNumber; }
             set { indexNumber = value; }
@@ -52,6 +53,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         /// FileRecord object that will be returned.
         /// </summary> 
 
+        [Alias("FilePath")]
         [Parameter(Mandatory = true, ParameterSetName = "Path")]
         public string FilePath
         {
@@ -101,7 +103,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
             byte[] mftBytes = MasterFileTable.GetBytes(volume);
             
-            if(this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
+            if(this.MyInvocation.BoundParameters.ContainsKey("Path"))
             {
                 
                 int index = InvokeIR.PowerForensics.NTFS.MFT.IndexNumber.Get(volume, filePath);
@@ -117,7 +119,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                 }
             }
 
-            else if(this.MyInvocation.BoundParameters.ContainsKey("IndexNumber"))
+            else if(this.MyInvocation.BoundParameters.ContainsKey("Index"))
             {
                 if (asbytes)
                 {

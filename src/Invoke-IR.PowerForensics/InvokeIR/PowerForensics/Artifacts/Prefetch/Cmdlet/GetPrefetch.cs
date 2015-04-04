@@ -23,8 +23,9 @@ namespace InvokeIR.PowerForensics.Artifacts
         /// Prefetch file to parse.
         /// </summary> 
 
-        [Parameter(Mandatory = true, ParameterSetName = "Path")]
-        public string FilePath
+        [Alias("FilePath")]
+        [Parameter(Mandatory = true, ParameterSetName = "Path", Position = 0)]
+        public string Path
         {
             get { return filePath; }
             set { filePath = value; }
@@ -37,7 +38,7 @@ namespace InvokeIR.PowerForensics.Artifacts
 
         /// <summary> 
         /// The ProcessRecord method returns a Prefetch object for the File specified
-        /// by the FilePath property, or iterates through all .pf files in the
+        /// by the Path property, or iterates through all .pf files in the
         /// C:\Windows\Prefetch directory to output an array of Prefetch objects.
         /// </summary> 
         protected override void ProcessRecord()
@@ -57,7 +58,7 @@ namespace InvokeIR.PowerForensics.Artifacts
             byte[] MFT = MasterFileTable.GetBytes(hVolume, streamToRead);
 
             // If the FilePath parameter is used
-            if (this.MyInvocation.BoundParameters.ContainsKey("FilePath"))
+            if (this.MyInvocation.BoundParameters.ContainsKey("Path"))
             {
                 //Test that FilePath exists
                 if(File.Exists(filePath))

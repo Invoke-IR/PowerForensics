@@ -44,7 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InvokeIR\Hash\Cmdlets\GetHash.cs" />
-    <Compile Include="InvokeIR\Hash\MD5Hash.cs" />
+    <Compile Include="InvokeIR\Hash\Hash.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Artifacts\GetDirectoryInodeSuccession.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Cmdlet\GetPrefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Prefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\Cmdlet\GetTimezone.cs" />
@@ -56,8 +57,8 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\VBR\Cmdlets\GetVolumeBootRecord.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\LogFile\Cmdlet\Get-LogFile.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\LogFile\LogFile.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\Cmdlets\GetMBRCodeSection.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\MBR.cs" />
+    <Compile Include="InvokeIR\PowerForensics\MBR\Cmdlets\GetMBR.cs" />
+    <Compile Include="InvokeIR\PowerForensics\MBR\MBR.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\EA.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\EAInformation.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Cmdlets\GetMFTAttribute.cs" />
@@ -67,8 +68,8 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\USNJrnl\USNJrnl.cs" />
     <Compile Include="InvokeIR\Win32\ExternDll.cs" />
     <Compile Include="InvokeIR\PowerForensics\DD\Cmdlets\InvokeDD.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData\Cmdlets\GetFileSystemStatistics.cs" />
-    <Compile Include="InvokeIR\PowerForensics\NTFS\MBR\Cmdlets\GetPartitionTable.cs" />
+    <Compile Include="InvokeIR\PowerForensics\NTFS\NTFSVolumeData\Cmdlets\GetFileSystemStatistic.cs" />
+    <Compile Include="InvokeIR\PowerForensics\MBR\Cmdlets\GetPartitionTable.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\Attr.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeFactory.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\MFT\Attributes\AttributeHeader.cs" />

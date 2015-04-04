@@ -68,19 +68,6 @@ namespace InvokeIR.Win32
         [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool DeviceIoControl
             (
-                IntPtr fileHandle, 
-                uint ioControlCode, 
-                IntPtr inBuffer, 
-                uint cbInBuffer, 
-                IntPtr outBuffer, 
-                uint cbOutBuffer, 
-                out uint cbBytesReturned, 
-                IntPtr overlapped
-            );
-
-        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern bool DeviceIoControl
-            (
                 IntPtr hDevice,
                 uint dwIoControlCode,
                 [MarshalAs(UnmanagedType.AsAny)]

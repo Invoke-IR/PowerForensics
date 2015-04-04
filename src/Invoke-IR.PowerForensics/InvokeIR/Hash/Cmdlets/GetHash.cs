@@ -21,13 +21,29 @@ namespace InvokeIR
         /// that will be hashed
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
-        public string FilePath
+        [Alias("FilePath")]
+        [Parameter(Mandatory = true, Position = 0)]
+        public string Path
         {
             get { return filePath; }
             set { filePath = value; }
         }
         private string filePath;
+
+        /// <summary> 
+        /// This parameter provides the count of bytes
+        /// that should be included when submitted to be hashed.
+        /// </summary> 
+
+        [Parameter()]
+        [ValidateSet("MD5", "RIPEMD160", "SHA1", "SHA256", "SHA384", "SHA512")]
+        public string Algorithm
+        {
+            get { return algorithm; }
+            set { algorithm = value; }
+        }
+        private string algorithm;
+
 
         /// <summary> 
         /// This parameter provides the count of bytes
@@ -56,15 +72,20 @@ namespace InvokeIR
 
             // Read filePath into byte array
             byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-            
-            // If the Size parameter is not used the set count to full size of bytes
-            if(!(this.MyInvocation.BoundParameters.ContainsKey("Size")))
+
+            if (!(this.MyInvocation.BoundParameters.ContainsKey("Algorithm")))
+            {
+                algorithm = "MD5";
+            }
+
+            // If the Count parameter is not used the set count to full size of bytes
+            if(!(this.MyInvocation.BoundParameters.ContainsKey("Count")))
             {
                 count = bytes.Length;
             }
 
             //Output the computed MD5 Hash as a string to the PowerShell pipeline
-            WriteObject(MD5Hash.Get(bytes, count));
+            WriteObject(Hash.Get(bytes, count, algorithm));
             
         } // ProcessRecord 
 

@@ -20,8 +20,9 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         /// MFTRecordIndex that will be returned.
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
-        public string FilePath
+        [Alias("FilePath")]
+        [Parameter(Mandatory = true, Position = 0)]
+        public string Path
         {
             get { return filePath; }
             set { filePath = value; }

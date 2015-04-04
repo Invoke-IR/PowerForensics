@@ -4,13 +4,13 @@ using System.Management.Automation;
 namespace InvokeIR.PowerForensics.Artifacts
 {
 
-    #region GetTimeZoneCommand
+    #region GetTimezoneCommand
     /// <summary> 
     /// This class implements the Get-Timezone cmdlet. 
     /// </summary> 
 
-    [Cmdlet(VerbsCommon.Get, "TimeZone")]
-    public class GetTimeZoneCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "Timezone")]
+    public class GetTimezoneCommand : PSCmdlet
     {
 
         #region Cmdlet Overrides
@@ -29,8 +29,8 @@ namespace InvokeIR.PowerForensics.Artifacts
 
         #endregion Cmdlet Overrides
 
-    } // End GetTimeZoneCommand class. 
+    } // End GetTimezoneCommand class. 
     
-    #endregion GetTimeZoneCommand
+    #endregion GetTimezoneCommand
 
 }

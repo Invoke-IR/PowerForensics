@@ -8,7 +8,7 @@ namespace InvokeIR.PowerForensics
 
     #region InvokeDDCommand
     /// <summary> 
-    /// This class implements the Invoke-PowerDD cmdlet. 
+    /// This class implements the Invoke-DD cmdlet. 
     /// </summary> 
 
     [Cmdlet("Invoke", "DD")]
@@ -61,7 +61,7 @@ namespace InvokeIR.PowerForensics
         /// read from the specified InFile.
         /// </summary> 
 
-        [Parameter(Mandatory = true)]
+        [Parameter()]
         public uint BlockSize
         {
             get { return blockSize; }
@@ -93,6 +93,11 @@ namespace InvokeIR.PowerForensics
 
         protected override void ProcessRecord()
         {
+
+            if(!(this.MyInvocation.BoundParameters.ContainsKey("BlockSize")))
+            {
+                blockSize = 512;
+            }
 
             Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
 
