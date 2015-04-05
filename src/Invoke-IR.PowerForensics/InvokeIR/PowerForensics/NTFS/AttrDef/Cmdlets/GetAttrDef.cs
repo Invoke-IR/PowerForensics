@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using InvokeIR.Win32;
-using InvokeIR.PowerForensics.NTFS.MFT;
-using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.AttrDef
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetAttrDefCommand
@@ -59,9 +58,9 @@ namespace InvokeIR.PowerForensics.NTFS.AttrDef
 
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
 
-            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
+            VolumeData volData = new VolumeData(hVolume);
             
-            MFT.MFTRecord record = MFT.MFTRecord.Get(MasterFileTable.GetBytes(volume), 4, null, null);
+            MFTRecord record = MFTRecord.Get(MasterFileTable.GetBytes(volume), 4, null, null);
 
             List<byte> bytes = new List<byte>();
             

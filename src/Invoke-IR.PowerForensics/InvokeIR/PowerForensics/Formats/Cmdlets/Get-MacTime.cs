@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.Formats;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetMacTimeCommand

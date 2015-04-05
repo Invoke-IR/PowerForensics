@@ -3,7 +3,7 @@ using System.IO;
 using System.Diagnostics;
 using InvokeIR.Win32;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class MasterFileTable
@@ -11,7 +11,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
         public static byte[] GetBytes(IntPtr hVolume, FileStream streamToRead)
         {
-            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
+            VolumeData volData = new VolumeData(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
             ulong mftOffset = ((ulong)volData.BytesPerCluster * volData.MFTStartCluster);
@@ -27,7 +27,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         {
             IntPtr hVolume = NativeMethods.getHandle(volume);
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
-            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
+            VolumeData volData = new VolumeData(hVolume);
 
             // Calculate byte offset to the Master File Table (MFT)
             ulong mftOffset = ((ulong)volData.BytesPerCluster * volData.MFTStartCluster);

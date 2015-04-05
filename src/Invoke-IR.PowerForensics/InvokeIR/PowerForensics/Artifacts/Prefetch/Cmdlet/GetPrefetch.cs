@@ -2,9 +2,10 @@
 using System.IO;
 using System.Management.Automation;
 using InvokeIR.Win32;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.Artifacts;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.Artifacts
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetPrefetchCommand

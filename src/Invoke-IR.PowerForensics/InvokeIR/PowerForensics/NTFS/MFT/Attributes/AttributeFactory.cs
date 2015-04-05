@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
     class AttributeFactory
     {
@@ -46,31 +45,29 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                     {
 
                         case (Int32)Attr.ATTR_TYPE.STANDARD_INFORMATION:
-                            return StandardInformation.Get(AttrBytes, AttrName);
+                            return new StandardInformation(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.FILE_NAME:
-                            return FileName.Get(AttrBytes, AttrName);
+                            return new FileName(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.OBJECT_ID:
-                            return ObjectId.Get(AttrBytes, AttrName);
+                            return new ObjectId(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.VOLUME_NAME:
-                            return VolumeName.Get(AttrBytes, AttrName);
+                            return new VolumeName(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.VOLUME_INFORMATION:
-                            return VolumeInformation.Get(AttrBytes, AttrName);
+                            return new VolumeInformation(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.DATA:
-                            return Data.Get(AttrBytes, AttrName);
+                            return new Data(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.INDEX_ROOT:
                             //IndexRoot indxRootAttr = IndexRoot.Get(AttrBytes, commonAttributeHeader, AttrHeaderResident, AttrName);
                             break;
                         
                         case (Int32)Attr.ATTR_TYPE.EA_INFORMATION:
-                            //
-                            //Console.WriteLine("Attr: EA_Information {0}", commonAttributeHeader.Id);
-                            break;
+                            return new EAInformation(AttrBytes, AttrName);
 
                         case (Int32)Attr.ATTR_TYPE.EA:
                             //

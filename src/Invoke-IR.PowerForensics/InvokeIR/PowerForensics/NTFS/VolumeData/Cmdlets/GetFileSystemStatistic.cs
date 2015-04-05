@@ -2,8 +2,9 @@
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using InvokeIR.Win32;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetFileSystemStatisticCommand
@@ -56,7 +57,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
             IntPtr hVolume = NativeMethods.getHandle(volumeName);
 
-            WriteObject(NTFS.NTFSVolumeData.Get(hVolume));
+            WriteObject(new VolumeData(hVolume));
 
             NativeMethods.CloseHandle(hVolume);
 

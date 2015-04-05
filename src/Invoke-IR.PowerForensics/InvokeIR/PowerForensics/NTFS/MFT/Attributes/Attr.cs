@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using InvokeIR.Win32;
-using InvokeIR.PowerForensics.NTFS.MFT;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class Attr

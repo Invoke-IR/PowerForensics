@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Management.Automation;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region CopyFileRawCommand

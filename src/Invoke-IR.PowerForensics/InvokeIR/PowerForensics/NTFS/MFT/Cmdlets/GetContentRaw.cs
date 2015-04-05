@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Management.Automation;
 using System.Text;
+using System.Management.Automation;
 using System.Text.RegularExpressions;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetContentRawCommand
@@ -134,7 +135,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             {
                 string volLetter = filePath.Split('\\')[0];
                 string volume = @"\\.\" + volLetter;
-                indexNo = MFT.IndexNumber.Get(volume, filePath);
+                indexNo = NTFS.IndexNumber.Get(volume, filePath);
                 contentArray = MFTRecord.getFile(volume, indexNo);
             }
 

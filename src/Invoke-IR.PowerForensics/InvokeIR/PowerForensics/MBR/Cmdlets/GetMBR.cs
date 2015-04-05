@@ -3,7 +3,7 @@ using System.IO;
 using System.Management.Automation;
 using InvokeIR.Win32;
 
-namespace InvokeIR.PowerForensics
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetMBRCommand
@@ -45,10 +45,10 @@ namespace InvokeIR.PowerForensics
             IntPtr hDrive = NativeMethods.getHandle(drivePath);
             FileStream streamToRead = NativeMethods.getFileStream(hDrive);
 
-            MBR MasterBootRecord = MBR.Get(streamToRead);
+            MasterBootRecord mbr = new MasterBootRecord(streamToRead);
 
             //WriteObject(MasterBootRecord.MBRCodeArea);
-            WriteObject(MasterBootRecord);
+            WriteObject(mbr);
 
             streamToRead.Close();
 

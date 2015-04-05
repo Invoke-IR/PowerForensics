@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
-using InvokeIR.PowerForensics.NTFS.MFT;
-using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
-namespace InvokeIR.PowerForensics.NTFS.LogFile
+namespace InvokeIR.PowerForensics.NTFS
 {
     public class LogFile
     {

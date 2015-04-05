@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
     public class VolumeName : Attr
     {
@@ -22,27 +22,15 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public string VolumeNameString;
 
-        internal VolumeName(uint ATTRType, string name, bool nonResident, ushort attributeId, string volumeName)
+        internal VolumeName(byte[] AttrBytes, string AttrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
-            NameString = name;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            VolumeNameString = volumeName;
-        }
-
-        internal static VolumeName Get(byte[] AttrBytes, string AttrName)
-        {
-
             ATTR_VOLNAME volName = new ATTR_VOLNAME(AttrBytes);
-            return new VolumeName(
-                volName.header.commonHeader.ATTRType,
-                AttrName,
-                volName.header.commonHeader.NonResident,
-                volName.header.commonHeader.Id,
-                volName.VolumeNameString);
 
+            Name = Enum.GetName(typeof(ATTR_TYPE), volName.header.commonHeader.ATTRType);
+            NameString = AttrName;
+            NonResident = volName.header.commonHeader.NonResident;
+            AttributeId = volName.header.commonHeader.Id;
+            VolumeNameString = volName.VolumeNameString;
         }
-
     }
 }

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.NTFS
 {
     internal class IndexEntry
     {

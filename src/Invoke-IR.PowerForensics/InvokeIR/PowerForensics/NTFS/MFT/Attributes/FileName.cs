@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class FileName : Attr
@@ -64,7 +64,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                     ER = BitConverter.ToUInt32(bytes, 60);
                     NameLength = bytes[64];
                     NameSpace = bytes[65];
-                    Name = bytes.Skip(66).ToArray();
+                    Name = bytes.Skip(66).Take(NameLength * 2).ToArray();
                 }
 
                 else
@@ -81,50 +81,32 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
                     ER = BitConverter.ToUInt32(bytes, 84);
                     NameLength = bytes[88];
                     NameSpace = bytes[89];
-                    Name = bytes.Skip(90).ToArray();
+                    Name = bytes.Skip(90).Take(NameLength * 2).ToArray();
                 }
             }
         }
 
         public string Filename;
         public ulong ParentIndex;
-        public DateTime CreateTime;
-        public DateTime FileModifiedTime;
-        public DateTime MFTModifiedTime;
-        public DateTime AccessTime;
+        public DateTime ModifiedTime;
+        public DateTime AccessedTime;
+        public DateTime ChangedTime;
+        public DateTime BornTime;
 
-        internal FileName(uint AttrType, string attrName, bool nonResident, ushort attributeId, byte[] name, ulong parentIndex, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
+        internal FileName(byte[] bytes, string attrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), AttrType);
+            ATTR_FILE_NAME fileName = new ATTR_FILE_NAME(bytes);
+
+            Name = Enum.GetName(typeof(ATTR_TYPE), fileName.header.commonHeader.ATTRType);
             NameString = attrName;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            Filename = Encoding.Unicode.GetString(name).TrimEnd('\0');
-            ParentIndex = parentIndex;
-            CreateTime = createTime;
-            FileModifiedTime = alterTime;
-            MFTModifiedTime = mftTime;
-            AccessTime = readTime;
-        }
-
-        internal static FileName Get(byte[] AttrBytes, string attrName)
-        {
-
-
-            ATTR_FILE_NAME fileName = new ATTR_FILE_NAME(AttrBytes);
-
-            return new FileName(
-                fileName.header.commonHeader.ATTRType,
-                attrName,
-                fileName.header.commonHeader.NonResident,
-                fileName.header.commonHeader.Id,
-                fileName.Name,
-                (fileName.ParentRef & 0x000000000000FFFF),
-                fileName.CreateTime,
-                fileName.AlterTime,
-                fileName.MFTTime,
-                fileName.ReadTime);
-
+            NonResident = fileName.header.commonHeader.NonResident;
+            AttributeId = fileName.header.commonHeader.Id;
+            Filename = Encoding.Unicode.GetString(fileName.Name).TrimEnd('\0');
+            ParentIndex = (fileName.ParentRef & 0x000000000000FFFF);
+            ModifiedTime = fileName.AlterTime;
+            AccessedTime = fileName.ReadTime;
+            ChangedTime = fileName.MFTTime;
+            BornTime = fileName.CreateTime;
         }
 
     }

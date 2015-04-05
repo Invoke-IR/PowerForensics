@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using InvokeIR.Win32;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class NonResident : Attr

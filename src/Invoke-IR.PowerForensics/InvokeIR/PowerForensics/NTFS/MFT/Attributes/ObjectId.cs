@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
     public class ObjectId : Attr
     {
@@ -29,27 +29,15 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public byte[] ObjectIdBytes;
 
-        internal ObjectId(uint ATTRType, string name, bool nonResident, ushort attributeId, byte[] objectId)
+        internal ObjectId(byte[] AttrBytes, string AttrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
-            NameString = name;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            ObjectIdBytes = objectId;
-        }
-
-        internal static ObjectId Get(byte[] AttrBytes, string AttrName)
-        {
-
             ATTR_OBJECT_ID objectId = new ATTR_OBJECT_ID(AttrBytes);
 
-            return new ObjectId(
-                objectId.header.commonHeader.ATTRType,
-                AttrName,
-                objectId.header.commonHeader.NonResident,
-                objectId.header.commonHeader.Id,
-                objectId.ObjectId);
-
+            Name = Enum.GetName(typeof(ATTR_TYPE), objectId.header.commonHeader.ATTRType);
+            NameString = AttrName;
+            NonResident = objectId.header.commonHeader.NonResident;
+            AttributeId = objectId.header.commonHeader.Id;
+            ObjectIdBytes = objectId.ObjectId;
         }
 
     }

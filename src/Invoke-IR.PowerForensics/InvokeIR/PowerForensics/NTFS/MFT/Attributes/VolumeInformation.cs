@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class VolumeInformation : Attr
@@ -25,7 +25,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             internal byte[] Reserved1;	// Always 0 ?
             internal byte MajorVersion;	// Major version
             internal byte MinorVersion;	// Minor version
-            public byte[] Flags;		// Flags
+            internal byte[] Flags;		// Flags
 
             internal ATTR_VOLUME_INFORMATION(byte[] bytes)
             {
@@ -41,21 +41,10 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
         public uint Minor;
         public string Flags;
 
-        internal VolumeInformation(uint ATTRType, string name, bool nonResident, ushort attributeId, byte majorVersion, byte minorVersion, string flags)
+        internal VolumeInformation(byte[] AttrBytes, string AttrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
-            NameString = name;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            Major = majorVersion;
-            Minor = minorVersion;
-            Flags = flags;
-        }
-
-        internal static VolumeInformation Get(byte[] AttrBytes, string AttrName)
-        {
-
             ATTR_VOLUME_INFORMATION volInfo = new ATTR_VOLUME_INFORMATION(AttrBytes);
+
             Int16 flags = BitConverter.ToInt16(volInfo.Flags, 0);
 
             #region volInfoFlags
@@ -96,15 +85,13 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
             #endregion volInfoFlags
 
-            return new VolumeInformation(
-                volInfo.header.commonHeader.ATTRType,
-                AttrName,
-                volInfo.header.commonHeader.NonResident,
-                volInfo.header.commonHeader.Id,
-                volInfo.MajorVersion,
-                volInfo.MinorVersion,
-                volumeFlags.ToString());
-
+            Name = Enum.GetName(typeof(ATTR_TYPE), volInfo.header.commonHeader.ATTRType);
+            NameString = AttrName;
+            NonResident = volInfo.header.commonHeader.NonResident;
+            AttributeId = volInfo.header.commonHeader.Id;
+            Major = volInfo.MajorVersion;
+            Minor = volInfo.MinorVersion;
+            Flags = volumeFlags.ToString();
         }
 
     }

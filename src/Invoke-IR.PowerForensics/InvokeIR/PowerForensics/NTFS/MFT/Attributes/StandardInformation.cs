@@ -3,13 +3,14 @@ using System.Linq;
 using System.Text;
 using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
+    #region StandardInformationClass
 
     public class StandardInformation : Attr
     {
 
-        enum ATTR_STDINFO_PERMISSION
+        enum ATTR_STDINFO_PERMISSION : uint
         {
             READONLY = 0x00000001,
             HIDDEN = 0x00000002,
@@ -79,34 +80,16 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             }
         }
 
-        public string Flags;
-        public uint Permission;
+        public string Permission;
         public uint OwnerId;
         public uint SecurityId;
-        public DateTime CreateTime;
-        public DateTime FileModifiedTime;
-        public DateTime MFTModifiedTime;
-        public DateTime AccessTime;
+        public DateTime ModifiedTime;
+        public DateTime AccessedTime;
+        public DateTime ChangedTime;
+        public DateTime BornTime;
 
-        internal StandardInformation(uint ATTRType, string name, bool nonResident, ushort attributeId, string flags, uint permission, uint ownerId, uint securityId, DateTime createTime, DateTime alterTime, DateTime mftTime, DateTime readTime)
+        internal StandardInformation(byte[] AttrBytes, string AttrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
-            NameString = name;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            Flags = flags;
-            Permission = permission;
-            OwnerId = ownerId;
-            SecurityId = securityId;
-            CreateTime = createTime;
-            FileModifiedTime = alterTime;
-            MFTModifiedTime = mftTime;
-            AccessTime = readTime;
-        }
-
-        internal static StandardInformation Get(byte[] AttrBytes, string AttrName)
-        {
-
             ATTR_STANDARD_INFORMATION stdInfo = new ATTR_STANDARD_INFORMATION(AttrBytes, AttrBytes.Length);
 
             #region stdInfoFlags
@@ -172,24 +155,23 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
                 }
             }
+
             #endregion stdInfoFlags
 
-            return new StandardInformation(
-                stdInfo.header.commonHeader.ATTRType,
-                AttrName,
-                stdInfo.header.commonHeader.NonResident,
-                stdInfo.header.commonHeader.Id,
-                permissionFlags.ToString(),
-                stdInfo.Permission,
-                stdInfo.OwnerId,
-                stdInfo.SecurityId,
-                stdInfo.CreateTime,
-                stdInfo.AlterTime,
-                stdInfo.MFTTime,
-                stdInfo.ReadTime);
-
+            Name = Enum.GetName(typeof(ATTR_TYPE), stdInfo.header.commonHeader.ATTRType);
+            NameString = AttrName;
+            NonResident = stdInfo.header.commonHeader.NonResident;
+            AttributeId = stdInfo.header.commonHeader.Id;
+            Permission = permissionFlags.ToString();
+            OwnerId = stdInfo.OwnerId;
+            SecurityId = stdInfo.SecurityId;
+            ModifiedTime = stdInfo.AlterTime;
+            AccessedTime = stdInfo.ReadTime;
+            ChangedTime = stdInfo.MFTTime;
+            BornTime = stdInfo.CreateTime;
         }
 
     }
 
+    #endregion StandardInformationClass
 }

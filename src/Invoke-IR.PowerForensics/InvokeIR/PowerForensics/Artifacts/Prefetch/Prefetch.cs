@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.PowerForensics.Artifacts
 {
@@ -323,9 +323,9 @@ namespace InvokeIR.PowerForensics.Artifacts
         }
 
         //Application Path
-        private static string getPfPath(string appName, string[] dependencyArray, int dependencyCount)
+        private static string getPfPath(string appName, string[] dependencyArray)
         {
-            for (int i = 0; i < dependencyCount; i++)
+            for (int i = 0; i < dependencyArray.Length; i++)
             {
                 if (dependencyArray[i].Contains(appName))
                 {
@@ -394,7 +394,6 @@ namespace InvokeIR.PowerForensics.Artifacts
 
                 string appName = null;
                 string[] dependencyArray = null;
-                int dependencyCount = 0;
 
                 appName = System.Text.Encoding.Unicode.GetString((fileBytes.Skip(0x10).Take(0x3C).ToArray())).TrimEnd('\0');
                 dependencyArray = getPfDependencies(getPfDependencySection(fileBytes));
@@ -406,7 +405,7 @@ namespace InvokeIR.PowerForensics.Artifacts
                     getPfAccessTime(pfVersion, fileBytes),
                     dependencyArray,
                     dependencyArray.Length,
-                    getPfPath(appName, dependencyArray, dependencyCount),
+                    getPfPath(appName, dependencyArray),
                     getPfDeviceCount(fileBytes),
                     getPfRunCount(pfVersion, fileBytes)
                 );

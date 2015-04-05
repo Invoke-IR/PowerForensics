@@ -30,8 +30,7 @@
 						<maml:para>The file to copy.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
 					<maml:name>Destination</maml:name>
@@ -55,8 +54,7 @@
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
 				<maml:name>Destination</maml:name>
@@ -71,6 +69,24 @@
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
 			<command:example>
@@ -122,8 +138,7 @@ Copy-FileRaw C:\Windows\System32\config\SAM C:\Users\Public\Desktop\SAM</dev:cod
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -139,10 +154,32 @@ Copy-FileRaw C:\Windows\System32\config\SAM C:\Users\Public\Desktop\SAM</dev:cod
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.AttrDef</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -367,6 +404,40 @@ You can use the &quot;Tail&quot; parameter name or its alias, &quot;Last&quot;.
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Byte</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -483,8 +554,7 @@ tc\msdtcadvancedinstaller\msdtcadvancedinstaller.cpp (1758)</dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -500,10 +570,37 @@ tc\msdtcadvancedinstaller\msdtcadvancedinstaller.cpp (1758)</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeData</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -563,8 +660,7 @@ MFTMirrorStart       : 2</dev:code>
 						<maml:para>The path of the file to be hashed.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" pipelineinput="false" globbing="false" position="named" aliases="">
 					<maml:name>Algorithm</maml:name>
@@ -572,8 +668,7 @@ MFTMirrorStart       : 2</dev:code>
 						<maml:para>The hashing algorithm to use. Default algorithm is MD5.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false">String { MD5 | RIPEMD160 | SHA1 | SHA256 | SHA384 | SHA512 }</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" pipelineinput="false" globbing="false" position="named" aliases="">
 					<maml:name>Count</maml:name>
@@ -597,8 +692,7 @@ MFTMirrorStart       : 2</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>Algorithm</maml:name>
@@ -606,8 +700,7 @@ MFTMirrorStart       : 2</dev:code>
 					<maml:para>The hashing algorithm to use. Default algorithm is MD5.</maml:para>
 				</maml:description>
 				<command:parameterValue required="true">String { MD5 | RIPEMD160 | SHA1 | SHA256 | SHA384 | SHA512 }</command:parameterValue>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>Count</maml:name>
@@ -618,6 +711,27 @@ MFTMirrorStart       : 2</dev:code>
 				<dev:defaultValue>File.Length</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>Get-Hash outputs a System.String object representing the hash created by the specified algorithm.</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
@@ -704,8 +818,7 @@ MFTMirrorStart       : 2</dev:code>
 						<maml:para>Specifies a path for the physical drive in the system. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -721,10 +834,43 @@ MFTMirrorStart       : 2</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.MBR</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.MBR.Partition</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -770,8 +916,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="IndexNumber">
 					<maml:name>Index</maml:name>
@@ -779,8 +924,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>Get attributes from the MFT Record at the specified index.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>AttributeId</maml:name>
@@ -788,8 +932,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>Gets the Attribute that corresponds with the Id.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>AsBytes</maml:name>
@@ -797,8 +940,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>Returns the MFT Record Attribute as Raw Bytes instead of an Attr object.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -814,8 +956,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="IndexNumber">
 				<maml:name>Index</maml:name>
@@ -827,8 +968,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>AttributeId</maml:name>
@@ -840,8 +980,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>UInt32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>AsBytes</maml:name>
@@ -853,10 +992,125 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>SwitchParameter</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.Attr</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.StandardInformation</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.FileName</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.Data</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.NonResident</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.ObjectId</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeInformation</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeName</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.EAInformation</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
@@ -885,8 +1139,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
@@ -897,8 +1150,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="IndexNumber">
 					<maml:name>Index</maml:name>
@@ -906,8 +1158,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The MFT Record Index Number for the MFT Record that will be returned.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>AsBytes</maml:name>
@@ -915,8 +1166,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>Returns the MFT Record as Raw Bytes instead of an MFTRecord object.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
@@ -927,8 +1177,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="FilePath">
 					<maml:name>Path</maml:name>
@@ -936,8 +1185,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The Path of the FileRecord object that will be returned.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>AsBytes</maml:name>
@@ -945,8 +1193,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>Returns the MFT Record as Raw Bytes instead of an MFTRecord object.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -962,8 +1209,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="IndexNumber">
 				<maml:name>Index</maml:name>
@@ -975,8 +1221,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>AsBytes</maml:name>
@@ -988,8 +1233,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>SwitchParameter</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="FilePath">
 				<maml:name>Path</maml:name>
@@ -1001,10 +1245,43 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.MFTRecord</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.Attr</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -1121,6 +1398,15 @@ Attribute             : {STANDARD_INFORMATION, FILE_NAME, DATA, BITMAP}</dev:cod
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
 		<command:returnValues>
 			<!--Outputs-->
 			<command:returnValue>
@@ -1175,8 +1461,7 @@ Attribute             : {STANDARD_INFORMATION, FILE_NAME, DATA, BITMAP}</dev:cod
 						<maml:para>Specifies a path for the physical drive in the system. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -1192,12 +1477,31 @@ Attribute             : {STANDARD_INFORMATION, FILE_NAME, DATA, BITMAP}</dev:cod
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
 		<command:returnValues>
 			<!-- Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.MBR.Partition</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
 		</command:returnValues>
 		<command:examples>
 			<!-- Examples-->
@@ -1251,8 +1555,7 @@ True         NTFS         2048            125827072
 						<maml:para>The path of a Prefetch file to parse.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -1268,10 +1571,30 @@ True         NTFS         2048            125827072
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.Artifacts.Prefetch</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -1333,6 +1656,15 @@ RunCount           : 40</dev:code>
 		<command:parameters>
 			<!--All Parameters-->
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
 		<command:returnValues>
 			<!-- Outputs-->
 			<command:returnValue>
@@ -1390,8 +1722,7 @@ Central Standard Time       Central Daylight Time  </dev:code>
 						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -1407,10 +1738,32 @@ Central Standard Time       Central Daylight Time  </dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -1469,8 +1822,7 @@ Code                  : {0, 0, 0, 0...}</dev:code>
 						<maml:para>The file to read from. (Ex. \\.\PHYSICALDRIVE0, \\.\HARDDISKVOLUME1, or \\.\C:)</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>OutFile</maml:name>
@@ -1518,8 +1870,7 @@ Code                  : {0, 0, 0, 0...}</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>OutFile</maml:name>
@@ -1570,6 +1921,24 @@ Code                  : {0, 0, 0, 0...}</dev:code>
 				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 		<command:examples>
 			<!--Examples-->
 			<command:example>

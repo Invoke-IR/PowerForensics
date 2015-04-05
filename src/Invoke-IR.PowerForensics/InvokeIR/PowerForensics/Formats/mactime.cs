@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics
+namespace InvokeIR.PowerForensics.Formats
 {
 
     public enum ACTIVITY_TYPE
@@ -34,26 +34,26 @@ namespace InvokeIR.PowerForensics
         {
             // Modified Time
             Dictionary<DateTime, ACTIVITY_TYPE> dictionary = new Dictionary<DateTime, ACTIVITY_TYPE>();
-            dictionary[record.ChangeTime] = ACTIVITY_TYPE.m;
+            dictionary[record.ModifiedTime] = ACTIVITY_TYPE.m;
 
             // Access Time
-            if (dictionary.ContainsKey(record.AccessTime))
+            if (dictionary.ContainsKey(record.AccessedTime))
             {
-                dictionary[record.AccessTime] = dictionary[record.AccessTime] | ACTIVITY_TYPE.a;
+                dictionary[record.AccessedTime] = dictionary[record.AccessedTime] | ACTIVITY_TYPE.a;
             }
             else
             {
-                dictionary.Add(record.AccessTime, ACTIVITY_TYPE.a);
+                dictionary.Add(record.AccessedTime, ACTIVITY_TYPE.a);
             }
 
             // MFT Changed Time
-            if (dictionary.ContainsKey(record.MFTChangeTime))
+            if (dictionary.ContainsKey(record.ChangedTime))
             {
-                dictionary[record.MFTChangeTime] = dictionary[record.MFTChangeTime] | ACTIVITY_TYPE.c;
+                dictionary[record.ChangedTime] = dictionary[record.ChangedTime] | ACTIVITY_TYPE.c;
             }
             else
             {
-                dictionary.Add(record.MFTChangeTime, ACTIVITY_TYPE.c);
+                dictionary.Add(record.ChangedTime, ACTIVITY_TYPE.c);
             }
 
             // Born Time

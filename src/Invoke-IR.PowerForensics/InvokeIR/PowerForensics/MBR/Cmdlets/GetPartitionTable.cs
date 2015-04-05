@@ -7,7 +7,7 @@ using System.Management.Automation;
 using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetPartitionTableCommand
@@ -49,8 +49,8 @@ namespace InvokeIR.PowerForensics.NTFS
                 IntPtr hDrive = NativeMethods.getHandle(drivePath);
                 FileStream streamToRead = NativeMethods.getFileStream(hDrive);
 
-                MBR MasterBootRecord = MBR.Get(streamToRead);
-                foreach (MBR.PARTITION_TABLE_ENTRY partition in MasterBootRecord.partitionList)
+                MasterBootRecord mbr = new MasterBootRecord(streamToRead);
+                foreach (MBR.Partition partition in mbr.Partitions)
                 {
 
                     if (partition.SystemID != "EMPTY")

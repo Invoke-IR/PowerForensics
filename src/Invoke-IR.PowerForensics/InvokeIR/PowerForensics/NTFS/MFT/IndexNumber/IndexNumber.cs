@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using InvokeIR.Win32;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.NTFS
 {
     public class IndexNumber
     {
@@ -170,7 +170,6 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             }
             return 0;
         }
-
 
         public static int Get(string volume, string filePath)
         {

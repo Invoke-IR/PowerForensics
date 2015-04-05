@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Management.Automation;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetMFTRecordIndexCommand

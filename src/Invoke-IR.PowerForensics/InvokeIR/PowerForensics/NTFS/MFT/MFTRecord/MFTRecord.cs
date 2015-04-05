@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using InvokeIR.Win32;
-using InvokeIR.PowerForensics.NTFS.MFT.Attributes;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.NTFS
 {
     public class MFTRecord
     {
@@ -60,11 +60,11 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
         public ulong ParentIndex;
         public uint RecordNumber;
         public ulong Size;
-        public DateTime AccessTime;
+        public DateTime ModifiedTime;
+        public DateTime AccessedTime;
+        public DateTime ChangedTime;
         public DateTime BornTime;
-        public DateTime ChangeTime;
-        public DateTime MFTChangeTime;
-        public uint Permission;
+        public string Permission;
         public ushort SequenceNumber;
         public ulong LogFileSequenceNumber;
         public ushort Links;
@@ -118,9 +118,12 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                 List<Attr> AttributeList = new List<Attr>();
                 int offsetToATTR = RecordHeader.OffsetOfAttr;
 
+                //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+
                 while (offsetToATTR < (RecordHeader.RealSize - 8))
                 {
-                    int i = 0;
+                    //sw.Start();
+
                     int offset = offsetToATTR;
                     Attr attr = AttributeFactory.Get(recordBytes, offset, out offsetToATTR);
                     if (attr != null)
@@ -128,20 +131,26 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                         if (attr.Name == "STANDARD_INFORMATION")
                         {
                             StandardInformation stdInfo = attr as StandardInformation;
-                            AccessTime = stdInfo.AccessTime;
-                            BornTime = stdInfo.CreateTime;
-                            ChangeTime = stdInfo.FileModifiedTime;
-                            MFTChangeTime = stdInfo.MFTModifiedTime;
+                            ModifiedTime = stdInfo.ModifiedTime;
+                            AccessedTime = stdInfo.AccessedTime;
+                            ChangedTime = stdInfo.ChangedTime;
+                            BornTime = stdInfo.BornTime;
                             Permission = stdInfo.Permission;
                         }
-                        else if ((attr.Name == "FILE_NAME") && (i < 1))
+                        else if (attr.Name == "FILE_NAME")
                         {
                             FileName fN = attr as FileName;
-                            Name = fN.Filename;
-                            ParentIndex = fN.ParentIndex;
-                            i++;
+                            if(!(fN.Filename.Contains("~")))
+                            {
+                                Name = fN.Filename;
+                                ParentIndex = fN.ParentIndex;
+                            }
+
                         }
                         AttributeList.Add(attr);
+                        //sw.Stop(); 
+                        //Console.WriteLine("Attribute Name: {0}", attr.Name);
+                        //Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
                     }
                 }
 
@@ -182,7 +191,6 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             // Check MFT Signature (FILE) to ensure bytes actually represent an MFT Record
             if (checkMFTRecord(RecordHeader.Magic))
             {
-
                 RecordNumber = RecordHeader.RecordNo;
                 Size = RecordHeader.RealSize;
                 SequenceNumber = RecordHeader.SeqNo;
@@ -214,9 +222,11 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                 List<Attr> AttributeList = new List<Attr>();
                 int offsetToATTR = RecordHeader.OffsetOfAttr;
 
+                //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+
                 while (offsetToATTR < (RecordHeader.RealSize - 8))
                 {
-                    int i = 0;
+                    //sw.Start();
                     int offset = offsetToATTR;
                     Attr attr = AttributeFactory.Get(recordBytes, offset, out offsetToATTR);
                     if (attr != null)
@@ -224,20 +234,25 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
                         if (attr.Name == "STANDARD_INFORMATION")
                         {
                             StandardInformation stdInfo = attr as StandardInformation;
-                            AccessTime = stdInfo.AccessTime;
-                            BornTime = stdInfo.CreateTime;
-                            ChangeTime = stdInfo.FileModifiedTime;
-                            MFTChangeTime = stdInfo.MFTModifiedTime;
+                            ModifiedTime = stdInfo.ModifiedTime;
+                            AccessedTime = stdInfo.AccessedTime;
+                            ChangedTime = stdInfo.ChangedTime;
+                            BornTime = stdInfo.BornTime;
                             Permission = stdInfo.Permission;
                         }
-                        else if ((attr.Name == "FILE_NAME") && (i < 1))
+                        else if (attr.Name == "FILE_NAME")
                         {
                             FileName fN = attr as FileName;
-                            Name = fN.Filename;
-                            ParentIndex = fN.ParentIndex;
-                            i++;
+                            if(!(fN.Filename.Contains("~")))
+                            {
+                                Name = fN.Filename;
+                                ParentIndex = fN.ParentIndex;
+                            }
                         }
                         AttributeList.Add(attr);
+                        //sw.Stop();
+                        //Console.WriteLine("Attribute Name: {0}", attr.Name);
+                        //Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
                     }
                 }
                 // Check if MFT Record is for the root directory (should be Record Index 5)
@@ -396,7 +411,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
             
             // 
-            NTFSVolumeData volData = NTFSVolumeData.Get(hVolume);
+            VolumeData volData = new VolumeData(hVolume);
 
             ulong mftStartOffset = volData.MFTStartCluster * (ulong)volData.BytesPerCluster;
             ulong recordOffset = mftStartOffset + ((ulong)index * 1024);

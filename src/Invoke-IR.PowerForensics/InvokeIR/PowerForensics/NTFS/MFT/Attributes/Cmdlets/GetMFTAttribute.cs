@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetMFTAttributeCommand
@@ -94,7 +94,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
             WriteDebug("VolumeName: " + volume);
 
-            byte[] recordBytes = MFT.MFTRecord.getMFTRecordBytes(volume, indexNumber);
+            byte[] recordBytes = MFTRecord.getMFTRecordBytes(volume, indexNumber);
             
             if(asbytes)
             {

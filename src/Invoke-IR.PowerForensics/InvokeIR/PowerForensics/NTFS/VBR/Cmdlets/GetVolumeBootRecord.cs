@@ -3,8 +3,9 @@ using System.IO;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using InvokeIR.Win32;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.VBR
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetVolumeBootRecordCommand
@@ -55,7 +56,7 @@ namespace InvokeIR.PowerForensics.NTFS.VBR
             FileStream streamToRead = NativeMethods.getFileStream(hVolume);
             byte[] bootbytes = NativeMethods.readDrive(streamToRead, 0, 512);
 
-             WriteObject(new NTFS_VBR(bootbytes));
+             WriteObject(new VolumeBootRecord(bootbytes));
 
         } // ProcessRecord 
 

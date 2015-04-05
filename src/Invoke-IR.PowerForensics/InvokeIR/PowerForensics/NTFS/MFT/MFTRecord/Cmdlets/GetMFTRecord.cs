@@ -5,8 +5,9 @@ using System.Text;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
+using InvokeIR.PowerForensics.NTFS;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT
+namespace InvokeIR.PowerForensics.Cmdlet
 {
 
     #region GetMFTRecordCommand
@@ -55,7 +56,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
 
         [Alias("FilePath")]
         [Parameter(Mandatory = true, ParameterSetName = "Path")]
-        public string FilePath
+        public string Path
         {
             get { return filePath; }
             set { filePath = value; }
@@ -106,7 +107,7 @@ namespace InvokeIR.PowerForensics.NTFS.MFT
             if(this.MyInvocation.BoundParameters.ContainsKey("Path"))
             {
                 
-                int index = InvokeIR.PowerForensics.NTFS.MFT.IndexNumber.Get(volume, filePath);
+                int index = IndexNumber.Get(volume, filePath);
                 
                 if (asbytes)
                 {

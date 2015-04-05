@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class IndexRoot : Attr
@@ -25,7 +25,8 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
             internal uint IndexSizeinBytes;
             internal byte IndexSizeinClusters;
             internal byte[] Padding;
-            internal NODE_HEADER nodeHeader;
+            internal NODE_HEADER NodeHeader;
+
         }
 
     }

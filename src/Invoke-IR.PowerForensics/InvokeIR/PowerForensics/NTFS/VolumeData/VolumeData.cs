@@ -7,7 +7,7 @@ using InvokeIR.Win32;
 namespace InvokeIR.PowerForensics.NTFS
 {
 
-    public class NTFSVolumeData
+    public class VolumeData
     {
 
         internal struct NTFS_VOLUME_DATA_BUFFER
@@ -46,6 +46,8 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
+        #region Properties
+
         public ulong VolumeSize_MB;
         public ulong TotalSectors;
         public ulong TotalClusters;
@@ -58,34 +60,17 @@ namespace InvokeIR.PowerForensics.NTFS
         public ulong MFTSize_MB;
         public ulong MFTSize;
         public ulong MFTStartCluster;
-        public ulong MFTZoneClusterStart;
-        public ulong MFTZoneClusterEnd;
+        public ulong MFTZoneStartCluster;
+        public ulong MFTZoneEndCluster;
         public ulong MFTZoneSize;
-        public ulong MFTMirrorStart;
+        public ulong MFTMirrorStartCluster;
 
-        internal NTFSVolumeData(ulong totalSectors, ulong totalClusters, ulong freeClusters, int bytesPerSector, int bytesPerCluster, int bytesPerMFTRecord, int clustersPerMFTRecord, ulong mftValidDataLength, ulong mftStartCluster, ulong mftZoneClusterStart, ulong mftZoneClusterEnd, ulong mftMirrorStart)
+        #endregion Properties
+
+        #region Constructors
+
+        internal VolumeData(IntPtr hDrive)
         {
-            VolumeSize_MB = (totalClusters * (ulong)bytesPerCluster) / 0x100000;
-            TotalSectors = totalSectors;
-            TotalClusters = totalClusters;
-            FreeClusters = freeClusters;
-            FreeSpace_MB = ((totalClusters - freeClusters) * (ulong)bytesPerCluster) / 0x100000;
-            BytesPerSector = bytesPerSector;
-            BytesPerCluster = bytesPerCluster;
-            BytesPerMFTRecord = bytesPerMFTRecord;
-            ClustersPerMFTRecord = clustersPerMFTRecord;
-            MFTSize_MB = (mftValidDataLength) / 0x100000;
-            MFTSize = mftValidDataLength;
-            MFTStartCluster = mftStartCluster;
-            MFTZoneClusterStart = mftZoneClusterStart;
-            MFTZoneClusterEnd = mftZoneClusterEnd;
-            MFTZoneSize = (mftZoneClusterEnd - mftZoneClusterStart) * (ulong)bytesPerCluster;
-            MFTMirrorStart = mftMirrorStart;
-        }
-
-        public static NTFSVolumeData Get(IntPtr hDrive)
-        {
-
             // Create a byte array the size of the NTFS_VOLUME_DATA_BUFFER struct
             byte[] ntfsVolData = new byte[96];
             // Instatiate an integer to accept the amount of bytes read
@@ -103,22 +88,26 @@ namespace InvokeIR.PowerForensics.NTFS
                 lpOverlapped: IntPtr.Zero);
 
             NTFS_VOLUME_DATA_BUFFER ntfsVD = new NTFS_VOLUME_DATA_BUFFER(ntfsVolData);
-
-            // Return the NTFSVolumeData Object
-            return new NTFSVolumeData(
-                ntfsVD.NumberSectors,
-                ntfsVD.TotalClusters,
-                ntfsVD.FreeClusters,
-                ntfsVD.BytesPerSector,
-                ntfsVD.BytesPerCluster,
-                ntfsVD.BytesPerFileRecordSegment,
-                ntfsVD.ClustersPerFileRecordSegment,
-                ntfsVD.MftValidDataLength,
-                ntfsVD.MftStartLcn,
-                ntfsVD.MftZoneStart,
-                ntfsVD.MftZoneEnd,
-                ntfsVD.Mft2StartLcn);
+            
+            VolumeSize_MB = (ntfsVD.TotalClusters * (ulong)ntfsVD.BytesPerCluster) / 0x100000;
+            TotalSectors = ntfsVD.NumberSectors;
+            TotalClusters = ntfsVD.TotalClusters;
+            FreeClusters = ntfsVD.FreeClusters;
+            FreeSpace_MB = ((ntfsVD.TotalClusters - ntfsVD.FreeClusters) * (ulong)ntfsVD.BytesPerCluster) / 0x100000;
+            BytesPerSector = ntfsVD.BytesPerSector;
+            BytesPerCluster = ntfsVD.BytesPerCluster;
+            BytesPerMFTRecord = ntfsVD.BytesPerFileRecordSegment;
+            ClustersPerMFTRecord = ntfsVD.ClustersPerFileRecordSegment;
+            MFTSize_MB = (ntfsVD.MftValidDataLength) / 0x100000;
+            MFTSize = ntfsVD.MftValidDataLength;
+            MFTStartCluster = ntfsVD.MftStartLcn;
+            MFTZoneStartCluster = ntfsVD.MftZoneStart;
+            MFTZoneEndCluster = ntfsVD.MftZoneEnd;
+            MFTZoneSize = (ntfsVD.MftZoneEnd - ntfsVD.MftZoneStart) * (ulong)ntfsVD.BytesPerCluster;
+            MFTMirrorStartCluster = ntfsVD.Mft2StartLcn;
         }
+
+        #endregion Constructors
 
     }
 

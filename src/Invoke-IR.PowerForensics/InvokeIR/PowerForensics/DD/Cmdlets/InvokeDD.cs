@@ -3,7 +3,7 @@ using System.Management.Automation;
 using System.Text.RegularExpressions;
 using InvokeIR.PowerForensics;
 
-namespace InvokeIR.PowerForensics
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region InvokeDDCommand

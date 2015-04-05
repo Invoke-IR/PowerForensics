@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-using InvokeIR.PowerForensics.NTFS.MFT;
+using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.PowerForensics
 {

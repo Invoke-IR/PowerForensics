@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
+namespace InvokeIR.PowerForensics.NTFS
 {
 
     public class Data : Attr
@@ -23,26 +23,15 @@ namespace InvokeIR.PowerForensics.NTFS.MFT.Attributes
 
         public byte[] RawData;
 
-        internal Data(uint ATTRType, string name, bool nonResident, ushort attributeId, byte[] bytes)
+        internal Data(byte[] AttrBytes, string attrName)
         {
-            Name = Enum.GetName(typeof(ATTR_TYPE), ATTRType);
-            NameString = name;
-            NonResident = nonResident;
-            AttributeId = attributeId;
-            RawData = bytes;
-        }
-
-        internal static Data Get(byte[] AttrBytes, string attrName)
-        {
-
             ATTR_DATA data = new ATTR_DATA(AttrBytes);
 
-            return new Data(
-                data.header.commonHeader.ATTRType,
-                attrName,
-                data.header.commonHeader.NonResident,
-                data.header.commonHeader.Id,
-                data.RawBytes);
+            Name = Enum.GetName(typeof(ATTR_TYPE), data.header.commonHeader.ATTRType);
+            NameString = attrName;
+            NonResident = data.header.commonHeader.NonResident;
+            AttributeId = data.header.commonHeader.Id;
+            RawData = data.RawBytes;
         }
 
     }

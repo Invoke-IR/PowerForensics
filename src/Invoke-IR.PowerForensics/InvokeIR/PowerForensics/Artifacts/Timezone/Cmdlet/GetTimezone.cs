@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace InvokeIR.PowerForensics.Artifacts
+namespace InvokeIR.PowerForensics.Cmdlets
 {
 
     #region GetTimezoneCommand

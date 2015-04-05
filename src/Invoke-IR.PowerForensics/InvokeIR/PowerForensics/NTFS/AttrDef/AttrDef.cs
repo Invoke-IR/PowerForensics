@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace InvokeIR.PowerForensics.NTFS.AttrDef
+namespace InvokeIR.PowerForensics.NTFS
 {
     class AttrDef
     {
