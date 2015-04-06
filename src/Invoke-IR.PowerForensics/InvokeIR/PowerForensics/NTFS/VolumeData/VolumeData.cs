@@ -48,16 +48,13 @@ namespace InvokeIR.PowerForensics.NTFS
 
         #region Properties
 
-        public ulong VolumeSize_MB;
         public ulong TotalSectors;
         public ulong TotalClusters;
         public ulong FreeClusters;
-        public ulong FreeSpace_MB;
         public int BytesPerSector;
         public int BytesPerCluster;
         public int BytesPerMFTRecord;
         public int ClustersPerMFTRecord;
-        public ulong MFTSize_MB;
         public ulong MFTSize;
         public ulong MFTStartCluster;
         public ulong MFTZoneStartCluster;
@@ -73,13 +70,14 @@ namespace InvokeIR.PowerForensics.NTFS
         {
             // Create a byte array the size of the NTFS_VOLUME_DATA_BUFFER struct
             byte[] ntfsVolData = new byte[96];
+            
             // Instatiate an integer to accept the amount of bytes read
             int buf = new int();
 
             // Return the NTFS_VOLUME_DATA_BUFFER struct
             var status = NativeMethods.DeviceIoControl(
                 hDevice: hDrive,
-                dwIoControlCode: NativeMethods.NTFS_VOLUME_DATA_BUFFER,
+                dwIoControlCode: WinIoCtl.FSCTL_GET_NTFS_VOLUME_DATA,
                 InBuffer: null,
                 nInBufferSize: 0,
                 OutBuffer: ntfsVolData,
@@ -89,16 +87,13 @@ namespace InvokeIR.PowerForensics.NTFS
 
             NTFS_VOLUME_DATA_BUFFER ntfsVD = new NTFS_VOLUME_DATA_BUFFER(ntfsVolData);
             
-            VolumeSize_MB = (ntfsVD.TotalClusters * (ulong)ntfsVD.BytesPerCluster) / 0x100000;
             TotalSectors = ntfsVD.NumberSectors;
             TotalClusters = ntfsVD.TotalClusters;
             FreeClusters = ntfsVD.FreeClusters;
-            FreeSpace_MB = ((ntfsVD.TotalClusters - ntfsVD.FreeClusters) * (ulong)ntfsVD.BytesPerCluster) / 0x100000;
             BytesPerSector = ntfsVD.BytesPerSector;
             BytesPerCluster = ntfsVD.BytesPerCluster;
             BytesPerMFTRecord = ntfsVD.BytesPerFileRecordSegment;
             ClustersPerMFTRecord = ntfsVD.ClustersPerFileRecordSegment;
-            MFTSize_MB = (ntfsVD.MftValidDataLength) / 0x100000;
             MFTSize = ntfsVD.MftValidDataLength;
             MFTStartCluster = ntfsVD.MftStartLcn;
             MFTZoneStartCluster = ntfsVD.MftZoneStart;

@@ -90,7 +90,7 @@ namespace InvokeIR.PowerForensics.Cmdlets
             for (int i = 0; (i < bytes.ToArray().Length) && (bytes.ToArray()[i] != 0); i += 160)
             {
                 byte[] attrDefBytes = bytes.Skip(i).Take(160).ToArray();
-                WriteObject(AttrDef.Get(attrDefBytes));
+                WriteObject(new AttrDef(attrDefBytes));
             }
 
             streamToRead.Close();

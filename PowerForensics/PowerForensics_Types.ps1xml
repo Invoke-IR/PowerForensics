@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+    <Type>
+        <Name>InvokeIR.PowerForensics.NTFS.VolumeData</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>VolumeSize(MB)</Name>
+                <GetScriptBlock>
+                    (($this.TotalClusters) * ($this.BytesPerCluster)) / (0x100000)
+                </GetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>FreeSpace(MB)</Name>
+                <GetScriptBlock>
+                    ((($this.TotalClusters) - ($this.FreeClusters)) * ($this.BytesPerCluster)) / (0x100000)
+                </GetScriptBlock>
+            </ScriptProperty>
+            <ScriptProperty>
+                <Name>MFTSize(MB)</Name>
+                <GetScriptBlock>
+                    ($this.MFTSize) / (0x100000)
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+</Types>

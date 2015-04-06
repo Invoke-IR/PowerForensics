@@ -14,26 +14,51 @@ namespace InvokeIR.PowerForensics.Formats
         b = 0x1
     }
 
-    public class mactime
+    #region mactimeClass
+
+    public class Mactime
     {
 
-        public uint Index;
+        #region Properties
+
         public DateTime DateTime;
+        public ulong Size;
         public ushort ActivityType;
+        //Permissions
+        public uint UserId;
+        public uint GroupId;
+        public uint Index;
         public string FileName;
 
-        internal mactime(uint index, DateTime dateTime, ushort activityType, string fileName)
+        #endregion Properties
+
+        #region Constructors
+
+        internal Mactime(DateTime dateTime, ulong size, ushort activityType, uint index, string fileName, bool deleted)
         {
-            Index = index;
+            if (deleted)
+            {
+                fileName += " (deleted)";
+            }
+            
             DateTime = dateTime;
             ActivityType = activityType;
+            Size = size;
+            UserId = 0;
+            GroupId = 0;
+            Index = index;
             FileName = fileName;
         }
 
-        public static List<mactime> Get(MFTRecord record)
+        #endregion Constructors
+
+        public static Mactime[] Get(MFTRecord record)
         {
-            // Modified Time
+            #region DetermineTime
+
             Dictionary<DateTime, ACTIVITY_TYPE> dictionary = new Dictionary<DateTime, ACTIVITY_TYPE>();
+            
+            // Modified Time
             dictionary[record.ModifiedTime] = ACTIVITY_TYPE.m;
 
             // Access Time
@@ -66,22 +91,20 @@ namespace InvokeIR.PowerForensics.Formats
                 dictionary.Add(record.BornTime, ACTIVITY_TYPE.b);
             }
 
-            List<mactime> macs = new List<mactime>();
+            #endregion DetermineTime
 
-            //for (int i = 0; i < dictionary[record.RecordNumber].Count; i++)
-            //{
-            //   mactime mac = new mactime(record.RecordNumber, dictionary[record.RecordNumber].Keys[0],  )
-            //}
+            List<Mactime> macs = new List<Mactime>();
 
             foreach (var time in dictionary)
             {
-                macs.Add(new mactime(record.RecordNumber, time.Key, (ushort)time.Value, record.Name));
+                macs.Add(new Mactime(time.Key, record.Size, (ushort)time.Value, record.RecordNumber, record.FullPath, record.Deleted));
             }
 
-            return macs;
-
+            return macs.ToArray();
         }
 
-    
     }
+
+    #endregion mactimeClass
+
 }

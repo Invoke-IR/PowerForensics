@@ -22,8 +22,8 @@ namespace InvokeIR.PowerForensics.NTFS
             internal uint DisplayRule;
             internal uint CollationRule;
             internal uint Flags;
-            internal ulong MaxSize;
             internal ulong MinSize;
+            internal ulong MaxSize;
 
             internal ATTR_DEF(byte[] bytes)
             {
@@ -32,28 +32,25 @@ namespace InvokeIR.PowerForensics.NTFS
                 DisplayRule = BitConverter.ToUInt32(bytes, 0x84);
                 CollationRule = BitConverter.ToUInt32(bytes, 0x88);
                 Flags = BitConverter.ToUInt32(bytes, 0x8C);
-                MaxSize = BitConverter.ToUInt64(bytes, 0x90);
-                MinSize = BitConverter.ToUInt64(bytes, 0x98);
+                MinSize = BitConverter.ToUInt64(bytes, 0x90);
+                MaxSize = BitConverter.ToUInt64(bytes, 0x98);
             }
 
         }
 
+        #region Properties
+
         public string Name;
         public uint Type;
         public string Flags;
-        public ulong MaxSize;
         public ulong MinSize;
+        public ulong MaxSize;
 
-        internal AttrDef(string name, uint type, string flags, ulong maxSize, ulong minSize)
-        {
-            Name = name;
-            Type = type;
-            Flags = flags;
-            MaxSize = maxSize;
-            MinSize = minSize;
-        }
+        #endregion Properties
 
-        internal static AttrDef Get(byte[] bytes)
+        #region Constructors
+
+        internal AttrDef(byte[] bytes)
         {
             ATTR_DEF attrDefStruct = new ATTR_DEF(bytes);
 
@@ -82,15 +79,14 @@ namespace InvokeIR.PowerForensics.NTFS
             }
             #endregion stdInfoFlags
 
-
-            return new AttrDef(
-                attrDefStruct.Name,
-                attrDefStruct.TypeIdentified,
-                flags.ToString(),
-                attrDefStruct.MaxSize,
-                attrDefStruct.MinSize);
-
+            Name = attrDefStruct.Name;
+            Type = attrDefStruct.TypeIdentified;
+            Flags = flags.ToString();
+            MinSize = attrDefStruct.MinSize;
+            MaxSize = attrDefStruct.MaxSize;
         }
+
+        #endregion Constructors
 
     }
 

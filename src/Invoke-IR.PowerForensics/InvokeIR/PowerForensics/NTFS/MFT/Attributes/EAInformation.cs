@@ -5,6 +5,8 @@ using System.Text;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
+    #region EAInformationClass
+
     class EAInformation : Attr
     {
         internal struct ATTR_EA_INFORMATION
@@ -23,9 +25,15 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
+        #region Properties
+
         public ushort PackedSize;
         public ushort EACount;
         public uint UnpackedSize;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal EAInformation(byte[] bytes, string attrName)
         {
@@ -39,5 +47,9 @@ namespace InvokeIR.PowerForensics.NTFS
             EACount = ea.EACount;
             UnpackedSize = ea.UnpackedSize;
         }
+
+        #endregion Constructors
     }
+
+    #endregion EAInformationClass
 }

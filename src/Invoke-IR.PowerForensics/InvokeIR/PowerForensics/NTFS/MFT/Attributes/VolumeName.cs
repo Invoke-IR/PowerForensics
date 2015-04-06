@@ -6,7 +6,6 @@ namespace InvokeIR.PowerForensics.NTFS
 {
     public class VolumeName : Attr
     {
-
         struct ATTR_VOLNAME
         {
             internal AttrHeader.ATTR_HEADER_RESIDENT header;
@@ -20,7 +19,13 @@ namespace InvokeIR.PowerForensics.NTFS
 
         }
 
+        #region Properties
+        
         public string VolumeNameString;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal VolumeName(byte[] AttrBytes, string AttrName)
         {
@@ -32,5 +37,7 @@ namespace InvokeIR.PowerForensics.NTFS
             AttributeId = volName.header.commonHeader.Id;
             VolumeNameString = volName.VolumeNameString;
         }
+
+        #endregion Constructors
     }
 }

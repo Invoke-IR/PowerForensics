@@ -50,8 +50,8 @@
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Prefetch\Prefetch.cs" />
     <Compile Include="InvokeIR\PowerForensics\Artifacts\Timezone\Cmdlet\GetTimezone.cs" />
     <Compile Include="InvokeIR\PowerForensics\DD\DD.cs" />
-    <Compile Include="InvokeIR\PowerForensics\Formats\Cmdlets\Get-MacTime.cs" />
-    <Compile Include="InvokeIR\PowerForensics\Formats\mactime.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Formats\Cmdlets\Get-Mactime.cs" />
+    <Compile Include="InvokeIR\PowerForensics\Formats\Mactime.cs" />
     <Compile Include="InvokeIR\PowerForensics\MBR\Partition.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\AttrDef.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\Cmdlets\GetAttrDef.cs" />
@@ -90,6 +90,7 @@
     <Compile Include="InvokeIR\PowerForensics\NTFS\VBR\VolumeBootRecord.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\VolumeData\VolumeData.cs" />
     <Compile Include="InvokeIR\Win32\Win32.cs" />
+    <Compile Include="InvokeIR\Win32\WinIoCtl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

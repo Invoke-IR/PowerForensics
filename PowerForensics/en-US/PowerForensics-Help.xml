@@ -736,46 +736,49 @@ MFTMirrorStart       : 2</dev:code>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
-			<command:name>Get-MacTime</command:name>
+			<command:name>Get-Mactime</command:name>
 			<maml:description>
-				<maml:para/>
+				<maml:para>Returns a Mactime object for the inputted MFTRecord.</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>MacTime</command:noun>
+			<command:noun>Mactime</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para/>
+			<maml:para>The Get-Mactime cmdlet produces an array of Mactime objects for the inputted MFTRecords. The Mactime object is compatible with the output used by log2timeline.</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!--Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Get-MacTime</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="named">
+				<maml:name>Get-Mactime</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="">
 					<maml:name>MFTRecord</maml:name>
 					<maml:description>
-						<maml:para/>
+						<maml:para>An array of MFTRecord objects to derive Mactime objects from.  This property accepts input from the pipeline.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">MFTRecord[]</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="named">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="">
 				<maml:name>MFTRecord</maml:name>
 				<maml:description>
-					<maml:para/>
+					<maml:para>An array of MFTRecord objects to derive Mactime objects from.  This property accepts input from the pipeline.</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">MFTRecord[]</command:parameterValue>
 				<dev:type>
 					<maml:name>MFTRecord[]</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -790,6 +793,20 @@ MFTMirrorStart       : 2</dev:code>
 				</maml:description>
 			</command:inputType>
 		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>InvokeIR.PowerForensics.Formats.Mactime</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
@@ -854,7 +871,7 @@ MFTMirrorStart       : 2</dev:code>
 					</maml:para>
 				</maml:description>
 				<dev:type>
-					<maml:name>InvokeIR.PowerForensics.MBR</maml:name>
+					<maml:name>InvokeIR.PowerForensics.MasterBootRecord</maml:name>
 					<maml:uri>
 					</maml:uri>
 				</dev:type>
@@ -1011,17 +1028,6 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 		</command:inputTypes>
 		<command:returnValues>
 			<!--Outputs-->
-			<command:returnValue>
-				<maml:description>
-					<maml:para>
-					</maml:para>
-				</maml:description>
-				<dev:type>
-					<maml:name>InvokeIR.PowerForensics.NTFS.Attr</maml:name>
-					<maml:uri>
-					</maml:uri>
-				</dev:type>
-			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
 					<maml:para>

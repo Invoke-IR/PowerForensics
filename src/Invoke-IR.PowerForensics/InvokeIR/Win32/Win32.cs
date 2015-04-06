@@ -12,12 +12,6 @@ namespace InvokeIR.Win32
     public static class NativeMethods
     {
 
-        #region constants
-
-        public const uint NTFS_VOLUME_DATA_BUFFER = 0x00090064;
-
-        #endregion constants
-
         #region structs
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]

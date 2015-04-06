@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<Configuration> 
+    <ViewDefinitions> 
+        
+<!-- Master Boot Record -->
+
+        <!-- InvokeIR.PowerForensics.MasterBootRecord -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.MasterBootRecord</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.MasterBootRecord</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>25</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>25</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>MBRSignature</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>DiskSignature</PropertyName> 
+                            </TableColumnItem>  
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+        
+        <!-- InvokeIR.PowerForensics.MBR.Partition -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.MBR.Partition</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.MBR.Partition</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>25</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>8</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>11</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>9</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>SystemID</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>Bootable</PropertyName> 
+                            </TableColumnItem>  
+                            <TableColumnItem> 
+                                <PropertyName>StartSector</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>EndSector</PropertyName> 
+                            </TableColumnItem> 
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+
+<!-- End Master Boot Record -->
+
+
+<!-- NTFS System Files -->
+
+        <!-- InvokeIR.PowerForensics.NTFS.AttrDef -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.NTFS.AttrDef</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.NTFS.AttrDef</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>25</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>6</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>7</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>20</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>Name</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>Type</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>MinSize</PropertyName> 
+                            </TableColumnItem>  
+                            <TableColumnItem> 
+                                <PropertyName>MaxSize</PropertyName> 
+                            </TableColumnItem>   
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.VolumeBootRecord -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>VolumeSN</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>TotalSectors</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>HiddenSectors</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ReservedSectors</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerSector</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>SectorsPerCluster</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>SectorsPerTrack</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NumberOfHeads</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>MFTStartIndex</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>CodeSection</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+         <!-- InvokeIR.PowerForensics.NTFS.VolumeData -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.VolumeData</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeData</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>VolumeSize(MB)</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FreeSpace(MB)</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerSector</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerCluster</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FreeClusters</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>MFTSize(MB)</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>MFTStartCluster</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerMFTRecord</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>       
+
+<!-- End NTFS System Files -->
+
+
+<!-- Master File Table -->
+        
+        <!-- InvokeIR.PowerForensics.NTFS.MFTRecord -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.MFTRecord</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.MFTRecord</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>FullPath</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>RecordNumber</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Size</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Deleted</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Directory</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ModifiedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AccessedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ChangedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+    <!-- MFT Attributes -->
+
+        <!-- InvokeIR.PowerForensics.NTFS.NonResident -->        
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.NonResident</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.NonResident</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AllocatedSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>InitializedSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>RealSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>StartCluster</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>EndCluster</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.StandardInformation -->        
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.StandardInformation</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.StandardInformation</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ModifiedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AccessedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ChangedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.FileName -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.FileName</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.FileName</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FileName</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ModifiedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AccessedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ChangedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.Data -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.Data</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.Data</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>RawData</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.ObjectId -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.ObjectId</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.ObjectId</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ObjectId</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.VolumeInformation -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.VolumeInformation</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeInformation</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Major</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Minor</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Flags</PropertyName>
+                  </ListItem>                                      
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.VolumeName -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.VolumeName</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeName</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>VolumeNameString</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.NTFS.EAInformation -->
+        <View>
+          <Name>InvokeIR.PowerForensics.NTFS.EAInformation</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.NTFS.EAInformation</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>PackedSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>UnpackedSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>EACount</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+    <!-- End MFT Attributes -->
+
+<!-- End Master File Table -->
+
+
+<!-- Artifacts -->
+
+        <!-- InvokeIR.PowerForensics.Artifacts.Prefetch -->
+        <View>
+          <Name>InvokeIR.PowerForensics.Artifacts.Prefetch</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.Artifacts.Prefetch</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Path</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>PathHash</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>DependencyCount</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>PrefetchAccessTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>RunCount</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+<!-- End Artifacts -->
+
+
+<!-- Formats -->
+
+        <!-- InvokeIR.PowerForensics.Formats.Mactime -->
+        <View>
+          <Name>InvokeIR.PowerForensics.Formats.Mactime</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.Formats.Mactime</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>DateTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Size</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ActivityType</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>UserId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>GroupId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Index</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FileName</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+<!-- End Formats -->
+
+    </ViewDefinitions> 
+</Configuration>
