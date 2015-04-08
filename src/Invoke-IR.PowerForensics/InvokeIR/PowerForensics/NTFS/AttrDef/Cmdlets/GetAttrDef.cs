@@ -12,7 +12,7 @@ namespace InvokeIR.PowerForensics.Cmdlets
 
     #region GetAttrDefCommand
     /// <summary> 
-    /// This class implements the Get-BootFile cmdlet. 
+    /// This class implements the Get-AttrDef cmdlet. 
     /// </summary> 
 
     [Cmdlet(VerbsCommon.Get, "AttrDef")]
@@ -22,8 +22,8 @@ namespace InvokeIR.PowerForensics.Cmdlets
         #region Parameters
 
         /// <summary> 
-        /// This parameter provides the DriveName for the 
-        /// Partition Table that will be returned.
+        /// This parameter provides the Volume Name for the 
+        /// AttrDef objects that will be returned.
         /// </summary> 
 
         [Parameter(Mandatory = true, Position = 0)]
@@ -39,61 +39,13 @@ namespace InvokeIR.PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// The ProcessRecord method calls ManagementClass.GetInstances() 
-        /// method to iterate through each BindingObject on each system specified.
+        /// The ProcessRecord method calls AttrDef.GetInstances() 
+        /// method to iterate through each AttrDef object on the specified volume.
         /// </summary> 
         protected override void ProcessRecord()
         {
 
-            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
-
-            if (lettersOnly.IsMatch(volume))
-            {
-
-                volume = @"\\.\" + volume + ":";
-
-            }
-
-            IntPtr hVolume = NativeMethods.getHandle(volume);
-
-            FileStream streamToRead = NativeMethods.getFileStream(hVolume);
-
-            VolumeData volData = new VolumeData(hVolume);
-            
-            MFTRecord record = MFTRecord.Get(MasterFileTable.GetBytes(volume), 4, null, null);
-
-            List<byte> bytes = new List<byte>();
-            
-            foreach(Attr attr in record.Attribute)
-            {
-                if(attr.Name == "DATA")
-                {
-                    if(attr.NonResident)
-                    {
-                        NonResident data = attr as NonResident;
-                        for(int i = 0; i < data.StartCluster.Length; i++)
-                        {
-                            ulong offset = data.StartCluster[i] * (ulong)volData.BytesPerCluster;
-                            ulong length = (data.EndCluster[i] - data.StartCluster[i]) * (ulong)volData.BytesPerCluster;
-                            byte[] byteRange = Win32.NativeMethods.readDrive(streamToRead, offset, length);
-                            bytes.AddRange(byteRange);
-                        }
-                    }
-                    else
-                    {
-                        Data data = attr as Data;
-                        bytes.AddRange(data.RawData);
-                    }
-                }
-            }
-
-            for (int i = 0; (i < bytes.ToArray().Length) && (bytes.ToArray()[i] != 0); i += 160)
-            {
-                byte[] attrDefBytes = bytes.Skip(i).Take(160).ToArray();
-                WriteObject(new AttrDef(attrDefBytes));
-            }
-
-            streamToRead.Close();
+            WriteObject(AttrDef.GetInstances(volume));
 
         } // ProcessRecord 
 

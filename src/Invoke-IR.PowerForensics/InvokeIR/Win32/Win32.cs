@@ -4,13 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Microsoft.Win32.SafeHandles;
+using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.Win32
 {
 
     public static class NativeMethods
     {
+
+        #region Constants
+
+        internal const Int32 FILE_ATTRIBUTE_ARCHIVE = 0x00000020;
+        internal const Int32 FILE_ATTRIBUTE_ENCRYPTED = 0x00004000;
+        internal const Int32 FILE_ATTRIBUTE_HIDDEN = 0x00000002;
+        internal const Int32 FILE_ATTRIBUTE_NORMAL = 0x00000080;
+        internal const Int32 FILE_ATTRIBUTE_OFFLINE = 0x00001000;
+        internal const Int32 FILE_ATTRIBUTE_READONLY = 0x00000001;
+        internal const Int32 FILE_ATTRIBUTE_SYSTEM = 0x00000004;
+        internal const Int32 FILE_ATTRIBUTE_TEMPORARY = 0x00000100;
+
+        internal const Int32 FILE_FLAG_BACKUP_SEMANTICS = 0x02000000;
+        internal const Int32 FILE_FLAG_DELETE_ON_CLOSE = 0x04000000;
+        internal const Int32 FILE_FLAG_NO_BUFFERING = 0x20000000;
+        internal const Int32 FILE_FLAG_OPEN_NO_RECALL = 0x00100000;
+        internal const Int32 FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000;
+        internal const Int32 FILE_FLAG_OVERLAPPED = 0x40000000;
+        internal const Int32 FILE_FLAG_POSIX_SEMANTICS = 0x00100000;
+        internal const Int32 FILE_FLAG_RANDOM_ACCESS = 0x10000000;
+        internal const Int32 FILE_FLAG_SESSION_AWARE = 0x00800000;
+
+        internal const Int32 INVALID_HANDLE_VALUE = -1;
+
+        #endregion Constants
 
         #region structs
 
@@ -33,7 +60,6 @@ namespace InvokeIR.Win32
 
         #region PInvoke
 
-        //function import
         [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr CreateFile
             (
@@ -76,6 +102,47 @@ namespace InvokeIR.Win32
 
         #endregion PInvoke
 
+        #region Helper Functions
+        internal static string getDriveName(string drive)
+        {
+            Regex lettersOnly = new Regex(@"\\\\\.\\PHYSICALDRIVE\d");
+
+            if (!(lettersOnly.IsMatch(drive)))
+            {
+                throw new Exception("Provided Drive Name is not acceptable.");
+            }
+
+            return drive;
+
+        }
+        
+        internal static string getVolumeName(ref string volume)
+        {
+            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
+            Regex volLetter = new Regex(@"[a-zA-Z]:\\");
+            Regex uncPath = new Regex(@"\\\\\.\\[a-zA-Z]:");
+
+            if (lettersOnly.IsMatch(volume))
+            {
+                volume = @"\\.\" + volume + ":";
+            }
+            else if(volLetter.IsMatch(volume))
+            {
+                volume = @"\\.\" + volume.TrimEnd('\\');
+            }
+            else if(uncPath.IsMatch(volume))
+            {
+
+            }
+            else
+            {
+                throw new Exception("Provided Volume Name is not acceptable.");
+            }
+
+            return volume;
+
+        }
+
         internal static IntPtr getHandle(string FileName)
         {
 
@@ -86,9 +153,17 @@ namespace InvokeIR.Win32
                 fileShare: FileShare.Write | FileShare.Read | FileShare.Delete,
                 securityAttributes: IntPtr.Zero,
                 creationDisposition: FileMode.Open,
-                flags: 0x02000000, //with this also an enum can be used. (as described above as EFileAttributes)
+                flags: FILE_FLAG_BACKUP_SEMANTICS,
                 template: IntPtr.Zero);
 
+            // Check if handle is valid
+            if (hDrive.ToInt32() == INVALID_HANDLE_VALUE)
+            {
+                // If handle is not valid throw an error
+                throw new Exception("Invalid handle to Volume/Drive returned");
+            }
+
+            // Return handle
             return hDrive;
 
         }
@@ -112,12 +187,50 @@ namespace InvokeIR.Win32
             // Create a byte array to read into
             byte[] buf = new byte[sizeToRead];
             // Read buf.Length bytes (sizeToRead) from offset 
-            streamToRead.Read(buf, 0, buf.Length);
+            try
+            {
+                Int32 bytesRead = streamToRead.Read(buf, 0, buf.Length);
+
+                if (bytesRead != buf.Length)
+                {
+                    if (bytesRead > buf.Length)
+                    {
+                        throw new Exception("The readDrive method read more bytes from disk than expected.");
+                    }
+                    else if (bytesRead < buf.Length)
+                    {
+                        throw new Exception("The readDrive method read less bytes from disk than expected.");
+                    }
+                }
+
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("The readDrive method experienced an ArgumentNullException.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new ArgumentOutOfRangeException("The readDrive method experienced an ArgumentOutOfRangeException.");
+            }
+            catch (IOException)
+            {
+                throw new IOException("The readDrive method experienced an IOException.");
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException("The readDrive method experienced an ArgumentException");
+            }
+            catch (ObjectDisposedException)
+            {
+                throw new ObjectDisposedException("The readDrive method experienced an ObjectDisposedException");
+            }
 
             return buf;
+
         }
 
-    }
+        #endregion Helper Functions
 
+    }
 }
 

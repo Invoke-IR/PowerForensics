@@ -6,29 +6,29 @@ using InvokeIR.PowerForensics.NTFS;
 namespace InvokeIR.PowerForensics.Formats
 {
 
-    public enum ACTIVITY_TYPE
-    {
-        m = 0x8,
-        a = 0x4,
-        c = 0x2,
-        b = 0x1
-    }
-
     #region mactimeClass
 
     public class Mactime
     {
 
+        public enum ACTIVITY_TYPE
+        {
+            m = 0x8,
+            a = 0x4,
+            c = 0x2,
+            b = 0x1
+        }
+
         #region Properties
 
-        public DateTime DateTime;
-        public ulong Size;
-        public ushort ActivityType;
+        public readonly DateTime DateTime;
+        public readonly ulong Size;
+        public readonly ushort ActivityType;
         //Permissions
-        public uint UserId;
-        public uint GroupId;
-        public uint Index;
-        public string FileName;
+        public readonly uint UserId;
+        public readonly uint GroupId;
+        public readonly uint Index;
+        public readonly string FileName;
 
         #endregion Properties
 

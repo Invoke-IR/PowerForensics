@@ -106,8 +106,6 @@ namespace InvokeIR.Win32
         #endregion USNControlCodes
 
         public static uint FSCTL_GET_NTFS_VOLUME_DATA = CTL_CODE(FILE_DEVICE_FILE_SYSTEM, 25, METHOD_BUFFERED, FILE_ANY_ACCESS); // NTFS_VOLUME_DATA_BUFFER
-        
-        //public const uint NTFS_VOLUME_DATA_BUFFER = 0x00090064;
 
     }
 }

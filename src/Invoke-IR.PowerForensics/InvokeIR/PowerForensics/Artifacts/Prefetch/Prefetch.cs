@@ -3,14 +3,22 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.PowerForensics.Artifacts
 {
+    #region PrefetchClass
+
     public class Prefetch
     {
+        #region Constants
 
-        const string Magic = "SCCA";
+        const string PREFETCH_MAGIC = "SCCA";
+
+        #endregion Constants
+
+        #region Enums
 
         enum PREFETCH_VERSION
         {
@@ -19,408 +27,336 @@ namespace InvokeIR.PowerForensics.Artifacts
             WINDOWS_XP = 0x11
         }
 
-        #region PrefetchParameters
+        #endregion Enums
 
-        private string version;
-        public string Version
+        #region Parameters
+
+        public readonly string Version;
+        public readonly string Name;
+        public readonly string Path;
+//        public string MD5
+        public readonly string PathHash;
+        public readonly int DependencyCount;
+        public readonly DateTime[] PrefetchAccessTime;
+//        public readonly DateTime PrefetchBornTime;
+//        public readonly string ProgramBornTime;
+//        public readonly string ProgramChangeTime
+        public readonly int DeviceCount;
+        public readonly int RunCount;
+        public readonly string[] DependencyFiles;
+
+        #endregion Parameters
+
+        #region Constructors
+
+        private Prefetch(byte[] fileBytes)
         {
-            get
-            {
-                return version;
-            }
-            set
-            {
-                version = value;
-            }
-        }
+            // Instantiate byte array
+            byte[] pfMagic = new byte[0x04];
 
-        private string name;
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+            // Create sub-array "pfMagic" from byte array "fileBytes"
+            Array.Copy(fileBytes, 0x04, pfMagic, 0x00, pfMagic.Length);
 
-        private string path;
-        public string Path
-        {
-            get
+            // Check for Prefetch Magic Number (Value) SCCA at offset 0x04 - 0x07
+            if (Encoding.ASCII.GetString(pfMagic) == PREFETCH_MAGIC)
             {
-                return path;
-            }
-            set
-            {
-                path = value;
-            }
-        }
+                // Check Prefetch file for version (0x1A = Win 8, 0x17 = Win 7, 0x11 = Win XP)
+                string pfVersion = Enum.GetName(typeof(PREFETCH_VERSION), fileBytes[0]);
 
-        /*private string md5;
-        public string MD5
-        {
-            get
-            {
-                return md5;
-            }
-            set
-            {
-                md5 = value;
-            }
-        }*/
 
-        private string pathhash;
-        public string PathHash
-        {
-            get
-            {
-                return pathhash;
-            }
-            set
-            {
-                pathhash = value;
-            }
-        }
+                //// Get Prefetch Path Hash Value ////
+                // Instantiate byte array
+                byte[] pfHashBytes = new byte[0x04];
+                // Create sub-array "pfHashBytes" from byte array "bytes"
+                Array.Copy(fileBytes, 0x4C, pfHashBytes, 0, pfHashBytes.Length);
+                // Reverse Little Endian bytes
+                Array.Reverse(pfHashBytes);
+                // Return string representing Prefetch Path Hash
+                string pfPathHash = BitConverter.ToString(pfHashBytes).Replace("-", "");
 
-        private int dependencycount;
-        public int DependencyCount
-        {
-            get
-            {
-                return dependencycount;
-            }
-            set
-            {
-                dependencycount = value;
-            }
-        }
 
-        private DateTime[] prefetchaccesstime;
-        public DateTime[] PrefetchAccessTime
-        {
-            get
-            {
-                return prefetchaccesstime;
-            }
-            set
-            {
-                prefetchaccesstime = value;
-            }
-        }
+                // Get Prefetch Last Accessed Time Array //
+                // Instantiate a null byte array
+                byte[] pfAccessTimeBytes = null;
+                // Instantiate a List of DateTime Objects
+                List<DateTime> pfAccessTimeList = new List<DateTime>();
+                // Zero out counter
+                int counter = 0;
+                // Check Prefetch version
+                switch (pfVersion)
+                {
+                    // Windows 8 Version
+                    case "WINDOWS_8":
+                        pfAccessTimeBytes = new byte[0x40];
+                        Array.Copy(fileBytes, 0x80, pfAccessTimeBytes, 0, 0x40);
+                        counter = 64;
+                        break;
+                    // Windows 7 Version
+                    case "WINDOWS_7":
+                        pfAccessTimeBytes = new byte[0x08];
+                        Array.Copy(fileBytes, 0x80, pfAccessTimeBytes, 0, 0x08);
+                        counter = 8;
+                        break;
+                    // Windows XP Version
+                    case "WINDOWS_XP":
+                        pfAccessTimeBytes = new byte[0x08];
+                        Array.Copy(fileBytes, 0x78, pfAccessTimeBytes, 0, 0x08);
+                        counter = 8;
+                        break;
+                }
+                for (int i = 0; i < counter; i += 8)
+                {
+                    long winFileTime = BitConverter.ToInt64(pfAccessTimeBytes, i);
+                    DateTime dt = DateTime.FromFileTimeUtc(winFileTime);
+                    if ((pfVersion == "WINDOWS_8") && (dt.ToString() == "1/1/1601 12:00:00 AM"))
+                    {
+                        break;
+                    }
+                    pfAccessTimeList.Add(dt);
+                }
 
-        /*private DateTime prefetchborntime;
-        public DateTime PrefetchBornTime
-        {
-            get
-            {
-                return prefetchborntime;
-            }
-            set
-            {
-                prefetchborntime = value;
-            }
-        }
-        */
 
-        /*private string programborntime;
-        public string ProgramBornTime
-        {
-            get
-            {
-                return programborntime;
-            }
-            set
-            {
-                programborntime = value;
-            }
-        }
+                ////
+                string appName = System.Text.Encoding.Unicode.GetString((fileBytes.Skip(0x10).Take(0x3C).ToArray())).TrimEnd('\0');
 
-        private string programchangetime;
-        public string ProgramChangeTime
-        {
-            get
-            {
-                return programchangetime;
-            }
-            set
-            {
-                programchangetime = value;
-            }
-        }*/
 
-        private int devicecount;
-        public int DeviceCount
-        {
-            get
-            {
-                return devicecount;
-            }
-            set
-            {
-                devicecount = value;
-            }
-        }
+                //// Get Dependency Files Section ////
+                int dependencyOffsetValue = BitConverter.ToInt32((fileBytes.Skip(0x64).Take(0x04).ToArray()), 0);
+                int dependencyLengthValue = BitConverter.ToInt32((fileBytes.Skip(0x68).Take(0x04).ToArray()), 0);
+                byte[] pfDependencyBytes = fileBytes.Skip(dependencyOffsetValue).Take(dependencyLengthValue).ToArray();
 
-        private int runcount;
-        public int RunCount
-        {
-            get
-            {
-                return runcount;
-            }
-            set
-            {
-                runcount = value;
-            }
-        }
 
-        private string[] dependencyfiles;
-        public string[] DependencyFiles
-        {
-            get
-            {
-                return dependencyfiles;
-            }
-            set
-            {
-                dependencyfiles = value;
-            }
-        }
+                ////
+                string pfPath = null;
 
-        #endregion PrefetchParameters
 
-        #region PrefetchConstructors
-        private Prefetch(string version, string name, string pathhash, DateTime[] prefetchaccesstime, string[] dependencyfiles, int dependencycount, string path, int devicecount, int runcount)
-        {
-            this.Version = version;
-            this.Name = name;
-            this.PathHash = pathhash;
-            this.PrefetchAccessTime = prefetchaccesstime;
-            this.DependencyFiles = dependencyfiles;
-            this.DependencyCount = dependencycount;
-            this.Path = path;
-            this.DeviceCount = devicecount;
-            this.RunCount = runcount;
+                ////
+                var dependencyString = Encoding.Unicode.GetString(pfDependencyBytes);
+                string[] dependencyArraySplit = dependencyString.Split(new string[] { "\\DEVICE\\" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] dependencyArray = new string[dependencyArraySplit.Count()];
+                for (int i = 0; i < dependencyArraySplit.Count(); i++)
+                {
+                    string dependency = dependencyArraySplit[i].Replace("HARDDISKVOLUME1", "\\DEVICE\\HARDDISKVOLUME1").Replace("\0", string.Empty);
+                    if(dependency.Contains(appName))
+                    {
+                        pfPath = dependency;
+                    }
+                    dependencyArray[i] = dependency;
+                }
+
+
+                //// Get int representing the number of devices associated with prefetch record ////
+                // Instantiate byte array
+                byte[] deviceCountBytes = new byte[0x04];
+                // Create sub-array "deviceCountBytes" from byte array "bytes"
+                Array.Copy(fileBytes, 0x70, deviceCountBytes, 0, deviceCountBytes.Length);
+                // Return int representing the number of devices associated with this application
+                Int32 pfDeviceCount = BitConverter.ToInt32(deviceCountBytes, 0);
+
+
+                //// Get application run count ////
+                // Instantiate byte array
+                byte[] runCountBytes = new byte[0x04];
+                // Check version and put correct bytes in runCountBytes byte array
+                switch (pfVersion)
+                {
+                    case "WINDOWS_8":
+                        Array.Copy(fileBytes, 0xD0, runCountBytes, 0, runCountBytes.Length);
+                        break;
+                    case "WINDOWS_7":
+                        Array.Copy(fileBytes, 0x98, runCountBytes, 0, runCountBytes.Length);
+                        break;
+                    case "WINDOWS_XP":
+                        Array.Copy(fileBytes, 0x90, runCountBytes, 0, runCountBytes.Length);
+                        break;
+                }
+                // Return run count as int
+                Int32 pfRunCount =  BitConverter.ToInt32(runCountBytes, 0);
+
+
+                //
+                Version = pfVersion;
+                Name = appName;
+                PathHash = pfPathHash;
+                PrefetchAccessTime = pfAccessTimeList.ToArray();
+                DependencyFiles = dependencyArray;
+                DependencyCount = dependencyArray.Length;
+                Path = pfPath;
+                DeviceCount = pfDeviceCount;
+                RunCount = pfRunCount;
+            }
         }
         
-        #endregion PrefetchConstructors
+        #endregion Constructors
 
-        #region PrivatePrefetchMethods
+        #region StaticMethods
 
-        // Check that file is actually a Prefetch File
-        private static bool checkPfMagic(byte[] bytes)
+        public static Prefetch Get(string filePath)
         {
-            // Instantiate byte array
-            byte[] magicBytes = new byte[0x04];
+            // Get volume path from filePath
+            string volume = @"\\.\" + filePath.Split('\\')[0];
 
-            // Create sub-array "magicBytes" from byte array "bytes"
-            Array.Copy(bytes, 0x04, magicBytes, 0, magicBytes.Length);
+            // Get a handle to the volume
+            IntPtr hVolume = NativeMethods.getHandle(volume);
 
-            // Check to see if magicBytes are equal to the Prefetch Magic Value
-            if (Encoding.ASCII.GetString(magicBytes) == Magic)
+            // Create a FileStream to read from the volume handle
+            using (FileStream streamToRead = NativeMethods.getFileStream(hVolume))
             {
-                return true;
+                // Get a byte array representing the Master File Table
+                byte[] MFT = MasterFileTable.GetBytes(hVolume, streamToRead);
+
+                // Get bytes for specific Prefetch file
+                byte[] fileBytes = MFTRecord.getFile(volume, streamToRead, MFT, filePath).ToArray();
+
+                // Return a Prefetch object for the Prefetch file stored at filePath
+                return new Prefetch(fileBytes);
             }
-
-            else
-            {
-                return false;
-            }
         }
 
-        // Get Prefetch Path Hash Value
-        private static string getPfPathHash(byte[] bytes)
+        public static Prefetch Get(string filePath, bool fast)
         {
-            // Instantiate byte array
-            byte[] pfHashBytes = new byte[0x04];
-
-            // Create sub-array "pfHashBytes" from byte array "bytes"
-            Array.Copy(bytes, 0x4C, pfHashBytes, 0, pfHashBytes.Length);
-            
-            // Reverse Little Endian bytes
-            Array.Reverse(pfHashBytes);
-            
-            // Return string representing Prefetch Path Hash
-            return BitConverter.ToString(pfHashBytes).Replace("-", "");
-        }
-
-        // 
-        private static DateTime[] getPfAccessTime(byte ver, byte[] bytes)
-        {
-            // Instantiate a null byte array
-            byte[] pfAccessTimeBytes = null;
-
-            // Instantiate a List of DateTime Objects
-            List<DateTime> pfAccessTimeList = new List<DateTime>();
-            
-            // Zero out counter
-            int counter = 0;
-
-            // Check Prefetch version
-            switch (ver)
-            {
-                // Windows 8 Version
-                case 0x1A:
-                    pfAccessTimeBytes = new byte[0x40];
-                    Array.Copy(bytes, 0x80, pfAccessTimeBytes, 0, 0x40);
-                    counter = 64;
-                    break;
-                // Windows 7 Version
-                case 0x17:
-                    pfAccessTimeBytes = new byte[0x08];
-                    Array.Copy(bytes, 0x80, pfAccessTimeBytes, 0, 0x08);
-                    counter = 8;
-                    break;
-                // Windows XP Version
-                case 0x11:
-                    pfAccessTimeBytes = new byte[0x08];
-                    Array.Copy(bytes, 0x78, pfAccessTimeBytes, 0, 0x08);
-                    counter = 8;
-                    break;
-            }
-
-            for (int i = 0; i < counter; i += 8)
-            {
-                long winFileTime = BitConverter.ToInt64(pfAccessTimeBytes, i);
-                DateTime dt = DateTime.FromFileTimeUtc(winFileTime);
-                if ((ver == 0x1A) && (dt.ToString() == "1/1/1601 12:00:00 AM"))
-                {
-                    break;
-                }
-
-                pfAccessTimeList.Add(dt);
-
-            }
-
-            return pfAccessTimeList.ToArray();
-        }
-
-        //
-        private static byte[] getPfDependencySection(byte[] bytes)
-        {
-
-            int dependencyOffsetValue = BitConverter.ToInt32((bytes.Skip(0x64).Take(0x04).ToArray()), 0);
-            int dependencyLengthValue = BitConverter.ToInt32((bytes.Skip(0x68).Take(0x04).ToArray()), 0);
-            return bytes.Skip(dependencyOffsetValue).Take(dependencyLengthValue).ToArray();
-
-        }
-
-        private static string[] getPfDependencies(byte[] pfDependencyBytes)
-        {
-            var dependencyString = Encoding.Unicode.GetString(pfDependencyBytes);
-            string[] dependencyArraySplit = dependencyString.Split(new string[] { "\\DEVICE\\" }, StringSplitOptions.RemoveEmptyEntries);
-            string[] dependencyArray = new string[dependencyArraySplit.Count()];
-            for (int i = 0; i < dependencyArraySplit.Count(); i++)
-            {
-                string dependency = dependencyArraySplit[i].Replace("HARDDISKVOLUME1", "\\DEVICE\\HARDDISKVOLUME1").Replace("\0", string.Empty);
-                dependencyArray[i] = dependency;
-            }
-            return dependencyArray;
-        }
-
-        //Application Path
-        private static string getPfPath(string appName, string[] dependencyArray)
-        {
-            for (int i = 0; i < dependencyArray.Length; i++)
-            {
-                if (dependencyArray[i].Contains(appName))
-                {
-                    return dependencyArray[i];
-                }
-            }
-            return null;
-        }
-
-        // Get int representing the number of devices associated with prefetch record
-        private static int getPfDeviceCount(byte[] bytes)
-        {
-            // Instantiate byte array
-            byte[] deviceCountBytes = new byte[0x04];
-
-            // Create sub-array "deviceCountBytes" from byte array "bytes"
-            Array.Copy(bytes, 0x70, deviceCountBytes, 0, deviceCountBytes.Length);
-            
-            // Return int representing the number of devices associated with this application
-            return BitConverter.ToInt32(deviceCountBytes, 0);
-        }
-
-        // Get application run count
-        private static int getPfRunCount(byte ver, byte[] bytes)
-        {
-            // Instantiate byte array
-            byte[] runCountBytes = new byte[0x04];
-
-            // Check version and put correct bytes in runCountBytes byte array
-            switch (ver)
-            {
-                case 0x1A:
-                    //runCountBytes = bytes.Skip(0xD0).Take(0x04).ToArray();
-                    Array.Copy(bytes, 0xD0, runCountBytes, 0, runCountBytes.Length);
-                    break;
-                case 0x17:
-                    //runCountBytes = bytes.Skip(0x98).Take(0x04).ToArray();
-                    Array.Copy(bytes, 0x98, runCountBytes, 0, runCountBytes.Length);
-                    break;
-                case 0x11:
-                    //runCountBytes = bytes.Skip(0x90).Take(0x04).ToArray();
-                    Array.Copy(bytes, 0x90, runCountBytes, 0, runCountBytes.Length);
-                    break;
-            }
-
-            // Return run count as int
-            return BitConverter.ToInt32(runCountBytes, 0);
-        }
-
-        #endregion PrivatePrefetchMethods
-
-        #region StaticPrefetchMethods
-
-        public static Prefetch Get(string volume, FileStream streamToRead, byte[] MFT, string prefetchPath)
-        {
-
             // Get bytes for specific Prefetch file
-            byte[] fileBytes = MFTRecord.getFile(volume, streamToRead, MFT, prefetchPath).ToArray();
-            
-            // Check for Prefetch Magic Number (Value) SCCA at offset 0x04 - 0x07
-            if (checkPfMagic(fileBytes))
+            byte[] fileBytes = null;
+
+            try
             {
-
-                // Check Prefetch file for version (0x1A = Win 8, 0x17 = Win 7, 0x11 = Win XP)
-                byte pfVersion = fileBytes[0];
-
-                string appName = null;
-                string[] dependencyArray = null;
-
-                appName = System.Text.Encoding.Unicode.GetString((fileBytes.Skip(0x10).Take(0x3C).ToArray())).TrimEnd('\0');
-                dependencyArray = getPfDependencies(getPfDependencySection(fileBytes));
-
-                Prefetch prefetch = new Prefetch(
-                    Enum.GetName(typeof(PREFETCH_VERSION), pfVersion),
-                    appName,
-                    getPfPathHash(fileBytes),
-                    getPfAccessTime(pfVersion, fileBytes),
-                    dependencyArray,
-                    dependencyArray.Length,
-                    getPfPath(appName, dependencyArray),
-                    getPfDeviceCount(fileBytes),
-                    getPfRunCount(pfVersion, fileBytes)
-                );
-
-                return prefetch;
-
+                fileBytes = File.ReadAllBytes(filePath);
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException("ArgumentException thrown by Prefetch.GetInstance()");
+            }
+            catch (PathTooLongException)
+            {
+                throw new PathTooLongException("PathTooLongException thrown by Prefetch.GetInstance()");
+            }
+            catch (DirectoryNotFoundException)
+            {
+                throw new DirectoryNotFoundException("DirectoryNotFoundException thrown by Prefetch.GetInstance()");
+            }
+            catch (IOException)
+            {
+                throw new IOException("IOException thrown by Prefetch.GetInstance()");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new UnauthorizedAccessException("UnauthorizedAccessException thrown by Prefetch.GetInstance()");
             }
 
+            // Return a Prefetch object for the Prefetch file stored at filePath
+            return new Prefetch(fileBytes);
+        }
+
+        public static Prefetch[] GetInstances()
+        {
+            // Get current volume
+            string volLetter = Directory.GetCurrentDirectory().Split('\\')[0];
+            string volume = @"\\.\" + volLetter;
+
+            // Get a handle to the volume
+            IntPtr hVolume = NativeMethods.getHandle(volume);
+
+            // Create a FileStream to read from the volume handle
+            using (FileStream streamToRead = NativeMethods.getFileStream(hVolume))
+            {
+                // Get a byte array representing the Master File Table
+                byte[] MFT = MasterFileTable.GetBytes(hVolume, streamToRead);
+
+                // Build Prefetch directory path
+                string prefetchPath = volLetter + @"\\Windows\\Prefetch";
+
+                // Check prefetchPath exists
+                if (Directory.Exists(prefetchPath))
+                {
+                    // Get list of file in the Prefetch directory that end in the .pf extension
+                    var pfFiles = System.IO.Directory.GetFiles(prefetchPath, "*.pf");
+                    
+                    // Instantiate an array of Prefetch objects
+                    Prefetch[] pfArray = new Prefetch[pfFiles.Length];
+                    
+                    // Iterate through Prefetch Files
+                    for (int i = 0; i < pfFiles.Length; i++)
+                    {
+                        // Get bytes for specific Prefetch file
+                        byte[] fileBytes = MFTRecord.getFile(volume, streamToRead, MFT, pfFiles[i]).ToArray();
+
+                        // Output the Prefetch object for the corresponding file
+                        pfArray[i] = (new Prefetch(fileBytes));
+                    }
+
+                    // Return array or Prefetch objects
+                    return pfArray;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static Prefetch[] GetInstances(bool fast)
+        {
+            // Get current volume
+            string volLetter = Directory.GetCurrentDirectory().Split('\\')[0];
+            // Build Prefetch directory path
+            string prefetchPath = volLetter + @"\\Windows\\Prefetch";
+
+            // Check prefetchPath exists
+            if (Directory.Exists(prefetchPath))
+            {
+                // Get list of file in the Prefetch directory that end in the .pf extension
+                var pfFiles = System.IO.Directory.GetFiles(prefetchPath, "*.pf");
+                    
+                // Instantiate an array of Prefetch objects
+                Prefetch[] pfArray = new Prefetch[pfFiles.Length];
+                    
+                // Iterate through Prefetch Files
+                for (int i = 0; i < pfFiles.Length; i++)
+                {
+                    // Get bytes for specific Prefetch file
+                    byte[] fileBytes = null;
+                    
+                    try
+                    {
+                        fileBytes = File.ReadAllBytes(pfFiles[i]);
+                    }
+                    catch (ArgumentException)
+                    {
+                        throw new ArgumentException("ArgumentException thrown by Prefetch.GetInstance()");
+                    }
+                    catch(PathTooLongException)
+                    {
+                        throw new PathTooLongException("PathTooLongException thrown by Prefetch.GetInstance()");
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                        throw new DirectoryNotFoundException("DirectoryNotFoundException thrown by Prefetch.GetInstance()");
+                    }
+                    catch (IOException)
+                    {
+                        throw new IOException("IOException thrown by Prefetch.GetInstance()");
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        throw new UnauthorizedAccessException("UnauthorizedAccessException thrown by Prefetch.GetInstance()");
+                    }
+
+
+                    // Output the Prefetch object for the corresponding file
+                    pfArray[i] = (new Prefetch(fileBytes));
+                }
+
+                // Return array or Prefetch objects
+                return pfArray;
+            }
             else
             {
                 return null;
             }
         }
 
-        #endregion StaticPrefetchMethods
-
+        #endregion StaticMethods
     }
+
+    #endregion PrefetchClass
 }

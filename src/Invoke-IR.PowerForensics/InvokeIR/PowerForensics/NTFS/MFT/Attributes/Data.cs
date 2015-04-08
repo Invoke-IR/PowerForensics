@@ -21,7 +21,13 @@ namespace InvokeIR.PowerForensics.NTFS
 
         }
 
-        public byte[] RawData;
+        #region Properties
+
+        public readonly byte[] RawData;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal Data(byte[] AttrBytes, string attrName)
         {
@@ -33,6 +39,8 @@ namespace InvokeIR.PowerForensics.NTFS
             AttributeId = data.header.commonHeader.Id;
             RawData = data.RawBytes;
         }
+
+        #endregion Constructors
 
     }
 

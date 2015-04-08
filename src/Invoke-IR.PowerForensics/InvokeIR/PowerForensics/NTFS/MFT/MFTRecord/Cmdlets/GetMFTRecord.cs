@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
+using InvokeIR.Win32;
 using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.PowerForensics.Cmdlet
@@ -89,18 +90,9 @@ namespace InvokeIR.PowerForensics.Cmdlet
         protected override void ProcessRecord()
         {
 
-            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
-
-            if (lettersOnly.IsMatch(volume))
-            {
-
-                volume = @"\\.\" + volume + ":";
-                
-            }
+            NativeMethods.getVolumeName(ref volume);
 
             string volLetter = volume.TrimStart('\\').TrimStart('.').TrimStart('\\') + '\\';
-
-            WriteDebug("VolumeName: " + volume);
 
             byte[] mftBytes = MasterFileTable.GetBytes(volume);
             

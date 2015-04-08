@@ -174,15 +174,15 @@ namespace InvokeIR.PowerForensics.NTFS
 
         #region Properties
 
-        public ulong FileReferenceNumber;
-        public ulong ParentFileReferenceNumber;
-        public ulong Usn;
-        public DateTime TimeStamp;
-        public string Reason;
-        public string SourceInfo;
-        public uint SecurityId;
-        public uint FileAttributes;
-        public string FileName;
+        public readonly ulong FileReferenceNumber;
+        public readonly ulong ParentFileReferenceNumber;
+        public readonly ulong Usn;
+        public readonly DateTime TimeStamp;
+        public readonly string Reason;
+        public readonly string SourceInfo;
+        public readonly uint SecurityId;
+        public readonly uint FileAttributes;
+        public readonly string FileName;
 
         #endregion Properties
 

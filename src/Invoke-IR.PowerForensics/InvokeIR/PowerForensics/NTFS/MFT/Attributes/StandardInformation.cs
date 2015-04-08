@@ -80,13 +80,19 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
-        public string Permission;
-        public uint OwnerId;
-        public uint SecurityId;
-        public DateTime ModifiedTime;
-        public DateTime AccessedTime;
-        public DateTime ChangedTime;
-        public DateTime BornTime;
+        #region Properties
+
+        public readonly string Permission;
+        public readonly uint OwnerId;
+        public readonly uint SecurityId;
+        public readonly DateTime ModifiedTime;
+        public readonly DateTime AccessedTime;
+        public readonly DateTime ChangedTime;
+        public readonly DateTime BornTime;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal StandardInformation(byte[] AttrBytes, string AttrName)
         {
@@ -170,6 +176,8 @@ namespace InvokeIR.PowerForensics.NTFS
             ChangedTime = stdInfo.MFTTime;
             BornTime = stdInfo.CreateTime;
         }
+
+        #endregion Constructors
 
     }
 

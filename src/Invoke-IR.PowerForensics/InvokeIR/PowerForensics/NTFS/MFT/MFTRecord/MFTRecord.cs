@@ -2,20 +2,29 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using InvokeIR.Win32;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
+    #region MFTRecordClass
+
     public class MFTRecord
     {
+
+        #region Enums
 
         enum FILE_RECORD_FLAG
         {
             INUSE = 0x01,	// File record is in use
             DIR = 0x02	    // File record is a directory
         }
+
+        #endregion Enums
+
+        #region Structs
 
         internal struct FILE_RECORD_HEADER
         {
@@ -53,28 +62,102 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
+        #endregion Structs
+
         #region Properties
 
-        public string FullPath;
-        public string Name;
-        public ulong ParentIndex;
-        public uint RecordNumber;
-        public ulong Size;
-        public DateTime ModifiedTime;
-        public DateTime AccessedTime;
-        public DateTime ChangedTime;
-        public DateTime BornTime;
-        public string Permission;
-        public ushort SequenceNumber;
-        public ulong LogFileSequenceNumber;
-        public ushort Links;
-        public bool Deleted;
-        public bool Directory;
-        public Attr[] Attribute;
+        public readonly string FullPath;
+        public readonly string Name;
+        public readonly ulong ParentIndex;
+        public readonly uint RecordNumber;
+        public readonly ulong Size;
+        public readonly DateTime ModifiedTime;
+        public readonly DateTime AccessedTime;
+        public readonly DateTime ChangedTime;
+        public readonly DateTime BornTime;
+        public readonly string Permission;
+        public readonly ushort SequenceNumber;
+        public readonly ulong LogFileSequenceNumber;
+        public readonly ushort Links;
+        public readonly bool Deleted;
+        public readonly bool Directory;
+        public readonly Attr[] Attribute;
 
         #endregion Properties
 
         #region Constructors
+
+        internal MFTRecord(byte[] recordBytes)
+        {
+            // Instantiate a FILE_RECORD_HEADER struct from raw MFT Record bytes
+            FILE_RECORD_HEADER RecordHeader = new FILE_RECORD_HEADER(recordBytes);
+
+            // Check MFT Signature (FILE) to ensure bytes actually represent an MFT Record
+            if (checkMFTRecord(RecordHeader.Magic))
+            {
+                RecordNumber = RecordHeader.RecordNo;
+                Size = RecordHeader.RealSize;
+                SequenceNumber = RecordHeader.SeqNo;
+                LogFileSequenceNumber = RecordHeader.LSN;
+                Links = RecordHeader.Hardlinks;
+
+                // Unmask Header Flags
+                #region HeaderFlags
+
+                if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.INUSE) == (ushort)FILE_RECORD_FLAG.INUSE)
+                {
+                    Deleted = false;
+                }
+                else
+                {
+                    Deleted = true;
+                }
+                if ((RecordHeader.Flags & (ushort)FILE_RECORD_FLAG.DIR) == (ushort)FILE_RECORD_FLAG.DIR)
+                {
+                    Directory = true;
+                }
+                else
+                {
+                    Directory = false;
+                }
+
+                #endregion HeaderFlags
+
+                List<Attr> AttributeList = new List<Attr>();
+                int offsetToATTR = RecordHeader.OffsetOfAttr;
+
+                while (offsetToATTR < (RecordHeader.RealSize - 8))
+                {
+                    int offset = offsetToATTR;
+                    Attr attr = AttributeFactory.Get(recordBytes, offset, out offsetToATTR);
+                    if (attr != null)
+                    {
+                        if (attr.Name == "STANDARD_INFORMATION")
+                        {
+                            StandardInformation stdInfo = attr as StandardInformation;
+                            ModifiedTime = stdInfo.ModifiedTime;
+                            AccessedTime = stdInfo.AccessedTime;
+                            ChangedTime = stdInfo.ChangedTime;
+                            BornTime = stdInfo.BornTime;
+                            Permission = stdInfo.Permission;
+                        }
+                        else if (attr.Name == "FILE_NAME")
+                        {
+                            FileName fN = attr as FileName;
+                            if (!(fN.Filename.Contains("~")))
+                            {
+                                Name = fN.Filename;
+                                ParentIndex = fN.ParentIndex;
+                            }
+
+                        }
+                        AttributeList.Add(attr);
+                    }
+                }
+
+                Attribute = AttributeList.ToArray();
+            }
+        }
 
         internal MFTRecord(byte[] mftBytes, int index, string volLetter, string fileName)
         {
@@ -397,6 +480,30 @@ namespace InvokeIR.PowerForensics.NTFS
             return null;
         }
 
+        internal static byte[] getFile(FileStream streamToRead, MFTRecord mftRecord)
+        {
+            if (!(mftRecord.Directory))
+            {
+                foreach (Attr attr in mftRecord.Attribute)
+                {
+                    if (attr.Name == "DATA")
+                    {
+                        if (attr.NonResident == true)
+                        {
+                            NonResident nonResAttr = attr as NonResident;
+                            return NonResident.GetContent(streamToRead, nonResAttr);
+                        }
+                        else
+                        {
+                            Data dataAttr = attr as Data;
+                            return dataAttr.RawData;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
         #endregion getFile
 
         #region getMFTRecordBytesMethods
@@ -488,4 +595,6 @@ namespace InvokeIR.PowerForensics.NTFS
         #endregion GetInstancesMethods
 
     }
+
+    #endregion MFTRecordClass
 }

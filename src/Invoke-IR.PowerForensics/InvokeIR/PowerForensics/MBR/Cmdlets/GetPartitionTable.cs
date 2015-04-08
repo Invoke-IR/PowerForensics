@@ -40,16 +40,15 @@ namespace InvokeIR.PowerForensics.Cmdlets
             #region Cmdlet Overrides
 
             /// <summary> 
-            /// The ProcessRecord outputs the raw bytes of the specified File
+            /// The ProcessRecord instantiates a MasterBootRecord Object
+            /// and outputs all Partitions that are not of the EMPTY type
             /// </summary> 
 
             protected override void ProcessRecord()
             {
 
-                IntPtr hDrive = NativeMethods.getHandle(drivePath);
-                FileStream streamToRead = NativeMethods.getFileStream(hDrive);
+                MasterBootRecord mbr = new MasterBootRecord(drivePath);
 
-                MasterBootRecord mbr = new MasterBootRecord(streamToRead);
                 foreach (MBR.Partition partition in mbr.Partitions)
                 {
 
@@ -63,8 +62,6 @@ namespace InvokeIR.PowerForensics.Cmdlets
                         // Add code to parse EXTENDED partitions
                     }
                 }
-
-                streamToRead.Close();
 
             } // ProcessRecord 
 

@@ -107,11 +107,11 @@ namespace InvokeIR.PowerForensics.NTFS
 
             }
 
-            List<byte> nonResBytes = NonResident.GetContent(streamToRead, INDX);
+            byte[] nonResBytes = NonResident.GetContent(streamToRead, INDX);
 
             List<IndexEntry> indxEntryList = new List<IndexEntry>();
 
-            for (int offset = 0; offset < nonResBytes.Count; offset += 4096)
+            for (int offset = 0; offset < nonResBytes.Length; offset += 4096)
             {
 
                 byte[] indxBytes = nonResBytes.Skip(offset).Take(4096).ToArray();

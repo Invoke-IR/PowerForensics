@@ -20,8 +20,8 @@ namespace InvokeIR.PowerForensics.Cmdlets
         #region Parameters
 
         /// <summary> 
-        /// This parameter provides the DriveName for the 
-        /// Partition Table that will be returned.
+        /// This parameter provides the VolumeName for the 
+        /// Volume Boot Record that will be returned.
         /// </summary> 
 
         [Parameter(Mandatory = true, Position = 0)]
@@ -37,26 +37,13 @@ namespace InvokeIR.PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// The ProcessRecord method calls ManagementClass.GetInstances() 
-        /// method to iterate through each BindingObject on each system specified.
+        /// The ProcessRecord method instantiates a VolumeBootRecord object based 
+        /// on the volume name given as an argument.
         /// </summary> 
         protected override void ProcessRecord()
         {
 
-            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
-
-            if (lettersOnly.IsMatch(volume))
-            {
-
-                volume = @"\\.\" + volume + ":";
-
-            }
-
-            IntPtr hVolume = NativeMethods.getHandle(volume);
-            FileStream streamToRead = NativeMethods.getFileStream(hVolume);
-            byte[] bootbytes = NativeMethods.readDrive(streamToRead, 0, 512);
-
-             WriteObject(new VolumeBootRecord(bootbytes));
+             WriteObject(new VolumeBootRecord(volume));
 
         } // ProcessRecord 
 

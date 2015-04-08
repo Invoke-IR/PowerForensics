@@ -27,9 +27,9 @@ namespace InvokeIR.PowerForensics.NTFS
 
         #region Properties
 
-        public ushort PackedSize;
-        public ushort EACount;
-        public uint UnpackedSize;
+        public readonly ushort PackedSize;
+        public readonly ushort EACount;
+        public readonly uint UnpackedSize;
 
         #endregion Properties
 

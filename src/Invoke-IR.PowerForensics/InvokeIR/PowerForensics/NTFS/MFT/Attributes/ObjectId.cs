@@ -27,7 +27,13 @@ namespace InvokeIR.PowerForensics.NTFS
 
         }
 
-        public byte[] ObjectIdBytes;
+        #region Properties
+
+        public readonly byte[] ObjectIdBytes;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal ObjectId(byte[] AttrBytes, string AttrName)
         {
@@ -39,6 +45,8 @@ namespace InvokeIR.PowerForensics.NTFS
             AttributeId = objectId.header.commonHeader.Id;
             ObjectIdBytes = objectId.ObjectId;
         }
+
+        #endregion Constructors
 
     }
 

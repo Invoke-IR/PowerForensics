@@ -5,7 +5,16 @@ using System.Text;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
-    class EA
+    class EA : Attr
     {
+
+        #region Properties
+
+        #endregion Properties
+
+        #region Constructors
+
+        #endregion Constructors
+
     }
 }

@@ -37,9 +37,15 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
-        public uint Major;
-        public uint Minor;
-        public string Flags;
+        #region Properties
+
+        public readonly uint Major;
+        public readonly uint Minor;
+        public readonly string Flags;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal VolumeInformation(byte[] AttrBytes, string AttrName)
         {
@@ -93,6 +99,8 @@ namespace InvokeIR.PowerForensics.NTFS
             Minor = volInfo.MinorVersion;
             Flags = volumeFlags.ToString();
         }
+
+        #endregion Constructors
 
     }
 

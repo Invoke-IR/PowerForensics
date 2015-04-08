@@ -20,8 +20,8 @@ namespace InvokeIR.PowerForensics.NTFS
         }
 
         #region Properties
-        
-        public string VolumeNameString;
+
+        public readonly string VolumeNameString;
 
         #endregion Properties
 

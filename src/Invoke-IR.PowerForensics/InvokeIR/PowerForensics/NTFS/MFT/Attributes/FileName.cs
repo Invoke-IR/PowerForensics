@@ -86,12 +86,18 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
-        public string Filename;
-        public ulong ParentIndex;
-        public DateTime ModifiedTime;
-        public DateTime AccessedTime;
-        public DateTime ChangedTime;
-        public DateTime BornTime;
+        #region Properties
+
+        public readonly string Filename;
+        public readonly ulong ParentIndex;
+        public readonly DateTime ModifiedTime;
+        public readonly DateTime AccessedTime;
+        public readonly DateTime ChangedTime;
+        public readonly DateTime BornTime;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal FileName(byte[] bytes, string attrName)
         {
@@ -108,6 +114,8 @@ namespace InvokeIR.PowerForensics.NTFS
             ChangedTime = fileName.MFTTime;
             BornTime = fileName.CreateTime;
         }
+
+        #endregion Constructors
 
     }
 

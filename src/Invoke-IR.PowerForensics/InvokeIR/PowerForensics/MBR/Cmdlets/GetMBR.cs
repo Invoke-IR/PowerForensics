@@ -8,7 +8,7 @@ namespace InvokeIR.PowerForensics.Cmdlets
 
     #region GetMBRCommand
     /// <summary> 
-    /// This class implements the Get-PartitionTable cmdlet. 
+    /// This class implements the Get-MBR cmdlet. 
     /// </summary> 
 
     [Cmdlet(VerbsCommon.Get, "MBR", SupportsShouldProcess = true)]
@@ -36,21 +36,14 @@ namespace InvokeIR.PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// The ProcessRecord outputs the raw bytes of the specified File
+        /// The ProcessRecord outputs a MasterBootRecord object for the
+        /// specified Drive Path
         /// </summary> 
 
         protected override void ProcessRecord()
         {
 
-            IntPtr hDrive = NativeMethods.getHandle(drivePath);
-            FileStream streamToRead = NativeMethods.getFileStream(hDrive);
-
-            MasterBootRecord mbr = new MasterBootRecord(streamToRead);
-
-            //WriteObject(MasterBootRecord.MBRCodeArea);
-            WriteObject(mbr);
-
-            streamToRead.Close();
+            WriteObject(new MasterBootRecord(drivePath));
 
         } // ProcessRecord 
 

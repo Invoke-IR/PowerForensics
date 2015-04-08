@@ -44,22 +44,7 @@ namespace InvokeIR.PowerForensics.Cmdlets
         protected override void ProcessRecord()
         {
 
-            Regex lettersOnly = new Regex("^[a-zA-Z]{1}$");
-
-            if (lettersOnly.IsMatch(volumeName))
-            {
-
-                volumeName = @"\\.\" + volumeName + ":";
-
-            }
-
-            WriteDebug("VolumeName: " + volumeName);
-
-            IntPtr hVolume = NativeMethods.getHandle(volumeName);
-
-            WriteObject(new VolumeData(hVolume));
-
-            NativeMethods.CloseHandle(hVolume);
+            WriteObject(new VolumeData(volumeName));
 
         } // ProcessRecord 
 

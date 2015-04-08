@@ -37,11 +37,17 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
-        public ulong AllocatedSize;
-        public ulong RealSize;
-        public ulong InitializedSize;
-        public ulong[] StartCluster;
-        public ulong[] EndCluster;
+        #region Properties
+
+        public readonly ulong AllocatedSize;
+        public readonly ulong RealSize;
+        public readonly ulong InitializedSize;
+        public readonly ulong[] StartCluster;
+        public readonly ulong[] EndCluster;
+
+        #endregion Properties
+
+        #region Constructors
 
         internal NonResident(uint AttrType, string name, bool nonResident, ushort attributeId, ulong allocatedSize, ulong realSize, ulong iniSize, ulong[] startCluster, ulong[] endCluster)
         {
@@ -56,8 +62,12 @@ namespace InvokeIR.PowerForensics.NTFS
             EndCluster = endCluster;
         }
 
-        internal static List<byte> GetContent(FileStream streamToRead, NonResident nonResAttr)
+        #endregion Constructors
+
+        internal static byte[] GetContent(FileStream streamToRead, NonResident nonResAttr)
         {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
 
             List<byte> DataBytes = new List<byte>();
 
@@ -67,9 +77,16 @@ namespace InvokeIR.PowerForensics.NTFS
                 ulong length = (nonResAttr.EndCluster[i] - nonResAttr.StartCluster[i]) * 4096;
                 DataBytes.AddRange(NativeMethods.readDrive(streamToRead, offset, length));
             }
+            sw.Stop();
+            Console.WriteLine("readDrive: {0}", sw.ElapsedMilliseconds);
+            sw.Start();
 
-            DataBytes.Take((int)nonResAttr.RealSize);
-            return DataBytes;
+            byte[] contentBytes = new byte[nonResAttr.RealSize];
+            Array.Copy(DataBytes.ToArray(), 0, contentBytes, 0, contentBytes.Length);
+            sw.Stop();
+            Console.WriteLine("Array.Copy: {0}", sw.ElapsedMilliseconds);
+            sw.Start();
+            return contentBytes;
 
         }
 

@@ -55,6 +55,7 @@
     <Compile Include="InvokeIR\PowerForensics\MBR\Partition.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\AttrDef.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\AttrDef\Cmdlets\GetAttrDef.cs" />
+    <Compile Include="InvokeIR\Win32\Helper\NTFSHelper.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\VBR\Cmdlets\GetVolumeBootRecord.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\LogFile\Cmdlet\Get-LogFile.cs" />
     <Compile Include="InvokeIR\PowerForensics\NTFS\LogFile\LogFile.cs" />
