@@ -14,7 +14,11 @@ namespace InvokeIR.PowerForensics
 
         #region MBRSignatures
 
-        private const string WINDOWS_6 = "A36C5E4F47E84449FF07ED3517B43A31";
+        private const string WINDOWS5_X = "8F558EB6672622401DA993E1E865C861";
+        private const string WINDOWS6_0 = "5C616939100B85E558DA92B899A0FC36";
+        private const string WINDOWS6_1 = "A36C5E4F47E84449FF07ED3517B43A31";
+        //private const string LILO = "";
+        private const string GRUB = "A6C7E63CA46F1CB2307E0F10AD897BDE";
         private const string NYANCAT = "B40C0E49689A0ABD2A51379FED1800F3";
         private const string STONEDv2 = "72B8CE41AF0DE751C946802B3ED844B4";
         private const string STONEDv2_TRUE_CRYPT = "5C7DE5F58B276CBE84B8B7E25F08318E";
@@ -58,17 +62,26 @@ namespace InvokeIR.PowerForensics
 
                 switch (Hash.Get(mbrCode, mbrCode.Length, "MD5"))
                 {
-                    case WINDOWS_6:
-                        MD5Signature = "WINDOWS_6";
+                    case WINDOWS5_X:
+                        MD5Signature = "Windows 5.X";
+                        break;
+                    case WINDOWS6_0:
+                        MD5Signature = "Windows 6.0";
+                        break;
+                    case WINDOWS6_1:
+                        MD5Signature = "Windows 6.1+";
+                        break;
+                    case GRUB:
+                        MD5Signature = "GRUB";
                         break;
                     case NYANCAT:
-                        MD5Signature = "NYANCAT";
+                        MD5Signature = "BOOTKIT Nyan Cat";
                         break;
                     case STONEDv2:
-                        MD5Signature = "STONEDv2";
+                        MD5Signature = "BOOTKIT Stonedv2";
                         break;
                     case STONEDv2_TRUE_CRYPT:
-                        MD5Signature = "STONEDv2_TRUE_CRYPT";
+                        MD5Signature = "BOOTKIT Stonedv2";
                         break;
                     default:
                         MD5Signature = "UNKNOWN";
