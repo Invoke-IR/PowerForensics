@@ -10,6 +10,7 @@ namespace InvokeIR.PowerForensics.NTFS
     public class StandardInformation : Attr
     {
 
+        [FlagsAttribute]
         enum ATTR_STDINFO_PERMISSION : uint
         {
             READONLY = 0x00000001,
@@ -98,77 +99,11 @@ namespace InvokeIR.PowerForensics.NTFS
         {
             ATTR_STANDARD_INFORMATION stdInfo = new ATTR_STANDARD_INFORMATION(AttrBytes, AttrBytes.Length);
 
-            #region stdInfoFlags
-
-            StringBuilder permissionFlags = new StringBuilder();
-            if (stdInfo.Permission != 0)
-            {
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.READONLY) == (uint)ATTR_STDINFO_PERMISSION.READONLY)
-                {
-                    permissionFlags.Append("READONLY, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.HIDDEN) == (uint)ATTR_STDINFO_PERMISSION.HIDDEN)
-                {
-                    permissionFlags.Append("HIDDEN, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.SYSTEM) == (uint)ATTR_STDINFO_PERMISSION.SYSTEM)
-                {
-                    permissionFlags.Append("SYSTEM, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.ARCHIVE) == (uint)ATTR_STDINFO_PERMISSION.ARCHIVE)
-                {
-                    permissionFlags.Append("ARCHIVE, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.DEVICE) == (uint)ATTR_STDINFO_PERMISSION.DEVICE)
-                {
-                    permissionFlags.Append("DEVICE, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.NORMAL) == (uint)ATTR_STDINFO_PERMISSION.NORMAL)
-                {
-                    permissionFlags.Append("NORMAL, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.TEMP) == (uint)ATTR_STDINFO_PERMISSION.TEMP)
-                {
-                    permissionFlags.Append("TEMP, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.SPARSE) == (uint)ATTR_STDINFO_PERMISSION.SPARSE)
-                {
-                    permissionFlags.Append("SPARSE, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.REPARSE) == (uint)ATTR_STDINFO_PERMISSION.REPARSE)
-                {
-                    permissionFlags.Append("REPARSE, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.COMPRESSED) == (uint)ATTR_STDINFO_PERMISSION.COMPRESSED)
-                {
-                    permissionFlags.Append("COMPRESSED, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.OFFLINE) == (uint)ATTR_STDINFO_PERMISSION.OFFLINE)
-                {
-                    permissionFlags.Append("OFFLINE, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.NCI) == (uint)ATTR_STDINFO_PERMISSION.NCI)
-                {
-                    permissionFlags.Append("NCI, ");
-                }
-                if ((stdInfo.Permission & (uint)ATTR_STDINFO_PERMISSION.ENCRYPTED) == (uint)ATTR_STDINFO_PERMISSION.ENCRYPTED)
-                {
-                    permissionFlags.Append("ENCRYPTED, ");
-                }
-                if (permissionFlags.Length > 2)
-                {
-                    permissionFlags.Length -= 2;
-
-                }
-            }
-
-            #endregion stdInfoFlags
-
             Name = Enum.GetName(typeof(ATTR_TYPE), stdInfo.header.commonHeader.ATTRType);
             NameString = AttrName;
             NonResident = stdInfo.header.commonHeader.NonResident;
             AttributeId = stdInfo.header.commonHeader.Id;
-            Permission = permissionFlags.ToString();
+            Permission = ((ATTR_STDINFO_PERMISSION)stdInfo.Permission).ToString();
             OwnerId = stdInfo.OwnerId;
             SecurityId = stdInfo.SecurityId;
             ModifiedTime = stdInfo.AlterTime;

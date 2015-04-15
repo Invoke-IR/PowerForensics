@@ -14,6 +14,7 @@ namespace InvokeIR.PowerForensics.NTFS
 
         #region Enums
 
+        [FlagsAttribute]
         internal enum ATTR_DEF_ENTRY
         {
             INDEX = 0x02,
@@ -66,39 +67,16 @@ namespace InvokeIR.PowerForensics.NTFS
         {
             ATTR_DEF attrDefStruct = new ATTR_DEF(bytes);
 
-            #region attrDefFlags
-
-            StringBuilder flags = new StringBuilder();
-            if (attrDefStruct.Flags != 0)
-            {
-                if ((attrDefStruct.Flags & (uint)ATTR_DEF_ENTRY.INDEX) == (uint)ATTR_DEF_ENTRY.INDEX)
-                {
-                    flags.Append("Index, ");
-                }
-                if ((attrDefStruct.Flags & (uint)ATTR_DEF_ENTRY.ALWAYS_RESIDENT) == (uint)ATTR_DEF_ENTRY.ALWAYS_RESIDENT)
-                {
-                    flags.Append("Always Resident, ");
-                }
-                if ((attrDefStruct.Flags & (uint)ATTR_DEF_ENTRY.ALWAYS_NONRESIDENT) == (uint)ATTR_DEF_ENTRY.ALWAYS_NONRESIDENT)
-                {
-                    flags.Append("Always Non-Resident, ");
-                }
-                if (flags.Length > 2)
-                {
-                    flags.Length -= 2;
-
-                }
-            }
-            #endregion stdInfoFlags
-
             Name = attrDefStruct.Name;
             Type = attrDefStruct.TypeIdentified;
-            Flags = flags.ToString();
+            Flags = ((ATTR_DEF_ENTRY)attrDefStruct.Flags).ToString();
             MinSize = attrDefStruct.MinSize;
             MaxSize = attrDefStruct.MaxSize;
         }
 
         #endregion Constructors
+
+        #region GetInstancesMethod
 
         internal static AttrDef[] GetInstances(string volumeName)
         {
@@ -142,6 +120,8 @@ namespace InvokeIR.PowerForensics.NTFS
             // Return an array of AttrDef objects
             return adList.ToArray();
         }
+
+        #endregion GetInstancesMethod
 
     }
 

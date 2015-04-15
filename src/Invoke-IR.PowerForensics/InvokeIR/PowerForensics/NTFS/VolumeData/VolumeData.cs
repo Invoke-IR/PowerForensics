@@ -71,55 +71,6 @@ namespace InvokeIR.PowerForensics.NTFS
 
         #region Constructors
 
-        public VolumeData(string volumeName)
-        {
-            // Get correct volume name from user input
-            NativeMethods.getVolumeName(ref volumeName);
-
-            // Get handle to Logical Volume
-            IntPtr hVolume = NativeMethods.getHandle(volumeName);
-
-            // Instantiate an empty NTFS_VOLUME_DATA_BUFFER struct
-            NTFS_VOLUME_DATA_BUFFER ntfsVolData = new NTFS_VOLUME_DATA_BUFFER();
-
-            // Instatiate an integer to accept the amount of bytes read
-            uint buf = 0;
-
-            // Return the NTFS_VOLUME_DATA_BUFFER struct
-            var status = DeviceIoControl(
-                hVolume,
-                WinIoCtl.FSCTL_GET_NTFS_VOLUME_DATA,
-                IntPtr.Zero,
-                0,
-                out ntfsVolData,
-                Marshal.SizeOf(ntfsVolData),
-                out buf,
-                IntPtr.Zero);
-
-            // Close the handle to the Logical Volume
-            NativeMethods.CloseHandle(hVolume);
-
-            if (!(status))
-            {
-                throw new Exception("Error calling DeviceIoControl with the FSCTL_GET_NTFS_VOLUME_DATA Control Code");
-            }
-
-            // Assign object properties
-            TotalSectors = ntfsVolData.NumberSectors;
-            TotalClusters = ntfsVolData.TotalClusters;
-            FreeClusters = ntfsVolData.FreeClusters;
-            BytesPerSector = ntfsVolData.BytesPerSector;
-            BytesPerCluster = ntfsVolData.BytesPerCluster;
-            BytesPerMFTRecord = ntfsVolData.BytesPerFileRecordSegment;
-            ClustersPerMFTRecord = ntfsVolData.ClustersPerFileRecordSegment;
-            MFTSize = ntfsVolData.MftValidDataLength;
-            MFTStartCluster = ntfsVolData.MftStartLcn;
-            MFTZoneStartCluster = ntfsVolData.MftZoneStart;
-            MFTZoneEndCluster = ntfsVolData.MftZoneEnd;
-            MFTMirrorStartCluster = ntfsVolData.Mft2StartLcn;
-
-        }
-
         internal VolumeData(IntPtr hVolume)
         {
             // This constructor expects the caller to close the handle to the volume

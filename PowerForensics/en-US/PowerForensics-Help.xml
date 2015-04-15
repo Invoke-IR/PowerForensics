@@ -170,13 +170,11 @@ Copy-FileRaw C:\Windows\System32\config\SAM C:\Users\Public\Desktop\SAM</dev:cod
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.AttrDef</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -417,24 +415,20 @@ You can use the &quot;Tail&quot; parameter name or its alias, &quot;Last&quot;.
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.String</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.Byte</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -577,13 +571,11 @@ tc\msdtcadvancedinstaller\msdtcadvancedinstaller.cpp (1758)</dev:code>
 			<!--Inputs-->
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>None</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -591,13 +583,11 @@ tc\msdtcadvancedinstaller\msdtcadvancedinstaller.cpp (1758)</dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeData</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -760,8 +750,7 @@ MFTMirrorStart       : 2</dev:code>
 						<maml:para>An array of MFTRecord objects to derive Mactime objects from.  This property accepts input from the pipeline.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">MFTRecord[]</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -777,8 +766,7 @@ MFTMirrorStart       : 2</dev:code>
 					<maml:name>MFTRecord[]</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -797,13 +785,11 @@ MFTMirrorStart       : 2</dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.Formats.Mactime</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -867,24 +853,20 @@ MFTMirrorStart       : 2</dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.MasterBootRecord</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.MBR.Partition</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1016,13 +998,11 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 			<!--Inputs-->
 			<command:inputType>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>None</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -1030,90 +1010,74 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.StandardInformation</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.FileName</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.Data</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.NonResident</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.ObjectId</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeInformation</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeName</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.EAInformation</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1267,24 +1231,20 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.MFTRecord</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.Attr</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1499,13 +1459,11 @@ Attribute             : {STANDARD_INFORMATION, FILE_NAME, DATA, BITMAP}</dev:cod
 			<!-- Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.MBR.Partition</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1746,6 +1704,14 @@ Central Standard Time       Central Daylight Time  </dev:code>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AsBytes</maml:name>
+				<maml:description>
+					<maml:para>Returns Volume Boot Record as byte array instead of as VolumeBootRecord object.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">SwitchParameter</command:parameterValue>
+				<dev:defaultValue>False</dev:defaultValue>
+			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
 			<!--Inputs-->
@@ -1760,13 +1726,11 @@ Central Standard Time       Central Daylight Time  </dev:code>
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -1797,6 +1761,16 @@ VolumeSN              : E3133CD4233CD4CA
 Code                  : {0, 0, 0, 0...}</dev:code>
 				<dev:remarks>
 					<maml:para>This example shows how to get the VolumeBootRecord object for the C drive.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>$bytes = Get-VolumeBootRecord -VolumeName \\.\C: -AsBytes</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows how to store the bytes that represent the Volume Boot Record as a byte array in the variable $bytes.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>

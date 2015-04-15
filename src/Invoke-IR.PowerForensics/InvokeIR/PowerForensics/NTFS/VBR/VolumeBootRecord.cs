@@ -114,6 +114,30 @@ namespace InvokeIR.PowerForensics.NTFS
 
         internal VolumeBootRecord(string volumeName)
         {
+            // Instantiate a NTFS_VOLUME_BOOT_RECORD struct
+            NTFS_VOLUME_BOOT_RECORD structVBR = new NTFS_VOLUME_BOOT_RECORD(getBytes(volumeName));
+
+            // Assign object properties
+            BytesPerSector = structVBR.BytesPerSector;
+            SectorsPerCluster = structVBR.SectorsPerCluster;
+            ReservedSectors = structVBR.ReservedSectors;
+            NumberOfHeads = structVBR.NumberOfHeads;
+            HiddenSectors = structVBR.HiddenSectors;
+            TotalSectors = structVBR.TotalSectors;
+            MFTStartIndex = structVBR.LCN_MFT;
+            MFTMirrStartIndex = structVBR.LCN_MFTMirr;
+            ClustersPerFileRecord = structVBR.ClustersPerFileRecord;
+            ClustersPerIndexBlock = structVBR.ClustersPerIndexBlock;
+            VolumeSN = structVBR.VolumeSN;
+            CodeSection = structVBR.Code;
+        }
+
+        #endregion Constructors
+
+        #region InternalMethods
+
+        internal static byte[] getBytes(string volumeName)
+        {
             // Get correct volume name from user input
             NativeMethods.getVolumeName(ref volumeName);
 
@@ -123,31 +147,13 @@ namespace InvokeIR.PowerForensics.NTFS
             // Create a FileStream object for the Volume
             using (FileStream streamToRead = NativeMethods.getFileStream(hVolume))
             {
-                // Instantiate a NTFS_VOLUME_BOOT_RECORD struct
-                NTFS_VOLUME_BOOT_RECORD structVBR = new NTFS_VOLUME_BOOT_RECORD(NativeMethods.readDrive(streamToRead, 0, 512));
-
-                // Assign object properties
-                BytesPerSector = structVBR.BytesPerSector;
-                SectorsPerCluster = structVBR.SectorsPerCluster;
-                ReservedSectors = structVBR.ReservedSectors;
-                NumberOfHeads = structVBR.NumberOfHeads;
-                HiddenSectors = structVBR.HiddenSectors;
-                TotalSectors = structVBR.TotalSectors;
-                MFTStartIndex = structVBR.LCN_MFT;
-                MFTMirrStartIndex = structVBR.LCN_MFTMirr;
-                ClustersPerFileRecord = structVBR.ClustersPerFileRecord;
-                ClustersPerIndexBlock = structVBR.ClustersPerIndexBlock;
-                VolumeSN = structVBR.VolumeSN;
-                CodeSection = structVBR.Code;
+                return NativeMethods.readDrive(streamToRead, 0, 512);
             }
-
-            // Close File Handle
-            NativeMethods.CloseHandle(hVolume);
         }
 
-        #endregion Constructors
+        #endregion InternalMethods
 
     }
-    
+
     #endregion VolumeBootRecordClass
 }

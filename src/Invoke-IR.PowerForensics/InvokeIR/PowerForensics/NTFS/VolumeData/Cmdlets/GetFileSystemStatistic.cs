@@ -44,7 +44,15 @@ namespace InvokeIR.PowerForensics.Cmdlets
         protected override void ProcessRecord()
         {
 
-            WriteObject(new VolumeData(volumeName));
+            // Get correct volume name from user input
+            NativeMethods.getVolumeName(ref volumeName);
+
+            // Get handle to Logical Volume
+            IntPtr hVolume = NativeMethods.getHandle(volumeName);
+
+            WriteObject(new VolumeData(hVolume));
+
+            NativeMethods.CloseHandle(hVolume);
 
         } // ProcessRecord 
 

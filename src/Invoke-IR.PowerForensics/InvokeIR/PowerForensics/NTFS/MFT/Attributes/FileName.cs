@@ -5,9 +5,21 @@ using InvokeIR.PowerForensics.NTFS;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
+    #region FileNameClass
 
     public class FileName : Attr
     {
+
+        #region Constants
+
+        private const byte ATTR_FILENAME_NAMESPACE_POSIX = 0x00;
+        private const byte ATTR_FILENAME_NAMESPACE_WIN32 = 0x01;
+        private const byte ATTR_FILENAME_NAMESPACE_DOS = 0x02;
+
+        #endregion Constants
+
+        #region Enums
+
         enum ATTR_FILENAME_FLAG
         {
             READONLY = 0x00000001,
@@ -27,9 +39,9 @@ namespace InvokeIR.PowerForensics.NTFS
             INDEXVIEW = 0x20000000
         }
 
-        private const byte ATTR_FILENAME_NAMESPACE_POSIX = 0x00;
-        private const byte ATTR_FILENAME_NAMESPACE_WIN32 = 0x01;
-        private const byte ATTR_FILENAME_NAMESPACE_DOS = 0x02;
+        #endregion Enums
+
+        #region Structs
 
         internal struct ATTR_FILE_NAME
         {
@@ -86,6 +98,8 @@ namespace InvokeIR.PowerForensics.NTFS
             }
         }
 
+        #endregion Structs
+
         #region Properties
 
         public readonly string Filename;
@@ -119,4 +133,5 @@ namespace InvokeIR.PowerForensics.NTFS
 
     }
 
+    #endregion FileNameClass
 }

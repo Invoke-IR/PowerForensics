@@ -94,6 +94,22 @@ namespace InvokeIR.PowerForensics
 
         #endregion Constructor
 
+        public static byte[] GetBytes(string drivePath)
+        {
+            // Check drivePath parameter
+            NativeMethods.getDriveName(drivePath);
+
+            // Get Handle to Hard Drive
+            IntPtr hDrive = NativeMethods.getHandle(drivePath);
+            
+            // Create a FileStream to read from hDrive
+            using (FileStream streamToRead = NativeMethods.getFileStream(hDrive))
+            {
+                // Read Master Boot Record (first 512 bytes) from disk
+                 return NativeMethods.readDrive(streamToRead, 0, 512);
+            }
+        }
+
     }
 
     #endregion MasterBootRecordClass

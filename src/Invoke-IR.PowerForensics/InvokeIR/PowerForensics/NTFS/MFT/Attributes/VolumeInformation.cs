@@ -4,10 +4,14 @@ using System.Text;
 
 namespace InvokeIR.PowerForensics.NTFS
 {
+    #region VolumeInformationClass
 
     public class VolumeInformation : Attr
     {
 
+        #region Enums
+
+        [FlagsAttribute]
         enum ATTR_VOLINFO
         {
             FLAG_DIRTY = 0x0001,	// Dirty
@@ -19,13 +23,17 @@ namespace InvokeIR.PowerForensics.NTFS
             FLAG_MBC = 0x8000	    // Modified by chkdsk
         }
 
+        #endregion Enums
+
+        #region Structs
+
         struct ATTR_VOLUME_INFORMATION
         {
             internal AttrHeader.ATTR_HEADER_RESIDENT header;
             internal byte[] Reserved1;	// Always 0 ?
             internal byte MajorVersion;	// Major version
             internal byte MinorVersion;	// Minor version
-            internal byte[] Flags;		// Flags
+            internal short Flags;		// Flags
 
             internal ATTR_VOLUME_INFORMATION(byte[] bytes)
             {
@@ -33,9 +41,11 @@ namespace InvokeIR.PowerForensics.NTFS
                 Reserved1 = bytes.Skip(24).Take(8).ToArray();
                 MajorVersion = bytes[32];
                 MinorVersion = bytes[33];
-                Flags = bytes.Skip(34).Take(2).ToArray();
+                Flags = BitConverter.ToInt16(bytes, 34);
             }
         }
+
+        #endregion Structs
 
         #region Properties
 
@@ -51,57 +61,18 @@ namespace InvokeIR.PowerForensics.NTFS
         {
             ATTR_VOLUME_INFORMATION volInfo = new ATTR_VOLUME_INFORMATION(AttrBytes);
 
-            Int16 flags = BitConverter.ToInt16(volInfo.Flags, 0);
-
-            #region volInfoFlags
-
-            StringBuilder volumeFlags = new StringBuilder();
-            if (flags != 0)
-            {
-                if ((flags & (int)ATTR_VOLINFO.FLAG_DIRTY) == (int)ATTR_VOLINFO.FLAG_DIRTY)
-                {
-                    volumeFlags.Append("Dirty, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_RLF) == (int)ATTR_VOLINFO.FLAG_RLF)
-                {
-                    volumeFlags.Append("Resize Logfile, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_UOM) == (int)ATTR_VOLINFO.FLAG_UOM)
-                {
-                    volumeFlags.Append("Upgrade on Mount, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_MONT) == (int)ATTR_VOLINFO.FLAG_MONT)
-                {
-                    volumeFlags.Append("Mounted on NT4, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_DUSN) == (int)ATTR_VOLINFO.FLAG_DUSN)
-                {
-                    volumeFlags.Append("Delete USN Underway, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_ROI) == (int)ATTR_VOLINFO.FLAG_ROI)
-                {
-                    volumeFlags.Append("Repair Object Ids, ");
-                }
-                if ((flags & (int)ATTR_VOLINFO.FLAG_MBC) == (int)ATTR_VOLINFO.FLAG_MBC)
-                {
-                    volumeFlags.Append("Modified By ChkDisk, ");
-                }
-                volumeFlags.Length -= 2;
-            }
-
-            #endregion volInfoFlags
-
             Name = Enum.GetName(typeof(ATTR_TYPE), volInfo.header.commonHeader.ATTRType);
             NameString = AttrName;
             NonResident = volInfo.header.commonHeader.NonResident;
             AttributeId = volInfo.header.commonHeader.Id;
             Major = volInfo.MajorVersion;
             Minor = volInfo.MinorVersion;
-            Flags = volumeFlags.ToString();
+            Flags = ((ATTR_VOLINFO)volInfo.Flags).ToString();
         }
 
         #endregion Constructors
 
     }
 
+    #endregion VolumeInformationClass
 }

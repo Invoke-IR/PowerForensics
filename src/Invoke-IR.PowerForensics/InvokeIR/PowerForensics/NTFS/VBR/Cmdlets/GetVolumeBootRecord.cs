@@ -32,6 +32,18 @@ namespace InvokeIR.PowerForensics.Cmdlets
         }
         private string volume;
 
+        /// <summary> 
+        /// This parameter provides causes Get-VolumeBootRecord
+        /// to return the VBR as a byte array.
+        /// </summary> 
+
+        public SwitchParameter AsBytes
+        {
+            get { return asbytes; }
+            set { asbytes = value; }
+        }
+        private SwitchParameter asbytes;
+
         #endregion Parameters
 
         #region Cmdlet Overrides
@@ -43,7 +55,14 @@ namespace InvokeIR.PowerForensics.Cmdlets
         protected override void ProcessRecord()
         {
 
-             WriteObject(new VolumeBootRecord(volume));
+            if (asbytes)
+            {
+                WriteObject(VolumeBootRecord.getBytes(volume));
+            }
+            else
+            {
+                WriteObject(new VolumeBootRecord(volume));
+            }
 
         } // ProcessRecord 
 

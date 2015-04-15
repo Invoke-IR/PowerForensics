@@ -31,6 +31,18 @@ namespace InvokeIR.PowerForensics.Cmdlets
         }
         private string drivePath;
 
+        /// <summary> 
+        /// This parameter causes Get-MBR to return the MBR as a Byte array
+        /// </summary> 
+
+        [Parameter()]
+        public SwitchParameter AsBytes
+        {
+            get { return asBytes; }
+            set { asBytes = value; }
+        }
+        private SwitchParameter asBytes;
+
         #endregion Parameters
 
         #region Cmdlet Overrides
@@ -43,7 +55,14 @@ namespace InvokeIR.PowerForensics.Cmdlets
         protected override void ProcessRecord()
         {
 
-            WriteObject(new MasterBootRecord(drivePath));
+            if (asBytes)
+            {
+                WriteObject(MasterBootRecord.GetBytes(drivePath));
+            }
+            else
+            {
+                WriteObject(new MasterBootRecord(drivePath));
+            }
 
         } // ProcessRecord 
 
@@ -52,6 +71,5 @@ namespace InvokeIR.PowerForensics.Cmdlets
     } // End GetMBRCommand class. 
 
     #endregion GetMBRCommand
-
 
 }
