@@ -201,12 +201,8 @@ namespace InvokeIR.PowerForensics.NTFS
                 List<Attr> AttributeList = new List<Attr>();
                 int offsetToATTR = RecordHeader.OffsetOfAttr;
 
-                //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
                 while (offsetToATTR < (RecordHeader.RealSize - 8))
                 {
-                    //sw.Start();
-
                     int offset = offsetToATTR;
                     Attr attr = AttributeFactory.Get(recordBytes, offset, out offsetToATTR);
                     if (attr != null)
@@ -231,9 +227,6 @@ namespace InvokeIR.PowerForensics.NTFS
 
                         }
                         AttributeList.Add(attr);
-                        //sw.Stop(); 
-                        //Console.WriteLine("Attribute Name: {0}", attr.Name);
-                        //Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
                     }
                 }
 
@@ -305,8 +298,6 @@ namespace InvokeIR.PowerForensics.NTFS
                 List<Attr> AttributeList = new List<Attr>();
                 int offsetToATTR = RecordHeader.OffsetOfAttr;
 
-                //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
                 while (offsetToATTR < (RecordHeader.RealSize - 8))
                 {
                     //sw.Start();
@@ -333,9 +324,6 @@ namespace InvokeIR.PowerForensics.NTFS
                             }
                         }
                         AttributeList.Add(attr);
-                        //sw.Stop();
-                        //Console.WriteLine("Attribute Name: {0}", attr.Name);
-                        //Console.WriteLine("Elapsed: {0}", sw.ElapsedMilliseconds);
                     }
                 }
                 // Check if MFT Record is for the root directory (should be Record Index 5)

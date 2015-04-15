@@ -66,9 +66,6 @@ namespace InvokeIR.PowerForensics.NTFS
 
         internal static byte[] GetContent(FileStream streamToRead, NonResident nonResAttr)
         {
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-
             List<byte> DataBytes = new List<byte>();
 
             for (int i = 0; i < nonResAttr.StartCluster.Length; i++)
@@ -77,17 +74,11 @@ namespace InvokeIR.PowerForensics.NTFS
                 ulong length = (nonResAttr.EndCluster[i] - nonResAttr.StartCluster[i]) * 4096;
                 DataBytes.AddRange(NativeMethods.readDrive(streamToRead, offset, length));
             }
-            sw.Stop();
-            Console.WriteLine("readDrive: {0}", sw.ElapsedMilliseconds);
-            sw.Start();
 
             byte[] contentBytes = new byte[nonResAttr.RealSize];
             Array.Copy(DataBytes.ToArray(), 0, contentBytes, 0, contentBytes.Length);
-            sw.Stop();
-            Console.WriteLine("Array.Copy: {0}", sw.ElapsedMilliseconds);
-            sw.Start();
-            return contentBytes;
 
+            return contentBytes;
         }
 
 
@@ -128,14 +119,8 @@ namespace InvokeIR.PowerForensics.NTFS
             List<ulong> startClusterList = new List<ulong>();
             List<ulong> endClusterList = new List<ulong>();
 
-
-            //Console.WriteLine("Size: {0}", DataRunSize);
             do
             {
-                //Console.WriteLine("Offset: {0}", offset);
-                //Console.WriteLine("Count1: {0}", DataRunLengthByteCount);
-                //Console.WriteLine("Count2: {0}", DataRunOffsetByteCount);
-
                 byte[] DataRunLengthBytes = DataRunBytes.Skip(offset + 1).Take(DataRunLengthByteCount).ToArray();
                 Array.Resize(ref DataRunLengthBytes, 8);
                 ulong DataRunLength = BitConverter.ToUInt64(DataRunLengthBytes, 0);

@@ -37,6 +37,7 @@ namespace InvokeIR.PowerForensics.Cmdlets
         /// to return the VBR as a byte array.
         /// </summary> 
 
+        [Parameter()]
         public SwitchParameter AsBytes
         {
             get { return asbytes; }
