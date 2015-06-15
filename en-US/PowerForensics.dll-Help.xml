@@ -478,154 +478,6 @@ tc\msdtcadvancedinstaller\msdtcadvancedinstaller.cpp (1758)</dev:code>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
-			<command:name>Get-DirectoryIndexSuccession</command:name>
-			<maml:description>
-				<maml:para/>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>DirectoryIndexSuccession</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para/>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-DirectoryIndexSuccession</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Directory</maml:name>
-					<maml:description>
-						<maml:para/>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Directory</maml:name>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Get-FileSystemStatistic</command:name>
-			<maml:description>
-				<maml:para>Returns statistics about the specified volume&apos;s file system.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>FileSystemStatistic</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Get-FileSystemStatistic cmdlet gets the NTFS_VOLUME_DATA_BUFFER structure from calling the DeviceIOControl Win32 API function, and creates a NTFSVolumeData object.</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-FileSystemStatistic</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
-					<maml:name>VolumeName</maml:name>
-					<maml:description>
-						<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>VolumeName</maml:name>
-				<maml:description>
-					<maml:para>The name of the Volume or Logical Partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<dev:type>
-					<maml:name>None</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<dev:type>
-					<maml:name>InvokeIR.PowerForensics.NTFS.VolumeData</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt; </maml:para>
-				</maml:introduction>
-				<dev:code>Get-FileSystemStatistic -VolumeName \\.\C:
-
-
-VolumeSize_MB        : 61437
-TotalSectors         : 125825023
-TotalClusters        : 15728127
-FreeClusters         : 8901834
-FreeSpace_MB         : 26665
-BytesPerSector       : 512
-BytesPerCluster      : 4096
-BytesPerMFTRecord    : 1024
-ClustersPerMFTRecord : 0
-MFTSize_MB           : 185
-MFTSize              : 194772992
-MFTStartCluster      : 786432
-MFTZoneClusterStart  : 833984
-MFTZoneClusterEnd    : 837664
-MFTZoneSize          : 15073280
-MFTMirrorStart       : 2</dev:code>
-				<dev:remarks>
-					<maml:para>This example shows the file system statistics of the C logical volume.</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
 			<command:name>Get-Hash</command:name>
 			<maml:description>
 				<maml:para>Returns a hash of the specified file.</maml:para>
@@ -799,7 +651,7 @@ MFTMirrorStart       : 2</dev:code>
 		<command:details>
 			<command:name>Get-MBR</command:name>
 			<maml:description>
-				<maml:para>Gets the MBR boot code</maml:para>
+				<maml:para>Gets the Master Boot Record for the specified physical drive.</maml:para>
 			</maml:description>
 			<maml:copyright>
 				<maml:para/>
@@ -809,7 +661,11 @@ MFTMirrorStart       : 2</dev:code>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>The Get-MBR cmdlet returns an MBR object containing the boot code within the Master Boot Record. Additionally, the cmdlet checks the MBR boot code for any unauthorized alterations that may be typical of MBR bootkits.</maml:para>
+			<maml:para>The Get-MBR cmdlet gets the Master Boot Record for the specified physical drive and analyzes the MBR&apos;s boot code for anomalies.
+
+By default, Get-MBR returns a MasterBootRecord object that has detailed information about the drive&apos;s boot code and partition table. You can also use the AsBytes switch parameter to return the raw bytes of the Master Boot Record.
+
+			</maml:para>
 		</maml:description>
 		<command:syntax>
 			<!--Parameter Sets-->
@@ -818,10 +674,20 @@ MFTMirrorStart       : 2</dev:code>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="DrivePath">
 					<maml:name>Path</maml:name>
 					<maml:description>
-						<maml:para>Specifies a path for the physical drive in the system. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
+						<maml:para>Specified the physical drive to investigate. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
+					<dev:defaultValue>
+					</dev:defaultValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named" aliases="">
+					<maml:name>AsBytes</maml:name>
+					<maml:description>
+						<maml:para>Specifies that the Master Boot Record is returned as raw bytes instead of as a custom object.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">Switch</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -830,14 +696,24 @@ MFTMirrorStart       : 2</dev:code>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="DrivePath">
 				<maml:name>Path</maml:name>
 				<maml:description>
-					<maml:para>Specifies a path for the physical drive in the system. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
+					<maml:para>Specified the physical drive to investigate. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 				<dev:type>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AsBytes</maml:name>
+				<maml:description>
+					<maml:para>Specifies that the Master Boot Record is returned as raw bytes instead of as a custom object.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">Switch</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -870,6 +746,9 @@ MFTMirrorStart       : 2</dev:code>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
+		<maml:alertSet>
+			<!--Notes-->
+		</maml:alertSet>
 		<command:examples>
 			<!--Examples-->
 			<command:example>
@@ -886,12 +765,57 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:para>This example shows Get-MBR being used to return the MBR object from \\.\PHYSICALDRIVE0.  In this case the MBRCodeArea is the standard Windows proprietary boot code.</maml:para>
 				</dev:remarks>
 			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-MBR -Path \\.\PHYSICALDRIVE2 -AsBytes | Format-Hex
+
+Offset     _00_01_02_03_04_05_06_07_08_09_0A_0B_0C_0D_0E_0F  Ascii           
+------     ------------------------------------------------  -----           
+0x00000000  33 C0 8E D0 BC 00 7C 8E C0 8E D8 BE 00 7C BF 00  3.....|......|..
+0x00000010  06 B9 00 02 FC F3 A4 50 68 1C 06 CB FB B9 04 00  .......Ph.......
+0x00000020  BD BE 07 80 7E 00 00 7C 0B 0F 85 0E 01 83 C5 10  ....~..|........
+0x00000030  E2 F1 CD 18 88 56 00 55 C6 46 11 05 C6 46 10 00  .....V.U.F...F..
+0x00000040  B4 41 BB AA 55 CD 13 5D 72 0F 81 FB 55 AA 75 09  .A..U..]r...U.u.
+0x00000050  F7 C1 01 00 74 03 FE 46 10 66 60 80 7E 10 00 74  ....t..F.f`.~..t
+0x00000060  26 66 68 00 00 00 00 66 FF 76 08 68 00 00 68 00  &amp;fh....f.v.h..h.
+0x00000070  7C 68 01 00 68 10 00 B4 42 8A 56 00 8B F4 CD 13  |h..h...B.V.....
+0x00000080  9F 83 C4 10 9E EB 14 B8 01 02 BB 00 7C 8A 56 00  ............|.V.
+0x00000090  8A 76 01 8A 4E 02 8A 6E 03 CD 13 66 61 73 1C FE  .v..N..n...fas..
+0x000000A0  4E 11 75 0C 80 7E 00 80 0F 84 8A 00 B2 80 EB 84  N.u..~..........
+0x000000B0  55 32 E4 8A 56 00 CD 13 5D EB 9E 81 3E FE 7D 55  U2..V...]...&gt;.}U
+0x000000C0  AA 75 6E FF 76 00 E8 8D 00 75 17 FA B0 D1 E6 64  .un.v....u.....d
+0x000000D0  E8 83 00 B0 DF E6 60 E8 7C 00 B0 FF E6 64 E8 75  ......`.|....d.u
+0x000000E0  00 FB B8 00 BB CD 1A 66 23 C0 75 3B 66 81 FB 54  .......f#.u;f..T
+0x000000F0  43 50 41 75 32 81 F9 02 01 72 2C 66 68 07 BB 00  CPAu2....r,fh...
+0x00000100  00 66 68 00 02 00 00 66 68 08 00 00 00 66 53 66  .fh....fh....fSf
+0x00000110  53 66 55 66 68 00 00 00 00 66 68 00 7C 00 00 66  SfUfh....fh.|..f
+0x00000120  61 68 00 00 07 CD 1A 5A 32 F6 EA 00 7C 00 00 CD  ah.....Z2...|...
+0x00000130  18 A0 B7 07 EB 08 A0 B6 07 EB 03 A0 B5 07 32 E4  ..............2.
+0x00000140  05 00 07 8B F0 AC 3C 00 74 09 BB 07 00 B4 0E CD  ......&lt;.t.......
+0x00000150  10 EB F2 F4 EB FD 2B C9 E4 64 EB 00 24 02 E0 F8  ......+..d..$...
+0x00000160  24 02 C3 49 6E 76 61 6C 69 64 20 70 61 72 74 69  $..Invalid parti
+0x00000170  74 69 6F 6E 20 74 61 62 6C 65 00 45 72 72 6F 72  tion table.Error
+0x00000180  20 6C 6F 61 64 69 6E 67 20 6F 70 65 72 61 74 69   loading operati
+0x00000190  6E 67 20 73 79 73 74 65 6D 00 4D 69 73 73 69 6E  ng system.Missin
+0x000001A0  67 20 6F 70 65 72 61 74 69 6E 67 20 73 79 73 74  g operating syst
+0x000001B0  65 6D 00 00 00 63 7B 9A B3 64 EE 2F 00 00 00 20  em...c{..d./... 
+0x000001C0  21 00 07 65 24 41 00 08 00 00 00 00 10 00 00 65  !..e$A.........e
+0x000001D0  25 41 0B AA 28 82 00 08 10 00 00 00 10 00 00 AA  %A..(...........
+0x000001E0  29 82 0B EF 2C C3 00 08 20 00 00 00 10 00 00 EF  )...,... .......
+0x000001F0  2D C3 0F FE FF 90 00 08 30 00 00 F0 AF 00 55 AA  -.......0.....U.</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows how the AsBytes parameter returns the Master Boot Record as a byte array.</maml:para>
+				</dev:remarks>
+			</command:example>
 		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
-			<command:name>Get-MFTAttribute</command:name>
+			<command:name>Get-FileRecordAttribute</command:name>
 			<maml:description>
 				<maml:para>Get a specific Attribute from an MFT Record.</maml:para>
 			</maml:description>
@@ -899,7 +823,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>MFTAttribute</command:noun>
+			<command:noun>FileRecordAttribute</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
@@ -908,7 +832,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 		<command:syntax>
 			<!--Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Get-MFTAttribute</maml:name>
+				<maml:name>Get-FileRecordAttribute</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>VolumeName</maml:name>
 					<maml:description>
@@ -1085,7 +1009,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
-			<command:name>Get-MFTRecord</command:name>
+			<command:name>Get-FileRecord</command:name>
 			<maml:description>
 				<maml:para>Parses the Master File Table and returns MFTRecord objects.</maml:para>
 			</maml:description>
@@ -1093,7 +1017,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>MFTRecord</command:noun>
+			<command:noun>FileRecord</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
@@ -1102,7 +1026,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 		<command:syntax>
 			<!--Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Get-MFTRecord</maml:name>
+				<maml:name>Get-FileRecord</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>VolumeName</maml:name>
 					<maml:description>
@@ -1113,7 +1037,7 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Get-MFTRecord</maml:name>
+				<maml:name>Get-FileRecord</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>VolumeName</maml:name>
 					<maml:description>
@@ -1130,17 +1054,9 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 					<dev:defaultValue/>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
-					<maml:name>AsBytes</maml:name>
-					<maml:description>
-						<maml:para>Returns the MFT Record as Raw Bytes instead of an MFTRecord object.</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
-				<maml:name>Get-MFTRecord</maml:name>
+				<maml:name>Get-FileRecord</maml:name>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>VolumeName</maml:name>
 					<maml:description>
@@ -1155,14 +1071,6 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 						<maml:para>The Path of the FileRecord object that will be returned.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
-					<maml:name>AsBytes</maml:name>
-					<maml:description>
-						<maml:para>Returns the MFT Record as Raw Bytes instead of an MFTRecord object.</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
@@ -1193,18 +1101,6 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
-				<maml:name>AsBytes</maml:name>
-				<maml:description>
-					<maml:para>Returns the MFT Record as Raw Bytes instead of an MFTRecord object.</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-				<dev:type>
-					<maml:name>SwitchParameter</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="FilePath">
 				<maml:name>Path</maml:name>
 				<maml:description>
@@ -1216,6 +1112,15 @@ WINDOWS_6        82D4BA7D          {51, 192, 142, 208...}  </dev:code>
 					<maml:uri/>
 				</dev:type>
 				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AsBytes</maml:name>
+				<maml:description>
+					<maml:para>Specifies that the File Record is returned as raw bytes instead of as a custom object.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">
+				</command:parameterValue>
+				<dev:defaultValue>false</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1934,4 +1839,221 @@ Code                  : {0, 0, 0, 0...}</dev:code>
 		</command:examples>
 	</command:command>
 	<!--Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.10-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-GPT</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>GPT</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-GPT</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>Path</maml:name>
+					<maml:description>
+						<maml:para>Specified the physical drive to investigate. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>AsBytes</maml:name>
+					<maml:description>
+						<maml:para>Specifies that the Guid Partition Table is returned as raw bytes instead of as a custom object.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">Switch</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="DrivePath">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para>Specified the physical drive to investigate. (Ex. \\.\PHYSICALDRIVE0)</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<maml:name>AsBytes</maml:name>
+				<maml:description>
+					<maml:para>Specifies that the Guid Partition Table is returned as raw bytes instead of as a custom object.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">Switch</command:parameterValue>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-GPT</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-GPT</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ChildItemRaw</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ChildItemRaw</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-BootSector</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>BootSector</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para/>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.10-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-DeletedFile</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>DeletedFile</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+			</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-UsnJrnl</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>UsnJrnl</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+			</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-UsnJrnlInformation</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>UsnJrnlInformation</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+			</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.10-->
 </helpItems>

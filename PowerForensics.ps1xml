@@ -149,7 +149,13 @@
                     <PropertyName>BytesPerSector</PropertyName>
                   </ListItem>
                   <ListItem>
-                    <PropertyName>SectorsPerCluster</PropertyName>
+                    <PropertyName>BytesPerCluster</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerFileRecord</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BytesPerIndexBlock</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>SectorsPerTrack</PropertyName>
@@ -159,6 +165,9 @@
                   </ListItem>
                   <ListItem>
                     <PropertyName>MFTStartIndex</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>MFTMirrStartIndex</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>CodeSection</PropertyName>
@@ -259,6 +268,36 @@
 
     <!-- MFT Attributes -->
 
+        <!-- InvokeIR.PowerForensics.NTFS.IndexEntry -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.NTFS.IndexEntry</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.NTFS.IndexEntry</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>10</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>30</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>FileIndex</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>Name</PropertyName> 
+                            </TableColumnItem>  
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+
         <!-- InvokeIR.PowerForensics.NTFS.NonResident -->        
         <View>
           <Name>InvokeIR.PowerForensics.NTFS.NonResident</Name>
@@ -350,6 +389,9 @@
                     <PropertyName>FileName</PropertyName>
                   </ListItem>
                   <ListItem>
+                    <PropertyName>Namespace</PropertyName>
+                  </ListItem>
+                  <ListItem>
                     <PropertyName>ModifiedTime</PropertyName>
                   </ListItem>
                   <ListItem>
@@ -409,7 +451,16 @@
                     <PropertyName>NameString</PropertyName>
                   </ListItem>
                   <ListItem>
-                    <PropertyName>ObjectId</PropertyName>
+                    <PropertyName>ObjectIdGuid</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BirthVolumeId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BirthObjectId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BirthDomainId</PropertyName>
                   </ListItem>
                 </ListItems>
               </ListEntry>
@@ -431,13 +482,7 @@
                     <PropertyName>Name</PropertyName>
                   </ListItem>
                   <ListItem>
-                    <PropertyName>NameString</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>Major</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>Minor</PropertyName>
+                    <PropertyName>Version</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>Flags</PropertyName>
@@ -585,6 +630,42 @@
               </ListEntry>
             </ListEntries>
           </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.Formats.HexDump -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.Formats.HexDump</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.Formats.HexDump</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>10</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>49</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>16</Width> 
+                    </TableColumnHeader>
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>Offset</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>_00_01_02_03_04_05_06_07_08_09_0A_0B_0C_0D_0E_0F</PropertyName> 
+                            </TableColumnItem>
+                            <TableColumnItem> 
+                                <PropertyName>Ascii</PropertyName> 
+                            </TableColumnItem>
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
         </View>
 
 <!-- End Formats -->
