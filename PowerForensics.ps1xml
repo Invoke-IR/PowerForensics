@@ -13,10 +13,13 @@
             <TableControl> 
                 <TableHeaders> 
                     <TableColumnHeader> 
-                        <Width>25</Width> 
+                        <Width>14</Width> 
                     </TableColumnHeader> 
                     <TableColumnHeader> 
-                        <Width>25</Width> 
+                        <Width>15</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>14</Width> 
                     </TableColumnHeader> 
                 </TableHeaders> 
                 <TableRowEntries> 
@@ -27,23 +30,26 @@
                             </TableColumnItem> 
                             <TableColumnItem> 
                                 <PropertyName>DiskSignature</PropertyName> 
-                            </TableColumnItem>  
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>PartitionTable</PropertyName> 
+                            </TableColumnItem>                                                          
                         </TableColumnItems> 
                     </TableRowEntry> 
                 </TableRowEntries> 
             </TableControl> 
         </View>
-        
-        <!-- InvokeIR.PowerForensics.MBR.Partition -->
+
+        <!-- InvokeIR.PowerForensics.PartitionEntry -->
         <View> 
-            <Name>InvokeIR.PowerForensics.MBR.Partition</Name> 
+            <Name>InvokeIR.PowerForensics.PartitionEntry</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.MBR.Partition</TypeName> 
+                <TypeName>InvokeIR.PowerForensics.PartitionEntry</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
                     <TableColumnHeader> 
-                        <Width>25</Width> 
+                        <Width>15</Width> 
                     </TableColumnHeader> 
                     <TableColumnHeader> 
                         <Width>8</Width> 
