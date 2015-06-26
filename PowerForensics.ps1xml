@@ -140,7 +140,7 @@
               <ListEntry>
                 <ListItems>
                   <ListItem>
-                    <PropertyName>VolumeSN</PropertyName>
+                    <PropertyName>VolumeSerialNumber</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>TotalSectors</PropertyName>
@@ -184,75 +184,41 @@
           </ListControl>
         </View>
 
-         <!-- InvokeIR.PowerForensics.NTFS.VolumeData -->
-        <View>
-          <Name>InvokeIR.PowerForensics.NTFS.VolumeData</Name>
-          <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeData</TypeName>
-          </ViewSelectedBy>
-          <ListControl>
-            <ListEntries>
-              <ListEntry>
-                <ListItems>
-                  <ListItem>
-                    <PropertyName>VolumeSize(MB)</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>FreeSpace(MB)</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>BytesPerSector</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>BytesPerCluster</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>FreeClusters</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>MFTSize(MB)</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>MFTStartCluster</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>BytesPerMFTRecord</PropertyName>
-                  </ListItem>
-                </ListItems>
-              </ListEntry>
-            </ListEntries>
-          </ListControl>
-        </View>       
-
 <!-- End NTFS System Files -->
 
 
 <!-- Master File Table -->
         
-        <!-- InvokeIR.PowerForensics.NTFS.MFTRecord -->
+        <!-- InvokeIR.PowerForensics.NTFS.FileRecord -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.MFTRecord</Name>
+          <Name>InvokeIR.PowerForensics.NTFS.FileRecord</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.MFTRecord</TypeName>
+            <TypeName>InvokeIR.PowerForensics.NTFS.FileRecord</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
               <ListEntry>
                 <ListItems>
                   <ListItem>
-                    <PropertyName>FullPath</PropertyName>
+                    <PropertyName>FullName</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>SequenceNumber</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>RecordNumber</PropertyName>
                   </ListItem>
                   <ListItem>
-                    <PropertyName>Size</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>Deleted</PropertyName>
+                    <PropertyName>ParentRecordNumber</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>Directory</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Deleted</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>ModifiedTime</PropertyName>
@@ -271,8 +237,6 @@
             </ListEntries>
           </ListControl>
         </View>
-
-    <!-- MFT Attributes -->
 
         <!-- InvokeIR.PowerForensics.NTFS.IndexEntry -->
         <View> 
@@ -296,7 +260,44 @@
                                 <PropertyName>FileIndex</PropertyName> 
                             </TableColumnItem> 
                             <TableColumnItem> 
+                                <PropertyName>Filename</PropertyName> 
+                            </TableColumnItem>  
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+
+    <!-- MFT Attributes -->
+        <!-- InvokeIR.PowerForensics.NTFS.Attr -->
+        <View> 
+            <Name>InvokeIR.PowerForensics.NTFS.Attr</Name> 
+            <ViewSelectedBy> 
+                <TypeName>InvokeIR.PowerForensics.NTFS.Attr</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>20</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>11</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>10</Width> 
+                    </TableColumnHeader>
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
                                 <PropertyName>Name</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>AttributeId</PropertyName> 
+                            </TableColumnItem>
+                            <TableColumnItem> 
+                                <PropertyName>NameString</PropertyName> 
                             </TableColumnItem>  
                         </TableColumnItems> 
                     </TableRowEntry> 
@@ -318,6 +319,9 @@
                     <PropertyName>Name</PropertyName>
                   </ListItem>
                   <ListItem>
+                    <PropertyName>AttributeId</PropertyName>
+                  </ListItem>
+                  <ListItem>
                     <PropertyName>NameString</PropertyName>
                   </ListItem>
                   <ListItem>
@@ -330,10 +334,7 @@
                     <PropertyName>RealSize</PropertyName>
                   </ListItem>
                   <ListItem>
-                    <PropertyName>StartCluster</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>EndCluster</PropertyName>
+                    <PropertyName>DataRun</PropertyName>
                   </ListItem>
                 </ListItems>
               </ListEntry>
@@ -355,6 +356,9 @@
                     <PropertyName>Name</PropertyName>
                   </ListItem>
                   <ListItem>
+                    <PropertyName>AttributeId</PropertyName>
+                  </ListItem>
+                  <ListItem>
                     <PropertyName>NameString</PropertyName>
                   </ListItem>
                   <ListItem>
@@ -368,6 +372,12 @@
                   </ListItem>
                   <ListItem>
                     <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Permissions</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>UpdateSequenceNumber</PropertyName>
                   </ListItem>
                 </ListItems>
               </ListEntry>
@@ -387,6 +397,9 @@
                 <ListItems>
                   <ListItem>
                     <PropertyName>Name</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AttributeId</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>NameString</PropertyName>
@@ -432,6 +445,9 @@
                     <PropertyName>NameString</PropertyName>
                   </ListItem>
                   <ListItem>
+                    <PropertyName>AttributeId</PropertyName>
+                  </ListItem>
+                  <ListItem>
                     <PropertyName>RawData</PropertyName>
                   </ListItem>
                 </ListItems>
@@ -455,6 +471,9 @@
                   </ListItem>
                   <ListItem>
                     <PropertyName>NameString</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AttributeId</PropertyName>
                   </ListItem>
                   <ListItem>
                     <PropertyName>ObjectIdGuid</PropertyName>
@@ -505,54 +524,23 @@
           <ViewSelectedBy>
             <TypeName>InvokeIR.PowerForensics.NTFS.VolumeName</TypeName>
           </ViewSelectedBy>
-          <ListControl>
-            <ListEntries>
-              <ListEntry>
-                <ListItems>
-                  <ListItem>
-                    <PropertyName>Name</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>NameString</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>VolumeNameString</PropertyName>
-                  </ListItem>
-                </ListItems>
-              </ListEntry>
-            </ListEntries>
-          </ListControl>
-        </View>
+                      <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>20</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>VolumeName</PropertyName> 
+                            </TableColumnItem>  
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
 
-        <!-- InvokeIR.PowerForensics.NTFS.EAInformation -->
-        <View>
-          <Name>InvokeIR.PowerForensics.NTFS.EAInformation</Name>
-          <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.EAInformation</TypeName>
-          </ViewSelectedBy>
-          <ListControl>
-            <ListEntries>
-              <ListEntry>
-                <ListItems>
-                  <ListItem>
-                    <PropertyName>Name</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>NameString</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>PackedSize</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>UnpackedSize</PropertyName>
-                  </ListItem>
-                  <ListItem>
-                    <PropertyName>EACount</PropertyName>
-                  </ListItem>
-                </ListItems>
-              </ListEntry>
-            </ListEntries>
-          </ListControl>
         </View>
 
     <!-- End MFT Attributes -->
@@ -675,6 +663,111 @@
         </View>
 
 <!-- End Formats -->
+
+<!-- Ext3 Objects -->
+
+        <!-- InvokeIR.PowerForensics.ext3.Superblock -->
+        <View>
+          <Name>InvokeIR.PowerForensics.ext3.Superblock</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.ext3.Superblock</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>VolumeUUID</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>LastMountedDirectory</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>MountTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>WriteTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FirstDataBlock</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>TotalBlockCount</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FreeBlockCount</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BlockSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BlocksPerGroup</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>TotalInodeCount</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FreeInodeCount</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>InodeSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>InodesPerGroup</PropertyName>
+                  </ListItem>                 
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+        <!-- InvokeIR.PowerForensics.ext3.Inode -->
+        <View>
+          <Name>InvokeIR.PowerForensics.ext3.Inode</Name>
+          <ViewSelectedBy>
+            <TypeName>InvokeIR.PowerForensics.ext3.Inode</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>InodeNumber</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Mode</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>Size</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>UserId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>GroupId</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ModifiedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AccessTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>ChangedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>DeletedTime</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
+<!-- End Ext3 Objects -->
 
     </ViewDefinitions> 
 </Configuration>
