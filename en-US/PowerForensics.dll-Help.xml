@@ -2289,4 +2289,29 @@ Code                  : {0, 0, 0, 0...}</dev:code>
 		</command:examples>
 	</command:command>
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.11-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ScheduledJobRaw</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ScheduledJobRaw</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+			</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+		</command:syntax>
+	</command:command>
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.11-->
 </helpItems>

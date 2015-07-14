@@ -247,7 +247,7 @@
             <TableControl> 
                 <TableHeaders> 
                     <TableColumnHeader> 
-                        <Width>10</Width> 
+                        <Width>12</Width> 
                     </TableColumnHeader> 
                     <TableColumnHeader> 
                         <Width>30</Width> 
@@ -257,7 +257,7 @@
                     <TableRowEntry> 
                         <TableColumnItems> 
                             <TableColumnItem> 
-                                <PropertyName>FileIndex</PropertyName> 
+                                <PropertyName>RecordNumber</PropertyName> 
                             </TableColumnItem> 
                             <TableColumnItem> 
                                 <PropertyName>Filename</PropertyName> 
