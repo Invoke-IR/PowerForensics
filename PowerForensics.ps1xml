@@ -250,8 +250,11 @@
                         <Width>12</Width> 
                     </TableColumnHeader> 
                     <TableColumnHeader> 
-                        <Width>30</Width> 
-                    </TableColumnHeader> 
+                        <Width>50</Width> 
+                    </TableColumnHeader>
+                    <TableColumnHeader> 
+                        <Width>50</Width> 
+                    </TableColumnHeader>  
                 </TableHeaders> 
                 <TableRowEntries> 
                     <TableRowEntry> 
