@@ -261,7 +261,10 @@
                             </TableColumnItem> 
                             <TableColumnItem> 
                                 <PropertyName>Filename</PropertyName> 
-                            </TableColumnItem>  
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>FullName</PropertyName> 
+                            </TableColumnItem>   
                         </TableColumnItems> 
                     </TableRowEntry> 
                 </TableRowEntries> 
