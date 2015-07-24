@@ -2,7 +2,7 @@
 
 #PowerForensics
 
-PowerForensics is a powershell digital forensics framework. It currently
+PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
 
 Developed by [@jaredcatkinson](https://twitter.com/jaredcatkinson)
