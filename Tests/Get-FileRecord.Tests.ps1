@@ -7,12 +7,12 @@ Describe 'Get-FileRecord' {
             [GC]::Collect()
         }
     }
-    Context 'get the FileRecord for C:\Windows\notepad.exe' {
+    Context 'get the FileRecord for C:\$Volume' {
         It 'should work with -Path' {
-            (Get-FileRecord -Path C:\Windows\notepad.exe).FullName | Should Be 'C:\Windows\notepad.exe'
+            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\Windows\notepad.exe'
         }
         It 'should work without -Path' {
-            (Get-FileRecord -Path C:\Windows\notepad.exe).FullName | Should Be 'C:\Windows\notepad.exe'
+            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\Windows\notepad.exe'
         }
     }
     Context 'get the FileRecord for Index 5' {

@@ -17,9 +17,4 @@ Describe 'Get-FileRecordIndex' {
             { Get-FileRecordIndex 'C:\$Extend\$UsnJrnl' } | Should Not Throw
         }
     }
-    Context 'Get record index for notepad.exe' { 
-        It 'should work' {
-            { Get-FileRecordIndex 'C:\windows\notepad.exe' } | Should Not Throw
-        }
-    }
 }
