@@ -9,10 +9,10 @@ Describe 'Get-FileRecord' {
     }
     Context 'get the FileRecord for C:\$Volume' {
         It 'should work with -Path' {
-            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\Windows\notepad.exe'
+            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\$Volume'
         }
         It 'should work without -Path' {
-            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\Windows\notepad.exe'
+            (Get-FileRecord -Path 'C:\$Volume').FullName | Should Be 'C:\$Volume'
         }
     }
     Context 'get the FileRecord for Index 5' {
