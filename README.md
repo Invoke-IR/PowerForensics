@@ -2,7 +2,7 @@
   <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
 </p>
 
-#PowerForensics
+#PowerForensics [![Build status](https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true)](https://ci.appveyor.com/project/Invoke-IR/powerforensics)
 
 PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
