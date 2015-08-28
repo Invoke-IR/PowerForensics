@@ -540,7 +540,7 @@
                     <TableRowEntry> 
                         <TableColumnItems> 
                             <TableColumnItem> 
-                                <PropertyName>VolumeName</PropertyName> 
+                                <PropertyName>VolumeNameString</PropertyName> 
                             </TableColumnItem>  
                         </TableColumnItems> 
                     </TableRowEntry> 
