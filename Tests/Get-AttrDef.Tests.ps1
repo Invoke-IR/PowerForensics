@@ -1,11 +1,12 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-MBR' {    
-    
-    Context 'Get-MBR for \\.\PHYSICALDRIVE0' { 
-
-        It 'should not error' {
-            { Get-MBR -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+Describe 'Get-AttrDef' {    
+    Context 'Get the attribute definition for the C drive' { 
+        It 'should work with -VolumeName' {
+            { Get-AttrDef -VolumeName C } | Should Not Throw
+        }
+        It 'should work with -VolumeName' {
+            { Get-AttrDef } | Should Not Throw
         }
     }
 }

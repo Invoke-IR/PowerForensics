@@ -1,11 +1,11 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-MBR' {    
+Describe 'Get-BootSector' {    
     
-    Context 'Get-MBR for \\.\PHYSICALDRIVE0' { 
+    Context 'Get-BootSector for \\.\PHYSICALDRIVE0' { 
 
         It 'should not error' {
-            { Get-MBR -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+            { Get-BootSector -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
         }
     }
 }
