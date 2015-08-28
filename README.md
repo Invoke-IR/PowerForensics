@@ -83,7 +83,7 @@ Invoke-Item (Get-UserModulePath)
 
 Extract the archive to the PowerForensics folder. When you are done you should have all these files in your PowerForensics directory:
 
-![alt text](http://4.bp.blogspot.com/-NfSl2E5G7CM/Vd_Ei6Q_r6I/AAAAAAAAA3o/Ats2BlDSzmk/s640/Screenshot%2B2015-08-27%2B22.16.28.png)
+![alt text](http://3.bp.blogspot.com/-1I65699uSJk/Vd_f3zNuFDI/AAAAAAAAA4U/NCO52iz3w84/s640/Screenshot%2B2015-08-28%2B00.13.00.png)
 
 Start a new PowerShell session and import the PowerForensics module using the commands below:
 ```powershell
