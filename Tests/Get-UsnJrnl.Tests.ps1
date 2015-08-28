@@ -1,11 +1,14 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-MBR' {    
-    
-    Context 'Get-MBR for \\.\PHYSICALDRIVE0' { 
-
-        It 'should not error' {
-            { Get-MBR -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+Describe 'Get-UsnJrnl' {    
+    Context 'get all UsnJrnl entries' { 
+        It 'should work with -VolumeName' {
+            { $usn = Get-UsnJrnl -VolumeName C } | Should Not Throw
+            [GC]::Collect()
+        }
+        It 'should work without -VolumeName' {
+            { $usn = Get-UsnJrnl } | Should Not Throw
+            [GC]::Collect()
         }
     }
 }

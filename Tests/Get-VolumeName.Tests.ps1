@@ -1,11 +1,14 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-MBR' {    
-    
-    Context 'Get-MBR for \\.\PHYSICALDRIVE0' { 
+label C: testdrive
 
-        It 'should not error' {
-            { Get-MBR -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+Describe 'Get-VolumeName' {    
+    Context 'Get-VolumeName of C drive' { 
+        It 'should work with -VolumeName' {
+            (Get-VolumeName -VolumeName C).VolumeNameString | Should Be "testdrive"
+        }
+        It 'should work without -VolumeName' {
+            (Get-VolumeName).VolumeNameString | Should Be "testdrive"
         }
     }
 }

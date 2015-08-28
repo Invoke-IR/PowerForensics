@@ -1,11 +1,15 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-MBR' {    
-    
-    Context 'Get-MBR for \\.\PHYSICALDRIVE0' { 
-
-        It 'should not error' {
-            { Get-MBR -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+Describe 'Get-ContentRaw' { 
+    Write-Host "More tests needed"   
+    Context 'Get-Content of C:\windows\system32\config\SAM' { 
+        It 'should error' {
+            { Copy-ContentRaw C:\Windows\System32\config\SAM } | Should Throw
+        }
+    }
+    Context 'Get-ContentRaw of C:\windows\system32\config\SAM' { 
+        It 'should work' {
+            { Get-ContentRaw C:\Windows\System32\config\SAM } | Should Not Throw
         }
     }
 }
