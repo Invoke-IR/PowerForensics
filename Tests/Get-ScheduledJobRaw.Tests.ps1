@@ -12,6 +12,8 @@ Describe 'Get-ScheduledJobRaw' {
     #        [GC]::Collect()
     #    }
     #}
+    at 12:00 calc
+    sleep 2
     $tasks = Get-ChildItemRaw C:\Windows\Tasks
     foreach($t in $tasks)
     {
