@@ -12,4 +12,9 @@ Describe 'Get-ScheduledJobRaw' {
     #        [GC]::Collect()
     #    }
     #}
+    $tasks = Get-ChildItemRaw C:\Windows\Tasks
+    foreach($t in $tasks)
+    {
+        Write-Host $t.FullName
+    }
 }
