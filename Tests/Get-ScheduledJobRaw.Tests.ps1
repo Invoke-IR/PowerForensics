@@ -1,22 +1,27 @@
 ﻿Import-Module -Force $PSScriptRoot\..\PowerForensics.psd1
 
-Describe 'Get-ScheduledJobRaw' {      
-    Write-Host 'Need to work on this...'
-    #Context 'Parse job files in the C:\windows\tasks directory' { 
-    #    It 'should work with -VolumeName' {
-    #        { $jobs = Get-ScheduledJobRaw -VolumeName C } | Should Not Throw
-    #        [GC]::Collect()
-    #    }
-    #    It 'should work without -VolumeName' {
-    #        { $jobs = Get-ScheduledJobRaw } | Should Not Throw
-    #        [GC]::Collect()
-    #    }
-    #}
-    at 12:00 calc
-    sleep 2
-    $tasks = Get-ChildItemRaw C:\Windows\Tasks
-    foreach($t in $tasks)
-    {
-        Write-Host $t.FullName
+if(Test-Path -Path C:\Windows\Tasks -PathType Container)
+{
+    $files = Get-ChildItem -Path C:\Windows\Tasks
+
+    Describe 'Get-ScheduledJobRaw' {
+        Context 'Parse all job files in the C:\windows\tasks directory' { 
+            It 'should work with -VolumeName' {
+                { $jobs = Get-ScheduledJobRaw -VolumeName C } | Should Not Throw
+                [GC]::Collect()
+            }
+            It 'should work without -VolumeName' {
+                { $jobs = Get-ScheduledJobRaw } | Should Not Throw
+                [GC]::Collect()
+            }
+        }
+        Context 'Parse a single job file based on Path' {
+            It 'should work with -Path' {
+                { $jobs = Get-ScheduledJobRaw -Path $files[0].FullName } | Should Not Throw
+            }
+            It 'should fail without -Path' {
+                { $jobs = Get-ScheduledJobRaw $files[0].FullName } | Should Throw
+            }
+        }
     }
 }
