@@ -212,6 +212,9 @@
                     <PropertyName>RecordNumber</PropertyName>
                   </ListItem>
                   <ListItem>
+                    <PropertyName>ParentSequenceNumber</PropertyName>
+                  </ListItem>
+                  <ListItem>
                     <PropertyName>ParentRecordNumber</PropertyName>
                   </ListItem>
                   <ListItem>
@@ -231,6 +234,18 @@
                   </ListItem>
                   <ListItem>
                     <PropertyName>BornTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FNModifiedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FNAccessedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FNChangedTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FNBornTime</PropertyName>
                   </ListItem>
                 </ListItems>
               </ListEntry>
