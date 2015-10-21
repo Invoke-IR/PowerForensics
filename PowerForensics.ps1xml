@@ -4,11 +4,11 @@
         
 <!-- Master Boot Record -->
 
-        <!-- InvokeIR.PowerForensics.MasterBootRecord -->
+        <!-- PowerForensics.MasterBootRecord -->
         <View> 
-            <Name>InvokeIR.PowerForensics.MasterBootRecord</Name> 
+            <Name>PowerForensics.MasterBootRecord</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.MasterBootRecord</TypeName> 
+                <TypeName>PowerForensics.MasterBootRecord</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -40,11 +40,11 @@
             </TableControl> 
         </View>
 
-        <!-- InvokeIR.PowerForensics.PartitionEntry -->
+        <!-- PowerForensics.PartitionEntry -->
         <View> 
-            <Name>InvokeIR.PowerForensics.PartitionEntry</Name> 
+            <Name>PowerForensics.PartitionEntry</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.PartitionEntry</TypeName> 
+                <TypeName>PowerForensics.PartitionEntry</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -87,11 +87,11 @@
 
 <!-- NTFS System Files -->
 
-        <!-- InvokeIR.PowerForensics.NTFS.AttrDef -->
+        <!-- PowerForensics.NTFS.AttrDef -->
         <View> 
-            <Name>InvokeIR.PowerForensics.NTFS.AttrDef</Name> 
+            <Name>PowerForensics.NTFS.AttrDef</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.NTFS.AttrDef</TypeName> 
+                <TypeName>PowerForensics.NTFS.AttrDef</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -129,11 +129,11 @@
             </TableControl> 
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.VolumeBootRecord -->
+        <!-- PowerForensics.NTFS.VolumeBootRecord -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</Name>
+          <Name>PowerForensics.NTFS.VolumeBootRecord</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeBootRecord</TypeName>
+            <TypeName>PowerForensics.NTFS.VolumeBootRecord</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -189,11 +189,11 @@
 
 <!-- Master File Table -->
         
-        <!-- InvokeIR.PowerForensics.NTFS.FileRecord -->
+        <!-- PowerForensics.NTFS.FileRecord -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.FileRecord</Name>
+          <Name>PowerForensics.NTFS.FileRecord</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.FileRecord</TypeName>
+            <TypeName>PowerForensics.NTFS.FileRecord</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -253,11 +253,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.IndexEntry -->
+        <!-- PowerForensics.NTFS.IndexEntry -->
         <View> 
-            <Name>InvokeIR.PowerForensics.NTFS.IndexEntry</Name> 
+            <Name>PowerForensics.NTFS.IndexEntry</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.NTFS.IndexEntry</TypeName> 
+                <TypeName>PowerForensics.NTFS.IndexEntry</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -290,11 +290,11 @@
         </View>
 
     <!-- MFT Attributes -->
-        <!-- InvokeIR.PowerForensics.NTFS.Attr -->
+        <!-- PowerForensics.NTFS.Attr -->
         <View> 
-            <Name>InvokeIR.PowerForensics.NTFS.Attr</Name> 
+            <Name>PowerForensics.NTFS.Attr</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.NTFS.Attr</TypeName> 
+                <TypeName>PowerForensics.NTFS.Attr</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -326,11 +326,11 @@
             </TableControl> 
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.NonResident -->        
+        <!-- PowerForensics.NTFS.NonResident -->        
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.NonResident</Name>
+          <Name>PowerForensics.NTFS.NonResident</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.NonResident</TypeName>
+            <TypeName>PowerForensics.NTFS.NonResident</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -363,11 +363,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.StandardInformation -->        
+        <!-- PowerForensics.NTFS.StandardInformation -->        
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.StandardInformation</Name>
+          <Name>PowerForensics.NTFS.StandardInformation</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.StandardInformation</TypeName>
+            <TypeName>PowerForensics.NTFS.StandardInformation</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -406,11 +406,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.FileName -->
+        <!-- PowerForensics.NTFS.FileName -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.FileName</Name>
+          <Name>PowerForensics.NTFS.FileName</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.FileName</TypeName>
+            <TypeName>PowerForensics.NTFS.FileName</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -449,11 +449,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.Data -->
+        <!-- PowerForensics.NTFS.Data -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.Data</Name>
+          <Name>PowerForensics.NTFS.Data</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.Data</TypeName>
+            <TypeName>PowerForensics.NTFS.Data</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -477,11 +477,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.ObjectId -->
+        <!-- PowerForensics.NTFS.ObjectId -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.ObjectId</Name>
+          <Name>PowerForensics.NTFS.ObjectId</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.ObjectId</TypeName>
+            <TypeName>PowerForensics.NTFS.ObjectId</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -514,11 +514,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.VolumeInformation -->
+        <!-- PowerForensics.NTFS.VolumeInformation -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.VolumeInformation</Name>
+          <Name>PowerForensics.NTFS.VolumeInformation</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeInformation</TypeName>
+            <TypeName>PowerForensics.NTFS.VolumeInformation</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -539,11 +539,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.NTFS.VolumeName -->
+        <!-- PowerForensics.NTFS.VolumeName -->
         <View>
-          <Name>InvokeIR.PowerForensics.NTFS.VolumeName</Name>
+          <Name>PowerForensics.NTFS.VolumeName</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.NTFS.VolumeName</TypeName>
+            <TypeName>PowerForensics.NTFS.VolumeName</TypeName>
           </ViewSelectedBy>
                       <TableControl> 
                 <TableHeaders> 
@@ -571,11 +571,11 @@
 
 <!-- Artifacts -->
 
-        <!-- InvokeIR.PowerForensics.Artifacts.Prefetch -->
+        <!-- PowerForensics.Artifacts.Prefetch -->
         <View>
-          <Name>InvokeIR.PowerForensics.Artifacts.Prefetch</Name>
+          <Name>PowerForensics.Artifacts.Prefetch</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.Artifacts.Prefetch</TypeName>
+            <TypeName>PowerForensics.Artifacts.Prefetch</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -610,11 +610,11 @@
 
 <!-- Formats -->
 
-        <!-- InvokeIR.PowerForensics.Formats.Mactime -->
+        <!-- PowerForensics.Formats.Mactime -->
         <View>
-          <Name>InvokeIR.PowerForensics.Formats.Mactime</Name>
+          <Name>PowerForensics.Formats.Mactime</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.Formats.Mactime</TypeName>
+            <TypeName>PowerForensics.Formats.Mactime</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -647,11 +647,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.Formats.HexDump -->
+        <!-- PowerForensics.Formats.HexDump -->
         <View> 
-            <Name>InvokeIR.PowerForensics.Formats.HexDump</Name> 
+            <Name>PowerForensics.Formats.HexDump</Name> 
             <ViewSelectedBy> 
-                <TypeName>InvokeIR.PowerForensics.Formats.HexDump</TypeName> 
+                <TypeName>PowerForensics.Formats.HexDump</TypeName> 
             </ViewSelectedBy> 
             <TableControl> 
                 <TableHeaders> 
@@ -687,11 +687,11 @@
 
 <!-- Ext3 Objects -->
 
-        <!-- InvokeIR.PowerForensics.ext3.Superblock -->
+        <!-- PowerForensics.ext3.Superblock -->
         <View>
-          <Name>InvokeIR.PowerForensics.ext3.Superblock</Name>
+          <Name>PowerForensics.ext3.Superblock</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.ext3.Superblock</TypeName>
+            <TypeName>PowerForensics.ext3.Superblock</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
@@ -742,11 +742,11 @@
           </ListControl>
         </View>
 
-        <!-- InvokeIR.PowerForensics.ext3.Inode -->
+        <!-- PowerForensics.ext3.Inode -->
         <View>
-          <Name>InvokeIR.PowerForensics.ext3.Inode</Name>
+          <Name>PowerForensics.ext3.Inode</Name>
           <ViewSelectedBy>
-            <TypeName>InvokeIR.PowerForensics.ext3.Inode</TypeName>
+            <TypeName>PowerForensics.ext3.Inode</TypeName>
           </ViewSelectedBy>
           <ListControl>
             <ListEntries>
