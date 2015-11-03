@@ -11,6 +11,6 @@ Describe 'Get-ChildItemRaw' {
         { Get-ChildItemRaw -Path C:\windoxs } | Should Not Throw
     }
     It 'should work with listing system files' {
-        (Get-ChildItemRaw -Path 'C:\$Volume').FullName | Should Be 'C:\$Volume'
+        (Get-ChildItemRaw -Path 'C:\$Volume').FullName | Should Be '$Volume'
     }
 }

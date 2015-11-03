@@ -4,6 +4,8 @@ if(Test-Path -Path C:\Windows\Tasks -PathType Container)
 {
     $files = Get-ChildItem -Path C:\Windows\Tasks
 
+    Write-Host $files.Length
+
     Describe 'Get-ScheduledJobRaw' {
         Context 'Parse all job files in the C:\windows\tasks directory' { 
             It 'should work with -VolumeName' {
