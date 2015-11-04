@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
-    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
+    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true" width="150">
   </a>
 </p>
 <p align="center">
