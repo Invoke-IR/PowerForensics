@@ -2,6 +2,8 @@
 
 if(Test-Path -Path C:\Windows\Tasks -PathType Container)
 {
+    at 12:00 calc.exe | Out-Null
+
     $files = Get-ChildItem -Path C:\Windows\Tasks
 
     Write-Host $files.Length
