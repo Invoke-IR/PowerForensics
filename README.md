@@ -2,16 +2,23 @@
   <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
 </p>
 
-#PowerForensics [![Build status](https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true)](https://ci.appveyor.com/project/Invoke-IR/powerforensics) 
+<h1 align="center">PowerForensics</h1>
+<h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
-[![Stories in Backlog](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=backlog&title=Backlog)](https://waffle.io/Invoke-IR/PowerForensics)
-[![Stories in Ready](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready)](https://waffle.io/Invoke-IR/PowerForensics)
-[![Stories in In Progress](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=in%20progress&title=In%20Progress)](https://waffle.io/Invoke-IR/PowerForensics)
+<p align="center">
+  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
+    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
+  </a>
+  <a href="https://waffle.io/Invoke-IR/PowerForensics">
+    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
+  </a>
+  <a href="https://waffle.io/Invoke-IR/PowerForensics">
+    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=in%20progress&title=In%20Progress">
+  </a>
+</p>
 
 PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
-
-Developed by [@jaredcatkinson](https://twitter.com/jaredcatkinson)
 
 ## Cmdlets
 ### Boot Sector:
