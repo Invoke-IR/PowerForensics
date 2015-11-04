@@ -10,6 +10,8 @@
   <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
     <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
   </a>
+</p>
+<p align="center">
   <a href="https://waffle.io/Invoke-IR/PowerForensics">
     <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
   </a>
