@@ -3,6 +3,7 @@
 </p>
 
 <h1 align="center">PowerForensics</h1>
+
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
 <p align="center">
@@ -19,6 +20,8 @@
 
 PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
+
+<h1 align="center"></h1>
 
 ## Cmdlets
 ### Boot Sector:
