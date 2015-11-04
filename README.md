@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready)](https://waffle.io/Invoke-IR/PowerForensics)
 <p align="center">
   <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
 </p>
