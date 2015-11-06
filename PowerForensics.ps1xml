@@ -605,6 +605,46 @@
           </ListControl>
         </View>
 
+        <!-- PowerForensics.Artifacts.ShellLink -->
+        <View>
+          <Name>PowerForensics.Artifacts.ShellLink</Name>
+          <ViewSelectedBy>
+            <TypeName>PowerForensics.Artifacts.ShellLink</TypeName>
+          </ViewSelectedBy>
+          <ListControl>
+            <ListEntries>
+              <ListEntry>
+                <ListItems>
+                  <ListItem>
+                    <PropertyName>Path</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>CreationTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>AccessTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>WriteTime</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>FileSize</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>LocalBasePath</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>CommandLineArguments</PropertyName>
+                  </ListItem>
+                  <ListItem>
+                    <PropertyName>CommonNetworkRelativeLink</PropertyName>
+                  </ListItem>
+                </ListItems>
+              </ListEntry>
+            </ListEntries>
+          </ListControl>
+        </View>
+
 <!-- End Artifacts -->
 
 
