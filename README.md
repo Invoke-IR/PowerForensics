@@ -12,6 +12,11 @@
   </a>
 </p>
 <p align="center">
+  <a href="https://gitter.im/Invoke-IR/PowerForensics">
+    <img src="https://badges.gitter.im/Join%20Chat.svg">
+  </a>
+</p>
+<p align="center">
   <a href="https://waffle.io/Invoke-IR/PowerForensics">
     <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
   </a>
@@ -21,8 +26,6 @@
 </p>
 
 ## Overview
-
-[![Join the chat at https://gitter.im/Invoke-IR/PowerForensics](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Invoke-IR/PowerForensics?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
 
