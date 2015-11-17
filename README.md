@@ -65,11 +65,11 @@ Get-ScheduledJobRaw - parses the binary structure of Scheduled Jobs (at jobs) an
 ### Utilities:
 ```
 Invoke-DD - provides a bit for bit copy of a specified device
-Copy-FileRaw - runs all current escalation checks and returns a report
-Get-ChildItemRaw - finds remaining unattended installation files
-Get-ContentRaw - checks for any encrypted web.config strings
-Get-Hash - returns a cryptographic has for the specified file
-Get-Timezone - returns the .NET Timezone object
+Copy-FileRaw - creates a copy of a file from its raw bytes on disk 
+Get-ChildItemRaw - returns a directory's contents by parsing the MFT structures
+Get-ContentRaw - gets the content of a file from its raw bytes on disk
+Get-Hash - returns a cryptographic hash for the specified file
+Get-Timezone - determines a system's timezone based on the registry setting
 ```
 
 ### Formatters:
