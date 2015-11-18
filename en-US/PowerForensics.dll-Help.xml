@@ -1290,12 +1290,12 @@ You can use the &quot;Tail&quot; parameter name or its alias, &quot;Last&quot;.<
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-ContentRaw</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>VolumeName</maml:name>
 					<maml:description>
 						<maml:para>The name of the Logical Volume where the file is located. (Ex. \\.\C: or C)</maml:para>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
 					<dev:defaultValue>\\.\C:</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
