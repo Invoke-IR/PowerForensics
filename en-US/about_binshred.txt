@@ -1,0 +1,306 @@
+TOPIC
+	about_binshred
+	
+SHORT DESCRIPTION
+	Describes the syntax and usage of the Invoke-BinShred cmdlet.
+	
+LONG DESCRIPTION
+	The Invoke-BinShred cmdlet is a general purpse cmdlet for parsing
+	binary files. To direct the parsing of this binary data, you describe
+	the file format using a simple text-based template structure.
+	
+	Most binary file formats are structured into a series of conceptual
+	regions. For example, a header, followed by a body, followed by some data
+	rows, followed by a footer. These regions usually have properties. For
+	example, a header might have a few "magic bytes", followed by a length
+	field, followed by a version number.
+	
+ A simple example
+	Consider a simple example of the following binary content:
+	
+	PS C:\> Format-Hex words.bin
+
+			   Path: C:\words.bin
+
+			   00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+
+	00000000   4C 48 02 00 00 00 05 00 00 00 48 65 6C 6C 6F 05  LH........Hello.
+	00000010   00 00 00 57 6F 72 6C 64                          ...World
+	
+	From either documentation or investigation, we've determined that the file
+	format has two main portions: a header, followed by a list of words. The
+	header itself has 2 bytes in ASCII as the magic signature, followed by an
+	integer representing the number count of the number of words. After that,
+	each word entry has an integer representing the word length, followed by a
+	word (of that length) in UTF8.
+	
+	A BinShred Template (.bst) for this file looks like this:
+	
+		header :
+			magic (2 bytes as ASCII)
+			wordCount (4 bytes as UINT32)
+			words (wordCount items);
+		words :
+			wordLength (4 bytes as UINT32)
+			word (wordLength bytes as UTF8);	
+	
+	Regions are identified as words followed by a colon. Within a region, you
+	identify properties by writing their property names followed by the length
+	and data type of that property. A semicolon identifies the end of a region.
+	
+	When you supply this template to the Invoke-BinShred cmdlet, the resulting
+	object represents the data structures contained in that binary file as
+	objects.
+	
+	PS > binshred -Path .\words.bin -TemplatePath .\wordParser.bst
+
+	Name                           Value
+	----                           -----
+	magic                          LH
+	wordCount                      2
+	words                          (...)
+
+	PS > (binshred -Path .\words.bin -TemplatePath .\wordParser.bst).Words[0]
+
+	Name                           Value
+	----                           -----
+	wordLength                     5
+	word                           Hello
+	
+ Supported features in a BinShred Template
+ 
+	Whitespace / Capitalization
+		BinShred templates are not sensitive to whitespace or capitalization.
+		Newlinesor spaces can be added as desired.
+		
+	//
+		A single-line comment. This type of comment does not appear in the
+		parsed result objects, unlike the documentation comments described below.
+		
+	/* */
+		A block comment. This type of comment does not appear in the
+		parsed result objects, unlike the documentation comments described below.	
+		
+	LABEL : ... ;
+		A region of a file to be parsed.
+
+		The LABEL of the region can be any name of your choice. The colon is
+		mandatory, as is the trailing semicolon. The region between the colon
+		and semicolon represents properties of that region. The LABEL will be
+		used as a property name on the resulting parsed object.
+		
+	PROPERTY (BYTES bytes as DATATYPE described by LOOKUPTABLE)
+		A property definition within a file region.
+
+		The name of the property ("PROPERTY") can be any name of your choice.
+		The parenthesis (and their contents) are optional. Without parenthesis,
+		the property will be treated as a nested property definition, and
+		BinShred will look for a LABEL of that name to continue processing.
+		
+		If you include parenthesis, this will provide instructions on how
+		to interpret that property.
+
+		The byte count ("BYTES") is mandatory. It may be either an absolute
+		number (10 bytes ...), or refer to a property that would have
+		already been parsed - for example "( header.ByteCount bytes ... )"
+
+		The optional "as DATATYPE" section of the parsing instruction
+		describes how to interpret these bytes. If not specified, the property
+		will use an array of bytes as its data type. Supported data types are:
+
+			ASCII, UNICODE, UTF8, UINT64, UINT32, UINT16
+			INT64, INT32, INT16, SINGLE, FLOAT, DOUBLE
+			
+		The optional "as described by LOOKUPTABLE" section of the parsing
+		instruction lets you define a lookup table that maps this property
+		value to a more meaningful description. This description will be
+		included as a "PROPERTY.description" property.
+
+	PROPERTY (COUNT items)
+		A property that is an array of items.
+		
+		The parenthesis are mandatory, as is the COUNT field. The COUNT field
+		may be either an absolute number (4 items), or refer to a property
+		that would have already been parsed - for example
+		"( header.ItemCount items )". You must also define a parsing
+		rule that matches this property name to describe the data format of the
+		property items.
+		
+	/** Comment */
+		A documentation comment.
+		
+		If you include this above a property definition, this comment will
+		be included as a "PROPERTY.description" property for that region.
+		If you include this above a lookup table definition, this comment
+		will be added to the "PROPERTY.description" field of the property
+		being described by the lookup table.
+		
+	(Additional properties identified by PROPERTY from LOOKUPTABLE)
+		A property inclusion rule.
+		
+		This is useful when you have a file structure that changes based on
+		the value of a property that you've already parsed. For example, a
+		'version' property might imply different properties for different
+		versions. These additional properties will be included as sibling
+		properties of the current region, rather than nested regions.
+		
+	LOOKUPTABLE : VALUE : LABEL ;
+		A lookup table for property inclusion rules.
+		
+		This form of lookup table is used to identify the region / definition
+		that should be used to parse the rest of the data in this region. The
+		beginning colon and trailing semicolon are mandatory.
+		
+		The "VALUE : LABEL" pair can be repeated. Each new pair should be
+		placed on separate lines for clarity, although it is not required.
+		
+		Values can be strings, integers, hexadecimal constants, or arrays of
+		these three data types.
+		
+	LOOKUPTABLE : VALUE : "Description" ;
+		A lookup table for property descriptions.
+		
+		This form of lookup table is used to add additional context-sensitive
+		documentation to property values when a rule uses the
+		"as described by LOOKUPTABLE" feature. The beginning colon and
+		trailing semicolon are mandatory.
+		
+		The "VALUE : "Description"" pair can be repeated. Each new pair should be
+		placed on separate lines for clarity, although it is not required.
+	
+ A complex example
+ 
+	The following BinShred template demonstrates many of these concepts by
+	parsing simple Windows bitmap files:
+	
+	// A bitmap file
+	bitmap :
+			/** The bitmap header */
+			header
+
+			/** The Device Independent Bitmap header */
+			dibHeader
+
+			/** The color table */
+			colorTable
+
+			/** The pixel data */
+			pixelData
+		;
+
+	header:
+			/** The bitmap type */
+			headerField (2 bytes as ASCII described by headerFieldType)
+
+			/** The size of the entire file */
+			fileSize (4 bytes as UINT32)
+
+			/** Application specific */
+			reserved1 (2 bytes)
+
+			/** Application specific */
+			reserved2 (2 bytes)
+
+			/** Offset to the start of the image bytes */
+			imageDataOffset (4 bytes as UINT32)
+		;
+
+	headerFieldType :
+			BM : "Windows Bitmap"
+			BA : "OS/2 struct bitmap array"
+			CI : "OS/2 struct color icon"
+			CP : "OS/2 const color pointer"
+			IC : "OS/2 struct icon"
+			PT : "OS/2 pointer"
+		;
+		
+	dibHeader:
+			/** The size of the DIB header */
+			headerSize (4 bytes as UINT32)
+
+			(additional properties identified by headerSize from bitmapType)
+		;
+
+	bitmapType :
+			/** Windows 2.0 or later / OS/2 1.x */
+			12 : bitmapCoreHeader
+
+			/** OS/2 BITMAPCOREHEADER2 - Adds halftoning. */
+			64 : os22xBitmapHeader
+
+			/** Windows NT, 3.1x or later - Adds 16 bpp and 32 bpp formats. */
+			40 : bitmapInfoHeader
+
+			/** Undocumented - adds RGB bit masks */
+			52 : bitmapV2Header
+
+			/** Bitmap with alpha mask */
+			56 : bitmapV3Header
+
+			/** Windows NT 4.0, 95 or later */
+			108 : bitmapV4Header
+
+			/** Windows NT 5.0, 98 or later - Adds ICC color profiles */
+			124 : bitmapV5Header
+		;
+
+	bitmapInfoHeader :
+			/** bitmap width in pixels */
+			bitmapWidth (4 bytes as INT32)
+
+			/** bitmap height in pixels */
+			bitmapHeight (4 bytes as INT32)
+
+			/** number of color planes. Must be 1. */
+			colorPlanes (2 bytes as UINT16)
+
+			/** number of bits per pixel, which is the color depth of the image. */
+			bitsPerPixel (2 bytes as UINT16)
+
+			/** compression method */
+			compressionMethod (4 bytes as UINT32 described by compressionMethod)
+
+			/** image size. This is the size of the raw bitmap data */
+			imageSize (4 bytes as UINT32)
+
+			/** horizontal resolution of the image (pixels per meter) */
+			horizontalResolution (4 bytes as INT32)
+
+			/** vertical resolution of the image (pixels per meter) */
+			verticalResolution (4 bytes as INT32)
+
+			/** number of colors in the color palette - or 0 to default to 2^n */
+			colorsInColorPalette (4 bytes as UINT32)
+
+			/** number of important colors used, or 0 when every color is important */
+			importantColors (4 bytes as UINT32)
+		;
+
+	compressionMethod :
+			0 : "BI_RGB - none"
+			1 : "BI_RLE8 - RLE 8-bit/pixel"
+			2 : "BI_RLE4 - RLE 4-bit/pixel"
+			3 : "BI_BITFIELDS"
+			4 : "BI_JPEG - OS22XBITMAPHEADER: RLE-24, BITMAPV4INFOHEADER+: JPEG image for printing"
+			5 : "BI_PNG - BITMAPV4INFOHEADER+: PNG image for printing"
+			6 : "BI_ALPHABITFIELDS - RGBA bit field masks (only Windows CE 5.0 with .NET 4.0 or later)"
+			11 : "BI_CMYK - none (only Windows Metafile CMYK)"
+			12 : "BI_CMYKRLE8 - RLE-8 (only Windows Metafile CMYK)"
+			13 : "BI_CMYKRLE4 - RLE-4 (only Windows Metafile CMYK)"
+		;
+
+	colorTable :
+		/** Stored in RGBA32 format */
+		colorTableEntries (bitmap.dibHeader.colorsInColorPalette items);
+
+	colorTableEntries :
+		colorDefinition (4 bytes);
+
+	pixelData :
+		rows (bitmap.dibHeader.bitmapHeight items);
+
+	rows :
+		pixels (bitmap.dibHeader.bitmapWidth items);
+
+	pixels :
+		pixel (3 bytes);
