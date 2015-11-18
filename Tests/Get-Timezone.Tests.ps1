@@ -3,7 +3,7 @@
 Describe 'Get-Timezone' {    
     Context 'Get the Timezone' { 
         It 'should work' {
-            { Get-Timezone } | Should Not Throw
+            { Get-ForensicTimezone } | Should Not Throw
         }
     }
 }

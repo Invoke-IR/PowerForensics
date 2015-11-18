@@ -3,10 +3,10 @@
 Describe 'Get-UsnJrnlInformation' {    
     Context 'Get-UsnJrnlInformation for the C drive' { 
         It 'should work with -VolumeName' {
-            { Get-UsnJrnlInformation -VolumeName C } | Should Not Throw
+            { Get-ForensicUsnJrnlInformation -VolumeName C } | Should Not Throw
         }
         It 'should work without -VolumeName' {
-            { Get-UsnJrnlInformation } | Should Not Throw
+            { Get-ForensicUsnJrnlInformation } | Should Not Throw
         }
     }
 }

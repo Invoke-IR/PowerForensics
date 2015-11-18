@@ -8,7 +8,7 @@ Describe 'Copy-FileRaw' {
     }
     Context 'Copy C:\windows\system32\config\SAM with Copy-FileRaw' { 
         It 'should work' {
-            { Copy-FileRaw C:\Windows\System32\config\SAM C:\Windows\Temp\SAMcopy } | Should Not Throw
+            { Copy-ForensicFileRaw C:\Windows\System32\config\SAM C:\Windows\Temp\SAMcopy } | Should Not Throw
         }
     }
 }

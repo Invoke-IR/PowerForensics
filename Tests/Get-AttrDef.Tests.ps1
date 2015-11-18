@@ -3,10 +3,10 @@
 Describe 'Get-AttrDef' {    
     Context 'Get the attribute definition for the C drive' { 
         It 'should work with -VolumeName' {
-            { Get-AttrDef -VolumeName C } | Should Not Throw
+            { Get-ForensicAttrDef -VolumeName C } | Should Not Throw
         }
         It 'should work with -VolumeName' {
-            { Get-AttrDef } | Should Not Throw
+            { Get-ForensicAttrDef } | Should Not Throw
         }
     }
 }

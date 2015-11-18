@@ -2,15 +2,15 @@
 
 Describe 'Get-ChildItemRaw' {    
     It 'should work without -Path' {
-        { Get-ChildItemRaw C:\ } | Should Not Throw
+        { Get-ForensicChildItemRaw C:\ } | Should Not Throw
     }
     It 'should work with -Path' {
-        { Get-ChildItemRaw -Path C:\ } | Should Not Throw
+        { Get-ForensicChildItemRaw -Path C:\ } | Should Not Throw
     }
     It 'should fail gracefully if the file does not exist' {
-        { Get-ChildItemRaw -Path C:\windoxs } | Should Not Throw
+        { Get-ForensicChildItemRaw -Path C:\windoxs } | Should Not Throw
     }
     It 'should work with listing system files' {
-        (Get-ChildItemRaw -Path 'C:\$Volume').FullName | Should Be '$Volume'
+        (Get-ForensicChildItemRaw -Path 'C:\$Volume').FullName | Should Be '$Volume'
     }
 }

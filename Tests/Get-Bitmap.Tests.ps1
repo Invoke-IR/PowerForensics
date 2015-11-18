@@ -6,7 +6,7 @@ Describe 'Get-Bitmap' {
         #    (Get-Bitmap -VolumeName C -Cluster 0) | Should Be 0
         #}
         It 'should work without -VolumeName' {
-            (Get-Bitmap -Cluster 0).Cluster | Should Be 0
+            (Get-ForensicBitmap -Cluster 0).Cluster | Should Be 0
         }
     }
 }

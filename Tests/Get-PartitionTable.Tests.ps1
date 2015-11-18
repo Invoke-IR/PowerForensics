@@ -3,7 +3,7 @@
 Describe 'Get-PartitionTable' {    
     Context 'Get-PartitionTable for \\.\PHYSICALDRIVE0' { 
         It 'should work with -Path' {
-            { Get-PartitionTable -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+            { Get-ForensicPartitionTable -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
         }
     }
 }
