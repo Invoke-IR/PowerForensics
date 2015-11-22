@@ -85,10 +85,10 @@ Format-Hex - Formats byte array output into a hexdump
 ## [Module Installation](https://msdn.microsoft.com/en-us/library/dd878350(v=vs.85).aspx)
 Jakub Jareš wrote an [excellent introduction](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) to module installation, so I decided to adapt his example for PowerForensics. 
 
-To begin open an internet browser and navigate to the main PowerForensics github [page](https://github.com/Invoke-IR/PowerForensics). Once on this page you will need to download and extract the module into your modules directory.
+To begin open an internet browser and navigate to the main PowerForensics github [page](https://github.com/Invoke-IR/PowerForensics/releases). Once on this page you will need to find the latest release, download PowerForensics.zip, and extract the module into your modules directory.
 
 <p align="center">
-  <img src="http://3.bp.blogspot.com/-grhkJC70sRo/Vd_eHf1lejI/AAAAAAAAA4E/QaEnIZQREew/s640/Screenshot%2B2015-08-27%2B23.57.32.png">
+  <img src="https://1.bp.blogspot.com/-9iysGot_Irw/VlI8VYZef7I/AAAAAAAAA9Y/ud-z17k6I0s/s1600/Screenshot%2B2015-11-22%2B17.04.13.png">
 </p>
 
 If you used Internet Explorer to download the archive, you need to unblock the archive before extraction, otherwise PowerShell will complain when you import the module. If you are using PowerShell 3.0 or newer you can use the Unblock-File cmdlet to do that:
@@ -96,10 +96,10 @@ If you used Internet Explorer to download the archive, you need to unblock the a
 Unblock-File -Path "$env:UserProfile\Downloads\PowerForensics-master.zip"
 ```
 
-If you are using an older version of PowerShell you will have to unblock the file manually. Go to your Downloads folder and right-click PowerForensics-master.zip and select "Properties". On the general tab click Unblock and then click OK to close the dialog.
+If you are using an older version of PowerShell you will have to unblock the file manually. Go to your Downloads folder and right-click PowerForensics.zip and select "Properties". On the general tab click Unblock and then click OK to close the dialog.
 
 <p align="center">
-  <img src="http://3.bp.blogspot.com/-A6C2p8swj50/Vd_eHSFhWVI/AAAAAAAAA4A/y7PMPb1XRCk/s640/Screenshot%2B2015-08-27%2B23.58.30.png">
+  <img src="https://3.bp.blogspot.com/-9l3ETdnI_YE/VlI-grV7etI/AAAAAAAAA9s/IQjL_Zvfw64/s1600/Screenshot%2B2015-11-22%2B17.15.00.png">
 </p>
 
 Open your Modules directory and create a new folder called PowerForensics. You can use this script to open the correct folder effortlessly:
@@ -122,7 +122,7 @@ Invoke-Item (Get-UserModulePath)
 Extract the archive to the PowerForensics folder. When you are done you should have all these files in your PowerForensics directory:
 
 <p align="center">
-  <img src="http://3.bp.blogspot.com/-1I65699uSJk/Vd_f3zNuFDI/AAAAAAAAA4U/NCO52iz3w84/s640/Screenshot%2B2015-08-28%2B00.13.00.png">
+  <img src="https://4.bp.blogspot.com/-kP8N4QXDO2A/VlI-mvXCY8I/AAAAAAAAA9w/V2-MFg1Tg90/s1600/Screenshot%2B2015-11-22%2B17.13.19.png">
 </p>
 
 Start a new PowerShell session and import the PowerForensics module using the commands below:
