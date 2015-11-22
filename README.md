@@ -2,18 +2,18 @@
   <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
 </p>
 
-<h1 align="center">PowerForensics - PowerShell Digital Forensics - </h1>
+<h1 align="center">PowerForensics - PowerShell Digital Forensics</h1>
 
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
 <p align="center">
-  <a href="https://gitter.im/Invoke-IR/PowerForensics">
-    <img src="https://badges.gitter.im/Join%20Chat.svg">
+  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
+    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true" width="150">
   </a>
 </p>
 <p align="center">
-  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
-    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true" width="150">
+  <a href="https://gitter.im/Invoke-IR/PowerForensics">
+    <img src="https://badges.gitter.im/Join%20Chat.svg">
   </a>
 </p>
 <p align="center">

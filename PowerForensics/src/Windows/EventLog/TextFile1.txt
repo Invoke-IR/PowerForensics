@@ -1,0 +1,695 @@
+﻿(BinXmlFragmentHeader)
+0F - Token (BinXmlFragmentHeaderToken)
+01 - Major Version
+01 - Minor Version
+00 - Flags
+
+(BinXmlTemplateInstance)
+0C - Token (BinXmlTokenTemplateInstance)
+
+(BinXmlTemplateDefinition)
+01 - Version
+D6 E0 E2 C7 - Template Id
+26 02 00 00 - Template Definition Data Offset
+00 00 00 00 - Unknown
+D6 E0 E2 C7 44 94 20 EA 4F D2 4E D2 23 AB F7 19 - Guid
+96 04 00 00 - DataSize                   
+
+
+
+#region FragmentHeader
+
+(BinXmlFragmentHeader)
+0F - Token (BinXmlFragmentHeaderToken)
+01 - Major Version
+01 - Minor Version
+00 - Flags
+
+#endregion FragmentHeader
+
+#region <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+(BinXMLElementStart)
+41 - Token (BinXmlTokenOpenStartElementTag)
+11 00 - Dependency Identifier
+8A 04 00 00 - Data Size
+4D 02 00 00 - Element Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+BA 0C - Name Hash
+05 00 - Name Length
+45 00 76 00 65 00 6E 00 74 00 00 00 - Name = Event
+
+(BinXmlAttributeList)
+87 00 00 00 - Data Size
+
+(BinXmlAttribute)
+06 - Token = BinXmlTokenAttribute
+6A 02 00 00 - Name Offset
+    
+(BinXmlName)
+00 00 00 00 - Unknown
+BC 0F - Name Hash
+05 00 - Name Length
+78 00 6D 00 6C 00 6E 00 73 00 00 00 - Name = xmlns
+
+(BinXmlValueText)
+05 - Token = BinXmlTokenValue
+01 - Value Type = StringType
+35 00 - String Length
+68 00 74 00 74 00 70 00 3A 00 2F 00 2F 00 73 00 63 00 68 00 65 00 6D 00 61 00 73 00 2E 00 6D 00 69 00 63 00 72 00 6F 00 73 00 6F 00 66 00 74 00 2E 00 63 00 6F 00 6D 00 2F 00 77 00 69 00 6E 00 2F 00 32 00 30 00 30 00 34 00 2F 00 30 00 38 00 2F 00 65 00 76 00 65 00 6E 00 74 00 73 00 2F 00 65 00 76 00 65 00 6E 00 74 00 - Name = http://schemas.microsoft.com/win/2004/08/events/event
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+#endregion <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+
+
+
+
+#region <System>
+(BinXMLElementStart)
+01 - Token (BinXmlTokenOpenStartElementTag) 
+FF FF - Dependency Identifier 
+DA 03 00 00 - Data Size 
+F8 02 00 00 - Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown
+6F 54 - Name Hash
+06 00 - Name Length
+53 00 79 00 73 00 74 00 65 00 6D 00 00 00 - Name = System
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+#endregion <System>
+
+// Not Done
+#region <Provider />
+
+(BinXMLElementStart)
+41 - Token (BinXmlTokenOpenStartElementTag) 
+FF FF - Dependency identifier 
+59 00 00 00 - Data size
+1A 03 00 00 - Element Name Offset 
+
+(BinXmlName)
+00 00 00 00 
+F1 7B 
+08 00 
+50 00 72 00 6F 00 76 00 69 00 64 00 65 00 72 00 00 00 - Name = Provider
+
+()
+36 00 00 00
+
+(BinXmlAttribute)
+46 
+3D 03 00 00 
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+4B 95 - Name Hash
+04 00 - Name Length
+4E 00 61 00 6D 00 65 00 00 00 - Name = Name
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+0E 00 - Substitution Identifier
+01 - Value Type = StringType
+
+(BinXmlAttribute)
+06 - Token = BinXmlTokenAttribute
+58 03 00 00 - Attribute Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown
+29 15 - Name Hash
+04 00 - Name Length
+47 00 75 00 69 00 64 00 00 00 - Name = Guid
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+0F 00 - Substitution Identifier 
+0F - Value Type = GuidType
+
+
+(BinXmlTokenCloseEmptyElementTag)
+03 />
+
+#endregion <Provider />
+
+// Not Done
+#region <EventID>
+
+(BinXMLElementStart)
+41 - Token = BinXmlTokenOpenStartElementTag
+03 00 - Dependency identifier  
+4D 00 00 00 - Data size 
+7A 03 00 00 - Element Name Offset  
+
+
+(BinXmlName)
+00 00 00 00 - Unknown
+F5 61 - Name Hash
+07 00 - Name Length
+45 00 76 00 65 00 6E 00 74 00 49 00 44 00 00 00 - Name = EventID
+
+
+[]
+27 00 00 00 
+
+06 
+9B 03 00 00 58 03 00 00 29 DA 
+
+0A 00 
+51 00 75 00 61 00 6C 00 69 00 66 00 69 00 65 00 72 00 73 00 00 00 Qualifiers
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution 
+04 00 - Substitution Identifier  
+06 - Value Type = UInt16Type 
+
+(BinXmlTokenCloseStartElementTag)
+02 
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution 
+03 00 - Substitution Identifier 
+06 - Value Type = UInt16Type 
+
+(BinXmlTokenEndElementTag)
+04 
+
+#endregion <EventID>
+
+#region <Version> </Version>
+
+(BinXMLElementStart)
+01 - Token = BinXmlTokenOpenStartElementTag
+0B 00 - Dependency Id
+22 00 00 00 - Data size
+CE 03 00 00 - Element Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown
+18 09 - Name Hash
+07 00 - Name Length
+56 00 65 00 72 00 73 00 69 00 6F 00 6E 00 00 00 - Name = Version
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+0B 00 - Substitution Identifier 
+04 - Value Type = UInt8Type 
+
+(BinXmlTokenEndElementTag)
+04 
+
+#endregion <Version> </Version>
+#region <Level> </Level>
+
+(BinXMLElementStart)
+01 - Token = BinXmlTokenOpenStartElementTag
+00 00 - Dependency identifier
+1E 00 00 00 - Data size
+F7 03 00 00 - Element Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown
+64 CE - Name Hash 
+05 00 - Name Length 
+4C 00 65 00 76 00 65 00 6C 00 00 00 - Name = Level
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+00 00 - Substitution Identifier
+04 - Value Type = UInt8Type
+
+(BinXmlTokenEndElementTag)
+04 - </Level>
+
+#endregion <Level> </Level>
+#region <Task> </Task>
+
+(BinXMLElementStart)
+01 - Token = BinXmlTokenOpenStartElementTag 
+02 00 - Dependency identifier 
+1C 00 00 00 - Data size 
+1C 04 00 00 - Element Name Offset 
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+45 7B - Name Hash 
+04 00 - Name Length 
+54 00 61 00 73 00 6B 00 00 00 - Name = Task
+
+(BinXmlTokenCloseStartElementTag)
+02 - > 
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+02 00 - Substitution Identifier
+06 - Value Type = UInt16Type
+
+(BinXmlTokenEndElementTag)
+04 - </Task>
+
+#endregion <Task> </Task>
+#region <Opcode> </Opcode>
+
+(BinXMLElementStart)
+01 - Token = BinXmlTokenOpenStartElementTag 
+01 00 - Dependency identifier
+20 00 00 00 - Data size   
+3F 04 00 00 - Element Name Offset  
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+AE 1E - Name Hash 
+06 00 - Name Length 
+4F 00 70 00 63 00 6F 00 64 00 65 00 00 00 - Name = Opcode
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+01 00 - Substitution Identifier
+04 - Value Type = UInt8Type
+
+(BinXmlTokenEndElementTag)
+04 - </Opcode>
+
+#endregion <Opcode> </Opcode>
+#region <Keywords> </Keywords>
+
+(BinXMLElementStart) - <
+01 - Token = BinXmlTokenOpenStartElementTag 
+05 00 - Dependency identifier 
+24 00 00 00 - Data size 
+66 04 00 00 - Element Name Offset 
+
+
+(BinXmlName)
+00 00 00 00 - Unknown
+6A CF - Name Hash 
+08 00 - Name Length 
+4B 00 65 00 79 00 77 00 6F 00 72 00 64 00 73 00 00 00 - Name = Keywords
+
+(BinXmlTokenCloseStartElementTag)
+02 - >
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+05 00 - Substitution Identifier
+15 - Value Type = HexInt64Type
+
+(BinXmlTokenEndElementTag)
+04 - </Keywords>
+
+#endregion <Keywords>  </Keywords>
+
+#region <TimeCreated>
+
+(BinXMLElementStart) - <
+41 - Token = BinXmlTokenOpenStartElementTag  
+FF FF - Dependency identifier 
+50 00 00 00 - Data size 
+91 04 00 00 - Element Name Offset  
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+3B 8E - Name Hash 
+0B 00 - Name Length
+54 00 69 00 6D 00 65 00 43 00 72 00 65 00 61 00 74 00 65 00 64 00 00 00 - Name = TimeCreated
+
+[]
+27 00 00 00 
+
+06 
+BA 04 00 00 6A 02 00 00 3C 7B 
+
+0A 00 
+53 00 79 00 73 00 74 00 65 00 6D 00 54 00 69 00 6D 00 65 00 00 00 - Name = SystemTime
+
+0x000002C0  0E 06 00 11 03 01 0A 00 2E 00 00 00 E8 04 00 00  ................
+
+
+(BinXmlName)
+00 00 00 00 - Unknown
+46 03 - Name Hash 
+0D 00 - Name Length 
+45 00 76 00 65 00 6E 00 74 00 52 00 65 00 63 00 6F 00 72 00 64 00 49 00 44 00 00 00 - Name = EventRecordID
+
+02 - BinXmlTokenCloseStartElementTag
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+0A 00 - Substitution Identifier
+0A - Value Type = UInt64Type
+
+(BinXmlTokenEndElementTag)
+04 
+
+#endregion <TimeCreated>
+
+#region Correlation
+[]
+41 
+FF FF 
+85 00 00 00 
+1D 05 00 00 
+
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+A2 F2 - Name Hash 
+0B 00 - Name Length 
+43 00 6F 00 72 00 72 00 65 00 6C 00 61 00 74 00 69 00 6F 00 6E 00 00 00 - Name = Correlation
+
+(BinXmlAttributeList)
+5C 00 00 00 
+
+(BinXmlAttribute)
+46 - Token = BinXmlTokenAttribute 
+46 05 00 00  - Attribute Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown
+0A F1 - Name Hash 
+0A 00 - Name Length 
+41 00 63 00 74 00 69 00 76 00 69 00 74 00 79 00 49 00 44 00 00 00 - Name = ActivityID
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+07 00 - Substitution Identifier
+0F - Value Type = GuidType
+
+
+(BinXmlAttribute)
+06 - Token = BinXmlTokenAttribute
+6D 05 00 00  - Attribute Name Offset
+
+7A 03 00 00 35 C5 
+
+11 00 52 00 65 00 6C 00 61 00 74 00 65 00 64 00 41 00 63 00 74 00 69 00 76 00 69 00 74 00 79 00 49 00 44 00 00 00 - Name = RelatedActivityID
+
+0E 
+0D 00 
+0F 
+
+03 
+
+41 FF 
+FF 6D 00 00 
+
+00 A9 05 00 00 00 00 00 00 B8 B5 
+
+09 00 45 00 78 00 65 00 63 00 75 00 74 00 69 00 6F 00 6E 00 00 00 - Name = Execution
+
+(BinXmlAttributeList)
+48 00 00 00 
+
+(BinXmlAttribute)
+46 - Token = BinXmlTokenAttribute 
+CE 05 00 00  - Attribute Name Offset
+
+46 05 00 00 0A D7 
+
+09 00 50 00 72 00 6F 00 63 00 65 00 73 00 73 00 49 00 44 00 00 00 - Name = ProcessID
+
+0E 
+08 00 
+08 
+
+06 F3 05 
+00 00 1C 04 
+
+00 00 85 39 
+
+08 00 54 00 68 00 72 00 65 00 61 00 64 00 49 00 44 00 00 00 - Name = ThreadID
+
+0E 
+09 00 
+08 03 01 10 
+00 22 00 00 
+
+
+00 1D 06 00 00 
+
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+83 61 - Name Hash 
+07 00 - Name Length 
+43 00 68 00 61 00 6E 00 6E 00 65 00 6C 00 00 00 - Name = Channel
+
+02 - BinXmlTokenCloseStartElementTag 
+
+0E 
+10 00 
+01 
+
+04 - BinXmlTokenEndElementTag
+
+#endregion Correlation
+
+#region <Computer>WIN-OL5AKAF1OUJ</Computer>
+
+(BinXMLElementStart) - <
+01 - Token = BinXmlTokenOpenStartElementTag  
+FF FF - Dependency identifier 
+42 00 00 00 - Data size  
+46 06 00 00 - Element Name Offset 
+
+(BinXmlName)
+91 04 00 00 - Unknown
+3B 6E - Name Hash
+08 00 - Name Length
+43 00 6F 00 6D 00 70 00 75 00 74 00 65 00 72 00 00 00 - Name = Computer
+
+(BinXmlTokenCloseStartElementTag)
+02 - > 
+
+(BinXmlValueText)
+05 - Token = BinXmlTokenValue
+01 - Value Type = StringType
+0F 00 - CharacterCount
+57 00 49 00 4E 00 2D 00 4F 00 4C 00 35 00 41 00 4B 00 41 00 46 00 31 00 4F 00 55 00 4A 00 - Name = WIN-OL5AKAF1OUJ
+
+(BinXmlTokenEndElementTag)
+04 - </Computer>
+
+#endregion <Computer>WIN-OL5AKAF1OUJ</Computer>
+#region <Security UserID="" />
+
+(BinXMLElementStart) - <
+41 - Token = BinXmlTokenOpenStartElementTag 
+FF FF - Dependency identifier 
+42 00 00 00 - Data size   
+8F 06 00 00 - Element Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+A0 2E - Name Hash 
+08 00 - Name Length 
+53 00 65 00 63 00 75 00 72 00 69 00 74 00 79 00 00 00 - Name = Security
+
+(BinXmlAttributeList)
+1F 00 00 00 - Data Size
+
+(BinXmlAttribute)
+06 - Token = BinXmlTokenAttribute
+B2 06 00 00 - Attribute Name Offset
+
+(BinXmlName)
+00 00 00 00 - Unknown 
+66 4C - Name Hash
+06 00 - Name Length 
+55 00 73 00 65 00 72 00 49 00 44 00 00 00 - Name = UserID 
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution 
+0C 00 - Substitution Identifier
+13 - Value Type = SidType
+
+
+(BinXmlTokenCloseEmptyElementTag)
+03 - /
+
+
+(BinXmlTokenEndElementTag)
+04 - >
+
+#endregion <Security UserID="" />
+
+
+
+
+(BinXmlOptionalSubstitution)
+0E - Token = BinXmlOptionalSubstitution
+11 00 - Substitution Identifier 
+21 - Value Type = BinXmlType 
+
+
+
+
+
+
+
+[]
+04 00 12 00 00 00  .........!......
+0x000004C0  01 00 04 00 01 00 04 00 02 00 06 00 02 00 06 00  ................
+0x000004D0  02 00 00 00 08 00 15 00 08 00 11 00 10 00 0F 00  ................
+0x000004E0  04 00 08 00 04 00 08 00 08 00 0A 00 01 00 04 00  ................
+0x000004F0  1C 00 13 00 00 00 00 00 38 00 01 00 10 00 0F 00  ........8.......
+0x00000500  50 00 01 00 73 06 21 00 03 13 6A 00 04 10 01 00  P...s.!...j.....
+0x00000510  00 00 00 00 00 00 00 00 FE 1F 34 58 43 D0 CF 01  ..........4XC...
+0x00000520  8E E1 FC 1F 8F CC 00 00 E7 EF FC 1F 8F CC CF 01  ................
+0x00000530  D0 0B 00 00 C0 08 00 00 01 00 00 00 00 00 00 00  ................
+0x00000540  01 01 05 00 00 00 00 00 05 15 00 00 00 63 12 4A  .............c.J
+0x00000550  17 05 D9 22 3D 16 FD A1 5E E9 03 00 00 4D 00 69  ..."=...^....M.i
+0x00000560  00 63 00 72 00 6F 00 73 00 6F 00 66 00 74 00 2D  .c.r.o.s.o.f.t.-
+0x00000570  00 57 00 69 00 6E 00 64 00 6F 00 77 00 73 00 2D  .W.i.n.d.o.w.s.-
+0x00000580  00 50 00 6F 00 77 00 65 00 72 00 53 00 68 00 65  .P.o.w.e.r.S.h.e
+0x00000590  00 6C 00 6C 00 3B 85 C1 A0 40 5C 15 4B 87 66 3C  .l.l.;...@\.K.f<
+0x000005A0  F1 C5 8F 98 5A 4D 00 69 00 63 00 72 00 6F 00 73  ....ZM.i.c.r.o.s
+0x000005B0  00 6F 00 66 00 74 00 2D 00 57 00 69 00 6E 00 64  .o.f.t.-.W.i.n.d
+0x000005C0  00 6F 00 77 00 73 00 2D 00 50 00 6F 00 77 00 65  .o.w.s.-.P.o.w.e
+0x000005D0  00 72 00 53 00 68 00 65 00 6C 00 6C 00 2F 00 4F  .r.S.h.e.l.l./.O
+0x000005E0  00 70 00 65 00 72 00 61 00 74 00 69 00 6F 00 6E  .p.e.r.a.t.i.o.n
+0x000005F0  00 61 00 6C 00 0C 01 AB 8C B4 18 17 08 00 00 00  .a.l............
+0x00000600  00 00 00 AB 8C B4 18 A1 08 8A B6 70 D6 EC 12 18  ...........p....
+0x00000610  3B 9B 29 CE 00 00 00                             ;.)....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(BinXmlFragmentHeader)
+0F - Token (BinXmlFragmentHeaderToken)
+01 - Major Version
+01 - Minor Version
+00 - Flags
+
+                                             01 FF FF C2 00         .........
+0x00000620  00 00 3E 08 00 00 
+
+(BinXmlName)
+00 00 00 00 - Unknown
+44 82 - Name Hash
+09 00 - Name Length
+45 00 76 00 65 00 6E 00 74 00 44 00 61 00 74 00 61 00 00 00 - EventData
+
+0x00000640        02 41 FF FF 3F 00 00 00 66 08 00 00 CE 05  ...A..?...f.....
+0x00000650  00 00 8A 6F 04 00 44 00 61 00 74 00 61 00 00 00  ...o..D.a.t.a...
+0x00000660  1F 00 00 00 06 3D 03 00 00 05 01 0B 00 43 00 6F  .....=.......C.o
+0x00000670  00 6E 00 74 00 65 00 78 00 74 00 49 00 6E 00 66  .n.t.e.x.t.I.n.f
+0x00000680  00 6F 00 02 0D 00 00 01 04 41 FF FF 27 00 00 00  .o.......A..'...
+0x00000690  66 08 00 00 19 00 00 00 06 3D 03 00 00 05 01 08  f........=......
+0x000006A0  00 55 00 73 00 65 00 72 00 44 00 61 00 74 00 61  .U.s.e.r.D.a.t.a
+0x000006B0  00 02 0D 01 00 01 04 41 FF FF 25 00 00 00 66 08  .......A..%...f.
+0x000006C0  00 00 17 00 00 00 06 3D 03 00 00 05 01 07 00 50  .......=.......P
+0x000006D0  00 61 00 79 00 6C 00 6F 00 61 00 64 00 02 0D 02  .a.y.l.o.a.d....
+0x000006E0  00 01 04 04 00 03 00 00 00 EA 03 01 00 02 00 01  ................
+0x000006F0  00 86 01 01 00 20 00 20 00 20 00 20 00 20 00 20  ..... . . . . .
+0x00000700  00 20 00 20 00 53 00 65 00 76 00 65 00 72 00 69  . . .S.e.v.e.r.i
+0x00000710  00 74 00 79 00 20 00 3D 00 20 00 57 00 61 00 72  .t.y. .=. .W.a.r
+0x00000720  00 6E 00 69 00 6E 00 67 00 0D 00 0A 00 20 00 20  .n.i.n.g..... .
+0x00000730  00 20 00 20 00 20 00 20 00 20 00 20 00 48 00 6F  . . . . . . .H.o
+0x00000740  00 73 00 74 00 20 00 4E 00 61 00 6D 00 65 00 20  .s.t. .N.a.m.e.
+0x00000750  00 3D 00 20 00 57 00 69 00 6E 00 64 00 6F 00 77  .=. .W.i.n.d.o.w
+0x00000760  00 73 00 20 00 50 00 6F 00 77 00 65 00 72 00 53  .s. .P.o.w.e.r.S
+0x00000770  00 68 00 65 00 6C 00 6C 00 20 00 49 00 53 00 45  .h.e.l.l. .I.S.E
+0x00000780  00 20 00 48 00 6F 00 73 00 74 00 0D 00 0A 00 20  . .H.o.s.t.....
+0x00000790  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 48  . . . . . . . .H
+0x000007A0  00 6F 00 73 00 74 00 20 00 56 00 65 00 72 00 73  .o.s.t. .V.e.r.s
+0x000007B0  00 69 00 6F 00 6E 00 20 00 3D 00 20 00 34 00 2E  .i.o.n. .=. .4..
+0x000007C0  00 30 00 0D 00 0A 00 20 00 20 00 20 00 20 00 20  .0..... . . . .
+0x000007D0  00 20 00 20 00 20 00 48 00 6F 00 73 00 74 00 20  . . . .H.o.s.t.
+0x000007E0  00 49 00 44 00 20 00 3D 00 20 00 65 00 30 00 35  .I.D. .=. .e.0.5
+0x000007F0  00 66 00 36 00 31 00 32 00 32 00 2D 00 34 00 37  .f.6.1.2.2.-.4.7
+0x00000800  00 35 00 39 00 2D 00 34 00 65 00 63 00 34 00 2D  .5.9.-.4.e.c.4.-
+0x00000810  00 38 00 66 00 38 00 65 00 2D 00 66 00 34 00 66  .8.f.8.e.-.f.4.f
+0x00000820  00 64 00 38 00 34 00 32 00 62 00 31 00 35 00 61  .d.8.4.2.b.1.5.a
+0x00000830  00 39 00 0D 00 0A 00 20 00 20 00 20 00 20 00 20  .9..... . . . .
+0x00000840  00 20 00 20 00 20 00 45 00 6E 00 67 00 69 00 6E  . . . .E.n.g.i.n
+0x00000850  00 65 00 20 00 56 00 65 00 72 00 73 00 69 00 6F  .e. .V.e.r.s.i.o
+0x00000860  00 6E 00 20 00 3D 00 20 00 34 00 2E 00 30 00 0D  .n. .=. .4...0..
+0x00000870  00 0A 00 20 00 20 00 20 00 20 00 20 00 20 00 20  ... . . . . . .
+0x00000880  00 20 00 52 00 75 00 6E 00 73 00 70 00 61 00 63  . .R.u.n.s.p.a.c
+0x00000890  00 65 00 20 00 49 00 44 00 20 00 3D 00 20 00 36  .e. .I.D. .=. .6
+0x000008A0  00 38 00 31 00 37 00 33 00 34 00 35 00 36 00 2D  .8.1.7.3.4.5.6.-
+0x000008B0  00 38 00 61 00 62 00 65 00 2D 00 34 00 38 00 63  .8.a.b.e.-.4.8.c
+0x000008C0  00 38 00 2D 00 61 00 30 00 38 00 33 00 2D 00 34  .8.-.a.0.8.3.-.4
+0x000008D0  00 31 00 31 00 30 00 66 00 37 00 66 00 34 00 35  .1.1.0.f.7.f.4.5
+0x000008E0  00 38 00 37 00 36 00 0D 00 0A 00 20 00 20 00 20  .8.7.6..... . .
+0x000008F0  00 20 00 20 00 20 00 20 00 20 00 50 00 69 00 70  . . . . . .P.i.p
+0x00000900  00 65 00 6C 00 69 00 6E 00 65 00 20 00 49 00 44  .e.l.i.n.e. .I.D
+0x00000910  00 20 00 3D 00 20 00 39 00 32 00 0D 00 0A 00 20  . .=. .9.2.....
+0x00000920  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 43  . . . . . . . .C
+0x00000930  00 6F 00 6D 00 6D 00 61 00 6E 00 64 00 20 00 4E  .o.m.m.a.n.d. .N
+0x00000940  00 61 00 6D 00 65 00 20 00 3D 00 20 00 47 00 65  .a.m.e. .=. .G.e
+0x00000950  00 74 00 2D 00 50 00 72 00 6F 00 63 00 0D 00 0A  .t.-.P.r.o.c....
+0x00000960  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 20  . . . . . . . .
+0x00000970  00 43 00 6F 00 6D 00 6D 00 61 00 6E 00 64 00 20  .C.o.m.m.a.n.d.
+0x00000980  00 54 00 79 00 70 00 65 00 20 00 3D 00 20 00 43  .T.y.p.e. .=. .C
+0x00000990  00 6D 00 64 00 6C 00 65 00 74 00 0D 00 0A 00 20  .m.d.l.e.t.....
+0x000009A0  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 53  . . . . . . . .S
+0x000009B0  00 63 00 72 00 69 00 70 00 74 00 20 00 4E 00 61  .c.r.i.p.t. .N.a
+0x000009C0  00 6D 00 65 00 20 00 3D 00 20 00 0D 00 0A 00 20  .m.e. .=. .....
+0x000009D0  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 43  . . . . . . . .C
+0x000009E0  00 6F 00 6D 00 6D 00 61 00 6E 00 64 00 20 00 50  .o.m.m.a.n.d. .P
+0x000009F0  00 61 00 74 00 68 00 20 00 3D 00 20 00 0D 00 0A  .a.t.h. .=. ....
+0x00000A00  00 20 00 20 00 20 00 20 00 20 00 20 00 20 00 20  . . . . . . . .
+0x00000A10  00 53 00 65 00 71 00 75 00 65 00 6E 00 63 00 65  .S.e.q.u.e.n.c.e
+0x00000A20  00 20 00 4E 00 75 00 6D 00 62 00 65 00 72 00 20  . .N.u.m.b.e.r.
+0x00000A30  00 3D 00 20 00 31 00 35 00 0D 00 0A 00 20 00 20  .=. .1.5..... .
+0x00000A40  00 20 00 20 00 20 00 20 00 20 00 20 00 55 00 73  . . . . . . .U.s
+0x00000A50  00 65 00 72 00 20 00 3D 00 20 00 57 00 49 00 4E  .e.r. .=. .W.I.N
+0x00000A60  00 2D 00 4F 00 4C 00 35 00 41 00 4B 00 41 00 46  .-.O.L.5.A.K.A.F
+0x00000A70  00 31 00 4F 00 55 00 4A 00 5C 00 55 00 70 00 72  .1.O.U.J.\.U.p.r
+0x00000A80  00 6F 00 6F 00 74 00 0D 00 0A 00 20 00 20 00 20  .o.o.t..... . .
+0x00000A90  00 20 00 20 00 20 00 20 00 20 00 53 00 68 00 65  . . . . . .S.h.e
+0x00000AA0  00 6C 00 6C 00 20 00 49 00 44 00 20 00 3D 00 20  .l.l. .I.D. .=.
+0x00000AB0  00 4D 00 69 00 63 00 72 00 6F 00 73 00 6F 00 66  .M.i.c.r.o.s.o.f
+0x00000AC0  00 74 00 2E 00 50 00 6F 00 77 00 65 00 72 00 53  .t...P.o.w.e.r.S
+0x00000AD0  00 68 00 65 00 6C 00 6C 00 0D 00 0A 00 00 00 00  .h.e.l.l........
+0x00000AE0  00 45 00 72 00 72 00 6F 00 72 00 20 00 4D 00 65  .E.r.r.o.r. .M.e
+0x00000AF0  00 73 00 73 00 61 00 67 00 65 00 20 00 3D 00 20  .s.s.a.g.e. .=.
+0x00000B00  00 4F 00 70 00 65 00 72 00 61 00 74 00 69 00 6F  .O.p.e.r.a.t.i.o
+0x00000B10  00 6E 00 20 00 69 00 73 00 20 00 6E 00 6F 00 74  .n. .i.s. .n.o.t
+0x00000B20  00 20 00 76 00 61 00 6C 00 69 00 64 00 20 00 64  . .v.a.l.i.d. .d
+0x00000B30  00 75 00 65 00 20 00 74 00 6F 00 20 00 74 00 68  .u.e. .t.o. .t.h
+0x00000B40  00 65 00 20 00 63 00 75 00 72 00 72 00 65 00 6E  .e. .c.u.r.r.e.n
+0x00000B50  00 74 00 20 00 73 00 74 00 61 00 74 00 65 00 20  .t. .s.t.a.t.e.
+0x00000B60  00 6F 00 66 00 20 00 74 00 68 00 65 00 20 00 6F  .o.f. .t.h.e. .o
+0x00000B70  00 62 00 6A 00 65 00 63 00 74 00 2E 00 0D 00 0A  .b.j.e.c.t......
+0x00000B80  00 46 00 75 00 6C 00 6C 00 79 00 20 00 51 00 75  .F.u.l.l.y. .Q.u
+0x00000B90  00 61 00 6C 00 69 00 66 00 69 00 65 00 64 00 20  .a.l.i.f.i.e.d.
+0x00000BA0  00 45 00 72 00 72 00 6F 00 72 00 20 00 49 00 44  .E.r.r.o.r. .I.D
+0x00000BB0  00 20 00 3D 00 20 00 53 00 79 00 73 00 74 00 65  . .=. .S.y.s.t.e
+0x00000BC0  00 6D 00 2E 00 49 00 6E 00 76 00 61 00 6C 00 69  .m...I.n.v.a.l.i
+0x00000BD0  00 64 00 4F 00 70 00 65 00 72 00 61 00 74 00 69  .d.O.p.e.r.a.t.i
+0x00000BE0  00 6F 00 6E 00 45 00 78 00 63 00 65 00 70 00 74  .o.n.E.x.c.e.p.t
+0x00000BF0  00 69 00 6F 00 6E 00 2C 00 4D 00 69 00 63 00 72  .i.o.n.,.M.i.c.r
+0x00000C00  00 6F 00 73 00 6F 00 66 00 74 00 2E 00 53 00 61  .o.s.o.f.t...S.a
+0x00000C10  00 6D 00 70 00 6C 00 65 00 73 00 2E 00 50 00 6F  .m.p.l.e.s...P.o
+0x00000C20  00 77 00 65 00 72 00 53 00 68 00 65 00 6C 00 6C  .w.e.r.S.h.e.l.l
+0x00000C30  00 2E 00 43 00 6F 00 6D 00 6D 00 61 00 6E 00 64  ...C.o.m.m.a.n.d
+0x00000C40  00 73 00 2E 00 47 00 65 00 74 00 50 00 72 00 6F  .s...G.e.t.P.r.o
+0x00000C50  00 63 00 43 00 6F 00 6D 00 6D 00 61 00 6E 00 64  .c.C.o.m.m.a.n.d
+0x00000C60  00 0D 00 0A 00 00 00 00 00 6F 00 6F              .........o.o

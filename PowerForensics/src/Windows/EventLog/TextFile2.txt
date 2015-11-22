@@ -1,0 +1,287 @@
+﻿(BinXmlFragmentHeader)
+(BinXmlTemplateInstance)
+(BinXmlTemplateDefinition)
+
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+(BinXmlFragmentHeader)
+(BinXMLElementStart - 41)
+	(BinXmlName - Event)
+	(BinXmlAttributeList)
+		(BinXmlAttribute - 06)
+			(BinXmlName - xmlns)
+			(BinXmlValueText - http://schemas.microsoft.com/win/2004/08/events/event)
+(BinXmlTokenCloseStartElementTag)
+
+	<System>
+	(BinXMLElementStart - 01)
+		(BinXmlName - System)
+	(BinXmlTokenCloseStartElementTag)
+
+		<Provider Name="" Guid="" />
+		(BinXMLElementStart - 41)
+			(BinXmlName - Provider)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 46)
+					(BinXmlName - Name)
+					(BinXmlOptionalSubstitution - StringType)
+				----------------------------
+				(BinXmlAttribute - 06)
+					(BinXmlName - Guid)
+					(BinXmlOptionalSubstitution - GuidType)
+		(BinXmlTokenCloseEmptyElementTag)
+
+		<EventID Qualifiers=""> </EventID>
+		(BinXMLElementStart - 41)
+			(BinXmlName - EventID)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 06)
+					(BinXmlName - Qualifiers)
+					(BinXmlOptionalSubstitution - UInt16Type)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution - UInt16Type)
+		(BinXmlTokenEndElementTag)
+
+		<Version> </Version>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution)
+		(BinXmlTokenEndElementTag)
+
+		<Level> </Level>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution)
+		(BinXmlTokenEndElementTag)
+
+		<Task> </Task>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution)
+		(BinXmlTokenEndElementTag)
+
+		<Opcode> </Opcode>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution)
+		(BinXmlTokenEndElementTag)
+
+		<Keywords> </Keywords>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution)
+		(BinXmlTokenEndElementTag)
+
+		<TimeCreated SystemTime="" />
+		(BinXMLElementStart - 41)
+			(BinXmlName - TimeCreated)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 06)
+					(BinXmlName - SystemTime)
+					(BinXmlOptionalSubstitution - FileTimeType)
+		(BinXmlTokenCloseEmptyElementTag)
+
+		<EventRecordID> </EventRecordID>
+		(BinXMLElementStart - 01)
+			(BinXmlName - EventRecordID)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution - UInt64Type)
+		(BinXmlTokenEndElementTag)
+
+		<Correlation ActivityID="" RelatedActivityID="" />
+		(BinXMLElementStart - 41)
+			(BinXmlName - Correlation)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 46 - GuidType)
+					(BinXmlName - ActivityID)
+					(BinXmlOptionalSubstitution)
+				-------------------------------------------
+				(BinXmlAttribute - 06)
+					(BinXmlName - RelatedActivityID)
+					(BinXmlOptionalSubstitution - GuidType)
+		(BinXmlTokenCloseEmptyElementTag)
+ 
+		 <Execution ProcessID="" ThreadID="" />
+		(BinXMLElementStart - 41)
+			(BinXmlName - Execution)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 46)
+					(BinXmlName - ProcessID)
+					(BinXmlOptionalSubstitution - UInt32Type)
+				---------------------------------------------
+				(BinXmlAttribute - 06)
+					(BinXmlName - ThreadID)
+					(BinXmlOptionalSubstitution - UInt32Type)
+		(BinXmlTokenCloseEmptyElementTag)
+
+		<Channel> </Channel>
+		(BinXMLElementStart - 01)
+			(BinXmlName - Channel)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlOptionalSubstitution - StringType)
+		(BinXmlTokenEndElementTag)
+
+		<Computer>WIN-OL5AKAF1OUJ</Computer>
+		(BinXMLElementStart - 01)
+			(BinXmlName)
+		(BinXmlTokenCloseStartElementTag)
+		(BinXmlValueText)
+		(BinXmlTokenEndElementTag)
+
+		<Security UserID="" />
+		(BinXMLElementStart - 41)
+			(BinXmlName - Security)
+			(BinXmlAttributeList)
+				(BinXmlAttribute - 06)
+					(BinXmlName - UserID )
+					(BinXmlOptionalSubstitution - SidType)
+		(BinXmlTokenCloseEmptyElementTag)
+		(BinXmlTokenEndElementTag)
+
+	(BinXmlOptionalSubstitution - BinXmlType)
+	(BinXmlTokenEndElementTag)
+
+</Event>
+(BinXmlTokenEOF)
+
+12 00 00 00  .........!......
+0x000004C0  01 00 04 00 01 00 04 00 02 00 06 00 02 00 06 00  ................
+0x000004D0  02 00 00 00 08 00 15 00 08 00 11 00 10 00 0F 00  ................
+0x000004E0  04 00 08 00 04 00 08 00 08 00 0A 00 01 00 04 00  ................
+0x000004F0  1C 00 13 00 00 00 00 00 38 00 01 00 10 00 0F 00  ........8.......
+0x00000500  50 00 01 00 73 06 21 00 03 13 6A 00 04 10 01 00  P...s.!...j.....
+0x00000510  00 00 00 00 00 00 00 00 FE 1F 34 58 43 D0 CF 01  ..........4XC...
+0x00000520  8E E1 FC 1F 8F CC 00 00 E7 EF FC 1F 8F CC CF 01  ................
+0x00000530  D0 0B 00 00 C0 08 00 00 01 00 00 00 00 00 00 00  ................
+0x00000540  01 01 05 00 00 00 00 00 05 15 00 00 00 63 12 4A  .............c.J
+0x00000550  17 05 D9 22 3D 16 FD A1 5E E9 03 00 00 4D 00 69  ..."=...^....M.i
+0x00000560  00 63 00 72 00 6F 00 73 00 6F 00 66 00 74 00 2D  .c.r.o.s.o.f.t.-
+0x00000570  00 57 00 69 00 6E 00 64 00 6F 00 77 00 73 00 2D  .W.i.n.d.o.w.s.-
+0x00000580  00 50 00 6F 00 77 00 65 00 72 00 53 00 68 00 65  .P.o.w.e.r.S.h.e
+0x00000590  00 6C 00 6C 00 3B 85 C1 A0 40 5C 15 4B 87 66 3C  .l.l.;...@\.K.f<
+0x000005A0  F1 C5 8F 98 5A 4D 00 69 00 63 00 72 00 6F 00 73  ....ZM.i.c.r.o.s
+0x000005B0  00 6F 00 66 00 74 00 2D 00 57 00 69 00 6E 00 64  .o.f.t.-.W.i.n.d
+0x000005C0  00 6F 00 77 00 73 00 2D 00 50 00 6F 00 77 00 65  .o.w.s.-.P.o.w.e
+0x000005D0  00 72 00 53 00 68 00 65 00 6C 00 6C 00 2F 00 4F  .r.S.h.e.l.l./.O
+0x000005E0  00 70 00 65 00 72 00 61 00 74 00 69 00 6F 00 6E  .p.e.r.a.t.i.o.n
+0x000005F0  00 61 00 6C 00 
+
+
+
+
+
+
+
+
+
+
+Offset     _00_01_02_03_04_05_06_07_08_09_0A_0B_0C_0D_0E_0F  Ascii
+------     ------------------------------------------------  -----
+0x00000000  0C 01 AB 8C B4 18 17 08 00 00 00 00 00 00 AB 8C  ................
+0x00000010  B4 18 A1 08 8A B6 70 D6 EC 12 18 3B 9B 29 CE 00  ......p....;.)..
+0x00000020  00 00 0F 01 01 00 01 FF FF C2 00 00 00 3E 08 00  .............>..
+0x00000030  00 00 00 00 00 44 82 09 00 45 00 76 00 65 00 6E  .....D...E.v.e.n
+0x00000040  00 74 00 44 00 61 00 74 00 61 00 00 00 02 41 FF  .t.D.a.t.a....A.
+0x00000050  FF 3F 00 00 00 66 08 00 00 CE 05 00 00 8A 6F 04  .?...f........o.
+0x00000060  00 44 00 61 00 74 00 61 00 00 00 1F 00 00 00 06  .D.a.t.a........
+0x00000070  3D 03 00 00 05 01 0B 00 43 00 6F 00 6E 00 74 00  =.......C.o.n.t.
+0x00000080  65 00 78 00 74 00 49 00 6E 00 66 00 6F 00 02 0D  e.x.t.I.n.f.o...
+0x00000090  00 00 01 04 41 FF FF 27 00 00 00 66 08 00 00 19  ....A..'...f....
+0x000000A0  00 00 00 06 3D 03 00 00 05 01 08 00 55 00 73 00  ....=.......U.s.
+0x000000B0  65 00 72 00 44 00 61 00 74 00 61 00 02 0D 01 00  e.r.D.a.t.a.....
+0x000000C0  01 04 41 FF FF 25 00 00 00 66 08 00 00 17 00 00  ..A..%...f......
+0x000000D0  00 06 3D 03 00 00 05 01 07 00 50 00 61 00 79 00  ..=.......P.a.y.
+0x000000E0  6C 00 6F 00 61 00 64 00 02 0D 02 00 01 04 04 00  l.o.a.d.........
+0x000000F0  03 00 00 00 EA 03 01 00 02 00 01 00 86 01 01 00  ................
+0x00000100  20 00 20 00 20 00 20 00 20 00 20 00 20 00 20 00   . . . . . . . .
+0x00000110  53 00 65 00 76 00 65 00 72 00 69 00 74 00 79 00  S.e.v.e.r.i.t.y.
+0x00000120  20 00 3D 00 20 00 57 00 61 00 72 00 6E 00 69 00   .=. .W.a.r.n.i.
+0x00000130  6E 00 67 00 0D 00 0A 00 20 00 20 00 20 00 20 00  n.g..... . . . .
+0x00000140  20 00 20 00 20 00 20 00 48 00 6F 00 73 00 74 00   . . . .H.o.s.t.
+0x00000150  20 00 4E 00 61 00 6D 00 65 00 20 00 3D 00 20 00   .N.a.m.e. .=. .
+0x00000160  57 00 69 00 6E 00 64 00 6F 00 77 00 73 00 20 00  W.i.n.d.o.w.s. .
+0x00000170  50 00 6F 00 77 00 65 00 72 00 53 00 68 00 65 00  P.o.w.e.r.S.h.e.
+0x00000180  6C 00 6C 00 20 00 49 00 53 00 45 00 20 00 48 00  l.l. .I.S.E. .H.
+0x00000190  6F 00 73 00 74 00 0D 00 0A 00 20 00 20 00 20 00  o.s.t..... . . .
+0x000001A0  20 00 20 00 20 00 20 00 20 00 48 00 6F 00 73 00   . . . . .H.o.s.
+0x000001B0  74 00 20 00 56 00 65 00 72 00 73 00 69 00 6F 00  t. .V.e.r.s.i.o.
+0x000001C0  6E 00 20 00 3D 00 20 00 34 00 2E 00 30 00 0D 00  n. .=. .4...0...
+0x000001D0  0A 00 20 00 20 00 20 00 20 00 20 00 20 00 20 00  .. . . . . . . .
+0x000001E0  20 00 48 00 6F 00 73 00 74 00 20 00 49 00 44 00   .H.o.s.t. .I.D.
+0x000001F0  20 00 3D 00 20 00 65 00 30 00 35 00 66 00 36 00   .=. .e.0.5.f.6.
+0x00000200  31 00 32 00 32 00 2D 00 34 00 37 00 35 00 39 00  1.2.2.-.4.7.5.9.
+0x00000210  2D 00 34 00 65 00 63 00 34 00 2D 00 38 00 66 00  -.4.e.c.4.-.8.f.
+0x00000220  38 00 65 00 2D 00 66 00 34 00 66 00 64 00 38 00  8.e.-.f.4.f.d.8.
+0x00000230  34 00 32 00 62 00 31 00 35 00 61 00 39 00 0D 00  4.2.b.1.5.a.9...
+0x00000240  0A 00 20 00 20 00 20 00 20 00 20 00 20 00 20 00  .. . . . . . . .
+0x00000250  20 00 45 00 6E 00 67 00 69 00 6E 00 65 00 20 00   .E.n.g.i.n.e. .
+0x00000260  56 00 65 00 72 00 73 00 69 00 6F 00 6E 00 20 00  V.e.r.s.i.o.n. .
+0x00000270  3D 00 20 00 34 00 2E 00 30 00 0D 00 0A 00 20 00  =. .4...0..... .
+0x00000280  20 00 20 00 20 00 20 00 20 00 20 00 20 00 52 00   . . . . . . .R.
+0x00000290  75 00 6E 00 73 00 70 00 61 00 63 00 65 00 20 00  u.n.s.p.a.c.e. .
+0x000002A0  49 00 44 00 20 00 3D 00 20 00 36 00 38 00 31 00  I.D. .=. .6.8.1.
+0x000002B0  37 00 33 00 34 00 35 00 36 00 2D 00 38 00 61 00  7.3.4.5.6.-.8.a.
+0x000002C0  62 00 65 00 2D 00 34 00 38 00 63 00 38 00 2D 00  b.e.-.4.8.c.8.-.
+0x000002D0  61 00 30 00 38 00 33 00 2D 00 34 00 31 00 31 00  a.0.8.3.-.4.1.1.
+0x000002E0  30 00 66 00 37 00 66 00 34 00 35 00 38 00 37 00  0.f.7.f.4.5.8.7.
+0x000002F0  36 00 0D 00 0A 00 20 00 20 00 20 00 20 00 20 00  6..... . . . . .
+0x00000300  20 00 20 00 20 00 50 00 69 00 70 00 65 00 6C 00   . . .P.i.p.e.l.
+0x00000310  69 00 6E 00 65 00 20 00 49 00 44 00 20 00 3D 00  i.n.e. .I.D. .=.
+0x00000320  20 00 39 00 32 00 0D 00 0A 00 20 00 20 00 20 00   .9.2..... . . .
+0x00000330  20 00 20 00 20 00 20 00 20 00 43 00 6F 00 6D 00   . . . . .C.o.m.
+0x00000340  6D 00 61 00 6E 00 64 00 20 00 4E 00 61 00 6D 00  m.a.n.d. .N.a.m.
+0x00000350  65 00 20 00 3D 00 20 00 47 00 65 00 74 00 2D 00  e. .=. .G.e.t.-.
+0x00000360  50 00 72 00 6F 00 63 00 0D 00 0A 00 20 00 20 00  P.r.o.c..... . .
+0x00000370  20 00 20 00 20 00 20 00 20 00 20 00 43 00 6F 00   . . . . . .C.o.
+0x00000380  6D 00 6D 00 61 00 6E 00 64 00 20 00 54 00 79 00  m.m.a.n.d. .T.y.
+0x00000390  70 00 65 00 20 00 3D 00 20 00 43 00 6D 00 64 00  p.e. .=. .C.m.d.
+0x000003A0  6C 00 65 00 74 00 0D 00 0A 00 20 00 20 00 20 00  l.e.t..... . . .
+0x000003B0  20 00 20 00 20 00 20 00 20 00 53 00 63 00 72 00   . . . . .S.c.r.
+0x000003C0  69 00 70 00 74 00 20 00 4E 00 61 00 6D 00 65 00  i.p.t. .N.a.m.e.
+0x000003D0  20 00 3D 00 20 00 0D 00 0A 00 20 00 20 00 20 00   .=. ..... . . .
+0x000003E0  20 00 20 00 20 00 20 00 20 00 43 00 6F 00 6D 00   . . . . .C.o.m.
+0x000003F0  6D 00 61 00 6E 00 64 00 20 00 50 00 61 00 74 00  m.a.n.d. .P.a.t.
+0x00000400  68 00 20 00 3D 00 20 00 0D 00 0A 00 20 00 20 00  h. .=. ..... . .
+0x00000410  20 00 20 00 20 00 20 00 20 00 20 00 53 00 65 00   . . . . . .S.e.
+0x00000420  71 00 75 00 65 00 6E 00 63 00 65 00 20 00 4E 00  q.u.e.n.c.e. .N.
+0x00000430  75 00 6D 00 62 00 65 00 72 00 20 00 3D 00 20 00  u.m.b.e.r. .=. .
+0x00000440  31 00 35 00 0D 00 0A 00 20 00 20 00 20 00 20 00  1.5..... . . . .
+0x00000450  20 00 20 00 20 00 20 00 55 00 73 00 65 00 72 00   . . . .U.s.e.r.
+0x00000460  20 00 3D 00 20 00 57 00 49 00 4E 00 2D 00 4F 00   .=. .W.I.N.-.O.
+0x00000470  4C 00 35 00 41 00 4B 00 41 00 46 00 31 00 4F 00  L.5.A.K.A.F.1.O.
+0x00000480  55 00 4A 00 5C 00 55 00 70 00 72 00 6F 00 6F 00  U.J.\.U.p.r.o.o.
+0x00000490  74 00 0D 00 0A 00 20 00 20 00 20 00 20 00 20 00  t..... . . . . .
+0x000004A0  20 00 20 00 20 00 53 00 68 00 65 00 6C 00 6C 00   . . .S.h.e.l.l.
+0x000004B0  20 00 49 00 44 00 20 00 3D 00 20 00 4D 00 69 00   .I.D. .=. .M.i.
+0x000004C0  63 00 72 00 6F 00 73 00 6F 00 66 00 74 00 2E 00  c.r.o.s.o.f.t...
+0x000004D0  50 00 6F 00 77 00 65 00 72 00 53 00 68 00 65 00  P.o.w.e.r.S.h.e.
+0x000004E0  6C 00 6C 00 0D 00 0A 00 00 00 00 00 45 00 72 00  l.l.........E.r.
+0x000004F0  72 00 6F 00 72 00 20 00 4D 00 65 00 73 00 73 00  r.o.r. .M.e.s.s.
+0x00000500  61 00 67 00 65 00 20 00 3D 00 20 00 4F 00 70 00  a.g.e. .=. .O.p.
+0x00000510  65 00 72 00 61 00 74 00 69 00 6F 00 6E 00 20 00  e.r.a.t.i.o.n. .
+0x00000520  69 00 73 00 20 00 6E 00 6F 00 74 00 20 00 76 00  i.s. .n.o.t. .v.
+0x00000530  61 00 6C 00 69 00 64 00 20 00 64 00 75 00 65 00  a.l.i.d. .d.u.e.
+0x00000540  20 00 74 00 6F 00 20 00 74 00 68 00 65 00 20 00   .t.o. .t.h.e. .
+0x00000550  63 00 75 00 72 00 72 00 65 00 6E 00 74 00 20 00  c.u.r.r.e.n.t. .
+0x00000560  73 00 74 00 61 00 74 00 65 00 20 00 6F 00 66 00  s.t.a.t.e. .o.f.
+0x00000570  20 00 74 00 68 00 65 00 20 00 6F 00 62 00 6A 00   .t.h.e. .o.b.j.
+0x00000580  65 00 63 00 74 00 2E 00 0D 00 0A 00 46 00 75 00  e.c.t.......F.u.
+0x00000590  6C 00 6C 00 79 00 20 00 51 00 75 00 61 00 6C 00  l.l.y. .Q.u.a.l.
+0x000005A0  69 00 66 00 69 00 65 00 64 00 20 00 45 00 72 00  i.f.i.e.d. .E.r.
+0x000005B0  72 00 6F 00 72 00 20 00 49 00 44 00 20 00 3D 00  r.o.r. .I.D. .=.
+0x000005C0  20 00 53 00 79 00 73 00 74 00 65 00 6D 00 2E 00   .S.y.s.t.e.m...
+0x000005D0  49 00 6E 00 76 00 61 00 6C 00 69 00 64 00 4F 00  I.n.v.a.l.i.d.O.
+0x000005E0  70 00 65 00 72 00 61 00 74 00 69 00 6F 00 6E 00  p.e.r.a.t.i.o.n.
+0x000005F0  45 00 78 00 63 00 65 00 70 00 74 00 69 00 6F 00  E.x.c.e.p.t.i.o.
+0x00000600  6E 00 2C 00 4D 00 69 00 63 00 72 00 6F 00 73 00  n.,.M.i.c.r.o.s.
+0x00000610  6F 00 66 00 74 00 2E 00 53 00 61 00 6D 00 70 00  o.f.t...S.a.m.p.
+0x00000620  6C 00 65 00 73 00 2E 00 50 00 6F 00 77 00 65 00  l.e.s...P.o.w.e.
+0x00000630  72 00 53 00 68 00 65 00 6C 00 6C 00 2E 00 43 00  r.S.h.e.l.l...C.
+0x00000640  6F 00 6D 00 6D 00 61 00 6E 00 64 00 73 00 2E 00  o.m.m.a.n.d.s...
+0x00000650  47 00 65 00 74 00 50 00 72 00 6F 00 63 00 43 00  G.e.t.P.r.o.c.C.
+0x00000660  6F 00 6D 00 6D 00 61 00 6E 00 64 00 0D 00 0A 00  o.m.m.a.n.d.....
+0x00000670  00 00 00                                         ...
