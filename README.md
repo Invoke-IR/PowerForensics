@@ -99,7 +99,7 @@ Unblock-File -Path "$env:UserProfile\Downloads\PowerForensics-master.zip"
 If you are using an older version of PowerShell you will have to unblock the file manually. Go to your Downloads folder and right-click PowerForensics.zip and select "Properties". On the general tab click Unblock and then click OK to close the dialog.
 
 <p align="center">
-  <img src="https://3.bp.blogspot.com/-9l3ETdnI_YE/VlI-grV7etI/AAAAAAAAA9s/IQjL_Zvfw64/s1600/Screenshot%2B2015-11-22%2B17.15.00.png">
+  <img src="https://3.bp.blogspot.com/-9l3ETdnI_YE/VlI-grV7etI/AAAAAAAAA9s/IQjL_Zvfw64/s400/Screenshot%2B2015-11-22%2B17.15.00.png">
 </p>
 
 Open your Modules directory and create a new folder called PowerForensics. You can use this script to open the correct folder effortlessly:
