@@ -83,7 +83,15 @@ Format-Hex - Formats byte array output into a hexdump
 ```
 
 ## [Module Installation](https://msdn.microsoft.com/en-us/library/dd878350(v=vs.85).aspx)
-Jakub Jareš wrote an [excellent introduction](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) to module installation, so I decided to adapt his example for PowerForensics. 
+The easiest way to install PowerForensics is through the  ```Install-Module``` cmdlet. This is available by default in Windows 10, but can also be installed via the Windows Management Framework or the standalone MSI installer:
+
+```
+PS> Install-Module PowerForensics
+```
+
+For more information about installing modules from the PowerShell Gallery, see http://www.powershellgallery.com/.
+
+If you wish to install directly from this repository, Jakub Jareš wrote an [excellent introduction](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) to module installation, so we've adapted those instructions here for PowerForensics. 
 
 To begin open an internet browser and navigate to the main PowerForensics github [page](https://github.com/Invoke-IR/PowerForensics/releases). Once on this page you will need to find the latest release, download PowerForensics.zip, and extract the module into your modules directory.
 
