@@ -41,6 +41,8 @@ byteOption
 sizeReference
     :   label
     |   INT
+    |   HEXADECIMAL
+    |   NATIVEEXPRESSION
     ;
 
 byteFormat
@@ -56,6 +58,7 @@ byteFormat
     |   SINGLE
     |   FLOAT
     |   DOUBLE
+    |   NATIVEEXPRESSION
     ;
 
 lookupTable
@@ -105,6 +108,10 @@ label
     ;
 
 QUOTEDVALUE  : QUOTE .+? QUOTE          ;
+
+NATIVEEXPRESSION
+    : '{' (~('{'|'}')|NATIVEEXPRESSION)*? '}'
+    ;
 
 COMMA        : ','                      ;
 QUOTE        : '"'                      ;
@@ -158,7 +165,7 @@ HEXADECIMAL  : '0'('x'|'X')[0-9a-fA-F]+ ;
 LABEL
     : [a-zA-Z_][.a-zA-Z0-9_]*
     ;
-
+    
 fragment A:('a'|'A');
 fragment B:('b'|'B');
 fragment C:('c'|'C');

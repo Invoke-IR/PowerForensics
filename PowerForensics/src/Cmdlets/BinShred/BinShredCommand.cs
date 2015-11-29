@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace PowerForensics.Cmdlets
 {
@@ -66,12 +67,43 @@ namespace PowerForensics.Cmdlets
             try
             {
                 OrderedDictionary results = BinShred.Shred(fileContent, templateContent);
-                WriteObject(results);
+                Object cmdletResult = ConvertToReturnObject(results);
+                WriteObject(cmdletResult);
             }
             catch (ParseException e)
             {
                 WriteError(new ErrorRecord(e, "ParseError", ErrorCategory.ParserError, currentPath));
             }
+        }
+
+        private Object ConvertToReturnObject(object currentObject)
+        {
+            List<Object> currentAsArray = currentObject as List<Object>;
+            if(currentAsArray != null)
+            {
+                PSObject[] result = new PSObject[currentAsArray.Count];
+
+                for(int currentIndex = 0; currentIndex < currentAsArray.Count; currentIndex++)
+                {
+                    result[currentIndex] = (PSObject) ConvertToReturnObject(currentAsArray[currentIndex]);
+                }
+
+                return result;
+            }
+
+            OrderedDictionary currentAsDictionary = currentObject as OrderedDictionary;
+            if (currentAsDictionary != null)
+            {
+                PSObject result = new PSObject();
+                foreach (string key in currentAsDictionary.Keys)
+                {
+                    result.Properties.Add(new PSNoteProperty(key, ConvertToReturnObject(currentAsDictionary[key])));
+                }
+
+                return result;
+            }
+
+            return currentObject;
         }
     }
 }

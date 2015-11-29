@@ -102,9 +102,18 @@ LONG DESCRIPTION
 		If you include parenthesis, this will provide instructions on how
 		to interpret that property.
 
-		The byte count ("BYTES") is mandatory. It may be either an absolute
-		number (10 bytes ...), or refer to a property that would have
+		The byte count ("BYTES") is mandatory. This will usually be either
+		an absolute number (10 bytes ...), or refer to a property that would have
 		already been parsed - for example "( header.ByteCount bytes ... )".
+		
+		You can also specify a native (C#) expression for this value. The
+		native expression can refer to properties that would have already been
+		parsed, and must return an integer - for example
+		"( { return (letterCount * 2); } bytes as Unicode )".
+		
+		Specifying a byte count with a native expression is much slower than
+		specifying it with a direct byte count or property reference, so you
+		you should avoid it if possible.
 
 		The optional "as DATATYPE" section of the parsing instruction
 		describes how to interpret these bytes. If not specified, the property
@@ -112,6 +121,28 @@ LONG DESCRIPTION
 
 			ASCII, UNICODE, UTF8, UINT64, UINT32, UINT16
 			INT64, INT32, INT16, SINGLE, FLOAT, DOUBLE
+			
+		You can also specify a native (C#) expression for the interpretation
+		of these bytes. The native expression can refer to properties that have
+		already been parsed. In addition to the properties that have already 
+		been parsed, three parameters are available to the native expression:
+		
+			_content: The byte array representing the entire binary content
+			    being parsed.
+			_contentPosition: The current position in the binary content
+			    being parsed.
+			_byteCount: The number of bytes to be parsed, as specified (or
+			    dynamically evaluated) by the byte count property.
+				
+		For example, you could write a native expression to parse a series of
+		bytes as ASCII like this:
+		
+		    (4 bytes as {
+				return Encoding.ASCII.GetString(_content, _contentPosition, _byteCount);
+			})
+			
+		Specifying a data interpretation with a native expression is much slower than
+		specifying a data type directly, so you you should avoid it if possible.
 			
 		The optional "as described by LOOKUPTABLE" section of the parsing
 		instruction lets you define a lookup table that maps this property
