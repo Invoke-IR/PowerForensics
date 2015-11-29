@@ -39,7 +39,7 @@ fileRecord :
     filenamePrefix (155 bytes as ASCII)
     fileContentGap (12 bytes as ASCII)
     fileContent ( {
-		return (fileSize[0] == '\0') ? 0 :
-			Convert.ToInt32(fileSize.Trim(), 8); } bytes)
-	
-	(padding to multiple of 512 bytes);
+        return (fileSize[0] == '\0') ? 0 :
+            Convert.ToInt32(fileSize.Trim(), 8); } bytes)
+    
+    (padding to multiple of 512 bytes);
