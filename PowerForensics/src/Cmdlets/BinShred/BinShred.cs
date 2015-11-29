@@ -75,7 +75,7 @@ namespace PowerForensics
         Stack<string> processingActions;
         Stack<OrderedDictionary> results;
 
-        delegate int ParseAction(byte[] content, int contentPosition);
+        delegate int ParseAction(byte[] content, int startingContentPosition, int contentPosition);
         Dictionary<string, List<ParseAction>> parseActions;
 
         Dictionary<string, Dictionary<Object, string>> lookupTables;
@@ -103,7 +103,7 @@ namespace PowerForensics
             {
                 foreach (ParseAction action in definitionActions)
                 {
-                    int consumed = action.Invoke(this.content, this.contentPosition);
+                    int consumed = action.Invoke(this.content, startingContentPosition, this.contentPosition);
                     this.contentPosition += consumed;
                 }
             }
@@ -138,6 +138,34 @@ namespace PowerForensics
                     string lookupTableName = body.lookupTableName().GetText();
 
                     ProcessAdditionalProperties(propertyName, lookupTableName, regionName);
+                    continue;
+                }
+
+                // This is a rule that describes padding bytes to be added:
+                // "(padding to multiple of <bytes> bytes)"
+                if (body.PADDING() != null)
+                {
+                    string propertyName = regionName;
+
+                    int bytes = 0;
+                    String byteLabel = String.Empty;
+
+                    if (body.sizeReference().INT() != null)
+                    {
+                        bytes = Int32.Parse(body.sizeReference().INT().GetText());
+                    }
+                    else
+                    {
+                        byteLabel = body.sizeReference().label().GetText();
+                    }
+
+                    string paddingLabel = "Padding";
+                    if(Char.IsLower(propertyName[0]))
+                    {
+                        paddingLabel = "padding";
+                    }
+
+                    ProcessBytePadding(propertyName, paddingLabel, bytes, byteLabel);
                     continue;
                 }
 
@@ -199,7 +227,7 @@ namespace PowerForensics
                     else
                     {
                         this.parseActions[regionName].Add(
-                        new ParseAction((content, contentPosition) =>
+                        new ParseAction((content, startingContentPosition, contentPosition) =>
                         {
                             OrderedDictionary currentResult = new OrderedDictionary(StringComparer.OrdinalIgnoreCase);
                             results.Peek().Add(ruleLabel, currentResult);
@@ -233,7 +261,7 @@ namespace PowerForensics
             {
                 // This has no byte format. It is just bytes.
                 this.parseActions[regionName].Add(
-                    new ParseAction((content, contentPosition) =>
+                    new ParseAction((content, startingContentPosition, contentPosition) =>
                     {
                         if (!String.IsNullOrEmpty(byteLabel))
                         {
@@ -250,11 +278,36 @@ namespace PowerForensics
             }
         }
 
+        private void ProcessBytePadding(string regionName, string ruleLabel, int byteMultiple, string byteLabel)
+        {
+            this.parseActions[regionName].Add(
+                new ParseAction((content, startingContentPosition, contentPosition) =>
+                {
+                    if (!String.IsNullOrEmpty(byteLabel))
+                    {
+                        byteMultiple = GetByteCountFromLabel(byteLabel);
+                    }
+
+                    int bytes = (contentPosition - startingContentPosition) % byteMultiple;
+                    if (bytes > 0)
+                    {
+                        bytes = byteMultiple - bytes;
+                    }
+
+                    byte[] element = new byte[bytes];
+                    Array.Copy(content, (int)contentPosition, element, 0, bytes);
+
+                    ParseElement(ruleLabel, element, null, null);
+                    return bytes;
+                }
+                ));
+        }
+
         private void ProcessCountedRule(string regionName, string ruleLabel, string ruleComment, int bytes, string byteLabel)
         {
             // This is a rule with counted elements of another rule type
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     int items = bytes;
 
@@ -289,7 +342,7 @@ namespace PowerForensics
         void ProcessAdditionalProperties(string propertyName, string lookupTableName, string regionName)
         {
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     Dictionary<object, string> lookupTable = null;
                     if (lookupTables.TryGetValue(lookupTableName, out lookupTable))
@@ -411,7 +464,7 @@ namespace PowerForensics
             string regionName, string ruleLabel, string describedBy, string ruleComment)
         {
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     if (!String.IsNullOrEmpty(byteLabel))
                     {

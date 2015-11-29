@@ -6,12 +6,15 @@ using System.Collections.Specialized;
 
 namespace PowerForensics.Cmdlets
 {
-    [Cmdlet("Invoke", "BinShred")]
+    [Cmdlet("ConvertFrom", "BinaryData", DefaultParameterSetName = "ByPath")]
     [Alias("binshred")]
     public class BinShredCommand : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath", Position = 0)]
         public string Path { get; set;  }
+
+        [Parameter(Mandatory = true, ParameterSetName = "ByContent", Position = 0)]
+        public byte[] Content { get; set; }
 
         [Parameter(Mandatory = true, Position = 1)]
         public string TemplatePath { get; set; }
@@ -32,31 +35,42 @@ namespace PowerForensics.Cmdlets
                             "TemplatePath"), "TemplateMustBeFileSystemPath", ErrorCategory.InvalidArgument, TemplatePath));
             }
 
-            Collection<string> filePaths = this.SessionState.Path.GetResolvedProviderPathFromPSPath(Path, out provider);
-            if (!String.Equals("FileSystem", provider.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                ThrowTerminatingError(
-                    new ErrorRecord(
-                        new ArgumentException(
-                            String.Format("Could not load file {0}. The path must represent a FileSystem path.", Path),
-                            "Path"), "PathMustBeFileSystemPath", ErrorCategory.InvalidArgument, Path));
-            }
-
             string templateContent = File.ReadAllText(templatePaths[0]);
 
-            foreach (string currentPath in filePaths)
+            if (Content != null)
             {
-                byte[] fileContent = File.ReadAllBytes(currentPath);
+                ParseContent(templateContent, "<Interactive>", Content);
+            }
+            else
+            {
+                Collection<string> filePaths = this.SessionState.Path.GetResolvedProviderPathFromPSPath(Path, out provider);
+                if (!String.Equals("FileSystem", provider.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    ThrowTerminatingError(
+                        new ErrorRecord(
+                            new ArgumentException(
+                                String.Format("Could not load file {0}. The path must represent a FileSystem path.", Path),
+                                "Path"), "PathMustBeFileSystemPath", ErrorCategory.InvalidArgument, Path));
+                }
 
-                try
+                foreach (string currentPath in filePaths)
                 {
-                    OrderedDictionary results = BinShred.Shred(fileContent, templateContent);
-                    WriteObject(results);
+                    byte[] fileContent = File.ReadAllBytes(currentPath);
+                    ParseContent(templateContent, currentPath, fileContent);
                 }
-                catch (ParseException e)
-                {
-                    WriteError(new ErrorRecord(e, "ParseError", ErrorCategory.ParserError, currentPath));
-                }
+            }
+        }
+
+        private void ParseContent(string templateContent, string currentPath, byte[] fileContent)
+        {
+            try
+            {
+                OrderedDictionary results = BinShred.Shred(fileContent, templateContent);
+                WriteObject(results);
+            }
+            catch (ParseException e)
+            {
+                WriteError(new ErrorRecord(e, "ParseError", ErrorCategory.ParserError, currentPath));
             }
         }
     }

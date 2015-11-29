@@ -716,6 +716,124 @@ namespace Tests
             Assert.AreEqual(3, result.Keys.Count, "Should have two keys");
         }
 
+        [TestMethod]
+        public void ElementNoPaddingNeeded()
+        {
+            string template = @"
+                pe :
+                    rows (2 items);
+                rows :
+                    data (2 bytes as ASCII)
+                    (padding to multiple of 2 bytes);
+            ";
+            byte[] content = { 65, 66, 67, 68 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
+
+            // Check the captured data
+            object[] items = (object[])result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            byte[] padding = (byte[])((OrderedDictionary)items[0])["padding"];
+            Assert.AreEqual(0, padding.Length);
+
+            padding = (byte[])((OrderedDictionary)items[1])["padding"];
+            Assert.AreEqual(0, padding.Length);
+
+            // Check the casing of the padding key
+            string[] keys = new string[2];
+            ((OrderedDictionary)items[0]).Keys.CopyTo(keys, 0);
+            Assert.AreEqual("padding", keys[1]);
+        }
+
+        [TestMethod]
+        public void ElementOneBytePadding()
+        {
+            string template = @"
+                Pe :
+                    Rows (2 items);
+                Rows :
+                    Data (2 bytes as ASCII)
+                    (padding to multiple of 3 bytes);
+            ";
+            byte[] content = { 65, 66, 0x02, 67, 68, 0x04 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
+
+            // Check the captured data
+            object[] items = (object[]) result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary) items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary) items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[]) ((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[]) ((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+
+            // Check the casing of the padding key
+            string[] keys = new string[2];
+            ((OrderedDictionary)items[0]).Keys.CopyTo(keys, 0);
+            Assert.AreEqual("Padding", keys[1]);
+        }
+
+        [TestMethod]
+        public void ElementTwoBytePadding()
+        {
+            string template = @"
+                pe :
+                    rows (2 items);
+                rows :
+                    data (2 bytes as ASCII)
+                    (padding to multiple of 4 bytes);
+            ";
+            byte[] content = { 65, 66, 0x02, 0x03, 67, 68, 0x04, 0x05, };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
+
+            // Check the captured data
+            object[] items = (object[])result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[])((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x3, ((byte[])((OrderedDictionary)items[0])["padding"])[1], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[])((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x5, ((byte[])((OrderedDictionary)items[1])["padding"])[1], "Should have got proper padding");
+        }
+
+        [TestMethod]
+        public void ElementDynamicBytePadding()
+        {
+            string template = @"
+                pe :
+                    paddingRequirement (4 bytes as INT32)
+                    rows (2 items);
+                rows :                    
+                    data (2 bytes as ASCII)
+                    (padding to multiple of pe.paddingRequirement bytes);
+            ";
+            byte[] content = { 0x4, 0x00, 0x00, 0x00, 65, 66, 0x02, 0x03, 67, 68, 0x04, 0x05, };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            Assert.AreEqual(2, result.Keys.Count, "Should have two keys");
+
+            // Check the captured data
+            object[] items = (object[])result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[])((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x3, ((byte[])((OrderedDictionary)items[0])["padding"])[1], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[])((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x5, ((byte[])((OrderedDictionary)items[1])["padding"])[1], "Should have got proper padding");
+        }
+
         // BUG - Bitmap compression method not incorporating description
 
         // TODO - Add 'Offset' field

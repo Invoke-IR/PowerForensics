@@ -125,7 +125,8 @@ pixelData :
     rows (bitmap.dibHeader.bitmapHeight items);
 
 rows :
-    pixels (bitmap.dibHeader.bitmapWidth items);
+    pixels (bitmap.dibHeader.bitmapWidth items)
+	(padding to multiple of 4 bytes);
 
 pixels :
     pixel (3 bytes);
