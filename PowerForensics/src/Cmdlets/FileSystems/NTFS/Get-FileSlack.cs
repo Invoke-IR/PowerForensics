@@ -2,7 +2,7 @@
 using PowerForensics.Ntfs;
 
 
-namespace PowerForensics.Cmdlet
+namespace PowerForensics.Cmdlets
 {
     #region GetFileSlackCommand
 

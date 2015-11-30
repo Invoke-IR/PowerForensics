@@ -8,13 +8,13 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Cmdlets
 {
-    #region InvokeForensicTimelineCommand
+    #region GetForensicTimelineCommand
 
     /// <summary> 
-    /// This class implements the Invoke-ForensicTimeline cmdlet. 
+    /// This class implements the Get-ForensicTimeline cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsLifecycle.Invoke, "Timeline")]
-    public class InvokeForensicTimelineCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "Timeline")]
+    public class GetForensicTimelineCommand : PSCmdlet
     {
         #region Parameters
 
@@ -88,5 +88,5 @@ namespace PowerForensics.Cmdlets
         #endregion Cmdlet Overrides
     }
 
-    #endregion InvokeForensicTimelineCommand
+    #endregion GetForensicTimelineCommand
 }

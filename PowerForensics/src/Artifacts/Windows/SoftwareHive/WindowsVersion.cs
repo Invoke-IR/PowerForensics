@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
@@ -8,14 +9,49 @@ namespace PowerForensics.Artifacts
         #region Properties
 
         public readonly string ProductName;
-        public readonly Version CurrentVersion;
+        public readonly uint CurrentMajorVersion;
+        public readonly uint CurrentMinorVersion;
+        public readonly string CurrentVersion;
+        public readonly DateTime InstallTime;
+        public readonly string RegisteredOwner;
+        public readonly string SystemRoot;
 
         #endregion Properties
 
         #region Constructors
 
-        internal WindowsVersion(NamedKey nk)
+        internal WindowsVersion(byte[] bytes, NamedKey nk)
         {
+            foreach (ValueKey vk in nk.GetValues(bytes))
+            {
+                switch (vk.Name)
+                {
+                    case "ProductName":
+                        ProductName = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        break;
+                    case "CurrentMajorVersionNumber":
+                        CurrentMajorVersion = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        break;
+                    case "CurrentMinorVersionNumber":
+                        CurrentMinorVersion = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        break;
+                    case "CurrentVersion":
+                        CurrentVersion = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        break;
+                    case "InstallTime":
+                        InstallTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
+                        break;
+                    case "RegisteredOwner":
+                        RegisteredOwner = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        break;
+                    case "SystemRoot":
+                        SystemRoot = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             //ProductName = ;
             //CurrentVersion = ;
         }
@@ -34,8 +70,8 @@ namespace PowerForensics.Artifacts
             if (RegistryHeader.Get(hivePath).HivePath.Contains("SOFTWARE"))
             {
                 byte[] bytes = Helper.GetHiveBytes(hivePath);
-                NamedKey nk = NamedKey.Get(bytes, hivePath, @"Micosoft\Windows NT\CurrentVersion");
-                return new WindowsVersion(nk);
+                NamedKey nk = NamedKey.Get(bytes, hivePath, @"Microsoft\Windows NT\CurrentVersion");
+                return new WindowsVersion(bytes, nk);
             }
             else
             {

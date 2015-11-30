@@ -3675,6 +3675,174 @@ to parse.</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>Get-ForensicTimeline</command:name>
+			<maml:description>
+				<maml:para>Creates a forensic timeline.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicTimeline</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Invoke-ForensicTimeline cmdlet creates a forensic timeline for the selected volume or logical drive. It runs several PowerForensics cmdlets and returns all results as ForensicTimeline objects, instead of objects of different types. The result is a forensic timeline, that is, is a chronology of diagnostic events.
+
+The cmdlets that Invoke-ForensicTimeline runs include:
+-- Get-ForensicScheduledJob
+-- Get-ForensicShellLink
+-- Get-ForensicUsnJrnl
+-- Get-ForensicEventLog
+-- Get-ForensicRegistryKey
+
+The cmdlet returns data that includes MFT file record, registry keys, Amcache, event logs, and much more.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicTimeline</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the volume or logical partition that Invoke-ForensicTimeline analyzes. 
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the volume or logical partition that Invoke-ForensicTimeline analyzes. 
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<maml:description>
+					<maml:para>You cannot pipe input to this cmdlet.</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>Name         MemberType Definition
+----         ---------- ----------
+ActivityType Property   string ActivityType {get;}
+Date         Property   datetime Date {get;}
+Description  Property   string Description {get;}
+FileName     Property   string FileName {get;}
+Source       Property   string Source {get;}
+SourceType   Property   string SourceType {get;}
+User         Property   string User {get;}</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Formats.ForensicTimeline</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Invoke-ForensicTimeline -VolumeName C</dev:code>
+				<dev:remarks>
+					<maml:para>This command creates a forensic timeline for the C: volume on the local system.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>$t = Invoke-ForensicTimeline -VolumeName D:
+
+PS C:\&gt; $t[0]
+
+Date         : 1/1/1999 12:00:00 AM
+ActivityType : MACB
+Source       : SCHEDULEDJOB
+SourceType   :
+User         : Server01\User01
+FileName     : C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe
+Description  : [PROGRAM EXECUTION] C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe executed
+               at 1/1/1999 12:00:00 AM via Scheduled Job
+
+				</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows the properties of the ForensicTimeline object. Invoke-ForensicTimeline returns the results of the disparate cmdlets in the same object type.
+
+The first command command creates a forensic timeline for the D: volume on the local system and saves the results in the $t variable.
+
+The second command displays the properties of the first object in $t, which was produced by the Get-ForensicScheduledJob cmdlet.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Invoke-ForensicTimeline -VolumeName \\.\C: | Group-Object -Property Source | Format-Table Count, Name
+
+[ADMIN]: PS C:\ps-test&gt; $r | Group-Object -Property Source | ft Count, Name
+
+  Count Name
+  ----- ----
+      4 SCHEDULEDJOB
+   1916 ShellLink
+1276123 MFT
+ 293715 USNJRNL
+   9319 EVENTLOG
+ 423900 REGISTRY
+				</dev:code>
+				<dev:remarks>
+					<maml:para>This command runs Invoke-ForensicTimeline on the C: drive. Then, it groups the objects by the value of their Source property so you can see the cmdlets that were run to produce the data, and it formats the results into a table of Count and Name, so the values of these properties are not truncated.
+
+The output of this command varies based on the system and drive contents.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Invoke-ForensicTimeline | Sort-Object -Property Date</dev:code>
+				<dev:remarks>
+					<maml:para>The command returns the output of Invoke-ForensicTimeline in chronological order to produce a true timeline of the events.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>Get-ForensicTimezone</command:name>
 			<maml:description>
 				<maml:para>Gets the system&apos;s timezone.</maml:para>
@@ -5348,174 +5516,6 @@ The command uses the default values for OutFile (stdout; the Windows PowerShell 
 It uses the Offset parameter to specify the starting point of the copy operation, the BlockSize parameter to specify the bytes per copy operation, and the Count parameter to specify the number of copy operations. 
 
 It also uses the OutFile parameter to specify a location for the output. The default is writing to the Windows PowerShell console (stdout).</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Invoke-ForensicTimeline</command:name>
-			<maml:description>
-				<maml:para>Creates a forensic timeline.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Invoke</command:verb>
-			<command:noun>ForensicTimeline</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Invoke-ForensicTimeline cmdlet creates a forensic timeline for the selected volume or logical drive. It runs several PowerForensics cmdlets and returns all results as ForensicTimeline objects, instead of objects of different types. The result is a forensic timeline, that is, is a chronology of diagnostic events.
-
-The cmdlets that Invoke-ForensicTimeline runs include:
--- Get-ForensicScheduledJob
--- Get-ForensicShellLink
--- Get-ForensicUsnJrnl
--- Get-ForensicEventLog
--- Get-ForensicRegistryKey
-
-The cmdlet returns data that includes MFT file record, registry keys, Amcache, event logs, and much more.
-
-Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Invoke-ForensicTimeline</maml:name>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
-					<maml:name>VolumeName</maml:name>
-					<maml:description>
-						<maml:para>Specifies the volume or logical partition that Invoke-ForensicTimeline analyzes. 
-
-Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
-				<maml:name>VolumeName</maml:name>
-				<maml:description>
-					<maml:para>Specifies the volume or logical partition that Invoke-ForensicTimeline analyzes. 
-
-Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<maml:description>
-					<maml:para>You cannot pipe input to this cmdlet.</maml:para>
-				</maml:description>
-				<dev:type>
-					<maml:name>None</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<maml:description>
-					<maml:para>Name         MemberType Definition
-----         ---------- ----------
-ActivityType Property   string ActivityType {get;}
-Date         Property   datetime Date {get;}
-Description  Property   string Description {get;}
-FileName     Property   string FileName {get;}
-Source       Property   string Source {get;}
-SourceType   Property   string SourceType {get;}
-User         Property   string User {get;}</maml:para>
-				</maml:description>
-				<dev:type>
-					<maml:name>PowerForensics.Formats.ForensicTimeline</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Invoke-ForensicTimeline -VolumeName C</dev:code>
-				<dev:remarks>
-					<maml:para>This command creates a forensic timeline for the C: volume on the local system.</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>$t = Invoke-ForensicTimeline -VolumeName D:
-
-PS C:\&gt; $t[0]
-
-Date         : 1/1/1999 12:00:00 AM
-ActivityType : MACB
-Source       : SCHEDULEDJOB
-SourceType   :
-User         : Server01\User01
-FileName     : C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe
-Description  : [PROGRAM EXECUTION] C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe executed
-               at 1/1/1999 12:00:00 AM via Scheduled Job
-
-				</dev:code>
-				<dev:remarks>
-					<maml:para>This example shows the properties of the ForensicTimeline object. Invoke-ForensicTimeline returns the results of the disparate cmdlets in the same object type.
-
-The first command command creates a forensic timeline for the D: volume on the local system and saves the results in the $t variable.
-
-The second command displays the properties of the first object in $t, which was produced by the Get-ForensicScheduledJob cmdlet.</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Invoke-ForensicTimeline -VolumeName \\.\C: | Group-Object -Property Source | Format-Table Count, Name
-
-[ADMIN]: PS C:\ps-test&gt; $r | Group-Object -Property Source | ft Count, Name
-
-  Count Name
-  ----- ----
-      4 SCHEDULEDJOB
-   1916 ShellLink
-1276123 MFT
- 293715 USNJRNL
-   9319 EVENTLOG
- 423900 REGISTRY
-				</dev:code>
-				<dev:remarks>
-					<maml:para>This command runs Invoke-ForensicTimeline on the C: drive. Then, it groups the objects by the value of their Source property so you can see the cmdlets that were run to produce the data, and it formats the results into a table of Count and Name, so the values of these properties are not truncated.
-
-The output of this command varies based on the system and drive contents.</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Invoke-ForensicTimeline | Sort-Object -Property Date</dev:code>
-				<dev:remarks>
-					<maml:para>The command returns the output of Invoke-ForensicTimeline in chronological order to produce a true timeline of the events.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>

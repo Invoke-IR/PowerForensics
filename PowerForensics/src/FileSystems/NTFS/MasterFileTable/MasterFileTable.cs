@@ -10,16 +10,6 @@ namespace PowerForensics.Ntfs
         #region StaticMethods
 
         #region GetRecordMethods
-        
-        public static FileRecord GetRecord(string volume)
-        {
-            Util.getVolumeName(ref volume);
-            IntPtr hVolume = Util.getHandle(volume);
-            using (FileStream streamToRead = Util.getFileStream(hVolume))
-            {
-                return GetRecord(streamToRead, volume);
-            }
-        }
 
         internal static FileRecord GetRecord(FileStream streamToRead, string volume)
         {

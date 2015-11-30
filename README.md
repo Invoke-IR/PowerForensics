@@ -64,15 +64,15 @@ Get-Inode - returns the Inode Table entries
 ```
 Get-VolumeShadowCopy - returns Win32_ShadowCopy objects
 Get-Prefetch - parses the binary structure of Windows Prefetch files and returns a custom Prefetch object
-Get-ScheduledJobRaw - parses the binary structure of Scheduled Jobs (at jobs) and returns a custom ScheduledJob object
+Get-ScheduledJob - parses the binary structure of Scheduled Jobs (at jobs) and returns a custom ScheduledJob object
 ```
 
 ### Utilities:
 ```
 Invoke-DD - provides a bit for bit copy of a specified device
-Copy-FileRaw - creates a copy of a file from its raw bytes on disk 
-Get-ChildItemRaw - returns a directory's contents by parsing the MFT structures
-Get-ContentRaw - gets the content of a file from its raw bytes on disk
+Copy-File - creates a copy of a file from its raw bytes on disk 
+Get-ChildItem - returns a directory's contents by parsing the MFT structures
+Get-Content - gets the content of a file from its raw bytes on disk
 Get-Hash - returns a cryptographic hash for the specified file
 Get-Timezone - determines a system's timezone based on the registry setting
 ```

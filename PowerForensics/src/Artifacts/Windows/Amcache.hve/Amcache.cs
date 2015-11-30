@@ -56,7 +56,7 @@ namespace PowerForensics.Artifacts
                         Description = Encoding.Unicode.GetString(vk.GetData(bytes));
                         break;
                     case "f":
-                        CompileTime = new DateTime(1970, 1, 1).AddSeconds(BitConverter.ToInt32(vk.GetData(bytes), 0x00));
+                        CompileTime = Util.FromUnixTime(BitConverter.ToUInt32(vk.GetData(bytes), 0x00));
                         break;
                     case "11":
                         ModifiedTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));

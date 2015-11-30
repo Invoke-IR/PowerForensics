@@ -46,7 +46,6 @@ namespace PowerForensics.Registry
         public readonly string FullName;
         public readonly string Name;
 
-
         #endregion Properties
 
         #region Constructors
