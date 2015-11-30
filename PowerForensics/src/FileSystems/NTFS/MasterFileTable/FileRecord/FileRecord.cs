@@ -548,6 +548,21 @@ namespace PowerForensics.Ntfs
 
         #endregion GetRecordBytesMethod
 
+        #region GetContentBytesMethods
+
+        public static byte[] GetContentBytes(string path)
+        {
+            return GetContentBytes(path, "");
+        }
+
+        public static byte[] GetContentBytes(string path, string streamName)
+        {
+            FileRecord record = Get(path, true);
+            return record.GetTestContent(streamName);
+        }
+
+        #endregion GetContentBytesMethods
+
         private static void ApplyFixup(ref byte[] bytes)
         {
             // Take UpdateSequence into account
@@ -681,6 +696,50 @@ namespace PowerForensics.Ntfs
 
         #endregion GetContentMethods
 
+        #region GetTestContentMethods
+
+        public byte[] GetTestContent()
+        {
+            return GetTestContent("");
+        }
+
+        public byte[] GetTestContent(string streamName)
+        {
+            foreach (Attr attr in this.Attribute)
+            {
+                if (attr.Name == Attr.ATTR_TYPE.DATA)
+                {
+                    if (attr.NameString.ToUpper() == streamName.ToUpper())
+                    {
+                        if (attr.NonResident)
+                        {
+                            return (attr as NonResident).GetBytes(this.VolumePath);
+                        }
+                        else
+                        {
+                            return (attr as Data).RawData;
+                        }
+                    }
+                }
+
+                AttributeList attrList = attr as AttributeList;
+                if (attrList != null)
+                {
+                    foreach (AttrRef ar in attrList.AttributeReference)
+                    {
+                        if (ar.Name == "DATA")
+                        {
+                            FileRecord record = new FileRecord(FileRecord.GetRecordBytes(this.VolumePath, (int)ar.RecordNumber), this.VolumePath, true);
+                            return record.GetTestContent(streamName);
+                        }
+                    }
+                }
+            }
+            throw new Exception("Could not locate desired stream");
+        }
+
+        #endregion GetTestContentMethods
+
         #region CopyFileMethods
 
         public void CopyFile(string Destination)
@@ -737,10 +796,11 @@ namespace PowerForensics.Ntfs
         {
             foreach (Attr attr in this.Attribute)
             {
-                if (attr.Name == Attr.ATTR_TYPE.STANDARD_INFORMATION)
+                StandardInformation SI = attr as StandardInformation;
+                if (SI != null)
                 {
-                    StandardInformation stdInfo = attr as StandardInformation;
-                    return UsnJrnl.Get(this.VolumePath.Split('\\')[3] + @"\$Extend\$UsnJrnl", stdInfo.UpdateSequenceNumber);
+                    return UsnJrnl.Get(this.VolumePath.Split('\\') + @"\$Extend\$UsnJrnl", SI.UpdateSequenceNumber);
+
                 }
             }
             throw new Exception("No $STANDARD_INFORMATION Attirbute found");
@@ -803,12 +863,12 @@ namespace PowerForensics.Ntfs
 
         public string GetHash(string algorithm)
         {
-            return Hash.Get(this.GetContent(), algorithm);
+            return PowerForensics.Utilities.Hash.Get(this.GetContent(), algorithm);
         }
 
         public string GetHash(string algorithm, string stream)
         {
-            return Hash.Get(this.GetContent(stream), algorithm);
+            return PowerForensics.Utilities.Hash.Get(this.GetContent(stream), algorithm);
         }
 
         #endregion GetHashMethods

@@ -12,6 +12,8 @@ namespace PowerForensics.Artifacts
     {
         #region Properties
 
+        public readonly ushort SequenceNumber;
+        public readonly uint RecordNumber;
         public readonly string ProductName;
         public readonly string CompanyName;
         public readonly uint FileSize;
@@ -29,7 +31,11 @@ namespace PowerForensics.Artifacts
 
         internal Amcache(NamedKey nk, byte[] bytes)
         {
-            foreach(ValueKey vk in nk.GetValues(bytes))
+            Console.WriteLine(nk.Name);
+            // SequenceNumber = ;
+            // RecordNumber = FileReference & 0xFFFF0000;
+
+            foreach (ValueKey vk in nk.GetValues(bytes))
             {
                 switch(vk.Name)
                 {

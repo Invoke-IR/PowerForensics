@@ -105,7 +105,7 @@ namespace PowerForensics.Registry
 
                 string[] hivesplit = hivePath.Split('\\');
                 string hive = hivesplit[hivesplit.Length - 1];
-                string fullname = (key + "\\" + Name).TrimStart('\\');
+                string fullname = (key.TrimEnd('\\') + "\\" + Name).TrimStart('\\');
                 FullName = fullname.Replace("CsiTool-CreateHive-{00000000-0000-0000-0000-000000000000}", hive + ":");
 
                 #endregion FullName
@@ -120,10 +120,13 @@ namespace PowerForensics.Registry
 
         #region StaticMethods
 
-        public static NamedKey[] GetInstances(string path, string key)
+        public static NamedKey Get(string path, string key)
         {
-            byte[] bytes = Helper.GetHiveBytes(path);
+            return NamedKey.Get(Helper.GetHiveBytes(path), path, key);
+        }
 
+        internal static NamedKey Get(byte[] bytes, string path, string key)
+        {
             NamedKey hiveroot = Helper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
@@ -140,13 +143,18 @@ namespace PowerForensics.Registry
                         }
                     }
                 }
-                if(nk == hiveroot)
+                if (nk == hiveroot)
                 {
                     throw new Exception(string.Format("Cannot find key '{0}' in the '{1}' hive because it does not exist.", key, path));
                 }
             }
 
-            return nk.GetSubKeys(bytes, key);
+            return nk;
+        }
+
+        public static NamedKey[] GetInstances(string path, string key)
+        {
+            return NamedKey.GetInstances(Helper.GetHiveBytes(path), path, key);
         }
 
         internal static NamedKey[] GetInstances(byte[] bytes, string path, string key)
@@ -166,6 +174,10 @@ namespace PowerForensics.Registry
                             nk = n;
                         }
                     }
+                }
+                if (nk == hiveroot)
+                {
+                    throw new Exception(string.Format("Cannot find key '{0}' in the '{1}' hive because it does not exist.", key, path));
                 }
             }
 

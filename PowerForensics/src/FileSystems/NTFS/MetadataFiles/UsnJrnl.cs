@@ -196,6 +196,45 @@ namespace PowerForensics.Ntfs
             return GetInstances(volume, (int)entry.RecordNumber);
         }
 
+        public static UsnJrnl[] GetTestInstances(string path)
+        {
+            byte[] bytes = FileRecord.GetContentBytes(path, "$J");
+            string volume = Util.GetVolumeFromPath(path);
+
+            VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
+            List<UsnJrnl> usnList = new List<UsnJrnl>();
+
+            for(int i = 0;  i < bytes.Length; i += (int)VBR.BytesPerCluster)
+            {
+                int clusteroffset = i;
+
+                do
+                {
+                    // Break if there are no more UsnJrnl entries in cluster
+                    if (bytes[clusteroffset] == 0)
+                    {
+                        break;
+                    }
+
+                    try
+                    {
+                        UsnJrnl usn = new UsnJrnl(bytes, volume, ref clusteroffset);
+                        if (usn.Version > USN40Version)
+                        {
+                            break;
+                        }
+                        usnList.Add(usn);
+                    }
+                    catch
+                    {
+                        break;
+                    }
+
+                } while (clusteroffset >= 0 && clusteroffset < bytes.Length);
+            }
+            return usnList.ToArray();
+        }
+
         private static UsnJrnl[] GetInstances(string volume, int recordnumber)
         {
             // Check for valid Volume name

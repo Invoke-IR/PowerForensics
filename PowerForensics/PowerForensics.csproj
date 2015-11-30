@@ -54,6 +54,8 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Artifacts\SoftwareHive\WindowsVersion.cs" />
+    <Compile Include="src\Artifacts\SystemHive\Shimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ShellLink.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-TypedUrl.cs" />
@@ -70,14 +72,14 @@
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-RegistryValue.cs" />
     <Compile Include="src\Artifacts\AlternateDataStream.cs" />
     <Compile Include="src\Artifacts\Amcache.cs" />
-    <Compile Include="src\Artifacts\NetworkList.cs" />
+    <Compile Include="src\Artifacts\SoftwareHive\NetworkList.cs" />
     <Compile Include="src\Artifacts\SamHive\Sid.cs" />
     <Compile Include="src\Artifacts\SamHive\Syskey.cs" />
     <Compile Include="src\Artifacts\SamHive\UserDetails.cs" />
     <Compile Include="src\Artifacts\ScheduledJob.cs" />
     <Compile Include="src\Artifacts\ScheduledTask.cs" />
     <Compile Include="src\Artifacts\ShellLink.cs" />
-    <Compile Include="src\Artifacts\Timezone.cs" />
+    <Compile Include="src\Artifacts\SystemHive\Timezone.cs" />
     <Compile Include="src\Artifacts\NTUSER.DAT\TypedUrls.cs" />
     <Compile Include="src\Artifacts\NTUSER.DAT\UserAssist.cs" />
     <Compile Include="src\Artifacts\VolumeShadowCopy.cs" />

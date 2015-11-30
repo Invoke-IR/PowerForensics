@@ -148,7 +148,7 @@ namespace PowerForensics.Cmdlet
 
                     }
                     break;*/
-                case "MFTPath":
+                case "ByMftPath":
                     WriteObject(FileRecord.GetInstancesByPath(mftpath), true);
                     break;
             }

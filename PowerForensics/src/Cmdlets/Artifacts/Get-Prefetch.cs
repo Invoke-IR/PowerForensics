@@ -28,7 +28,7 @@ namespace PowerForensics.Cmdlets
         /// This parameter provides the the path of the Prefetch file to parse.
         /// </summary> 
         [Alias("FullName")]
-        [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath", ValueFromPipelineByPropertyName = true)]
         public string Path
         {
             get { return filePath; }

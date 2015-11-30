@@ -26,7 +26,7 @@ namespace PowerForensics.EventLog
             BinXmlTokenNormalSubstitution = 0x0D,
             BinXmlTokenOptionalSubstitution = 0x0E,
             BinXmlFragmentHeaderToken = 0x0F,
-            
+
             // Need to differentiate these
             BinXmlTokenOpenStartElementTag_AttributeList = 0x41,
             //BinXmlTokenValue = 0x45,
@@ -132,70 +132,7 @@ namespace PowerForensics.EventLog
         }
 
         #endregion Constructors
-
-        #region StaticMethods
-
-        /*internal static string GetEventData(byte[] bytes, int chunkOffset, int recordOffset, int size)
-        {
-            int offset = recordOffset;
-
-            while (offset - recordOffset < size)
-            {
-                switch (bytes[offset])
-                {
-                    case 0x00:
-                        break;
-                    case 0x01:
-                        break;
-                    case 0x41:
-                        break;
-                    case 0x02:
-                        break;
-                    case 0x03:
-                        break;
-                    case 0x04:
-                        break;
-                    case 0x05:
-                        break;
-                    case 0x45:
-                        break;
-                    case 0x06:
-                        break;
-                    case 0x46:
-                        break;
-                    case 0x07:
-                        break;
-                    case 0x47:
-                        break;
-                    case 0x08:
-                        break;
-                    case 0x48:
-                        break;
-                    case 0x09:
-                        break;
-                    case 0x49:
-                        break;
-                    case 0x0A:
-                        break;
-                    case 0x0B:
-                        break;
-                    case 0x0C:
-                        break;
-                    case 0x0D:
-                        break;
-                    case 0x0E:
-                        break;
-                    //BinXmlFragmentHeader
-                    case 0x0F:
-                        new BinXmlFragmentHeader(bytes, offset);
-                        offset += 0x04;
-                        break;
-                }
-            }
-        }*/
-
-        #endregion StaticMethods
-
+ 
         public override string ToString()
         {
             return String.Format("EventId: {0}", EventId);
@@ -243,7 +180,6 @@ namespace PowerForensics.EventLog
         internal readonly int DataOffset;
         internal readonly Guid TemplateId;
         internal readonly int DataSize;
-        //internal readonly BinXmlElement[] Elements;
         internal readonly BinaryXml.TOKEN_TYPE EOFToken;
 
         #endregion Properties
@@ -515,111 +451,6 @@ namespace PowerForensics.EventLog
         #endregion Constructors
     }
 
-    public class BinXmlElement
-    {
-        internal const int HeaderSize = 0x0B;
-
-        #region Properties
-
-        public BinaryXml.TOKEN_TYPE Token;
-        public short DependencyId;
-        public int DataSize;
-        public int ElementNameOffset;
-        public BinXmlName ElementName;
-        public BinXmlAttributeList AttributeList;
-        public BinXmlElement[] ChildElements;
-        public BinaryXml.TOKEN_TYPE ElementEndToken;
-
-        #endregion Properties
-    }
-
-    public class BinXmlElementNoAttribute : BinXmlElement
-    {
-        #region Properties
-
-        public readonly BinaryXml.TOKEN_TYPE CloseStartTag;
-        public readonly BinaryXml.TOKEN_TYPE ValueTag;
-        public readonly BinXmlValueText ValueText;
-        public readonly BinXmlSubstitution Substitution;
-
-        #endregion Properties
-
-        #region Constructors
-
-        internal BinXmlElementNoAttribute(byte[] bytes, int chunkOffset, ref int offset)
-        {
-            Token = (BinaryXml.TOKEN_TYPE)bytes[offset];
-            DependencyId = BitConverter.ToInt16(bytes, offset + 0x01);
-            DataSize = BitConverter.ToInt32(bytes, offset + 0x03);
-            ElementNameOffset = BitConverter.ToInt32(bytes, offset + 0x07);
-            ElementName = new BinXmlName(bytes, chunkOffset + ElementNameOffset);
-            CloseStartTag = (BinaryXml.TOKEN_TYPE)bytes[offset + HeaderSize + BinXmlName.HeaderSize + (ElementName.NameSize * 0x02)];
-
-            int valueOffset = offset + HeaderSize + BinXmlName.HeaderSize + (ElementName.NameSize * 0x02) + 0x01;
-            ValueTag = (BinaryXml.TOKEN_TYPE)bytes[valueOffset];
-
-            if (ValueTag == BinaryXml.TOKEN_TYPE.BinXmlTokenValue)
-            {
-                ValueText = new BinXmlValueText(bytes, offset);
-            }
-            else
-            {
-                Substitution = new BinXmlSubstitution(bytes, valueOffset);
-            }
-                
-            ElementEndToken = (BinaryXml.TOKEN_TYPE)bytes[offset + this.DataSize + 0x07 - 0x01];
-
-            offset += this.DataSize + 0x07;
-        }
-
-        #endregion Constructors
-    }
-
-    public class BinXmlElementAttribute : BinXmlElement
-    {
-        #region Properties
-
-        public readonly BinaryXml.TOKEN_TYPE Token;
-        public readonly short DependencyId;
-        public readonly int DataSize;
-        public readonly int ElementNameOffset;
-        public readonly BinXmlName ElementName;
-        public readonly BinXmlAttributeList AttributeList;
-        public readonly BinXmlElement[] ChildElements;
-        public readonly BinaryXml.TOKEN_TYPE ElementEndToken;
-
-        #endregion Properties
-
-        #region Constructors
-
-        internal BinXmlElementAttribute(byte[] bytes, int chunkOffset, ref int offset)
-        {
-            Token = (BinaryXml.TOKEN_TYPE)bytes[offset];
-            DependencyId = BitConverter.ToInt16(bytes, offset + 0x01);
-            DataSize = BitConverter.ToInt32(bytes, offset + 0x03);
-            ElementNameOffset = BitConverter.ToInt32(bytes, offset + 0x07);
-            ElementName = new BinXmlName(bytes, chunkOffset + ElementNameOffset);
-
-            int attributeListOffset = offset + HeaderSize + BinXmlName.HeaderSize + (ElementName.NameSize * 0x02);
-            //AttributeList = new BinXmlAttributeList(bytes, chunkOffset, attributeListOffset);
-            
-            ElementEndToken = (BinaryXml.TOKEN_TYPE)bytes[offset + this.DataSize + 0x07 - 0x01];
-
-            offset += this.DataSize + 0x07;
-        }
-
-        #endregion Constructors
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<");
-            sb.Append(ElementName);
-
-            return base.ToString();
-        }
-    }
-
     // Not Done
     public class BinXmlAttributeList
     {
@@ -719,24 +550,6 @@ namespace PowerForensics.EventLog
             ValueToken = (BinaryXml.TOKEN_TYPE)bytes[offset];
             ValueType = (BinaryXml.VALUE_TYPE)bytes[offset + 0x01];
             ValueData = Encoding.Unicode.GetString(bytes, offset + 0x04, BitConverter.ToInt16(bytes, offset + 0x02));
-        }
-
-        #endregion Constructors
-    }
-
-    public class BinXmlSubstitution
-    {
-        public readonly BinaryXml.TOKEN_TYPE Token;
-        public readonly ushort SubstitutionId;
-        public readonly BinaryXml.VALUE_TYPE ValueType;
-
-        #region Constructors
-
-        internal BinXmlSubstitution(byte[] bytes, int offset)
-        {
-            Token = (BinaryXml.TOKEN_TYPE)bytes[offset];
-            SubstitutionId = BitConverter.ToUInt16(bytes, 0x01);
-            ValueType = (BinaryXml.VALUE_TYPE)bytes[0x03];
         }
 
         #endregion Constructors

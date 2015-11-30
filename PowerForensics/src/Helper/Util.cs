@@ -79,6 +79,16 @@ namespace PowerForensics
 
         }
 
+        internal static string GetVolumeFromPath(string path)
+        {
+            return "\\\\.\\" + path.Split('\\')[0];
+        }
+
+        internal static string GetVolumeLetter(string volume)
+        {
+            return volume.Split('\\')[3];
+        }
+
         internal static IntPtr getHandle(string FileName)
         {
             Regex physicalDrive = new Regex(@"\\\\\.\\PHYSICALDRIVE\d");
@@ -180,16 +190,6 @@ namespace PowerForensics
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
-        }
-
-        internal static string GetVolumeFromPath(string path)
-        {
-            return "\\\\.\\" + path.Split('\\')[0];
-        }
-
-        internal static string GetVolumeLetter(string volume)
-        {
-            return volume.Split('\\')[3];
         }
 
         internal static byte[] GetSubArray(byte[] InputBytes, uint offset, uint length)
