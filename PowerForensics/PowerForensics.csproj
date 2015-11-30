@@ -55,11 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Artifacts\Windows\InternetExplorerHistory.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedPath.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ShellLink.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-TypedUrl.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-WindowsSearchTerm.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-TypedPath.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShred.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShredBaseListener.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShredCommand.cs" />

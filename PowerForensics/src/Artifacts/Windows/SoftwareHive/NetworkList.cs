@@ -62,17 +62,17 @@ namespace PowerForensics.Artifacts
 
         #region GetInstancesMethods
 
-        public static NetworkList[] GetInstances()
+        public static NetworkList[] GetInstances(string volume)
         {
-            string hivePath = @"C:\windows\system32\config\SOFTWARE";
-            return GetInstances(hivePath);
+            string volLetter = Util.GetVolumeLetter(volume);
+            return GetInstances(volLetter + @"windows\system32\config\SOFTWARE");
         }
 
-        public static NetworkList[] GetInstances(string hivePath)
+        public static NetworkList[] GetInstancesByPath(string hivePath)
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("SOFTWARE"))
             {
-                string Key = @"Software\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures";
+                string Key = @"Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures";
 
                 byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
 

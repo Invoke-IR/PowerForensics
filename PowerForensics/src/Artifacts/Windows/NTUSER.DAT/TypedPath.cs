@@ -6,7 +6,7 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    public class TypedUrls
+    public class TypedPaths
     {
         #region StaticMethods
 
@@ -14,22 +14,22 @@ namespace PowerForensics.Artifacts
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("ntuser.dat"))
             {
-                string Key = @"Software\Microsoft\Internet Explorer\TypedUrls";
+                string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths";
 
                 byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
-            
+
                 NamedKey nk = NamedKey.Get(bytes, hivePath, Key);
 
-                string[] urls = new string[nk.NumberOfValues];
+                string[] paths = new string[nk.NumberOfValues];
+
+                int i = 0;
 
                 foreach (ValueKey vk in nk.GetValues(bytes))
                 {
-                    for (int i = 0; i < urls.Length; i++)
-                    {
-                        urls[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
-                    }
+                    paths[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
+                    i++;
                 }
-                return urls;
+                return paths;
             }
             else
             {

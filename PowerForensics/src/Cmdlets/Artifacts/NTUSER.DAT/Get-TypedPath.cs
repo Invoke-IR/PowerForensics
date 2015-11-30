@@ -3,13 +3,13 @@ using PowerForensics.Artifacts;
 
 namespace PowerForensics.Cmdlets
 {
-    #region GetNetworkListCommand
+    #region GetTypedPathCommand
 
     /// <summary> 
-    /// This class implements the Get-NetworkList cmdlet. 
+    /// This class implements the Get-TypedPath cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "NetworkList")]
-    public class GetNetworkListCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "TypedPath")]
+    public class GetTypedPathCommand : PSCmdlet
     {
         #region Parameters
 
@@ -17,7 +17,7 @@ namespace PowerForensics.Cmdlets
         /// This parameter provides the the path of the Registry Hive to parse.
         /// </summary> 
         [Alias("Path")]
-        [Parameter(Position = 0)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string HivePath
         {
             get { return hivePath; }
@@ -34,18 +34,11 @@ namespace PowerForensics.Cmdlets
         /// </summary>  
         protected override void ProcessRecord()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("HivePath"))
-            {
-                WriteObject(NetworkList.GetInstancesByPath(hivePath), true);
-            }
-            else
-            {
-                //WriteObject(NetworkList.GetInstances(), true);
-            }
-        }
+            WriteObject(TypedPaths.GetInstances(hivePath), true);
+        } 
 
         #endregion Cmdlet Overrides
     }
 
-    #endregion GetNetworkListCommand
+    #endregion GetTypedPathCommand
 }
