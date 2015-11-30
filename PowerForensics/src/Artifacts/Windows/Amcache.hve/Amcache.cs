@@ -13,7 +13,7 @@ namespace PowerForensics.Artifacts
         #region Properties
 
         public readonly ushort SequenceNumber;
-        public readonly uint RecordNumber;
+        public readonly ulong RecordNumber;
         public readonly string ProductName;
         public readonly string CompanyName;
         public readonly uint FileSize;
@@ -31,9 +31,13 @@ namespace PowerForensics.Artifacts
 
         internal Amcache(NamedKey nk, byte[] bytes)
         {
+            /*
             Console.WriteLine(nk.Name);
-            // SequenceNumber = ;
-            // RecordNumber = FileReference & 0xFFFF0000;
+            ulong FileReference = ulong.Parse(nk.Name, System.Globalization.NumberStyles.AllowHexSpecifier);
+            byte[] filerefbytes = BitConverter.GetBytes(FileReference);
+            SequenceNumber = (BitConverter.ToUInt16(filerefbytes, 0x06));
+            RecordNumber = (BitConverter.ToUInt64(filerefbytes, 0x00) & 0x0000FFFFFFFFFFFF);
+            */
 
             foreach (ValueKey vk in nk.GetValues(bytes))
             {

@@ -167,12 +167,17 @@ namespace PowerForensics.Registry
             {
                 foreach (string k in key.Split('\\'))
                 {
+                    NamedKey startingkey = nk;
                     foreach (NamedKey n in nk.GetSubKeys(bytes, key))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
                             nk = n;
                         }
+                    }
+                    if(nk == startingkey)
+                    {
+                        throw new Exception(string.Format("Cannot find key '{0}' in the '{1}' hive because it does not exist.", key, path));
                     }
                 }
                 if (nk == hiveroot)

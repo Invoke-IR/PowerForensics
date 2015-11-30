@@ -54,8 +54,8 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Artifacts\SoftwareHive\WindowsVersion.cs" />
-    <Compile Include="src\Artifacts\SystemHive\Shimcache.cs" />
+    <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
+    <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ShellLink.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-TypedUrl.cs" />
@@ -70,19 +70,19 @@
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-EventLog.cs" />
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-RegistryKey.cs" />
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-RegistryValue.cs" />
-    <Compile Include="src\Artifacts\AlternateDataStream.cs" />
-    <Compile Include="src\Artifacts\Amcache.cs" />
-    <Compile Include="src\Artifacts\SoftwareHive\NetworkList.cs" />
-    <Compile Include="src\Artifacts\SamHive\Sid.cs" />
-    <Compile Include="src\Artifacts\SamHive\Syskey.cs" />
-    <Compile Include="src\Artifacts\SamHive\UserDetails.cs" />
-    <Compile Include="src\Artifacts\ScheduledJob.cs" />
-    <Compile Include="src\Artifacts\ScheduledTask.cs" />
-    <Compile Include="src\Artifacts\ShellLink.cs" />
-    <Compile Include="src\Artifacts\SystemHive\Timezone.cs" />
-    <Compile Include="src\Artifacts\NTUSER.DAT\TypedUrls.cs" />
-    <Compile Include="src\Artifacts\NTUSER.DAT\UserAssist.cs" />
-    <Compile Include="src\Artifacts\VolumeShadowCopy.cs" />
+    <Compile Include="src\Artifacts\Windows\AlternateDataStream.cs" />
+    <Compile Include="src\Artifacts\Windows\Amcache.hve\Amcache.cs" />
+    <Compile Include="src\Artifacts\Windows\SoftwareHive\NetworkList.cs" />
+    <Compile Include="src\Artifacts\Windows\SamHive\Sid.cs" />
+    <Compile Include="src\Artifacts\Windows\SamHive\Syskey.cs" />
+    <Compile Include="src\Artifacts\Windows\SamHive\UserDetails.cs" />
+    <Compile Include="src\Artifacts\Windows\ScheduledJob.cs" />
+    <Compile Include="src\Artifacts\Windows\ScheduledTask.cs" />
+    <Compile Include="src\Artifacts\Windows\ShellLink.cs" />
+    <Compile Include="src\Artifacts\Windows\SystemHive\Timezone.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedUrls.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\UserAssist.cs" />
+    <Compile Include="src\Artifacts\Windows\VolumeShadowCopy.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\AttributeList.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\EA.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\EAInformation.cs" />
@@ -109,8 +109,8 @@
     <Compile Include="src\Utilities\Rot13.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-AlternateDataStream.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-UnallocatedSpace.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Get-Amcache.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Get-NetworkList.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Amcache.hve\Get-Amcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\SoftwareHive\Get-NetworkList.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-UserAssist.cs" />
     <Compile Include="src\Cmdlets\Artifacts\SamHive\Get-Sid.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-FileSlack.cs" />
@@ -128,8 +128,8 @@
     <Compile Include="src\Cmdlets\Utilities\Get-Hash.cs" />
     <Compile Include="src\Utilities\Hash.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-Prefetch.cs" />
-    <Compile Include="src\Artifacts\Prefetch.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Get-Timezone.cs" />
+    <Compile Include="src\Artifacts\Windows\Prefetch.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\SystemHive\Get-Timezone.cs" />
     <Compile Include="src\Cmdlets\BootSector\Get-BootSector.cs" />
     <Compile Include="src\Utilities\DD.cs" />
     <Compile Include="src\ForensicTimeline\ForensicTimeline.cs" />
