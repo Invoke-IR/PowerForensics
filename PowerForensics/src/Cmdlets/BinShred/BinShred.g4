@@ -24,6 +24,7 @@ ruleBody
             )
         )
     |   (LPAREN ADDITIONAL PROPERTIES IDENTIFIED BY propertyName FROM lookupTableName RPAREN)
+    |   (LPAREN PADDING TO MULTIPLE OF sizeReference BYTES RPAREN)
     ;
 
 propertyName    : label;
@@ -40,6 +41,8 @@ byteOption
 sizeReference
     :   label
     |   INT
+    |   HEXADECIMAL
+    |   NATIVEEXPRESSION
     ;
 
 byteFormat
@@ -55,6 +58,7 @@ byteFormat
     |   SINGLE
     |   FLOAT
     |   DOUBLE
+    |   NATIVEEXPRESSION
     ;
 
 lookupTable
@@ -97,9 +101,17 @@ label
     | PROPERTIES
     | IDENTIFIED
     | FROM
+    | PADDING
+    | TO
+    | MULTIPLE
+    | OF
     ;
 
 QUOTEDVALUE  : QUOTE .+? QUOTE          ;
+
+NATIVEEXPRESSION
+    : '{' (~('{'|'}')|NATIVEEXPRESSION)*? '}'
+    ;
 
 COMMA        : ','                      ;
 QUOTE        : '"'                      ;
@@ -128,6 +140,10 @@ ADDITIONAL   : A D D I T I O N A L      ;
 PROPERTIES   : P R O P E R T I E S      ;
 IDENTIFIED   : I D E N T I F I E D      ;
 FROM         : F R O M                  ;
+PADDING      : P A D D I N G            ;
+TO           : T O                      ;
+MULTIPLE     : M U L T I P L E          ;
+OF           : O F                      ;
 
 WS  :    [ \t\r\n\f]+ -> channel(HIDDEN)    ;
 
@@ -149,7 +165,7 @@ HEXADECIMAL  : '0'('x'|'X')[0-9a-fA-F]+ ;
 LABEL
     : [a-zA-Z_][.a-zA-Z0-9_]*
     ;
-
+    
 fragment A:('a'|'A');
 fragment B:('b'|'B');
 fragment C:('c'|'C');

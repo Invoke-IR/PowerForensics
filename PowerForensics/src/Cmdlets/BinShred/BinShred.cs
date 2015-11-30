@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.CodeDom.Compiler;
+using Microsoft.CSharp;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
@@ -60,6 +62,7 @@ namespace PowerForensics
             this.content = content;
             this.contentPosition = 0;
             parseActions = new Dictionary<string, List<ParseAction>>(StringComparer.OrdinalIgnoreCase);
+            nativeActions = new Dictionary<string, CompilerResults>(StringComparer.OrdinalIgnoreCase);
             processingActions = new Stack<string>();
 
             lookupTables = new Dictionary<string, Dictionary<Object, string>>(StringComparer.OrdinalIgnoreCase);
@@ -75,8 +78,9 @@ namespace PowerForensics
         Stack<string> processingActions;
         Stack<OrderedDictionary> results;
 
-        delegate int ParseAction(byte[] content, int contentPosition);
+        delegate int ParseAction(byte[] content, int startingContentPosition, int contentPosition);
         Dictionary<string, List<ParseAction>> parseActions;
+        Dictionary<string, CompilerResults> nativeActions;
 
         Dictionary<string, Dictionary<Object, string>> lookupTables;
         string currentLookupTable = null;
@@ -103,7 +107,7 @@ namespace PowerForensics
             {
                 foreach (ParseAction action in definitionActions)
                 {
-                    int consumed = action.Invoke(this.content, this.contentPosition);
+                    int consumed = action.Invoke(this.content, startingContentPosition, this.contentPosition);
                     this.contentPosition += consumed;
                 }
             }
@@ -141,6 +145,34 @@ namespace PowerForensics
                     continue;
                 }
 
+                // This is a rule that describes padding bytes to be added:
+                // "(padding to multiple of <bytes> bytes)"
+                if (body.PADDING() != null)
+                {
+                    string propertyName = regionName;
+
+                    int bytes = 0;
+                    String byteLabel = String.Empty;
+
+                    if (body.sizeReference().INT() != null)
+                    {
+                        bytes = Int32.Parse(body.sizeReference().INT().GetText());
+                    }
+                    else
+                    {
+                        byteLabel = body.sizeReference().label().GetText();
+                    }
+
+                    string paddingLabel = "Padding";
+                    if(Char.IsLower(propertyName[0]))
+                    {
+                        paddingLabel = "padding";
+                    }
+
+                    ProcessBytePadding(propertyName, paddingLabel, bytes, byteLabel);
+                    continue;
+                }
+
                 // Get the rule's label and descriptive comment (/** */)
                 string ruleLabel = body.label().GetText();
                 string ruleComment = null;
@@ -168,7 +200,18 @@ namespace PowerForensics
                     }
                     else
                     {
-                        byteLabel = byteOptions.sizeReference().label().GetText();
+                        if (byteOptions.sizeReference().NATIVEEXPRESSION() != null)
+                        {
+                            byteLabel = byteOptions.sizeReference().NATIVEEXPRESSION().GetText();
+                        }
+                        else if (byteOptions.sizeReference().HEXADECIMAL() != null)
+                        {
+                            bytes = Convert.ToInt32(byteOptions.sizeReference().HEXADECIMAL().GetText(), 16);
+                        }
+                        else
+                        {
+                            byteLabel = byteOptions.sizeReference().label().GetText();
+                        }
                     }
 
                     // This is a rule that extracts bytes in some format
@@ -199,12 +242,12 @@ namespace PowerForensics
                     else
                     {
                         this.parseActions[regionName].Add(
-                        new ParseAction((content, contentPosition) =>
+                        new ParseAction((content, startingContentPosition, contentPosition) =>
                         {
                             OrderedDictionary currentResult = new OrderedDictionary(StringComparer.OrdinalIgnoreCase);
                             results.Peek().Add(ruleLabel, currentResult);
 
-                            RunRule(ruleComment, ruleLabel, currentResult);
+                            RunRule(ruleComment, ruleLabel, currentResult, 0);
                             return 0;
                         }
                         ));
@@ -233,7 +276,7 @@ namespace PowerForensics
             {
                 // This has no byte format. It is just bytes.
                 this.parseActions[regionName].Add(
-                    new ParseAction((content, contentPosition) =>
+                    new ParseAction((content, startingContentPosition, contentPosition) =>
                     {
                         if (!String.IsNullOrEmpty(byteLabel))
                         {
@@ -250,27 +293,67 @@ namespace PowerForensics
             }
         }
 
+        private void ProcessBytePadding(string regionName, string ruleLabel, int byteMultiple, string byteLabel)
+        {
+            this.parseActions[regionName].Add(
+                new ParseAction((content, startingContentPosition, contentPosition) =>
+                {
+                    if (!String.IsNullOrEmpty(byteLabel))
+                    {
+                        byteMultiple = GetByteCountFromLabel(byteLabel);
+                    }
+
+                    int bytes = (contentPosition - startingContentPosition) % byteMultiple;
+                    if (bytes > 0)
+                    {
+                        bytes = byteMultiple - bytes;
+                    }
+
+                    byte[] element = new byte[bytes];
+                    Array.Copy(content, (int)contentPosition, element, 0, bytes);
+
+                    ParseElement(ruleLabel, element, null, null);
+                    return bytes;
+                }
+                ));
+        }
+
         private void ProcessCountedRule(string regionName, string ruleLabel, string ruleComment, int bytes, string byteLabel)
         {
             // This is a rule with counted elements of another rule type
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     int items = bytes;
+                    bool isUnlimited = true;
 
-                    if (!String.IsNullOrEmpty(byteLabel))
+                    if (String.Equals("Unlimited", byteLabel, StringComparison.OrdinalIgnoreCase))
                     {
-                        items = GetByteCountFromLabel(byteLabel);
+                        isUnlimited = true;
+                        items = int.MaxValue;
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(byteLabel))
+                        {
+                            items = GetByteCountFromLabel(byteLabel);
+                        }
                     }
 
-                    object[] ruleItems = new object[items];
+                    List<object> ruleItems = new List<object>();
                     results.Peek().Add(ruleLabel, ruleItems);
 
                     for (int itemNumber = 0; itemNumber < items; itemNumber++)
                     {
                         OrderedDictionary currentResult = new OrderedDictionary(StringComparer.OrdinalIgnoreCase);
-                        ruleItems[itemNumber] = currentResult;
-                        RunRule(ruleComment, ruleLabel, currentResult);
+                        ruleItems.Add(currentResult);
+                        RunRule(ruleComment, ruleLabel, currentResult, itemNumber);
+
+                        if(isUnlimited && 
+                            (this.contentPosition >= this.content.Length))
+                        {
+                            break;
+                        }
                     }
                     
                     return 0;
@@ -289,7 +372,7 @@ namespace PowerForensics
         void ProcessAdditionalProperties(string propertyName, string lookupTableName, string regionName)
         {
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     Dictionary<object, string> lookupTable = null;
                     if (lookupTables.TryGetValue(lookupTableName, out lookupTable))
@@ -337,7 +420,7 @@ namespace PowerForensics
                 Dictionary<object, string> lookupTable = lookupTables[describedBy];
 
                 string additionalComment = null;
-                lookupTable.TryGetValue(element, out additionalComment);
+                lookupTable.TryGetValue(element.ToString(), out additionalComment);
 
                 // If we found a lookup entry, add it to the comment (or use it
                 // as the comment if there wasn't one already).
@@ -356,17 +439,23 @@ namespace PowerForensics
 
             if (!String.IsNullOrEmpty(ruleComment))
             {
-                results.Peek().Add(ruleLabel + ".description", ruleComment);
+                results.Peek().Add(ruleLabel + "_description", ruleComment);
             }
+            results.Peek().Add(ruleLabel + "_offset", this.contentPosition);
 
             results.Peek().Add(ruleLabel, element);
         }
 
-        OrderedDictionary RunRule(string ruleComment, string ruleLabel, OrderedDictionary currentResult)
+        OrderedDictionary RunRule(string ruleComment, string ruleLabel, OrderedDictionary currentResult, int itemIndex)
         {
             if (!String.IsNullOrEmpty(ruleComment))
             {
-                results.Peek().Add(ruleLabel + ".description", ruleComment);
+                results.Peek().Add(ruleLabel + "_description", ruleComment);
+            }
+
+            if (itemIndex == 0)
+            {
+                results.Peek().Add(ruleLabel + "_offset", this.contentPosition);
             }
 
             results.Push(currentResult);
@@ -411,16 +500,27 @@ namespace PowerForensics
             string regionName, string ruleLabel, string describedBy, string ruleComment)
         {
             this.parseActions[regionName].Add(
-                new ParseAction((content, contentPosition) =>
+                new ParseAction((content, startingContentPosition, contentPosition) =>
                 {
                     if (!String.IsNullOrEmpty(byteLabel))
                     {
                         bytes = GetByteCountFromLabel(byteLabel);
                     }
 
-                    ValidateRuleByteSize(ruleLabel, bytes, ByteParsers[byteFormat.GetText()].Item1);
+                    string parser = byteFormat.GetText();
+                    object element = null;
 
-                    object element = ByteParsers[byteFormat.GetText()].Item2(content, (int)contentPosition, (int)bytes);
+                    // If this is a native expression, process it that way
+                    if (parser[0] == '{')
+                    {
+                        element = EvaluateNativeExpression<Object>(parser, results.Peek(), content, contentPosition, bytes);
+                    }
+                    else
+                    {
+                        ValidateRuleByteSize(ruleLabel, bytes, ByteParsers[byteFormat.GetText()].Item1);
+                        element = ByteParsers[parser].Item2(content, (int)contentPosition, (int)bytes);
+                    }
+
                     ParseElement(ruleLabel, element, describedBy, ruleComment);
 
                     return (int)bytes;
@@ -445,6 +545,12 @@ namespace PowerForensics
 
         int GetByteCountFromLabel(string byteLabel)
         {
+            // This is a C# expression
+            if(byteLabel[0] == '{')
+            {
+                return EvaluateNativeExpression<int>(byteLabel, results.Peek(), content, contentPosition, 0);
+            }
+
             OrderedDictionary labelData;
 
             if (byteLabel.IndexOf('.') == -1)
@@ -513,6 +619,75 @@ namespace PowerForensics
                 {
                     throw;
                 }
+            }
+        }
+
+        private T EvaluateNativeExpression<T>(string expression, OrderedDictionary labelData, byte[] content, int contentPosition, int byteCount)
+        {
+            expression = expression.Trim(new char[] { '{', '}' });
+
+            CompilerResults results = null;
+            if (!nativeActions.TryGetValue(expression, out results))
+            {
+                string code = @"
+                using System;
+                using System.Text;
+                using System.Collections.Generic;
+                using System.Collections.Specialized;
+
+                public static class Evaluator
+                {{
+                    public static Object Evaluate(OrderedDictionary _labelData, byte[] _content, int _contentPosition, int _byteCount)
+                    {{
+                        {0}
+                        {1}
+                    }}
+                }}
+                ";
+
+                CodeDomProvider provider = CSharpCodeProvider.CreateProvider("C#");
+                CompilerParameters options = new CompilerParameters();
+                options.ReferencedAssemblies.Add("System.dll");
+                options.GenerateInMemory = true;
+
+                string labels = "";
+                foreach (string key in labelData.Keys)
+                {
+                    Object labelValue = labelData[key];
+                    string labelType = labelValue.GetType().FullName;
+
+                    labels += "                        " + labelType + " " +
+                        key + " = (" + labelType + ") _labelData[\"" + key + "\"];\r\n";
+                }
+
+                string finalCode = String.Format(code, labels.Trim(), expression);
+                results = provider.CompileAssemblyFromSource(options, finalCode);
+
+                if (results.Errors.Count > 0)
+                {
+                    foreach (var error in results.Errors)
+                    {
+                        throw new ParseException(
+                            String.Format("Could not process native expression '{0}': {1}.", expression, error.ToString()));
+                    }
+
+                    return default(T);
+                }
+
+                nativeActions[expression] = results;
+            }
+
+            var t = results.CompiledAssembly.GetType("Evaluator");
+            try
+            {
+                return (T)t.GetMethod("Evaluate").Invoke(null, new object[] {
+                    labelData, content, contentPosition, byteCount });
+            }
+            catch(System.Reflection.TargetInvocationException e)
+            {
+                throw new ParseException(
+                            String.Format("Could not process native expression '{0}': {1}.",
+                            expression, e.InnerException.ToString()));
             }
         }
 

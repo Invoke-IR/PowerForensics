@@ -184,8 +184,7 @@ Description  : [208896] C:\Windows\notepad.exe</dev:code>
 						<maml:para>Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -237,8 +236,7 @@ Description  : [208896] C:\Windows\notepad.exe</dev:code>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -266,133 +264,6 @@ Description  : [208896] C:\Windows\notepad.exe</dev:code>
 				</maml:description>
 			</command:returnValue>
 		</command:returnValues>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Format-ForensicHex</command:name>
-			<maml:description>
-				<maml:para>Formats output as a hex dump.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Format</command:verb>
-			<command:noun>ForensicHex</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Format-ForensicHex cmdlet takes a byte array and formats it to a hex dump.
-
-Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Format-ForensicHex</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-					<maml:name>Bytes</maml:name>
-					<maml:description>
-						<maml:para>Byte array to be formatted to a hex dump.</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
-				<maml:name>Bytes</maml:name>
-				<maml:description>
-					<maml:para>Byte array to be formatted to a hex dump.</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
-				<dev:type>
-					<maml:name>Byte</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>System.Byte[]</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<dev:type>
-					<maml:name>PowerForensics.Formats.HexDump</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-				</maml:description>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-ForensicMasterBootRecord -Path \\.\PHYSICALDRIVE2 -AsBytes | Format-ForensicHex
-
-Offset     _00_01_02_03_04_05_06_07_08_09_0A_0B_0C_0D_0E_0F  Ascii           
-------     ------------------------------------------------  -----           
-0x00000000  33 C0 8E D0 BC 00 7C 8E C0 8E D8 BE 00 7C BF 00  3.....|......|..
-0x00000010  06 B9 00 02 FC F3 A4 50 68 1C 06 CB FB B9 04 00  .......Ph.......
-0x00000020  BD BE 07 80 7E 00 00 7C 0B 0F 85 0E 01 83 C5 10  ....~..|........
-0x00000030  E2 F1 CD 18 88 56 00 55 C6 46 11 05 C6 46 10 00  .....V.U.F...F..
-0x00000040  B4 41 BB AA 55 CD 13 5D 72 0F 81 FB 55 AA 75 09  .A..U..]r...U.u.
-0x00000050  F7 C1 01 00 74 03 FE 46 10 66 60 80 7E 10 00 74  ....t..F.f`.~..t
-0x00000060  26 66 68 00 00 00 00 66 FF 76 08 68 00 00 68 00  &amp;fh....f.v.h..h.
-0x00000070  7C 68 01 00 68 10 00 B4 42 8A 56 00 8B F4 CD 13  |h..h...B.V.....
-0x00000080  9F 83 C4 10 9E EB 14 B8 01 02 BB 00 7C 8A 56 00  ............|.V.
-0x00000090  8A 76 01 8A 4E 02 8A 6E 03 CD 13 66 61 73 1C FE  .v..N..n...fas..
-0x000000A0  4E 11 75 0C 80 7E 00 80 0F 84 8A 00 B2 80 EB 84  N.u..~..........
-0x000000B0  55 32 E4 8A 56 00 CD 13 5D EB 9E 81 3E FE 7D 55  U2..V...]...&gt;.}U
-0x000000C0  AA 75 6E FF 76 00 E8 8D 00 75 17 FA B0 D1 E6 64  .un.v....u.....d
-0x000000D0  E8 83 00 B0 DF E6 60 E8 7C 00 B0 FF E6 64 E8 75  ......`.|....d.u
-0x000000E0  00 FB B8 00 BB CD 1A 66 23 C0 75 3B 66 81 FB 54  .......f#.u;f..T
-0x000000F0  43 50 41 75 32 81 F9 02 01 72 2C 66 68 07 BB 00  CPAu2....r,fh...
-0x00000100  00 66 68 00 02 00 00 66 68 08 00 00 00 66 53 66  .fh....fh....fSf
-0x00000110  53 66 55 66 68 00 00 00 00 66 68 00 7C 00 00 66  SfUfh....fh.|..f
-0x00000120  61 68 00 00 07 CD 1A 5A 32 F6 EA 00 7C 00 00 CD  ah.....Z2...|...
-0x00000130  18 A0 B7 07 EB 08 A0 B6 07 EB 03 A0 B5 07 32 E4  ..............2.
-0x00000140  05 00 07 8B F0 AC 3C 00 74 09 BB 07 00 B4 0E CD  ......&lt;.t.......
-0x00000150  10 EB F2 F4 EB FD 2B C9 E4 64 EB 00 24 02 E0 F8  ......+..d..$...
-0x00000160  24 02 C3 49 6E 76 61 6C 69 64 20 70 61 72 74 69  $..Invalid parti
-0x00000170  74 69 6F 6E 20 74 61 62 6C 65 00 45 72 72 6F 72  tion table.Error
-0x00000180  20 6C 6F 61 64 69 6E 67 20 6F 70 65 72 61 74 69   loading operati
-0x00000190  6E 67 20 73 79 73 74 65 6D 00 4D 69 73 73 69 6E  ng system.Missin
-0x000001A0  67 20 6F 70 65 72 61 74 69 6E 67 20 73 79 73 74  g operating syst
-0x000001B0  65 6D 00 00 00 63 7B 9A B3 64 EE 2F 00 00 00 20  em...c{..d./... 
-0x000001C0  21 00 07 65 24 41 00 08 00 00 00 00 10 00 00 65  !..e$A.........e
-0x000001D0  25 41 0B AA 28 82 00 08 10 00 00 00 10 00 00 AA  %A..(...........
-0x000001E0  29 82 0B EF 2C C3 00 08 20 00 00 00 10 00 00 EF  )...,... .......
-0x000001F0  2D C3 0F FE FF 90 00 08 30 00 00 F0 AF 00 55 AA  -.......0.....U.</dev:code>
-				<dev:remarks>
-					<maml:para>This command uses the AsBytes parameter of Get-ForensicMasterBootRecord to get the Boot Sector as a byte
-array. Then, it uses Format-ForensicHex to format the byte array as a hex dump.</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
@@ -1306,8 +1177,7 @@ array.</maml:para>
 Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Index</maml:name>
@@ -1401,8 +1271,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>Index</maml:name>
@@ -2317,144 +2186,6 @@ Offset     _00_01_02_03_04_05_06_07_08_09_0A_0B_0C_0D_0E_0F  Ascii
 0x000001F0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................</dev:code>
 				<dev:remarks>
 					<maml:para>This command uses Get-ForensicGuidPartitionTable and its AsBytes parameter to return the GPT as a byte array.</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Get-ForensicHash</command:name>
-			<maml:description>
-				<maml:para>Computes the hash value for a file by using a specified hash algorithm.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>ForensicHash</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Get-ForensicHash cmdlet returns a cryptographic hash value for the specified file. To specify the hashing algorithm, use the Algorithm parameter.
-
-Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-ForensicHash</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="FullName">
-					<maml:name>Path</maml:name>
-					<maml:description>
-						<maml:para>The path of the file to be hashed.</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Algorithm</maml:name>
-					<maml:description>
-						<maml:para>The hashing algorithm to use. Default algorithm is MD5.</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-					<maml:name>Count</maml:name>
-					<maml:description>
-						<maml:para>The count of bytes to be included when hashing. Default value is the entire file.</maml:para>
-					</maml:description>
-					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="FullName">
-				<maml:name>Path</maml:name>
-				<maml:description>
-					<maml:para>The path of the file to be hashed.</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Algorithm</maml:name>
-				<maml:description>
-					<maml:para>The hashing algorithm to use. Default algorithm is MD5.</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue>MD5</dev:defaultValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Count</maml:name>
-				<maml:description>
-					<maml:para>The count of bytes to be included when hashing. Default value is the entire file.</maml:para>
-				</maml:description>
-				<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-				<dev:type>
-					<maml:name>Int32</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue>File.Length</dev:defaultValue>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>None</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<dev:type>
-					<maml:name>System.Security.Cryptography.HashAlgorithm</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<maml:description>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-					<maml:para/>
-				</maml:description>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-ForensicHash -Path C:\Windows\system32\cmd.exe
-A6177D080759CF4A03EF837A38F62401</dev:code>
-				<dev:remarks>
-					<maml:para>This command uses Get-ForensicHash to get the MD5 hash of Cmd.exe.</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-ForensicHash -Algorithm SHA256 -Path C:\Windows\System32\cmd.exe
-79D1FFABDD7841D9043D4DDF1F93721BCD35D823614411FD4EAB5D2C16A86F35</dev:code>
-				<dev:remarks>
-					<maml:para>This command uses Get-ForensicHash to get the SHA256 hash of Cmd.exe.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -5661,8 +5392,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -5680,8 +5410,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -5692,8 +5421,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 				</maml:description>
 				<dev:type>
 					<maml:name>None</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:inputType>
 		</command:inputTypes>
@@ -5713,8 +5441,7 @@ User         Property   string User {get;}</maml:para>
 				</maml:description>
 				<dev:type>
 					<maml:name>PowerForensics.Formats.ForensicTimeline</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>

@@ -2,12 +2,14 @@ TOPIC
 	about_binshred
 	
 SHORT DESCRIPTION
-	Describes the syntax and usage of the Invoke-BinShred cmdlet.
+	Describes the syntax and usage of the ConvertFrom-BinaryData cmdlet.
 	
 LONG DESCRIPTION
-	The Invoke-BinShred cmdlet is a general purpse cmdlet for parsing
-	binary files. To direct the parsing of this binary data, you describe
-	the file format using a simple text-based template structure.
+	The ConvertFrom-BinaryData cmdlet is a general purpse cmdlet for parsing
+	binary files and content. To direct the parsing of this binary data, you
+	describe the file format using a simple text-based template structure.
+	
+	Its default alias is "binshred".
 	
 	Most binary file formats are structured into a series of conceptual
 	regions. For example, a header, followed by a body, followed by some data
@@ -30,8 +32,8 @@ LONG DESCRIPTION
 	From either documentation or investigation, we've determined that the file
 	format has two main portions: a header, followed by a list of words. The
 	header itself has 2 bytes in ASCII as the magic signature, followed by an
-	integer representing the number count of the number of words. After that,
-	each word entry has an integer representing the word length, followed by a
+	integer representing the count of the number of words. After that, each
+	word entry has an integer representing the word length, followed by a
 	word (of that length) in UTF8.
 	
 	A BinShred Template (.bst) for this file looks like this:
@@ -82,7 +84,7 @@ LONG DESCRIPTION
 		parsed result objects, unlike the documentation comments described below.	
 		
 	LABEL : ... ;
-		A region of a file to be parsed.
+		A region of data to be parsed.
 
 		The LABEL of the region can be any name of your choice. The colon is
 		mandatory, as is the trailing semicolon. The region between the colon
@@ -90,7 +92,7 @@ LONG DESCRIPTION
 		used as a property name on the resulting parsed object.
 		
 	PROPERTY (BYTES bytes as DATATYPE described by LOOKUPTABLE)
-		A property definition within a file region.
+		A property definition within a region.
 
 		The name of the property ("PROPERTY") can be any name of your choice.
 		The parenthesis (and their contents) are optional. Without parenthesis,
@@ -100,9 +102,18 @@ LONG DESCRIPTION
 		If you include parenthesis, this will provide instructions on how
 		to interpret that property.
 
-		The byte count ("BYTES") is mandatory. It may be either an absolute
-		number (10 bytes ...), or refer to a property that would have
-		already been parsed - for example "( header.ByteCount bytes ... )"
+		The byte count ("BYTES") is mandatory. This will usually be either
+		an absolute number (10 bytes ...), or refer to a property that would have
+		already been parsed - for example "( header.ByteCount bytes ... )".
+		
+		You can also specify a native (C#) expression for this value. The
+		native expression can refer to properties that would have already been
+		parsed, and must return an integer - for example
+		"( { return (letterCount * 2); } bytes as Unicode )".
+		
+		Specifying a byte count with a native expression is much slower than
+		specifying it with a direct byte count or property reference, so you
+		you should avoid it if possible.
 
 		The optional "as DATATYPE" section of the parsing instruction
 		describes how to interpret these bytes. If not specified, the property
@@ -110,6 +121,28 @@ LONG DESCRIPTION
 
 			ASCII, UNICODE, UTF8, UINT64, UINT32, UINT16
 			INT64, INT32, INT16, SINGLE, FLOAT, DOUBLE
+			
+		You can also specify a native (C#) expression for the interpretation
+		of these bytes. The native expression can refer to properties that have
+		already been parsed. In addition to the properties that have already 
+		been parsed, three parameters are available to the native expression:
+		
+			_content: The byte array representing the entire binary content
+			    being parsed.
+			_contentPosition: The current position in the binary content
+			    being parsed.
+			_byteCount: The number of bytes to be parsed, as specified (or
+			    dynamically evaluated) by the byte count property.
+				
+		For example, you could write a native expression to parse a series of
+		bytes as ASCII like this:
+		
+		    (4 bytes as {
+				return Encoding.ASCII.GetString(_content, _contentPosition, _byteCount);
+			})
+			
+		Specifying a data interpretation with a native expression is much slower than
+		specifying a data type directly, so you you should avoid it if possible.
 			
 		The optional "as described by LOOKUPTABLE" section of the parsing
 		instruction lets you define a lookup table that maps this property
@@ -138,11 +171,35 @@ LONG DESCRIPTION
 	(Additional properties identified by PROPERTY from LOOKUPTABLE)
 		A property inclusion rule.
 		
-		This is useful when you have a file structure that changes based on
+		This is useful when you have a data structure that changes based on
 		the value of a property that you've already parsed. For example, a
 		'version' property might imply different properties for different
 		versions. These additional properties will be included as sibling
 		properties of the current region, rather than nested regions.
+
+	(Padding to multiple of BYTES bytes)
+		A property padding rule within a data region.
+		
+		The byte count ("BYTES") is mandatory. It may be either an absolute
+		number (10 bytes ...), or refer to a property that would have
+		already been parsed - for example "( header.ByteCount bytes ... )".
+		
+		This is useful when you have a region within a data structure that
+		must be a multiple of a specified number of bytes - even when the
+		properties within that region don't consume that many bytes. The
+		remainder is called padding, or sometimes alignment.
+		
+		For example, in the bitmap file format, each row of pixel data must
+		be a multiple of four bytes. If the pixel data itself (3 bytes
+		for each pixel) doesn't consume a multiple of four bytes, then you
+		can use a padding rule to ensure that it does.
+		
+		You could write the 'rows' data region this way:
+		
+			rows :
+				pixels (bitmap.dibHeader.bitmapWidth items)
+				(padding to multiple of 4 bytes);
+		
 		
 	LOOKUPTABLE : VALUE : LABEL ;
 		A lookup table for property inclusion rules.

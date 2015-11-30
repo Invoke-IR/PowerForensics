@@ -3,15 +3,19 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace PowerForensics.Cmdlets
 {
-    [Cmdlet("Invoke", "BinShred")]
+    [Cmdlet("ConvertFrom", "BinaryData", DefaultParameterSetName = "ByPath")]
     [Alias("binshred")]
     public class BinShredCommand : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath", Position = 0)]
         public string Path { get; set;  }
+
+        [Parameter(Mandatory = true, ParameterSetName = "ByContent", Position = 0)]
+        public byte[] Content { get; set; }
 
         [Parameter(Mandatory = true, Position = 1)]
         public string TemplatePath { get; set; }
@@ -32,32 +36,74 @@ namespace PowerForensics.Cmdlets
                             "TemplatePath"), "TemplateMustBeFileSystemPath", ErrorCategory.InvalidArgument, TemplatePath));
             }
 
-            Collection<string> filePaths = this.SessionState.Path.GetResolvedProviderPathFromPSPath(Path, out provider);
-            if (!String.Equals("FileSystem", provider.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                ThrowTerminatingError(
-                    new ErrorRecord(
-                        new ArgumentException(
-                            String.Format("Could not load file {0}. The path must represent a FileSystem path.", Path),
-                            "Path"), "PathMustBeFileSystemPath", ErrorCategory.InvalidArgument, Path));
-            }
-
             string templateContent = File.ReadAllText(templatePaths[0]);
 
-            foreach (string currentPath in filePaths)
+            if (Content != null)
             {
-                byte[] fileContent = File.ReadAllBytes(currentPath);
-
-                try
+                ParseContent(templateContent, "<Interactive>", Content);
+            }
+            else
+            {
+                Collection<string> filePaths = this.SessionState.Path.GetResolvedProviderPathFromPSPath(Path, out provider);
+                if (!String.Equals("FileSystem", provider.Name, StringComparison.OrdinalIgnoreCase))
                 {
-                    OrderedDictionary results = BinShred.Shred(fileContent, templateContent);
-                    WriteObject(results);
+                    ThrowTerminatingError(
+                        new ErrorRecord(
+                            new ArgumentException(
+                                String.Format("Could not load file {0}. The path must represent a FileSystem path.", Path),
+                                "Path"), "PathMustBeFileSystemPath", ErrorCategory.InvalidArgument, Path));
                 }
-                catch (ParseException e)
+
+                foreach (string currentPath in filePaths)
                 {
-                    WriteError(new ErrorRecord(e, "ParseError", ErrorCategory.ParserError, currentPath));
+                    byte[] fileContent = File.ReadAllBytes(currentPath);
+                    ParseContent(templateContent, currentPath, fileContent);
                 }
             }
+        }
+
+        private void ParseContent(string templateContent, string currentPath, byte[] fileContent)
+        {
+            try
+            {
+                OrderedDictionary results = BinShred.Shred(fileContent, templateContent);
+                Object cmdletResult = ConvertToReturnObject(results);
+                WriteObject(cmdletResult);
+            }
+            catch (ParseException e)
+            {
+                WriteError(new ErrorRecord(e, "ParseError", ErrorCategory.ParserError, currentPath));
+            }
+        }
+
+        private Object ConvertToReturnObject(object currentObject)
+        {
+            List<Object> currentAsArray = currentObject as List<Object>;
+            if(currentAsArray != null)
+            {
+                PSObject[] result = new PSObject[currentAsArray.Count];
+
+                for(int currentIndex = 0; currentIndex < currentAsArray.Count; currentIndex++)
+                {
+                    result[currentIndex] = (PSObject) ConvertToReturnObject(currentAsArray[currentIndex]);
+                }
+
+                return result;
+            }
+
+            OrderedDictionary currentAsDictionary = currentObject as OrderedDictionary;
+            if (currentAsDictionary != null)
+            {
+                PSObject result = new PSObject();
+                foreach (string key in currentAsDictionary.Keys)
+                {
+                    result.Properties.Add(new PSNoteProperty(key, ConvertToReturnObject(currentAsDictionary[key])));
+                }
+
+                return result;
+            }
+
+            return currentObject;
         }
     }
 }

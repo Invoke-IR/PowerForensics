@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using PowerForensics;
 
 namespace Tests
@@ -16,7 +17,25 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
+            byte[] parsed = result["DATA"] as byte[];
+
+            Assert.IsNotNull(parsed, "Should have BitMap key");
+            Assert.AreEqual(13, parsed.Length);
+
+            for (int counter = 0; counter < parsed.Length; counter++)
+            {
+                Assert.AreEqual(content[counter], parsed[counter], "Parsed data not equal at index {0}", counter);
+            }
+        }
+
+        [TestMethod]
+        public void HexByteExtraction()
+        {
+            string template = "bitmap : data (0xD bytes);";
+            byte[] content = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
             byte[] parsed = result["DATA"] as byte[];
 
             Assert.IsNotNull(parsed, "Should have BitMap key");
@@ -36,7 +55,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             string parsed = result["magic"] as string;
 
             Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
@@ -50,7 +68,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             string parsed = result["magic"] as string;
 
             Assert.AreEqual("Lee", parsed, "Should have parsed as Unicode");
@@ -64,7 +81,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             string parsed = result["magic"] as string;
 
             Assert.AreEqual("Laȝamon", parsed, "Should have parsed as Unicode");
@@ -78,7 +94,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             UInt16 parsed = (UInt16)result["magic"];
 
             Assert.AreEqual((UInt16) 56086, parsed, "Should have parsed as UInt16");
@@ -92,7 +107,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             Int16 parsed = (Int16) result["magic"];
 
             Assert.AreEqual(-28564, parsed, "Should have parsed as Int16");
@@ -106,7 +120,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             UInt32 parsed = (UInt32)result["magic"];
 
             Assert.AreEqual((UInt32)124312342, parsed, "Should have parsed as UInt32");
@@ -120,7 +133,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             int parsed = (int) result["magic"];
 
             Assert.AreEqual(-12349332, parsed, "Should have parsed as Int32");
@@ -134,7 +146,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             UInt64 parsed = (UInt64)result["magic"];
 
             Assert.AreEqual(18404200764909607935, parsed, "Should have parsed as UInt64");
@@ -148,7 +159,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             Int64 parsed = (Int64) result["magic"];
 
             Assert.AreEqual(-42543304641638145, parsed, "Should have parsed as Int64");
@@ -162,7 +172,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             float parsed = (float) result["magic"];
 
             Assert.AreEqual( (float) 3.14000010490417, parsed, "Should have parsed as Single / Float");
@@ -176,7 +185,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             float parsed = (float)result["magic"];
 
             Assert.AreEqual((float)3.14000010490417, parsed, "Should have parsed as Single / Float");
@@ -190,10 +198,22 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
             double parsed = (double)result["magic"];
 
             Assert.AreEqual((double) 3.1415926535859, parsed, "Should have parsed as Single / Float");
+        }
+
+        [TestMethod]
+        public void TypedByteExtractionCSharp()
+        {
+            string template = @"pe : magic ( 2 bytes as {
+                return System.Text.Encoding.ASCII.GetString(_content, _contentPosition, _byteCount); } );";
+            byte[] content = { 0x4d, 0x5a };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            string parsed = result["magic"] as string;
+
+            Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
         }
 
         [TestMethod]
@@ -209,12 +229,63 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(2, result.Keys.Count, "Should have one key");
             string parsed = result["magic"] as string;
             Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
 
-            string comment = result["magic.description"] as string;
+            string comment = result["magic_description"] as string;
             Assert.AreEqual("The magic file header", comment, "Should have comment");
+        }
+
+        [TestMethod]
+        public void ElementHasOffset()
+        {
+            string template = @"
+                pe :
+                    /** The magic file header */
+                    magic (2 bytes as ASCII)
+                    moreMagic (2 bytes as ASCII)
+                    ;
+            ";
+            byte[] content = { 0x4d, 0x5a, 97, 98 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            string parsed = result["magic"] as string;
+            int offset = (int) result["magic_offset"];
+            Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
+            Assert.AreEqual(0, offset, "Should have proper offset");
+
+            parsed = result["moreMagic"] as string;
+            offset = (int)result["moreMagic_offset"];
+            Assert.AreEqual("ab", parsed, "Should have parsed as ASCII");
+            Assert.AreEqual(2, offset, "Should have proper offset");
+
+            string comment = result["magic_description"] as string;
+            Assert.AreEqual("The magic file header", comment, "Should have comment");
+        }
+
+        [TestMethod]
+        public void ArrayHasOffset()
+        {
+            string template = @"
+                pe :
+                    /** The magic file header */
+                    magic (2 bytes as ASCII)
+                    moreElements (2 items);
+                moreElements :
+                    value (1 byte as ASCII);
+            ";
+            byte[] content = { 0x4d, 0x5a, 97, 98 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            string parsed = result["magic"] as string;
+            int offset = (int)result["magic_offset"];
+            Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
+            Assert.AreEqual(0, offset, "Should have proper offset");
+
+            offset = (int) result["moreElements_offset"];
+            Assert.AreEqual(2, offset, "Should have proper offset");
         }
 
         [TestMethod]
@@ -230,7 +301,6 @@ namespace Tests
 
             OrderedDictionary result = BinShred.Shred(content, template);
 
-            Assert.AreEqual(2, result.Keys.Count, "Should have two keys");
             byte[] parsed1 = result["data1"] as byte[];
             string parsed2 = result["data2"] as string;
 
@@ -247,6 +317,66 @@ namespace Tests
         }
 
         [TestMethod]
+        public void PropertyDescribedByAscii()
+        {
+            string template = @"
+                bitmap :
+                    data1 (2 bytes as ASCII described by data1Lookup);
+                data1Lookup :
+                    LH : ""Lee Holmes""
+                    SomethingElse : ""Something Else"";
+            ";
+            byte[] content = { 76, 72 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            string parsed1 = result["data1"] as string;
+            string parsed1Description = result["data1_description"] as string;
+            Assert.AreEqual("LH", parsed1, "Should have parsed initial data");
+            Assert.AreEqual("Lee Holmes", parsed1Description, "Should have parsed description");
+        }
+
+        [TestMethod]
+        public void PropertyDescribedByInt()
+        {
+            string template = @"
+                bitmap :
+                    data1 (4 bytes as Int32 described by data1Lookup);
+                data1Lookup :
+                    3 : ""Lee Holmes""
+                    SomethingElse : ""Something Else"";
+            ";
+            byte[] content = { 0x3, 0x0, 0x0, 0x0 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            Int32 parsed1 = (Int32) result["data1"];
+            string parsed1Description = result["data1_description"] as string;
+            Assert.AreEqual(3, parsed1, "Should have parsed initial data");
+            Assert.AreEqual("Lee Holmes", parsed1Description, "Should have parsed description");
+        }
+
+        [TestMethod]
+        public void PropertyDescribedByHexLookup()
+        {
+            string template = @"
+                bitmap :
+                    data1 (4 bytes as Int32 described by data1Lookup);
+                data1Lookup :
+                    0xFF : ""Lee Holmes""
+                    SomethingElse : ""Something Else"";
+            ";
+            byte[] content = { 255, 0x0, 0x0, 0x0 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            Int32 parsed1 = (Int32)result["data1"];
+            string parsed1Description = result["data1_description"] as string;
+            Assert.AreEqual(255, parsed1, "Should have parsed initial data");
+            Assert.AreEqual("Lee Holmes", parsed1Description, "Should have parsed description");
+        }
+
+        [TestMethod]
         public void MemberNesting()
         {
             string template = @"
@@ -256,10 +386,7 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
-
             OrderedDictionary header = result["header"] as OrderedDictionary;
-            Assert.AreEqual(1, header.Keys.Count, "Should have one key");
 
             Assert.AreEqual("MZ", header["magic"] as String, "Should have parsed as ASCII");
         }
@@ -274,10 +401,7 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
-
             OrderedDictionary header = result["header"] as OrderedDictionary;
-            Assert.AreEqual(1, header.Keys.Count, "Should have one key");
 
             Assert.AreEqual("MZ", header["magic"] as String, "Should have parsed as ASCII");
             Assert.AreEqual("ba", result["other"] as String, "Should have header remainder bytes");
@@ -298,14 +422,11 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             OrderedDictionary header = result["header"] as OrderedDictionary;
-            Assert.AreEqual(1, header.Keys.Count, "Should have one key");
             Assert.AreEqual("MZ", header["magic"] as String, "Should have parsed as ASCII");
 
             OrderedDictionary moreheader = result["moreheader"] as OrderedDictionary;
-            Assert.AreEqual(2, moreheader.Keys.Count, "Should have two keys");
             Assert.AreEqual("b", moreheader["firstLetter"] as String, "Should have parsed as ASCII");
             Assert.AreEqual("a", moreheader["secondLetter"] as String, "Should have parsed as ASCII");
         }
@@ -372,7 +493,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(77, ((byte[]) result["item"])[0], "Should have parsed first as BYTE");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -393,7 +513,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a, 98, 97, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(77, ((byte[])result["item"])[0], "Should have parsed first as bytes");
             Assert.AreEqual(90, ((byte[])result["item"])[1], "Should have parsed first as bytes");
@@ -415,7 +534,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(77, (UInt16) result["item"], "Should have parsed first as UInt16");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -436,7 +554,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(77, (Int16)result["item"], "Should have parsed first as Int16");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -457,7 +574,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x00, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual((UInt32) 77, (UInt32)result["item"], "Should have parsed first as UInt32");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -478,7 +594,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x00, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(77, (Int32)result["item"], "Should have parsed first as Int32");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -499,7 +614,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual((UInt64)77, (UInt64)result["item"], "Should have parsed first as UInt64");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -520,7 +634,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual((Int64)77, (Int64)result["item"], "Should have parsed first as Int64");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -541,7 +654,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual("M", result["item"] as String, "Should have parsed first as string");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -562,7 +674,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual("M", result["item"] as String, "Should have parsed first as string");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -583,7 +694,6 @@ namespace Tests
             byte[] content = { 0x4d, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5a, 98, 97 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual((Int64)77, (Int64)result["item"], "Should have parsed first as Int64");
             Assert.AreEqual("Zba", result["rest"] as String, "Should have picked up from lookup table");
@@ -600,7 +710,6 @@ namespace Tests
             byte[] content = { 2, 0x00, 0x00, 0x00, 72, 101, 108, 108, 111 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have two root keys");
 
             Assert.AreEqual(2, (int) result["Length"], "Should have parsed length");
             Assert.AreEqual("He", result["string"] as String, "Should have parsed runtime-length string");
@@ -642,11 +751,10 @@ namespace Tests
             byte[] content = { 9, 0x00, 0x00, 0x00, 65, 66, 67, 68, 69, 70 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have one key");
 
             Assert.AreEqual(9, (int)result["itemCount"], "Should have correct count");
 
-            object[] items = (object[])result["stuff"];
+            List<object> items = (List<object>) result["stuff"];
             Assert.AreEqual("AB", (string)((OrderedDictionary)items[0])["Value"], "Should have got first entry");
             Assert.AreEqual("CD", (string)((OrderedDictionary)items[1])["Value"], "Should have got second entry");
             Assert.AreEqual("EF", (string)((OrderedDictionary)items[2])["Value"], "Should have got third entry");
@@ -665,11 +773,10 @@ namespace Tests
             byte[] content = { 3, 0x00, 0x00, 0x00, 65, 66, 67, 68, 69, 70 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(2, result.Keys.Count, "Should have one key");
 
             Assert.AreEqual(3, (int) result["itemCount"], "Should have correct count");
 
-            object[] items = (object[]) result["stuff"];
+            List<object> items = (List<object>) result["stuff"];
             Assert.AreEqual("AB", (string)((OrderedDictionary) items[0])["Value"], "Should have got first entry");
             Assert.AreEqual("CD", (string)((OrderedDictionary) items[1])["Value"], "Should have got second entry");
             Assert.AreEqual("EF", (string)((OrderedDictionary) items[2])["Value"], "Should have got third entry");
@@ -690,15 +797,36 @@ namespace Tests
             byte[] content = { 3, 0x00, 0x00, 0x00, 65, 66, 67, 68, 69, 70 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(1, result.Keys.Count, "Should have one key");
 
-            Assert.AreEqual(2, ((OrderedDictionary)result["pe"]).Keys.Count, "Should have correct count");
             Assert.AreEqual(3, (int)((OrderedDictionary) result["pe"])["itemCount"], "Should have correct count");
 
-            object[] items = (object[])((OrderedDictionary)result["pe"])["stuff"];
+            List<object> items = (List<object>)((OrderedDictionary)result["pe"])["stuff"];
             Assert.AreEqual("AB", (string)((OrderedDictionary)items[0])["Value"], "Should have got first entry");
             Assert.AreEqual("CD", (string)((OrderedDictionary)items[1])["Value"], "Should have got second entry");
             Assert.AreEqual("EF", (string)((OrderedDictionary)items[2])["Value"], "Should have got third entry");
+        }
+
+        [TestMethod]
+        public void MultipleElementsUnlimited()
+        {
+            string template = @"
+                pe :
+                    elements (unlimited items);
+                elements :
+                    value (1 byte as ASCII);
+            ";
+            byte[] content = { 65, 66, 67, 68 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            List<object> items = (List<object>)result["elements"];
+
+            Assert.AreEqual(4, items.Count, "Should have parsed based on content length");
+
+            Assert.AreEqual("A", (string)((OrderedDictionary)items[0])["Value"], "Should have got first entry");
+            Assert.AreEqual("B", (string)((OrderedDictionary)items[1])["Value"], "Should have got second entry");
+            Assert.AreEqual("C", (string)((OrderedDictionary)items[2])["Value"], "Should have got third entry");
+            Assert.AreEqual("D", (string)((OrderedDictionary)items[3])["Value"], "Should have got third entry");
         }
 
         [TestMethod]
@@ -713,14 +841,161 @@ namespace Tests
             byte[] content = { 3, 0x00, 0x00, 0x00, 65, 66 };
 
             OrderedDictionary result = BinShred.Shred(content, template);
-            Assert.AreEqual(3, result.Keys.Count, "Should have two keys");
+            Assert.AreEqual(6, result.Keys.Count, "Should have right number of keys");
         }
 
-        // BUG - Bitmap compression method not incorporating description
+        [TestMethod]
+        public void ElementNoPaddingNeeded()
+        {
+            string template = @"
+                pe :
+                    rows (2 items);
+                rows :
+                    data (2 bytes as ASCII)
+                    (padding to multiple of 2 bytes);
+            ";
+            byte[] content = { 65, 66, 67, 68 };
 
-        // TODO - Add 'Offset' field
-        // TODO - Make SizeReference support hex
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            // Check the captured data
+            List<object> items = (List<object>) result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            byte[] padding = (byte[])((OrderedDictionary)items[0])["padding"];
+            Assert.AreEqual(0, padding.Length);
+
+            padding = (byte[])((OrderedDictionary)items[1])["padding"];
+            Assert.AreEqual(0, padding.Length);
+
+            // Check the casing of the padding key
+            string[] keys = new string[4];
+            ((OrderedDictionary)items[0]).Keys.CopyTo(keys, 0);
+            Assert.AreEqual("padding", keys[3]);
+        }
+
+        [TestMethod]
+        public void ElementOneBytePadding()
+        {
+            string template = @"
+                Pe :
+                    Rows (2 items);
+                Rows :
+                    Data (2 bytes as ASCII)
+                    (padding to multiple of 3 bytes);
+            ";
+            byte[] content = { 65, 66, 0x02, 67, 68, 0x04 };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            // Check the captured data
+            List<object> items = (List<object>) result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary) items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary) items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[]) ((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[]) ((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+
+            // Check the casing of the padding key
+            string[] keys = new string[4];
+            ((OrderedDictionary)items[0]).Keys.CopyTo(keys, 0);
+            Assert.AreEqual("Padding", keys[3]);
+        }
+
+        [TestMethod]
+        public void ElementTwoBytePadding()
+        {
+            string template = @"
+                pe :
+                    rows (2 items);
+                rows :
+                    data (2 bytes as ASCII)
+                    (padding to multiple of 4 bytes);
+            ";
+            byte[] content = { 65, 66, 0x02, 0x03, 67, 68, 0x04, 0x05, };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            // Check the captured data
+            List<object> items = (List<object>) result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[])((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x3, ((byte[])((OrderedDictionary)items[0])["padding"])[1], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[])((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x5, ((byte[])((OrderedDictionary)items[1])["padding"])[1], "Should have got proper padding");
+        }
+
+        [TestMethod]
+        public void ElementDynamicBytePadding()
+        {
+            string template = @"
+                pe :
+                    paddingRequirement (4 bytes as INT32)
+                    rows (2 items);
+                rows :                    
+                    data (2 bytes as ASCII)
+                    (padding to multiple of pe.paddingRequirement bytes);
+            ";
+            byte[] content = { 0x4, 0x00, 0x00, 0x00, 65, 66, 0x02, 0x03, 67, 68, 0x04, 0x05, };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+
+            // Check the captured data
+            List<object> items = (List<object>) result["rows"];
+            Assert.AreEqual("AB", ((OrderedDictionary)items[0])["data"], "Should have got proper value");
+            Assert.AreEqual("CD", ((OrderedDictionary)items[1])["data"], "Should have got proper value");
+
+            // Check the padding
+            Assert.AreEqual(0x2, ((byte[])((OrderedDictionary)items[0])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x3, ((byte[])((OrderedDictionary)items[0])["padding"])[1], "Should have got proper padding");
+            Assert.AreEqual(0x4, ((byte[])((OrderedDictionary)items[1])["padding"])[0], "Should have got proper padding");
+            Assert.AreEqual(0x5, ((byte[])((OrderedDictionary)items[1])["padding"])[1], "Should have got proper padding");
+        }
+
+        [TestMethod]
+        public void ByteExtractionCSharp()
+        {
+            string template = "pe : magic ( { return 2; } bytes as ASCII);";
+            byte[] content = { 0x4d, 0x5a };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            string parsed = result["magic"] as string;
+
+            Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
+        }
+
+        [TestMethod]
+        public void ByteExtractionCSharpWithLocalProperty()
+        {
+            string template = @"
+                pe :
+                    byteCount (4 bytes as INT32)
+                    magic (
+                    {
+                        if(byteCount > 0)
+                        {
+                            return (byteCount / 2);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    } bytes as ASCII);
+            ";
+            byte[] content = { 0x4, 0, 0, 0, 0x4d, 0x5a };
+
+            OrderedDictionary result = BinShred.Shred(content, template);
+            string parsed = result["magic"] as string;
+
+            Assert.AreEqual("MZ", parsed, "Should have parsed as ASCII");
+        }
+
         // TODO - Nice error when reading off the end of the byte stream
-        // TODO - Fix OOM when allocating item arrays
     }
 }
