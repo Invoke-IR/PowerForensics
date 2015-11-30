@@ -32,54 +32,49 @@ supports NTFS and is in the process of adding support for the ext4 file system.
 ## Cmdlets
 ### Boot Sector:
 ```
-Get-MBR - parses the first sector of the hard drive and returns a MasterBootRecord object
-Get-GPT - parses the first sector of the hard drive and returns a GuidPartitionTable object
-Get-BootSector - parses the first sector of the hard drive and returns the appropriate boot sector (MBR or GPT)
-Get-PartitionTable - parses the first sector of the hard drive and returns the partition table
+Get-ForensicMBR - parses the first sector of the hard drive and returns a MasterBootRecord object
+Get-ForensicGPT - parses the first sector of the hard drive and returns a GuidPartitionTable object
+Get-ForensicBootSector - parses the first sector of the hard drive and returns the appropriate boot sector (MBR or GPT)
+Get-ForensicPartitionTable - parses the first sector of the hard drive and returns the partition table
 ```
 
 ### New Technology File System (NTFS):
 ```
-Get-FileRecord - returns Master File Table entries
-Get-FileRecordIndex - returns a file's MFT record index number
-Get-DeletedFile - returns Master File Table entries of files that are marked as deleted
-Get-AttrDef - parses the $AttrDef file to return definitions of MFT Attributes 
-Get-BadCluster - parses the $BadClus file to check for damaged clusters
-Get-Bitmap - parses the $Bitmap file to determine if a cluster is marked as in use
-Get-UsnJrnl - parses the $UsnJrnl file's $J data attribute and returns USN Journal Entries
-Get-UsnJrnlInformation - parses the $UsnJrnl file's $MAX data attribute and returns USN Journal Metadata
-Get-VolumeBootRecord - parses the $Boot file located in the first sector of the volume and returns the VolumeBootRecord object
-Get-VolumeInformation - parses the $Volume file's $VOLUME_INFORMATION attribute and returns a VolumeInformation Object
-Get-VolumeName - parses the $Volume file's $VOLUME_NAME attribute and returns the VolumeName
+Get-ForensicFileRecord - returns Master File Table entries
+Get-ForensicFileRecordIndex - returns a file's MFT record index number
+Get-ForensicDeletedFile - returns Master File Table entries of files that are marked as deleted
+Get-ForensicAttrDef - parses the $AttrDef file to return definitions of MFT Attributes 
+Get-ForensicBadCluster - parses the $BadClus file to check for damaged clusters
+Get-ForensicBitmap - parses the $Bitmap file to determine if a cluster is marked as in use
+Get-ForensicUsnJrnl - parses the $UsnJrnl file's $J data attribute and returns USN Journal Entries
+Get-ForensicUsnJrnlInformation - parses the $UsnJrnl file's $MAX data attribute and returns USN Journal Metadata
+Get-ForensicVolumeBootRecord - parses the $Boot file located in the first sector of the volume and returns the VolumeBootRecord object
+Get-ForensicVolumeInformation - parses the $Volume file's $VOLUME_INFORMATION attribute and returns a VolumeInformation Object
+Get-ForensicVolumeName - parses the $Volume file's $VOLUME_NAME attribute and returns the VolumeName
 ```
 
 ### Extended File System 4 (ext4):
 ```
-Get-Superblock - returns the ext4 SuperBlock object
-Get-BlockGroupDescriptor - returns the Block Group Descriptor Table entries
-Get-Inode - returns the Inode Table entries
+Get-ForensicSuperblock - returns the ext4 SuperBlock object
+Get-ForensicBlockGroupDescriptor - returns the Block Group Descriptor Table entries
+Get-ForensicInode - returns the Inode Table entries
 ```
 
 ### Windows Artifacts
 ```
-Get-VolumeShadowCopy - returns Win32_ShadowCopy objects
-Get-Prefetch - parses the binary structure of Windows Prefetch files and returns a custom Prefetch object
-Get-ScheduledJob - parses the binary structure of Scheduled Jobs (at jobs) and returns a custom ScheduledJob object
+Get-ForensicVolumeShadowCopy - returns Win32_ShadowCopy objects
+Get-ForensicPrefetch - parses the binary structure of Windows Prefetch files and returns a custom Prefetch object
+Get-ForensicScheduledJob - parses the binary structure of Scheduled Jobs (at jobs) and returns a custom ScheduledJob object
 ```
 
 ### Utilities:
 ```
-Invoke-DD - provides a bit for bit copy of a specified device
-Copy-File - creates a copy of a file from its raw bytes on disk 
-Get-ChildItem - returns a directory's contents by parsing the MFT structures
-Get-Content - gets the content of a file from its raw bytes on disk
-Get-Hash - returns a cryptographic hash for the specified file
-Get-Timezone - determines a system's timezone based on the registry setting
-```
-
-### Formatters:
-```
-Format-Hex - Formats byte array output into a hexdump
+Invoke-ForensicDD - provides a bit for bit copy of a specified device
+Copy-ForensicFile - creates a copy of a file from its raw bytes on disk 
+Get-ForensicChildItem - returns a directory's contents by parsing the MFT structures
+Get-ForensicContent - gets the content of a file from its raw bytes on disk
+Get-ForensicHash - returns a cryptographic hash for the specified file
+Get-ForensicTimezone - determines a system's timezone based on the registry setting
 ```
 
 ## [Module Installation](https://msdn.microsoft.com/en-us/library/dd878350(v=vs.85).aspx)
