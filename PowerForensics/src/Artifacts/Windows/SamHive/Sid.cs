@@ -6,13 +6,12 @@ namespace PowerForensics.Artifacts
 {
     public class Sid
     {
-        public static SecurityIdentifier Get()
+        public static SecurityIdentifier Get(string volume)
         {
-            ValueKey vk = ValueKey.Get(@"C:\Windows\system32\config\SAM", @"SAM\Domains\Account", "V");
-            return new SecurityIdentifier(vk.GetData(), (int)vk.DataLength - 0x18);
+            return GetByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SAM");
         }
 
-        public static SecurityIdentifier Get(string hivePath)
+        public static SecurityIdentifier GetByPath(string hivePath)
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("SAM"))
             {

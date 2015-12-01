@@ -64,8 +64,7 @@ namespace PowerForensics.Artifacts
 
         public static NetworkList[] GetInstances(string volume)
         {
-            string volLetter = Util.GetVolumeLetter(volume);
-            return GetInstances(volLetter + @"windows\system32\config\SOFTWARE");
+            return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
         }
 
         public static NetworkList[] GetInstancesByPath(string hivePath)

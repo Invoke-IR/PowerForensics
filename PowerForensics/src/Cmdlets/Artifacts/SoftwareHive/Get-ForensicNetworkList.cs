@@ -8,16 +8,27 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-NetworkList cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "NetworkList")]
+    [Cmdlet(VerbsCommon.Get, "NetworkList", DefaultParameterSetName = "ByVolume")]
     public class GetNetworkListCommand : PSCmdlet
     {
         #region Parameters
 
         /// <summary> 
+        /// 
+        /// </summary> 
+        [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        public string VolumeName
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+        private string volume;
+
+        /// <summary> 
         /// This parameter provides the the path of the Registry Hive to parse.
         /// </summary> 
         [Alias("Path")]
-        [Parameter(Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
         public string HivePath
         {
             get { return hivePath; }
@@ -31,16 +42,30 @@ namespace PowerForensics.Cmdlets
 
         /// <summary> 
         /// 
+        /// </summary> 
+        protected override void BeginProcessing()
+        {
+            Util.checkAdmin();
+
+            if (ParameterSetName == "ByVolume")
+            {
+                Util.getVolumeName(ref volume);
+            }
+        }
+
+        /// <summary> 
+        /// 
         /// </summary>  
         protected override void ProcessRecord()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("HivePath"))
+            switch (ParameterSetName)
             {
-                WriteObject(NetworkList.GetInstancesByPath(hivePath), true);
-            }
-            else
-            {
-                //WriteObject(NetworkList.GetInstances(), true);
+                case "ByVolume":
+                    WriteObject(NetworkList.GetInstances(volume), true);
+                    break;
+                case "ByPath":
+                    WriteObject(NetworkList.GetInstancesByPath(hivePath), true);
+                    break;
             }
         }
 

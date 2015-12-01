@@ -87,9 +87,7 @@ namespace PowerForensics.Artifacts
 
         public static Amcache[] GetInstances(string volume)
         {
-            string volLetter = volume.Split('\\')[3];
-            string hivePath = volLetter + @"\Windows\AppCompat\Programs\Amcache.hve";
-            return GetInstancesByPath(hivePath);
+            return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\Amcache.hve");
         }
 
         public static Amcache[] GetInstancesByPath(string hivePath)

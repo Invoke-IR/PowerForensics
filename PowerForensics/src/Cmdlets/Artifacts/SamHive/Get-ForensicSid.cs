@@ -8,16 +8,27 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Sid cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Sid")]
+    [Cmdlet(VerbsCommon.Get, "Sid", DefaultParameterSetName = "ByVolume")]
     public class GetSidCommand : PSCmdlet
     {
         #region Parameters
 
         /// <summary> 
+        /// 
+        /// </summary> 
+        [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        public string VolumeName
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+        private string volume;
+
+        /// <summary> 
         /// This parameter provides the the path of the Registry Hive to parse.
         /// </summary> 
         [Alias("Path")]
-        [Parameter(Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
         public string HivePath
         {
             get { return hivePath; }
@@ -32,15 +43,29 @@ namespace PowerForensics.Cmdlets
         /// <summary> 
         /// 
         /// </summary> 
+        protected override void BeginProcessing()
+        {
+            Util.checkAdmin();
+
+            if (ParameterSetName == "ByVolume")
+            {
+                Util.getVolumeName(ref volume);
+            }
+        }
+
+        /// <summary> 
+        /// 
+        /// </summary>  
         protected override void ProcessRecord()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("HivePath"))
+            switch (ParameterSetName)
             {
-                WriteObject(Sid.Get(hivePath));
-            }
-            else
-            {
-                WriteObject(Sid.Get());
+                case "ByVolume":
+                    WriteObject(Sid.Get(volume), true);
+                    break;
+                case "ByPath":
+                    WriteObject(Sid.GetByPath(hivePath), true);
+                    break;
             }
         }
 

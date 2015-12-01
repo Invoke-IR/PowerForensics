@@ -60,12 +60,12 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
-        public static WindowsVersion Get()
+        public static WindowsVersion Get(string volume)
         {
-            return WindowsVersion.Get(@"C:\Windows\system32\config\SOFTWARE");
+            return WindowsVersion.Get(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
         }
 
-        public static WindowsVersion Get(string hivePath)
+        public static WindowsVersion GetByPath(string hivePath)
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("SOFTWARE"))
             {

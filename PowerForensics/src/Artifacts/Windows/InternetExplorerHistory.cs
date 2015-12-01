@@ -64,7 +64,7 @@ namespace PowerForensics.Artifacts
         public static InternetExplorerHistory[] Get(string volume)
         {
             // Determine Windows Version
-            WindowsVersion version = WindowsVersion.Get();
+            WindowsVersion version = WindowsVersion.Get(volume);
 
             string HistoryPath = null;
 
