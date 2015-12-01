@@ -68,7 +68,7 @@ namespace PowerForensics.Artifacts
 
             string HistoryPath = null;
 
-            switch (version.CurrentVersion)
+            /*switch (version.CurrentVersion)
             {
                 case "5.1":
                     //% systemdir %\Documents and Settings\% username %\Local Settings\History\history.ie5
@@ -90,7 +90,7 @@ namespace PowerForensics.Artifacts
                 case "6.3":
                     //C: \Users\tester\AppData\Local\Microsoft\Windows\WebCache\WebcacheV01.dat
                     break;
-            }
+            }*/
             // Iterate through Index.Dat Files
 
 

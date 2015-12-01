@@ -87,7 +87,15 @@ namespace PowerForensics.Artifacts
 
         public static Amcache[] GetInstances(string volume)
         {
-            return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\Amcache.hve");
+            WindowsVersion version = WindowsVersion.Get(volume);
+            if(version.CurrentVersion.CompareTo(new Version("6.2")) >= 0)
+            {
+                return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\Amcache.hve");
+            }
+            else
+            {
+                throw new Exception("The Amcache hive is only available on Windows 8 and newer Operating Systems");
+            }
         }
 
         public static Amcache[] GetInstancesByPath(string hivePath)

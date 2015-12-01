@@ -27,10 +27,7 @@ namespace PowerForensics.Artifacts
             ValueKey[] values = nk.GetValues(bytes);
             foreach (ValueKey vk in values)
             {
-                switch (vk.Name)
-                {
 
-                }
             }
         }
 

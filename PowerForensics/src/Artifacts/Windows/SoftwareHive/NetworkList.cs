@@ -64,7 +64,15 @@ namespace PowerForensics.Artifacts
 
         public static NetworkList[] GetInstances(string volume)
         {
-            return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
+            WindowsVersion version = WindowsVersion.Get(volume);
+            if (version.CurrentVersion.CompareTo(new Version("6.0")) >= 0)
+            {
+                return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
+            }
+            else
+            {
+                throw new Exception("The NetworkList key is only available on Windows Vista an newer Operating Systems.");
+            }
         }
 
         public static NetworkList[] GetInstancesByPath(string hivePath)

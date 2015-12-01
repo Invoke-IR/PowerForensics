@@ -11,7 +11,7 @@ namespace PowerForensics.Artifacts
         public readonly string ProductName;
         public readonly uint CurrentMajorVersion;
         public readonly uint CurrentMinorVersion;
-        public readonly string CurrentVersion;
+        public readonly Version CurrentVersion;
         public readonly DateTime InstallTime;
         public readonly string RegisteredOwner;
         public readonly string SystemRoot;
@@ -36,7 +36,7 @@ namespace PowerForensics.Artifacts
                         CurrentMinorVersion = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
                         break;
                     case "CurrentVersion":
-                        CurrentVersion = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        CurrentVersion = new Version(Encoding.Unicode.GetString(vk.GetData(bytes)));
                         break;
                     case "InstallTime":
                         InstallTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
@@ -62,7 +62,7 @@ namespace PowerForensics.Artifacts
 
         public static WindowsVersion Get(string volume)
         {
-            return WindowsVersion.Get(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
+            return WindowsVersion.GetByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
         }
 
         public static WindowsVersion GetByPath(string hivePath)
