@@ -3,13 +3,13 @@ using PowerForensics.Artifacts;
 
 namespace PowerForensics.Cmdlets
 {
-    #region GetTypedPathCommand
+    #region GetWindowsSearchHistoryCommand
 
     /// <summary> 
-    /// This class implements the Get-TypedPath cmdlet. 
+    /// This class implements the Get-WindowsSearchHistory  cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "TypedPath")]
-    public class GetTypedPathCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "WindowsSearchHistory")]
+    public class GetWindowsSearchHistoryCommand : PSCmdlet
     {
         #region Parameters
 
@@ -34,11 +34,11 @@ namespace PowerForensics.Cmdlets
         /// </summary>  
         protected override void ProcessRecord()
         {
-            WriteObject(TypedPaths.GetInstances(hivePath), true);
-        } 
+            WriteObject(WordWheelQuery.GetInstances(hivePath), true);
+        }
 
-        #endregion Cmdlet Overrides
-    }
+    #endregion Cmdlet Overrides
+}
 
-    #endregion GetTypedPathCommand
+    #endregion GetWindowsSearchHistoryCommand
 }

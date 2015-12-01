@@ -5369,7 +5369,7 @@ This parameter is optional. But default, Invoke-ForensicDD writes the output to 
 						<maml:para>Specifies the starting point in the file for the copy operation as a byte offset. This parameter is required.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">UInt64</command:parameterValue>
-					<dev:defaultValue/>
+					<dev:defaultValue>0</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 					<maml:name>BlockSize</maml:name>
@@ -5421,17 +5421,17 @@ This parameter is optional. But default, Invoke-ForensicDD writes the output to 
 				</dev:type>
 				<dev:defaultValue>Stdout</dev:defaultValue>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>Offset</maml:name>
 				<maml:description>
 					<maml:para>Specifies the starting point in the file for the copy operation as a byte offset. This parameter is required.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">UInt64</command:parameterValue>
+				<command:parameterValue required="false" variableLength="false">UInt64</command:parameterValue>
 				<dev:type>
 					<maml:name>UInt64</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>0</dev:defaultValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="">
 				<maml:name>BlockSize</maml:name>

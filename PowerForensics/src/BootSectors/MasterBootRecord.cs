@@ -91,10 +91,15 @@ namespace PowerForensics
             {
                 PartitionEntry entry = new PartitionEntry(Util.GetSubArray(bytes, i, PARTITION_ENTRY_SIZE));
 
-                if (entry.SystemId != "EMPTY")
+                if(entry.SystemId == "MS_EXTENDED")
+                {
+                    partitionList.AddRange(GetExtended(entry));
+                }
+                else if (entry.SystemId != "EMPTY")
                 {
                     partitionList.Add(entry);
                 }
+                
             }
 
             PartitionTable = partitionList.ToArray();
@@ -121,6 +126,12 @@ namespace PowerForensics
         {
             // Read Master Boot Record (first 512 bytes) from disk
             return new MasterBootRecord(MasterBootRecord.GetBytes(drivePath));
+        }
+
+        private static List<PartitionEntry> GetExtended(PartitionEntry entry)
+        {
+            List<PartitionEntry> pList = new List<PartitionEntry>();
+            return null;
         }
 
         private static List<PartitionEntry> GetExtended(FileStream streamToRead, uint startSector)

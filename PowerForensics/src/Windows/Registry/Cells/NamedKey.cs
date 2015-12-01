@@ -104,8 +104,19 @@ namespace PowerForensics.Registry
 
                 string[] hivesplit = hivePath.Split('\\');
                 string hive = hivesplit[hivesplit.Length - 1];
-                string fullname = (key + "\\" + Name).TrimStart('\\');
-                FullName = fullname.Replace("CsiTool-CreateHive-{00000000-0000-0000-0000-000000000000}", hive + ":");
+
+                string fullname = null;
+
+                if (!(key.Contains(Name)))
+                {
+                    fullname = (key + "\\" + Name).TrimStart('\\');
+                }
+                else
+                {
+                    fullname = key.TrimStart('\\');
+                }
+
+                FullName = fullname.Replace("CsiTool-CreateHive-{00000000-0000-0000-0000-000000000000}", hive + ':');
 
                 #endregion FullName
             }
@@ -158,7 +169,20 @@ namespace PowerForensics.Registry
 
         public static NamedKey[] GetInstances(string path, string key)
         {
-            return NamedKey.GetInstances(Helper.GetHiveBytes(path), path, key.TrimEnd('\\'));
+            if (key == null)
+            {
+                return NamedKey.GetInstances(Helper.GetHiveBytes(path), path);
+            }
+            else
+            {
+                return NamedKey.GetInstances(Helper.GetHiveBytes(path), path, key.TrimEnd('\\'));
+            }
+        }
+
+        internal static NamedKey[] GetInstances(byte[] bytes, string path)
+        {
+            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            return hiveroot.GetSubKeys();
         }
 
         internal static NamedKey[] GetInstances(byte[] bytes, string path, string key)
