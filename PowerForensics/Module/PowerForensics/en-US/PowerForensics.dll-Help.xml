@@ -1437,6 +1437,94 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>Get-ForensicExplorerTypedPath</command:name>
+			<maml:description>
+				<maml:para>Gets the file paths that have been typed into the Windows Explorer application.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicExplorerTypedPath</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-ForensicExplorerTypedPath cmdlet parses a user&apos;s NTUSER.DAT file to derive the file paths that have been typed into the Windows Explorer application.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicExplorerTypedPath</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicExplorerTypedPath -HivePath C:\Users\Public\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>Get-ForensicFileRecord</command:name>
 			<maml:description>
 				<maml:para>Gets the file records from the Master File Table of the specified volume.</maml:para>
@@ -3594,6 +3682,89 @@ ShellLink object.</maml:para>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>Get-ForensicRunMostRecentlyUsed</command:name>
+			<maml:description>
+				<maml:para>Gets the commands that were issued by the user to the run dialog.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicRunMostRecentlyUsed</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-ForensicRunMostRecentlyUsed cmdlet parses a user&apos;s NTUSER.DAT file to derive the commands that have been issued to the run dialog.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRunMostRecentlyUsed</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRunMostRecentlyUsed -HivePath C:\Users\Public\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>Get-ForensicSid</command:name>
 			<maml:description>
 				<maml:para>Gets the system&apos;s Security Identifier (SID).</maml:para>
@@ -5363,6 +5534,94 @@ If you get an error like this one, verify that the items in the template and the
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>Get-ForensicWindowsSearchHistory</command:name>
+			<maml:description>
+				<maml:para>Gets the search terms that have been searched for using the Windows Search feature.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para>
+				</maml:para>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicWindowsSearchHistory</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-ForensicWindowsSearchHistory cmdlet parses a user&apos;s NTUSER.DAT file to derive the terms that have been searched for using the Windows Search feature.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicWindowsSearchHistory</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicWindowsSearchHistory -HivePath C:\Users\Public\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>Invoke-ForensicDD</command:name>
 			<maml:description>
 				<maml:para>Gets a byte-for-byte copy of a file, disk, or partition.</maml:para>
@@ -5563,4 +5822,5 @@ It also uses the OutFile parameter to specify a location for the output. The def
 		</command:examples>
 	</command:command>
 	<!--Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 </helpItems>

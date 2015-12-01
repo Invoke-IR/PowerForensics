@@ -57,6 +57,7 @@ Get-ForensicEventLog -
 Get-ForensicExplorerTypedPath - 
 Get-ForensicNetworkList -  
 Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
+Get-ForensicRunMostRecentlyUsed - 
 Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
 Get-ForensicSid - gets the machine Security Identifier from the SAM hive

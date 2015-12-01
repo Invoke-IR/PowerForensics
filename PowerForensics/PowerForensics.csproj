@@ -56,12 +56,14 @@
   <ItemGroup>
     <Compile Include="src\Artifacts\Windows\InternetExplorerHistory.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedPath.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\RunMRU.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicShellLink.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicTypedUrl.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicRunMostRecentlyUsed.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicWindowsSearchHistory .cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicExplorerTypedPath.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShred.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="src\Artifacts\Windows\SystemHive\Timezone.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedUrls.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\UserAssist.cs" />
-    <Compile Include="src\Artifacts\Windows\VolumeShadowCopy.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\AttributeList.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\EA.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable\Attributes\EAInformation.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="src\Windows\Registry\List\OffsetRecord.cs" />
     <Compile Include="src\Windows\Registry\List\ReferenceItem.cs" />
     <Compile Include="src\Windows\Registry\List\ValuesList.cs" />
+    <Compile Include="src\Utilities\Hash.cs" />
     <Compile Include="src\Utilities\Rot13.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-ForensicAlternateDataStream.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-ForensicUnallocatedSpace.cs" />
@@ -120,7 +122,6 @@
     <Compile Include="src\Cmdlets\Artifacts\SamHive\Get-ForensicSid.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileSlack.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicMftSlack.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicBadCluster.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicBitmap.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnlInformation.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-ForensicDeletedFile.cs" />
@@ -129,9 +130,6 @@
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeName.cs" />
     <Compile Include="src\Windows\Registry\Cells\NamedKey.cs" />
     <Compile Include="src\Windows\Registry\RegistryHeader.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Get-ForensicVolumeShadowCopy.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Get-ForensicHash.cs" />
-    <Compile Include="src\Utilities\Hash.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicPrefetch.cs" />
     <Compile Include="src\Artifacts\Windows\Prefetch.cs" />
     <Compile Include="src\Cmdlets\Artifacts\SystemHive\Get-ForensicTimezone.cs" />

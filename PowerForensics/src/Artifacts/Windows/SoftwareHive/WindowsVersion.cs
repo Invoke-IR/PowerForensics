@@ -4,6 +4,7 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
+    #region WindowsVersion
     public class WindowsVersion
     {
         #region Properties
@@ -81,4 +82,5 @@ namespace PowerForensics.Artifacts
 
         #endregion StaticMethods
     }
+    #endregion WindowsVersion
 }
