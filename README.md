@@ -27,23 +27,23 @@ supports NTFS and is in the process of adding support for the ext4 file system.
 ## Cmdlets
 ### Boot Sector:
 ```
-Get-ForensicMasterBootRecord - parses the first sector of the hard drive and returns a MasterBootRecord object
-Get-ForensicGuidPartitionTable - parses the first sector of the hard drive and returns a GuidPartitionTable object
-Get-ForensicBootSector - parses the first sector of the hard drive and returns the appropriate boot sector (MBR or GPT)
-Get-ForensicPartitionTable - parses the first sector of the hard drive and returns the partition table
+Get-ForensicMasterBootRecord - gets the MasterBootRecord from the first sector of the hard drive
+Get-ForensicGuidPartitionTable - gets the GuidPartitionTable from the first sector of the hard drive
+Get-ForensicBootSector - gets the appropriate boot sector (MBR or GPT) from the specified drive
+Get-ForensicPartitionTable - gets the partition table for the specified drive
 ```
 
 ### New Technology File System (NTFS):
 ```
-Get-ForensicAttrDef - parses the $AttrDef file to return definitions of MFT Attributes 
-Get-ForensicBitmap - parses the $Bitmap file to determine if a cluster is marked as in use
-Get-ForensicFileRecord - returns Master File Table entries
-Get-ForensicFileRecordIndex - returns a file's MFT record index number
-Get-ForensicUsnJrnl - parses the $UsnJrnl file's $J data attribute and returns USN Journal Entries
-Get-ForensicUsnJrnlInformation - parses the $UsnJrnl file's $MAX data attribute and returns USN Journal Metadata
-Get-ForensicVolumeBootRecord - parses the $Boot file located in the first sector of the volume and returns the VolumeBootRecord object
-Get-ForensicVolumeInformation - parses the $Volume file's $VOLUME_INFORMATION attribute and returns a VolumeInformation Object
-Get-ForensicVolumeName - parses the $Volume file's $VOLUME_NAME attribute and returns the VolumeName
+Get-ForensicAttrDef - gets definitions of MFT Attributes (parses $AttrDef)
+Get-ForensicBitmap - determines if a cluster is marked as in use (parses $Bitmap)
+Get-ForensicFileRecord - gets Master File Table entries (parses $MFT)
+Get-ForensicFileRecordIndex - gets a file's MFT record index number
+Get-ForensicUsnJrnl - getss Usn Journal Entries (parses $UsnJrnl:$J)
+Get-ForensicUsnJrnlInformation - getss UsnJrnl Metadata (parses $UsnJrnl:$Max)
+Get-ForensicVolumeBootRecord - gets the VolumeBootRecord from the first sector of the volume (parses $Boot)
+Get-ForensicVolumeInformation - gets the $Volume file's $VOLUME_INFORMATION attribute
+Get-ForensicVolumeName - gets the $Volume file's $VOLUME_NAME attribute
 Get-ForensicFileSlack -
 Get-ForensicMftSlack -
 Get-ForensicUnallocatedSpace -  
@@ -56,11 +56,11 @@ Get-ForensicAmcache -
 Get-ForensicEventLog -
 Get-ForensicExplorerTypedPath - 
 Get-ForensicNetworkList -  
-Get-ForensicPrefetch - parses the binary structure of Windows Prefetch files and returns a custom Prefetch object
-Get-ForensicScheduledJob - parses the binary structure of Scheduled Jobs (at jobs) and returns a custom ScheduledJob object
-Get-ForensicShellLink - 
-Get-ForensicSid -  
-Get-ForensicTimezone - determines a system's timezone based on the registry setting
+Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
+Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
+Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
+Get-ForensicSid - gets the machine Security Identifier from the SAM hive
+Get-ForensicTimezone - gets the system's timezone based on the registry setting
 Get-ForensicTypedUrl - 
 Get-ForensicUserAssist - 
 Get-ForensicWindowsSearchHistory - 
@@ -70,7 +70,6 @@ Get-ForensicWindowsSearchHistory -
 ```
 Get-ForensicRegistryKey - 
 Get-ForensicRegistryValue - 
-
 ```
 
 ### Forensic Timeline
