@@ -44,39 +44,39 @@ Get-ForensicUsnJrnlInformation - getss UsnJrnl Metadata (parses $UsnJrnl:$Max)
 Get-ForensicVolumeBootRecord - gets the VolumeBootRecord from the first sector of the volume (parses $Boot)
 Get-ForensicVolumeInformation - gets the $Volume file's $VOLUME_INFORMATION attribute
 Get-ForensicVolumeName - gets the $Volume file's $VOLUME_NAME attribute
-Get-ForensicFileSlack -
-Get-ForensicMftSlack -
-Get-ForensicUnallocatedSpace -  
+Get-ForensicFileSlack - gets the specified volume's slack space
+Get-ForensicMftSlack - gets the Master File Table (MFT) slack space for the specified volume
+Get-ForensicUnallocatedSpace - gets the unallocated space on the specified partition/volume (parses $Bitmap)
 ```
 
 ### Windows Artifacts
 ```
-Get-AlternateDataStream - 
-Get-ForensicAmcache - 
-Get-ForensicEventLog -
-Get-ForensicExplorerTypedPath - 
-Get-ForensicNetworkList -  
+Get-AlternateDataStream - gets the NTFS Alternate Data Streams on the specified volume
+Get-ForensicAmcache - gets previously run commands from the Amcache.hve registry hive
+Get-ForensicEventLog - gets the events in an event log or in all event logs
+Get-ForensicExplorerTypedPath - gets the file paths that have been typed into the Windows Explorer application
+Get-ForensicNetworkList - gets a list of networks that the system has previously been connected to 
 Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
-Get-ForensicRunMostRecentlyUsed - 
+Get-ForensicRunMostRecentlyUsed - gets the commands that were issued by the user to the run dialog
 Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
 Get-ForensicSid - gets the machine Security Identifier from the SAM hive
 Get-ForensicTimezone - gets the system's timezone based on the registry setting
-Get-ForensicTypedUrl - 
-Get-ForensicUserAssist - 
-Get-ForensicWindowsSearchHistory - 
+Get-ForensicTypedUrl - gets the Universal Resource Locators (URL) that have been typed in the Internet Explorer browser
+Get-ForensicUserAssist - gets the UserAssist entries from the specified volume
+Get-ForensicWindowsSearchHistory - gets the search terms that have been searched for using the Windows Search feature
 ```
 
 ### Windows Registry
 ```
-Get-ForensicRegistryKey - 
-Get-ForensicRegistryValue - 
+Get-ForensicRegistryKey - gets the keys of the specified registry hive
+Get-ForensicRegistryValue - gets the values of the specified registry key
 ```
 
 ### Forensic Timeline
 ```
-ConvertTo-ForensicTimeline - 
-Get-ForensicTimeline - 
+ConvertTo-ForensicTimeline - converts an object to a ForensicTimeline object
+Get-ForensicTimeline - creates a forensic timeline
 ```
 
 ### Extended File System 4 (ext4):
@@ -88,7 +88,7 @@ Get-ForensicInode - returns the Inode Table entries
 
 ### Utilities
 ```
-ConvertFrom-BinaryData - 
+ConvertFrom-BinaryData - implements PowerForensics' BinShred API to parse binary data into an object
 Copy-ForensicFile - creates a copy of a file from its raw bytes on disk 
 Get-ForensicChildItem - returns a directory's contents by parsing the MFT structures
 Get-ForensicContent - gets the content of a file from its raw bytes on disk
