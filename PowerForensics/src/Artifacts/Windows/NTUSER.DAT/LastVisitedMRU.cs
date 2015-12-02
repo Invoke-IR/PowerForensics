@@ -4,11 +4,11 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    public class WordWheelQuery
+    public class LastVisitedMRU
     {
         public static string[] GetInstances(string hivePath)
         {
-            string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery";
+            string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedPidlMRU";
 
             byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
 
@@ -16,11 +16,19 @@ namespace PowerForensics.Artifacts
 
             try
             {
-                nk = NamedKey.Get(bytes, hivePath, Key);
+                    nk = NamedKey.Get(bytes, hivePath, Key);
             }
             catch
             {
-                return null;
+                try
+                {
+                    Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedMRU";
+                    nk = NamedKey.Get(bytes, hivePath, Key);
+                }
+                catch
+                {
+                    return null;
+                }
             }
 
             ValueKey MRUList = ValueKey.Get(bytes, hivePath, Key, "MRUListEx");

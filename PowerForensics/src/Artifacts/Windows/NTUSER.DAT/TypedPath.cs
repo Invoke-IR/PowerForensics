@@ -12,29 +12,22 @@ namespace PowerForensics.Artifacts
 
         public static string[] GetInstances(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("ntuser.dat"))
+            string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths";
+
+            byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+
+            NamedKey nk = NamedKey.Get(bytes, hivePath, Key);
+
+            string[] paths = new string[nk.NumberOfValues];
+
+            int i = 0;
+
+            foreach (ValueKey vk in nk.GetValues(bytes))
             {
-                string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths";
-
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
-
-                NamedKey nk = NamedKey.Get(bytes, hivePath, Key);
-
-                string[] paths = new string[nk.NumberOfValues];
-
-                int i = 0;
-
-                foreach (ValueKey vk in nk.GetValues(bytes))
-                {
-                    paths[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
-                    i++;
-                }
-                return paths;
+                paths[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
+                i++;
             }
-            else
-            {
-                throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
-            }
+            return paths;
         }
 
         #endregion StaticMethods

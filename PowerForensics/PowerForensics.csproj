@@ -57,6 +57,7 @@
     <Compile Include="src\Artifacts\Windows\InternetExplorerHistory.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedPath.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\RunMRU.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\LastVisitedMRU.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />

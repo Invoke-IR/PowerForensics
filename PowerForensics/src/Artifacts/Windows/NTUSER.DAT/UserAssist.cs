@@ -149,35 +149,28 @@ namespace PowerForensics.Artifacts
 
         public static UserAssist[] GetInstances(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("ntuser.dat"))
+            List<UserAssist> uaList = new List<UserAssist>();
+
+            string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist";
+
+            byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+
+            NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
+
+            foreach (NamedKey key in FileSubKey)
             {
-                List<UserAssist> uaList = new List<UserAssist>();
-
-                string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist";
-
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
-
-                NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
-
-                foreach (NamedKey key in FileSubKey)
+                foreach (NamedKey nk in key.GetSubKeys(bytes, key.FullName))
                 {
-                    foreach (NamedKey nk in key.GetSubKeys(bytes, key.FullName))
+                    if (nk.NumberOfValues != 0)
                     {
-                        if (nk.NumberOfValues != 0)
+                        foreach (ValueKey vk in nk.GetValues(bytes))
                         {
-                            foreach (ValueKey vk in nk.GetValues(bytes))
-                            {
-                                uaList.Add(new UserAssist(vk, bytes));
-                            }
+                            uaList.Add(new UserAssist(vk, bytes));
                         }
                     }
                 }
-                return uaList.ToArray();
             }
-            else
-            {
-                throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
-            }
+            return uaList.ToArray();
         }
 
         #endregion StaticMethods

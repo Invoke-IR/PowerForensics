@@ -2973,12 +2973,14 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-ForensicPrefetch</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="FullName">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="FullName">
 					<maml:name>Path</maml:name>
 					<maml:description>
 						<maml:para>Path to file to be parsed.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Fast</maml:name>
@@ -3017,7 +3019,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="FullName">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="FullName">
 				<maml:name>Path</maml:name>
 				<maml:description>
 					<maml:para>Path to file to be parsed.</maml:para>
@@ -3027,7 +3029,8 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>

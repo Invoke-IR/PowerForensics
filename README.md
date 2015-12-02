@@ -76,7 +76,7 @@ Get-ForensicRegistryValue -
 ### Forensic Timeline
 ```
 ConvertTo-ForensicTimeline - 
-Get-ForensicTimelize - 
+Get-ForensicTimeline - 
 ```
 
 ### Extended File System 4 (ext4):
