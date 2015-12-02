@@ -94,7 +94,7 @@ namespace PowerForensics.Artifacts
             }
             else
             {
-                throw new Exception("The Amcache hive is only available on Windows 8 and newer Operating Systems");
+                throw new Exception("The Amcache hive is only available on Windows 8 and newer Operating Systems.");
             }
         }
 

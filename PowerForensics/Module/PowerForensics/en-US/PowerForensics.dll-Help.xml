@@ -3397,6 +3397,133 @@ Allocated  : True</dev:code>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>Get-ForensicRecentFileCache</command:name>
+			<maml:description>
+				<maml:para>Gets previously run commands from the RecentFileCache.bcf file.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicRecentFileCache</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-ForensicRecentFileCache cmdlet parses the RecentFileCache.bcf file to derive applications that were recently used. If you don&apos;t specify a file path (-Path), the cmdlet parses the C:\Windows\AppCompat\Programs\RecentFileCache.bcf.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRecentFileCache</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue>\\.\C:</dev:defaultValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRecentFileCache</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="FullName">
+					<maml:name>Path</maml:name>
+					<maml:description>
+						<maml:para>Path to RecentFileCache.bcf file to process.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>\\.\C:</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="FullName">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para>Path to RecentFileCache.bcf file to process.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>
+				</dev:defaultValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRecentFileCache</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows Get-ForensicRecentFileCache being run against the default RecentFileCache.bcf (C:\Windows\AppCompat\Programs\RecentFileCache.bcf)</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRecentFileCache -Path C:\Windows\AppCompat\Programs\RecentFileCache.bcf</dev:code>
+				<dev:remarks>
+					<maml:para>This is an example of Get-ForensicRecentFileCache taking a RecentFileCache.bcf file path as an argument.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>Get-ForensicScheduledJob</command:name>
 			<maml:description>
 				<maml:para>Gets the scheduled jobs from the specified volume.</maml:para>
@@ -5825,5 +5952,6 @@ It also uses the OutFile parameter to specify a location for the output. The def
 		</command:examples>
 	</command:command>
 	<!--Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 </helpItems>

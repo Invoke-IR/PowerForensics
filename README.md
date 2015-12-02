@@ -57,6 +57,7 @@ Get-ForensicEventLog - gets the events in an event log or in all event logs
 Get-ForensicExplorerTypedPath - gets the file paths that have been typed into the Windows Explorer application
 Get-ForensicNetworkList - gets a list of networks that the system has previously been connected to 
 Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
+Get-ForensicRecentFileCache - gets previously run commands from the RecentFileCache.bcf file
 Get-ForensicRunMostRecentlyUsed - gets the commands that were issued by the user to the run dialog
 Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure

@@ -54,6 +54,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\RecentFileCache.cs" />
     <Compile Include="src\Artifacts\Windows\InternetExplorerHistory.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedPath.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\RunMRU.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicRecentFileCache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicShellLink.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicTypedUrl.cs" />
@@ -79,7 +81,7 @@
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-ForensicRegistryKey.cs" />
     <Compile Include="src\Cmdlets\OperatingSystem\Windows\Get-ForensicRegistryValue.cs" />
     <Compile Include="src\Artifacts\Windows\AlternateDataStream.cs" />
-    <Compile Include="src\Artifacts\Windows\Amcache.hve\Amcache.cs" />
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Amcache.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\NetworkList.cs" />
     <Compile Include="src\Artifacts\Windows\SamHive\Sid.cs" />
     <Compile Include="src\Artifacts\Windows\SamHive\Syskey.cs" />
@@ -117,7 +119,7 @@
     <Compile Include="src\Utilities\Rot13.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-ForensicAlternateDataStream.cs" />
     <Compile Include="src\Cmdlets\Analytics\Get-ForensicUnallocatedSpace.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Amcache.hve\Get-ForensicAmcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicAmcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\SoftwareHive\Get-ForensicNetworkList.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicUserAssist.cs" />
     <Compile Include="src\Cmdlets\Artifacts\SamHive\Get-ForensicSid.cs" />
