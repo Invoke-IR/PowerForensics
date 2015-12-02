@@ -8,7 +8,7 @@ namespace PowerForensics.Artifacts
     {
         public static string[] GetInstances(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("ntuser.dat"))
+            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
             {
                 string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU";
 

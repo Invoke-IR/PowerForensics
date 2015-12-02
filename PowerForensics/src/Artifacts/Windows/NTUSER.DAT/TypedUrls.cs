@@ -12,22 +12,29 @@ namespace PowerForensics.Artifacts
 
         public static string[] GetInstances(string hivePath)
         {
-            string Key = @"Software\Microsoft\Internet Explorer\TypedUrls";
-
-            byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
-            
-            NamedKey nk = NamedKey.Get(bytes, hivePath, Key);
-
-            string[] urls = new string[nk.NumberOfValues];
-
-            foreach (ValueKey vk in nk.GetValues(bytes))
+            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
             {
-                for (int i = 0; i < urls.Length; i++)
+                string Key = @"Software\Microsoft\Internet Explorer\TypedUrls";
+
+                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+
+                NamedKey nk = NamedKey.Get(bytes, hivePath, Key);
+
+                string[] urls = new string[nk.NumberOfValues];
+
+                foreach (ValueKey vk in nk.GetValues(bytes))
                 {
-                    urls[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
+                    for (int i = 0; i < urls.Length; i++)
+                    {
+                        urls[i] = Encoding.Unicode.GetString(vk.GetData(bytes));
+                    }
                 }
+                return urls;
             }
-            return urls;
+            else
+            {
+                throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
+            }
         }
 
         #endregion StaticMethods
