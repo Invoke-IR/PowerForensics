@@ -44,7 +44,7 @@ namespace PowerForensics.Artifacts
     //        public string MD5
         public readonly string PathHash;
         public readonly int DependencyCount;
-        public readonly DateTime[] PrefetchAccessTimeUtc;
+        public readonly DateTime[] PrefetchAccessTime;
     //        public readonly DateTime PrefetchBornTime;
     //        public readonly string ProgramBornTime;
     //        public readonly string ProgramChangeTime;
@@ -112,7 +112,7 @@ namespace PowerForensics.Artifacts
                     }
                     pfAccessTimeList.Add(dt);
                 }
-                PrefetchAccessTimeUtc = pfAccessTimeList.ToArray();
+                PrefetchAccessTime = pfAccessTimeList.ToArray();
 
                 #endregion PrefetchAccessTime
                 Name = System.Text.Encoding.Unicode.GetString(bytes, 0x10, 0x3C).Split('\0')[0];
