@@ -52,12 +52,10 @@ Get-ForensicUnallocatedSpace - gets the unallocated space on the specified parti
 ### Windows Artifacts
 ```
 Get-AlternateDataStream - gets the NTFS Alternate Data Streams on the specified volume
-Get-ForensicAmcache - gets previously run commands from the Amcache.hve registry hive
 Get-ForensicEventLog - gets the events in an event log or in all event logs
 Get-ForensicExplorerTypedPath - gets the file paths that have been typed into the Windows Explorer application
 Get-ForensicNetworkList - gets a list of networks that the system has previously been connected to 
 Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
-Get-ForensicRecentFileCache - gets previously run commands from the RecentFileCache.bcf file
 Get-ForensicRunMostRecentlyUsed - gets the commands that were issued by the user to the run dialog
 Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
@@ -67,6 +65,14 @@ Get-ForensicTypedUrl - gets the Universal Resource Locators (URL) that have been
 Get-ForensicUserAssist - gets the UserAssist entries from the specified volume
 Get-ForensicWindowsSearchHistory - gets the search terms that have been searched for using the Windows Search feature
 ```
+
+#### Application Compatibility Cache
+```
+Get-ForensicAmcache - gets previously run commands from the Amcache.hve registry hive
+Get-ForensicRecentFileCache - gets previously run commands from the RecentFileCache.bcf file
+Get-ForensicShimcache - gets previously run commands from the AppCompatCache (AppCompatibility on XP) registry key
+```
+
 
 ### Windows Registry
 ```
