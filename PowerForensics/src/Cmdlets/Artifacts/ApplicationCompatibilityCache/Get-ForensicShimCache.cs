@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Shimcache cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Shimcache", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicShimcache", DefaultParameterSetName = "ByVolume")]
     public class GetShimcacheCommand : PSCmdlet
     {
         #region Parameters

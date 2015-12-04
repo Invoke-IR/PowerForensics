@@ -131,7 +131,6 @@
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicMftSlack.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicBitmap.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnlInformation.cs" />
-    <Compile Include="src\Cmdlets\Analytics\Get-ForensicDeletedFile.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnl.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeInformation.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeName.cs" />

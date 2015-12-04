@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-MftSlack cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "MftSlack", DefaultParameterSetName = "ByIndex")]
+    [Cmdlet(VerbsCommon.Get, "ForensicMftSlack", DefaultParameterSetName = "ByIndex")]
     public class GetMftSlackCommand : PSCmdlet
     {
         #region Parameters

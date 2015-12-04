@@ -13,7 +13,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the ConvertTo-ForensicTimeline cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsData.ConvertTo, "Timeline")]
+    [Cmdlet(VerbsData.ConvertTo, "ForensicTimeline")]
     public class ConvertToForensicTimelineCommand : PSCmdlet
     {
         #region Parameters

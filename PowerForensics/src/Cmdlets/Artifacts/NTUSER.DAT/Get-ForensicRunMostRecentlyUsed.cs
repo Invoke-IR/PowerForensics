@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-RunMostRecentlyUsed  cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "RunMostRecentlyUsed")]
+    [Cmdlet(VerbsCommon.Get, "ForensicRunMostRecentlyUsed")]
     public class GetRunMostRecentlyUsedCommand : PSCmdlet
     {
         #region Parameters

@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-EventLog cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "EventLog", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicEventLog", DefaultParameterSetName = "ByVolume")]
     public class GetEventLogCommand : PSCmdlet
     {
         #region Parameters

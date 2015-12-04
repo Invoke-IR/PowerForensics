@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-UsnJrnl cmdlet 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "UsnJrnl", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicUsnJrnl", DefaultParameterSetName = "ByVolume")]
     public class GetUsnJrnlCommand : PSCmdlet
     {
         #region Parameters

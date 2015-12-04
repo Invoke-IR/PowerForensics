@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-ScheduledJob cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ScheduledJob", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicScheduledJob", DefaultParameterSetName = "ByVolume")]
     public class GetScheduledJobCommand : PSCmdlet
     {
         #region Parameters

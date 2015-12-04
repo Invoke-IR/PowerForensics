@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-RecentFileCache cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "RecentFileCache", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicRecentFileCache", DefaultParameterSetName = "ByVolume")]
     public class GetRecentFileCacheCommand : PSCmdlet
     {
         #region Parameters

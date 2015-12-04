@@ -10,6 +10,222 @@
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
+			<command:name>ConvertFrom-BinaryData</command:name>
+			<maml:description>
+				<maml:para>Parses binary files to extract the data within.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>ConvertFrom</command:verb>
+			<command:noun>BinaryData</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Invoke-BinShred cmdlet uses a structured template to parse binary files. 
+
+Unlike most commands in the PowerForensics module, this command does not require administrator privileges.
+
+The cmdlet returns the file contents as an ordered dictionary (like a hash table, but in guaranteed order). There is one key in the dictionary for each item in the template header.
+
+Despite the name, the Invoke-ForensicBinShred cmdlet parses the file; it does not &quot;shred,&quot; delete, or zero-out the file.
+
+For detailed instructions about writing a template for a particular binary file or file type, see about_BinShred_Templates. </maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>ConvertFrom-BinaryData</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+					<maml:name>Path</maml:name>
+					<maml:description>
+						<maml:para>Specifies that path to the binary file to be parsed. This parameter is required.
+
+Enter the file name or fully-qualified path. If you omit the path, the default location is the local directory.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
+					<maml:name>TemplatePath</maml:name>
+					<maml:description>
+						<maml:para>Specifies the path to a binShred template. This parameter is required.
+
+Enter the name of a file with a .bst file name extension. If the template file is not in the local directory, include the path.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para>Specifies that path to the binary file to be parsed. This parameter is required.
+
+Enter the file name or fully-qualified path. If you omit the path, the default location is the local directory.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
+				<maml:name>TemplatePath</maml:name>
+				<maml:description>
+					<maml:para>Specifies the path to a binShred template. This parameter is required.
+
+Enter the name of a file with a .bst file name extension. If the template file is not in the local directory, include the path.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<maml:description>
+					<maml:para>You cannot pipe input to this cmdlet.</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>None
+					</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>Returns an object that represents the data structures in the binary file.
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.Collections.Specialized.OrderedDictionary</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Invoke-ForensicBinShred -Path .\Words.bin -TemplatePath .\WordParser.bst
+
+Name                           Value
+----                           -----
+magic                          LH
+wordCount                      2
+words                          {System.Collections.Specialized.OrderedDictionary,....
+
+
+				</dev:code>
+				<dev:remarks>
+					<maml:para>This command uses the Invoke-ForensicBinShred cmdlet and the WordParser.bst file to parse the Words.bin file.
+
+The command returns an ordered dictionary with keys that match the elements in the header of the template file. The template also determines the .NET types of the values, such as ASCII (magic), Int32 (wordCount), and words (nested dictionaries of UTF8 characters).
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code># In Words.bin
+4c48 0200 0000 0500 0000 4865 6c6c 6f05
+0000 0057 6f72 6c64 
+
+# In WordParser.bst
+
+header :
+    magic (2 bytes as ASCII)
+    wordCount (4 bytes as UINT32)
+    words (wordCount items);
+words :
+    wordLength (4 bytes as UINT32)
+    word (wordLength bytes as UTF8);
+
+PS C:\&gt; $w = Invoke-ForensicBinShred -Path .\Words.bin -TemplatePath .\WordParser.bst
+
+PS C:\&gt; $w
+
+Name                           Value
+----                           -----
+magic                          LH
+wordCount                      2
+words                          {System.Collections.Specialized.OrderedDictionary,...
+
+PS C:\&gt; $w.words
+
+Name                           Value
+----                           -----
+wordLength                     5
+word                           Hello
+wordLength                     5
+word                           World
+
+
+PS C:\&gt; $w.words.word
+Hello
+World</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows how Invoke-ForensicBinShred uses a structured template to parse a binary file.
+
+The first item shows the content of the Words.bin file. The second item shows the content of the WordParser.bst template file. 
+
+The first command uses the Invoke-ForensicBinShred cmdlet and the template to parse the Words.bin file. The command saves the file in the $w variable.
+
+The second command shows the contents of the $w variable. The cmdlet returned an ordered dictionary with keys that match the items in the header section of the template. Based on the template, which has a words section, the value of the words key is a series of nested dictionaries. 
+
+The third command shows the value of the words key in the dictionary in $w, which is an array of nested dictionaries. The keys in the nested dictionary match the items in the words section of the template.
+
+The fourth command gets only the value of the word key in the words nested dictionary. </maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Invoke-ForensicBinShred -Path .\Words.bin&apos; -TemplatePath bad-wordParser.bst
+
+Invoke-ForensicBinShred : Index and count must refer to a location within the buffer.
+Parameter name: bytes
+At line:1 char:1
++ Invoke-ForensicBinShred @params
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-ForensicBinShred], ArgumentOutOfRangeException
+    + FullyQualifiedErrorId : System.ArgumentOutOfRangeException,PowerForensics.Cmdlets.BinShredCommand</dev:code>
+				<dev:remarks>
+					<maml:para>This command fails because the size or number of items specified by the template does not match the number of bytes in the file. The template might account for too many or too few bytes.
+
+If you get an error like this one, verify that the items in the template and their lengths match the content of the input file.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+		<maml:relatedLinks>
+			<!--Links-->
+			<maml:navigationLink>
+				<maml:linkText>about_binShred_Templates</maml:linkText>
+			</maml:navigationLink>
+		</maml:relatedLinks>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
 			<command:name>ConvertTo-ForensicTimeline</command:name>
 			<maml:description>
 				<maml:para>Converts an object to a ForensicTimeline object.</maml:para>
@@ -4368,13 +4584,11 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>PowerForensics.Artifacts.Shimcache</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -5557,222 +5771,6 @@ testdrive</dev:code>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Invoke-ForensicBinShred</command:name>
-			<maml:description>
-				<maml:para>Parses binary files to extract the data within.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Invoke</command:verb>
-			<command:noun>ForensicBinShred</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Invoke-BinShred cmdlet uses a structured template to parse binary files. 
-
-Unlike most commands in the PowerForensics module, this command does not require administrator privileges.
-
-The cmdlet returns the file contents as an ordered dictionary (like a hash table, but in guaranteed order). There is one key in the dictionary for each item in the template header.
-
-Despite the name, the Invoke-ForensicBinShred cmdlet parses the file; it does not &quot;shred,&quot; delete, or zero-out the file.
-
-For detailed instructions about writing a template for a particular binary file or file type, see about_BinShred_Templates. </maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Invoke-ForensicBinShred</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
-					<maml:name>Path</maml:name>
-					<maml:description>
-						<maml:para>Specifies that path to the binary file to be parsed. This parameter is required.
-
-Enter the file name or fully-qualified path. If you omit the path, the default location is the local directory.</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
-					<maml:name>TemplatePath</maml:name>
-					<maml:description>
-						<maml:para>Specifies the path to a binShred template. This parameter is required.
-
-Enter the name of a file with a .bst file name extension. If the template file is not in the local directory, include the path.</maml:para>
-					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
-				<maml:name>Path</maml:name>
-				<maml:description>
-					<maml:para>Specifies that path to the binary file to be parsed. This parameter is required.
-
-Enter the file name or fully-qualified path. If you omit the path, the default location is the local directory.</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1" aliases="">
-				<maml:name>TemplatePath</maml:name>
-				<maml:description>
-					<maml:para>Specifies the path to a binShred template. This parameter is required.
-
-Enter the name of a file with a .bst file name extension. If the template file is not in the local directory, include the path.</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<maml:description>
-					<maml:para>You cannot pipe input to this cmdlet.</maml:para>
-				</maml:description>
-				<dev:type>
-					<maml:name>None
-					</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<maml:description>
-					<maml:para>Returns an object that represents the data structures in the binary file.
-					</maml:para>
-				</maml:description>
-				<dev:type>
-					<maml:name>System.Collections.Specialized.OrderedDictionary</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Invoke-ForensicBinShred -Path .\Words.bin -TemplatePath .\WordParser.bst
-
-Name                           Value
-----                           -----
-magic                          LH
-wordCount                      2
-words                          {System.Collections.Specialized.OrderedDictionary,....
-
-
-				</dev:code>
-				<dev:remarks>
-					<maml:para>This command uses the Invoke-ForensicBinShred cmdlet and the WordParser.bst file to parse the Words.bin file.
-
-The command returns an ordered dictionary with keys that match the elements in the header of the template file. The template also determines the .NET types of the values, such as ASCII (magic), Int32 (wordCount), and words (nested dictionaries of UTF8 characters).
-					</maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code># In Words.bin
-4c48 0200 0000 0500 0000 4865 6c6c 6f05
-0000 0057 6f72 6c64 
-
-# In WordParser.bst
-
-header :
-    magic (2 bytes as ASCII)
-    wordCount (4 bytes as UINT32)
-    words (wordCount items);
-words :
-    wordLength (4 bytes as UINT32)
-    word (wordLength bytes as UTF8);
-
-PS C:\&gt; $w = Invoke-ForensicBinShred -Path .\Words.bin -TemplatePath .\WordParser.bst
-
-PS C:\&gt; $w
-
-Name                           Value
-----                           -----
-magic                          LH
-wordCount                      2
-words                          {System.Collections.Specialized.OrderedDictionary,...
-
-PS C:\&gt; $w.words
-
-Name                           Value
-----                           -----
-wordLength                     5
-word                           Hello
-wordLength                     5
-word                           World
-
-
-PS C:\&gt; $w.words.word
-Hello
-World</dev:code>
-				<dev:remarks>
-					<maml:para>This example shows how Invoke-ForensicBinShred uses a structured template to parse a binary file.
-
-The first item shows the content of the Words.bin file. The second item shows the content of the WordParser.bst template file. 
-
-The first command uses the Invoke-ForensicBinShred cmdlet and the template to parse the Words.bin file. The command saves the file in the $w variable.
-
-The second command shows the contents of the $w variable. The cmdlet returned an ordered dictionary with keys that match the items in the header section of the template. Based on the template, which has a words section, the value of the words key is a series of nested dictionaries. 
-
-The third command shows the value of the words key in the dictionary in $w, which is an array of nested dictionaries. The keys in the nested dictionary match the items in the words section of the template.
-
-The fourth command gets only the value of the word key in the words nested dictionary. </maml:para>
-				</dev:remarks>
-			</command:example>
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Invoke-ForensicBinShred -Path .\Words.bin&apos; -TemplatePath bad-wordParser.bst
-
-Invoke-ForensicBinShred : Index and count must refer to a location within the buffer.
-Parameter name: bytes
-At line:1 char:1
-+ Invoke-ForensicBinShred @params
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:) [Invoke-ForensicBinShred], ArgumentOutOfRangeException
-    + FullyQualifiedErrorId : System.ArgumentOutOfRangeException,PowerForensics.Cmdlets.BinShredCommand</dev:code>
-				<dev:remarks>
-					<maml:para>This command fails because the size or number of items specified by the template does not match the number of bytes in the file. The template might account for too many or too few bytes.
-
-If you get an error like this one, verify that the items in the template and their lengths match the content of the input file.</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-		<maml:relatedLinks>
-			<!--Links-->
-			<maml:navigationLink>
-				<maml:linkText>about_binShred_Templates</maml:linkText>
-			</maml:navigationLink>
-		</maml:relatedLinks>
 	</command:command>
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->

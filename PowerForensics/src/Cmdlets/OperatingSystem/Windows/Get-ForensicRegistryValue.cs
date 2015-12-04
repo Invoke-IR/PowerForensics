@@ -9,7 +9,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-RegistryValue cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "RegistryValue")]
+    [Cmdlet(VerbsCommon.Get, "ForensicRegistryValue")]
     public class GetRegistryValueCommand : PSCmdlet
     {
         #region Parameters

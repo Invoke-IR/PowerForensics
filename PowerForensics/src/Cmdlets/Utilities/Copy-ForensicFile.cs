@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Copy-File cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Copy, "File")]
+    [Cmdlet(VerbsCommon.Copy, "ForensicFile")]
     public class CopyFileCommand : PSCmdlet
     {
         #region Parameters

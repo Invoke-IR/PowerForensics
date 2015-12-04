@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Sid cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Sid", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicSid", DefaultParameterSetName = "ByVolume")]
     public class GetSidCommand : PSCmdlet
     {
         #region Parameters

@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Timezone cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Timezone")]
+    [Cmdlet(VerbsCommon.Get, "ForensicTimezone")]
     public class GetTimezoneCommand : PSCmdlet
     {
         #region Parameters

@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-ExplorerTypedPath cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ExplorerTypedPath")]
+    [Cmdlet(VerbsCommon.Get, "ForensicExplorerTypedPath")]
     public class GetExplorerTypedPathCommand : PSCmdlet
     {
         #region Parameters

@@ -7,7 +7,7 @@ namespace PowerForensics.Ntfs
     /// This class implements the Get-ChildItem cmdlet. 
     /// </summary> 
 
-    [Cmdlet(VerbsCommon.Get, "ChildItem")]
+    [Cmdlet(VerbsCommon.Get, "ForensicChildItem")]
     public class GetChildItemCommand : PSCmdlet
     {
         #region Parameters

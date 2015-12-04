@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-TypedUrl cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "TypedUrl")]
+    [Cmdlet(VerbsCommon.Get, "ForensicTypedUrl")]
     public class GetTypedUrlCommand : PSCmdlet
     {
         #region Parameters

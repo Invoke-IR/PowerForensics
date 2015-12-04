@@ -10,7 +10,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-UnallocatedSpace cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "UnallocatedSpace")]
+    [Cmdlet(VerbsCommon.Get, "ForensicUnallocatedSpace")]
     public class GetUnallocatedSpaceCommand : PSCmdlet
     {
         #region Parameters

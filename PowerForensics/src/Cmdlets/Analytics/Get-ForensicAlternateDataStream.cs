@@ -9,7 +9,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-AlternateDataStream cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "AlternateDataStream", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicAlternateDataStream", DefaultParameterSetName = "ByVolume")]
     public class GetAlternateDataStreamCommand : PSCmdlet
     {
         #region Parameters

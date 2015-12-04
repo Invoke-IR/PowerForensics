@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-GuidPartitioTable cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "GuidPartitionTable", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "ForensicGuidPartitionTable")]
     public class GetGuidPartitioTableCommand : PSCmdlet
     {
         #region Parameters

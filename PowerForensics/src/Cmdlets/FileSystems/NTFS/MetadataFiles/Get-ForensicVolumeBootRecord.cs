@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-GetVolumeBootRecord cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "VolumeBootRecord")]
+    [Cmdlet(VerbsCommon.Get, "ForensicVolumeBootRecord", DefaultParameterSetName = "ByVolume")]
     public class GetVolumeBootRecordCommand : PSCmdlet
     {
         #region Parameters

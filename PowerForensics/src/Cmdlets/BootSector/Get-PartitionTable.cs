@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-PartitionTable cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "PartitionTable", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "ForensicPartitionTable")]
     public class GetPartitionTableCommand : PSCmdlet
     {
         #region Parameters

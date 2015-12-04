@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-NetworkList cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "NetworkList", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicNetworkList", DefaultParameterSetName = "ByVolume")]
     public class GetNetworkListCommand : PSCmdlet
     {
         #region Parameters

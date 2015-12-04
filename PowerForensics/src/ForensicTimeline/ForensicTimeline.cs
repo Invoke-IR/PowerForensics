@@ -116,7 +116,7 @@ namespace PowerForensics.Formats
         {
             List<ForensicTimeline> mactimeList = new List<ForensicTimeline>();
 
-            foreach (DateTime time in input.PrefetchAccessTimeUtc)
+            foreach (DateTime time in input.PrefetchAccessTime)
             {
                 mactimeList.Add(new ForensicTimeline(time, "MACB", "PREFETCH", "", input.Path, input.ToString()));
             }

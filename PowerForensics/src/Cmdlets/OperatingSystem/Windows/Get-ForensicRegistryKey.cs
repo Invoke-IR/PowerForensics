@@ -9,7 +9,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-RegistryKey cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "RegistryKey", DefaultParameterSetName = "Default")]
+    [Cmdlet(VerbsCommon.Get, "ForensicRegistryKey", DefaultParameterSetName = "Default")]
     public class GetRegistryKeyCommand : PSCmdlet
     {
         #region Parameters

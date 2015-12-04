@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Prefetch cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Prefetch", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicPrefetch", DefaultParameterSetName = "ByVolume")]
     public class GetPrefetchCommand : PSCmdlet
     {
         #region Parameters

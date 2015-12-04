@@ -13,7 +13,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-ForensicTimeline cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Timeline")]
+    [Cmdlet(VerbsCommon.Get, "ForensicTimeline")]
     public class GetForensicTimelineCommand : PSCmdlet
     {
         #region Parameters

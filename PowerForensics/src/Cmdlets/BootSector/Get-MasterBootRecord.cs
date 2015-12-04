@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-MasterBootRecord cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "MasterBootRecord")]
+    [Cmdlet(VerbsCommon.Get, "ForensicMasterBootRecord")]
     public class GetMBRCommand : PSCmdlet
     {
         #region Parameters

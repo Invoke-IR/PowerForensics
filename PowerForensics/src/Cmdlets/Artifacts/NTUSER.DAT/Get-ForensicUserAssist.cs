@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-UserAssist cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "UserAssist")]
+    [Cmdlet(VerbsCommon.Get, "ForensicUserAssist")]
     public class GetUserAssistCommand : PSCmdlet
     {
         #region Parameters

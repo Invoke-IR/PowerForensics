@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-AttrDef cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "AttrDef", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicAttrDef", DefaultParameterSetName = "ByVolume")]
     public class GetAttrDefCommand : PSCmdlet
     {
         #region Parameters

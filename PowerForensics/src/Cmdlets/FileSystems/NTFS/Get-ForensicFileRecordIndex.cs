@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-FileRecordIndex cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "FileRecordIndex")]
+    [Cmdlet(VerbsCommon.Get, "ForensicFileRecordIndex")]
     public class FileRecordIndexCommand : PSCmdlet
     {
         #region Parameters

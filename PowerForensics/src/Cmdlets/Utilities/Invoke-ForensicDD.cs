@@ -9,7 +9,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Invoke-DD cmdlet. 
     /// </summary> 
-    [Cmdlet("Invoke", "DD")]
+    [Cmdlet("Invoke", "ForensicDD")]
     public class InvokeDDCommand : PSCmdlet
     {
         #region Parameters

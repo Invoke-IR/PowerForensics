@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Amcache cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Amcache", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicAmcache", DefaultParameterSetName = "ByVolume")]
     public class GetAmcacheCommand : PSCmdlet
     {
         #region Parameters

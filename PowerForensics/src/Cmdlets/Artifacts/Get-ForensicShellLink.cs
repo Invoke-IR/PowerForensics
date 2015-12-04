@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-ShellLink cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ShellLink", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicShellLink", DefaultParameterSetName = "ByVolume")]
     public class GetShellLinkCommand : PSCmdlet
     {
         #region Parameters

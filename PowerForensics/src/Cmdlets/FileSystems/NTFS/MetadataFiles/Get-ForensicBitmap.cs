@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Bitmap cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "Bitmap", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicBitmap", DefaultParameterSetName = "ByVolume")]
     public class GetBitmapCommand : PSCmdlet
     {
         #region Parameters

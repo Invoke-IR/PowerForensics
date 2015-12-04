@@ -8,7 +8,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-WindowsSearchHistory  cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "WindowsSearchHistory")]
+    [Cmdlet(VerbsCommon.Get, "ForensicWindowsSearchHistory")]
     public class GetWindowsSearchHistoryCommand : PSCmdlet
     {
         #region Parameters

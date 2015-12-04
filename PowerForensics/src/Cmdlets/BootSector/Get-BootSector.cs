@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-BootSector cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "BootSector", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "ForensicBootSector", SupportsShouldProcess = true)]
     public class GetBootSectorCommand : PSCmdlet
     {
         #region Parameters

@@ -7,7 +7,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-VolumeName cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "VolumeName", DefaultParameterSetName = "ByVolume")]
+    [Cmdlet(VerbsCommon.Get, "ForensicVolumeName", DefaultParameterSetName = "ByVolume")]
     public class GetVolumeNameCommand : PSCmdlet
     {
         #region Parameters
