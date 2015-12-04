@@ -1442,8 +1442,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 				<maml:para>Gets the file paths that have been typed into the Windows Explorer application.</maml:para>
 			</maml:description>
 			<maml:copyright>
-				<maml:para>
-				</maml:para>
+				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
 			<command:noun>ForensicExplorerTypedPath</command:noun>
@@ -1464,8 +1463,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -1481,8 +1479,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1498,13 +1495,11 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.String</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -2979,8 +2974,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 						<maml:para>Path to file to be parsed.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>Fast</maml:name>
@@ -3029,8 +3023,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -3436,8 +3429,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 						<maml:para>Path to RecentFileCache.bcf file to process.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -3467,8 +3459,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -3487,13 +3478,11 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.String</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -3517,6 +3506,89 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 				<dev:code>Get-ForensicRecentFileCache -Path C:\Windows\AppCompat\Programs\RecentFileCache.bcf</dev:code>
 				<dev:remarks>
 					<maml:para>This is an example of Get-ForensicRecentFileCache taking a RecentFileCache.bcf file path as an argument.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicRunMostRecentlyUsed</command:name>
+			<maml:description>
+				<maml:para>Gets the commands that were issued by the user to the run dialog.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicRunMostRecentlyUsed</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-ForensicRunMostRecentlyUsed cmdlet parses a user&apos;s NTUSER.DAT file to derive the commands that have been issued to the run dialog.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRunMostRecentlyUsed</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+					<dev:defaultValue/>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>System.String</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRunMostRecentlyUsed -HivePath C:\Users\Public\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -3805,89 +3877,6 @@ CommonNetworkRelativeLink :</dev:code>
 				<dev:remarks>
 					<maml:para>This command, which runs Get-ForensicShellLink with a single file path, gets only the corresponding
 ShellLink object.</maml:para>
-				</dev:remarks>
-			</command:example>
-		</command:examples>
-	</command:command>
-	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
-		<!--Command-->
-		<command:details>
-			<command:name>Get-ForensicRunMostRecentlyUsed</command:name>
-			<maml:description>
-				<maml:para>Gets the commands that were issued by the user to the run dialog.</maml:para>
-			</maml:description>
-			<maml:copyright>
-				<maml:para/>
-			</maml:copyright>
-			<command:verb>Get</command:verb>
-			<command:noun>ForensicRunMostRecentlyUsed</command:noun>
-			<dev:version/>
-		</command:details>
-		<maml:description>
-			<maml:para>The Get-ForensicRunMostRecentlyUsed cmdlet parses a user&apos;s NTUSER.DAT file to derive the commands that have been issued to the run dialog.
-
-Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
-		</maml:description>
-		<command:syntax>
-			<!--Parameter Sets-->
-			<command:syntaxItem>
-				<maml:name>Get-ForensicRunMostRecentlyUsed</maml:name>
-				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
-					<maml:name>HivePath</maml:name>
-					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
-					</maml:description>
-					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue/>
-				</command:parameter>
-			</command:syntaxItem>
-		</command:syntax>
-		<command:parameters>
-			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
-				<maml:name>HivePath</maml:name>
-				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
-			</command:parameter>
-		</command:parameters>
-		<command:inputTypes>
-			<!--Inputs-->
-			<command:inputType>
-				<dev:type>
-					<maml:name>None</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:inputType>
-		</command:inputTypes>
-		<command:returnValues>
-			<!--Outputs-->
-			<command:returnValue>
-				<maml:description>
-					<maml:para/>
-				</maml:description>
-				<dev:type>
-					<maml:name>System.String</maml:name>
-					<maml:uri/>
-				</dev:type>
-			</command:returnValue>
-		</command:returnValues>
-		<command:examples>
-			<!--Examples-->
-			<command:example>
-				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-				<maml:introduction>
-					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
-				</maml:introduction>
-				<dev:code>Get-ForensicRunMostRecentlyUsed -HivePath C:\Users\Public\NTUSER.DAT</dev:code>
-				<dev:remarks>
-					<maml:para>This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -4285,6 +4274,130 @@ RegistryTimezone              dotNetStandardTimezone        dotNetDaylightTimezo
 Eastern Standard Time         Eastern Standard Time         Eastern Daylight Time                                 False</dev:code>
 				<dev:remarks>
 					<maml:para>This command gets the time zones from an exported SYSTEM hive.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicShimcache</command:name>
+			<maml:description>
+				<maml:para>Gets previously run commands from the Shimcache forensic artifact.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicShimcache</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>The Get-Shimcache cmdlet parses the AppCompatCache (AppCompatibility on XP) registry value to derive applications that were recently used. If you don&apos;t specify a hive path (-HivePath), the cmdlet parses the local System hive.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicShimcache</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue>\\.\C:</dev:defaultValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicShimcache</maml:name>
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="Path">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue>\\.\C:</dev:defaultValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named" aliases="Path">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+				<dev:type>
+					<maml:name>String</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<dev:defaultValue/>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para>
+					</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.Shimcache</maml:name>
+					<maml:uri>
+					</maml:uri>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-Shimcache</dev:code>
+				<dev:remarks>
+					<maml:para>This example shows Get-Shimcache being run against the default System Hive (C:\Windows\system32\config\SYSTEM)</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-Shimcache -HivePath C:\evidence\system</dev:code>
+				<dev:remarks>
+					<maml:para>This is an example of Get-Shimcache taking a SYSTEM hive as an argument.</maml:para>
 				</dev:remarks>
 			</command:example>
 		</command:examples>
@@ -5669,8 +5782,7 @@ If you get an error like this one, verify that the items in the template and the
 				<maml:para>Gets the search terms that have been searched for using the Windows Search feature.</maml:para>
 			</maml:description>
 			<maml:copyright>
-				<maml:para>
-				</maml:para>
+				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
 			<command:noun>ForensicWindowsSearchHistory</command:noun>
@@ -5691,8 +5803,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -5708,8 +5819,7 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -5725,13 +5835,11 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Outputs-->
 			<command:returnValue>
 				<maml:description>
-					<maml:para>
-					</maml:para>
+					<maml:para/>
 				</maml:description>
 				<dev:type>
 					<maml:name>System.String</maml:name>
-					<maml:uri>
-					</maml:uri>
+					<maml:uri/>
 				</dev:type>
 			</command:returnValue>
 		</command:returnValues>
@@ -5952,6 +6060,7 @@ It also uses the OutFile parameter to specify a location for the output. The def
 		</command:examples>
 	</command:command>
 	<!--Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 </helpItems>

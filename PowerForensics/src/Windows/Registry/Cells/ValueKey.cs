@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace PowerForensics.Registry
 {
@@ -41,12 +42,12 @@ namespace PowerForensics.Registry
 
         public readonly string HivePath;
         public readonly string Key;
-        private readonly ushort NameLength;
+        public readonly ushort NameLength;
         public readonly uint DataLength;
-        private readonly bool ResidentData;
-        private readonly uint DataOffset;
+        public readonly bool ResidentData;
+        public readonly uint DataOffset;
         public readonly VALUE_KEY_DATA_TYPES DataType;
-        private readonly VALUE_KEY_FLAGS Flags;
+        public readonly VALUE_KEY_FLAGS Flags;
         public readonly string Name;
 
         #endregion Properties
@@ -251,15 +252,7 @@ namespace PowerForensics.Registry
 
         public byte[] GetData()
         {
-            if (this.ResidentData)
-            {
-                return BitConverter.GetBytes(this.DataOffset - RegistryHeader.HBINOFFSET);
-            }
-            else
-            {
-                byte[] bytes = Helper.GetHiveBytes(this.HivePath);
-                return PowerForensics.Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
-            }
+            return this.GetData(Helper.GetHiveBytes(this.HivePath));
         }
 
         internal byte[] GetData(byte[] bytes)
@@ -268,9 +261,13 @@ namespace PowerForensics.Registry
             {
                 return BitConverter.GetBytes(this.DataOffset - RegistryHeader.HBINOFFSET);
             }
+            else if (Encoding.ASCII.GetString(bytes, (int)this.DataOffset + 0x04, 0x02) == "db")
+            {
+                return BigData.Get(bytes, this);
+            }
             else
             {
-                return PowerForensics.Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
             }
         }
 
@@ -278,4 +275,32 @@ namespace PowerForensics.Registry
     }
 
     #endregion ValueKeyClass
+
+    class BigData
+    {
+        #region StaticMethods
+
+        internal static byte[] Get(byte[] bytes, ValueKey vk)
+        {
+            List<byte> contents = new List<byte>();
+            
+            byte[] dataBytes = PowerForensics.Util.GetSubArray(bytes, vk.DataOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)vk.DataOffset)));
+
+            short offsetCount = BitConverter.ToInt16(dataBytes, 0x06);
+            uint offsetOffset = BitConverter.ToUInt32(dataBytes, 0x08) + RegistryHeader.HBINOFFSET;
+
+            byte[] offsetBytes = Util.GetSubArray(bytes, offsetOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)offsetOffset)));
+
+            for (short i = 1; i <= offsetCount; i++)
+            {
+                uint segmentOffset = BitConverter.ToUInt32(offsetBytes, i * 0x04) + RegistryHeader.HBINOFFSET;
+                contents.AddRange(Util.GetSubArray(bytes, segmentOffset + 0x04, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)segmentOffset)) - 0x08));
+            }
+
+            byte[] b = contents.ToArray();
+            return Util.GetSubArray(b, 0x00, (uint)b.Length);
+        }
+
+        #endregion StaticMethods
+    }
 }

@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -52,6 +53,8 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\RecentFileCache.cs" />
@@ -61,7 +64,8 @@
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\LastVisitedMRU.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
-    <Compile Include="src\Artifacts\Windows\SystemHive\Shimcache.cs" />
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Shimcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicShimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicRecentFileCache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicScheduledJob.cs" />
     <Compile Include="src\Cmdlets\Artifacts\Get-ForensicShellLink.cs" />
@@ -178,7 +182,9 @@
     <Content Include="src\Windows\EventLog\TextFile2.txt" />
     <Content Include="src\Windows\EventLog\TextFile1.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\Artifacts\Windows\MountedDevices\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
