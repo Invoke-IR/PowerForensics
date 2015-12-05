@@ -61,9 +61,9 @@ Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's b
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
 Get-ForensicSid - gets the machine Security Identifier from the SAM hive
 Get-ForensicTimezone - gets the system's timezone based on the registry setting
-Get-ForensicTypedUrl - gets the Universal Resource Locators (URL) that have been typed in the Internet Explorer browser
+Get-ForensicTypedUrl - gets the Universal Resource Locators (URL) that have been typed into Internet Explorer
 Get-ForensicUserAssist - gets the UserAssist entries from the specified volume
-Get-ForensicWindowsSearchHistory - gets the search terms that have been searched for using the Windows Search feature
+Get-ForensicWindowsSearchHistory - gets the terms that have been searched for using the Windows Search feature
 ```
 
 #### Application Compatibility Cache
@@ -105,8 +105,8 @@ Invoke-ForensicDD - provides a bit for bit copy of a specified device
 ## [Module Installation](https://msdn.microsoft.com/en-us/library/dd878350(v=vs.85).aspx)
 The easiest way to install PowerForensics is through the  ```Install-Module``` cmdlet. This is available by default in Windows 10, but can also be installed via the Windows Management Framework or the standalone MSI installer:
 
-```
-PS> Install-Module PowerForensics
+```powershell
+Install-Module PowerForensics
 ```
 
 For more information about installing modules from the PowerShell Gallery, see http://www.powershellgallery.com/.
@@ -133,17 +133,15 @@ If you are using an older version of PowerShell you will have to unblock the fil
 Open your Modules directory and create a new folder called PowerForensics. You can use this script to open the correct folder effortlessly:
 ```powershell
 function Get-UserModulePath {
- 
     $Path = $env:PSModulePath -split ";" -match $env:USERNAME
  
     if (-not (Test-Path -Path $Path))
     {
         New-Item -Path $Path -ItemType Container | Out-Null
     }
-    
     $Path
 }
- 
+
 Invoke-Item (Get-UserModulePath)
 ```
 
