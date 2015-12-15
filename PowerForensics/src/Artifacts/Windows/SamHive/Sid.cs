@@ -13,10 +13,10 @@ namespace PowerForensics.Artifacts
 
         public static SecurityIdentifier GetByPath(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("SAM"))
+            if (RegistryHelper.isCorrectHive(hivePath, "SAM"))
             {
                 ValueKey vk = ValueKey.Get(hivePath, @"SAM\Domains\Account", "V");
-                return new SecurityIdentifier(vk.GetData(), (int)vk.DataLength - 0x18);
+                return new SecurityIdentifier((byte[])vk.GetData(), (int)vk.DataLength - 0x18);
             }
             else
             {

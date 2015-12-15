@@ -72,9 +72,9 @@ namespace PowerForensics.Artifacts
                     }
                 }
                 
-                byte[] bytes = vk.GetData();
+                byte[] bytes = (byte[])vk.GetData();
 
-                string arch = Encoding.Unicode.GetString(ValueKey.Get(hivePath, @"ControlSet001\Control\Session Manager\Environment", "PROCESSOR_ARCHITECTURE").GetData()).TrimEnd('\0');
+                string arch = (string)ValueKey.Get(hivePath, @"ControlSet001\Control\Session Manager\Environment", "PROCESSOR_ARCHITECTURE").GetData();
 
                 switch (BitConverter.ToUInt32(bytes, 0x00))
                 {

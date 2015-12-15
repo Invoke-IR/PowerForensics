@@ -28,25 +28,25 @@ namespace PowerForensics.Artifacts
                 switch (vk.Name)
                 {
                     case "ProductName":
-                        ProductName = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        ProductName = (string)vk.GetData(bytes);
                         break;
                     case "CurrentMajorVersionNumber":
-                        CurrentMajorVersion = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        CurrentMajorVersion = BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00);
                         break;
                     case "CurrentMinorVersionNumber":
-                        CurrentMinorVersion = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        CurrentMinorVersion = BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00);
                         break;
                     case "CurrentVersion":
-                        CurrentVersion = new Version(Encoding.Unicode.GetString(vk.GetData(bytes)));
+                        CurrentVersion = new Version((string)vk.GetData(bytes));
                         break;
                     case "InstallTime":
-                        InstallTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
+                        InstallTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64((byte[])vk.GetData(bytes), 0x00));
                         break;
                     case "RegisteredOwner":
-                        RegisteredOwner = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        RegisteredOwner = (string)vk.GetData(bytes);
                         break;
                     case "SystemRoot":
-                        SystemRoot = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        SystemRoot = (string)vk.GetData(bytes);
                         break;
                     default:
                         break;
@@ -68,9 +68,9 @@ namespace PowerForensics.Artifacts
 
         public static WindowsVersion GetByPath(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("SOFTWARE"))
+            if (RegistryHelper.isCorrectHive(hivePath, "SOFTWARE"))
             {
-                byte[] bytes = Helper.GetHiveBytes(hivePath);
+                byte[] bytes = RegistryHelper.GetHiveBytes(hivePath);
                 NamedKey nk = NamedKey.Get(bytes, hivePath, @"Microsoft\Windows NT\CurrentVersion");
                 return new WindowsVersion(bytes, nk);
             }

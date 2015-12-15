@@ -33,22 +33,22 @@ namespace PowerForensics.Artifacts
                 switch (vk.Name)
                 {
                     case "ProfileGuid":
-                        ProfileGuid = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        ProfileGuid = (string)vk.GetData(bytes);
                         break;
                     case "Description":
-                        Description = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        Description = (string)vk.GetData(bytes);
                         break;
                     case "Source":
-                        Source = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        Source = BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00);
                         break;
                     case "DnsSuffix":
-                        DnsSuffix = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        DnsSuffix = (string)vk.GetData(bytes);
                         break;
                     case "FirstNetwork":
-                        FirstNetwork = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        FirstNetwork = (string)vk.GetData(bytes);
                         break;
                     case "DefaultGatewayMac":
-                        DefaultGatewayMac = new PhysicalAddress(vk.GetData(bytes));
+                        DefaultGatewayMac = new PhysicalAddress((byte[])vk.GetData(bytes));
                         break;
                     default:
                         break;
@@ -77,11 +77,11 @@ namespace PowerForensics.Artifacts
 
         public static NetworkList[] GetInstancesByPath(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("SOFTWARE"))
+            if (RegistryHelper.isCorrectHive(hivePath, "SOFTWARE"))
             {
                 string Key = @"Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey[] SignatureKey = NamedKey.GetInstances(bytes, hivePath, Key);
 
@@ -91,7 +91,7 @@ namespace PowerForensics.Artifacts
                 {
                     if (key.NumberOfSubKeys != 0)
                     {
-                        foreach (NamedKey nk in key.GetSubKeys(bytes, key.FullName))
+                        foreach (NamedKey nk in key.GetSubKeys(bytes))
                         {
                             nlList.Add(new NetworkList(nk, bytes));
                         }

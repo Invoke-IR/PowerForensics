@@ -1,18 +1,38 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
     public class WordWheelQuery
     {
-        public static string[] GetInstances(string hivePath)
+        #region Properties
+
+        public readonly string User;
+        public readonly string SearchString;
+
+        #endregion Properties
+
+        #region Constructors
+
+        internal WordWheelQuery(string user, string path)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
+            User = user;
+            SearchString = path;
+        }
+
+        #endregion Constructors
+
+        #region StaticMethods
+
+        public static WordWheelQuery[] Get(string hivePath)
+        {
+            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
             {
                 string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey nk = null;
 
@@ -27,14 +47,14 @@ namespace PowerForensics.Artifacts
 
                 ValueKey MRUList = ValueKey.Get(bytes, hivePath, Key, "MRUListEx");
 
-                string[] dataStrings = new string[nk.NumberOfValues - 1];
+                WordWheelQuery[] dataStrings = new WordWheelQuery[nk.NumberOfValues - 1];
 
-                byte[] MRUListBytes = MRUList.GetData(bytes);
+                byte[] MRUListBytes = (byte[])MRUList.GetData(bytes);
 
                 for (int i = 0; i < MRUListBytes.Length - 4; i += 4)
                 {
                     uint MRUValue = BitConverter.ToUInt32(MRUListBytes, i);
-                    dataStrings[i / 4] = Encoding.Unicode.GetString(ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
+                    dataStrings[i / 4] = new WordWheelQuery(RegistryHelper.GetUserHiveOwner(hivePath), (string)ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
                 }
 
                 return dataStrings;
@@ -44,5 +64,26 @@ namespace PowerForensics.Artifacts
                 throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
             }
         }
+
+        public static WordWheelQuery[] GetInstances(string volume)
+        {
+            List<WordWheelQuery> list = new List<WordWheelQuery>();
+
+            foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
+            {
+                try
+                {
+                    list.AddRange(Get(hivePath));
+                }
+                catch
+                {
+
+                }
+            }
+
+            return list.ToArray();
+        }
+
+        #endregion StaticMethods
     }
 }

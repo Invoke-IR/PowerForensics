@@ -89,7 +89,7 @@ namespace PowerForensics.Ntfs
                     }
                 }
 
-                FileRecord record = FileRecord.Get(volume, index, true);
+                FileRecord record = FileRecord.Get(volume, index, false);
 
                 indexEntryList.Clear();
 

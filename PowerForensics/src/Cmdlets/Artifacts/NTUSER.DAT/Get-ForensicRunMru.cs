@@ -3,13 +3,13 @@ using PowerForensics.Artifacts;
 
 namespace PowerForensics.Cmdlets
 {
-    #region GetUserAssistCommand
+    #region GetRunMruCommand
 
     /// <summary> 
-    /// This class implements the Get-UserAssist cmdlet. 
+    /// This class implements the Get-RunMru  cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ForensicUserAssist")]
-    public class GetUserAssistCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "ForensicRunMru")]
+    public class GetRunMruCommand : PSCmdlet
     {
         #region Parameters
 
@@ -61,10 +61,10 @@ namespace PowerForensics.Cmdlets
             switch (ParameterSetName)
             {
                 case "ByVolume":
-                    WriteObject(UserAssist.GetInstances(volume), true);
+                    WriteObject(RunMRU.GetInstances(volume), true);
                     break;
                 case "ByPath":
-                    WriteObject(UserAssist.Get(hivePath), true);
+                    WriteObject(RunMRU.Get(hivePath), true);
                     break;
             }
         }
@@ -72,5 +72,5 @@ namespace PowerForensics.Cmdlets
         #endregion Cmdlet Overrides
     }
 
-    #endregion GetUserAssistCommand
+    #endregion GetRunMruCommand
 }

@@ -132,12 +132,12 @@ namespace PowerForensics.Registry
 
         public static NamedKey Get(string path, string key)
         {
-            return NamedKey.Get(Helper.GetHiveBytes(path), path, key.TrimEnd('\\'));
+            return NamedKey.Get(RegistryHelper.GetHiveBytes(path), path, key.TrimEnd('\\'));
         }
 
         internal static NamedKey Get(byte[] bytes, string path, string key)
         {
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -146,7 +146,7 @@ namespace PowerForensics.Registry
                 foreach (string k in key.Split('\\'))
                 {
                     NamedKey startingkey = nk;
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -171,23 +171,23 @@ namespace PowerForensics.Registry
         {
             if (key == null)
             {
-                return NamedKey.GetInstances(Helper.GetHiveBytes(path), path);
+                return NamedKey.GetInstances(RegistryHelper.GetHiveBytes(path), path);
             }
             else
             {
-                return NamedKey.GetInstances(Helper.GetHiveBytes(path), path, key.TrimEnd('\\'));
+                return NamedKey.GetInstances(RegistryHelper.GetHiveBytes(path), path, key.TrimEnd('\\'));
             }
         }
 
         internal static NamedKey[] GetInstances(byte[] bytes, string path)
         {
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
             return hiveroot.GetSubKeys();
         }
 
         internal static NamedKey[] GetInstances(byte[] bytes, string path, string key)
         {
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -196,7 +196,7 @@ namespace PowerForensics.Registry
                 foreach (string k in key.Split('\\'))
                 {
                     NamedKey startingkey = nk;
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -214,14 +214,14 @@ namespace PowerForensics.Registry
                 }
             }
 
-            return nk.GetSubKeys(bytes, key);
+            return nk.GetSubKeys(bytes);
         }
 
         public static NamedKey[] GetInstancesRecurse(string path)
         {
-            byte[] bytes = Helper.GetHiveBytes(path);
+            byte[] bytes = RegistryHelper.GetHiveBytes(path);
 
-            NamedKey hiveroot = Helper.GetRootKey(path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(path);
 
             return GetInstances(bytes, hiveroot, true);
         }
@@ -230,7 +230,7 @@ namespace PowerForensics.Registry
         {
             List<NamedKey> keyList = new List<NamedKey>();
 
-            foreach(NamedKey subkey in nk.GetSubKeys(bytes, nk.FullName))
+            foreach(NamedKey subkey in nk.GetSubKeys(bytes))
             {
                 keyList.Add(subkey);
                 
@@ -251,7 +251,7 @@ namespace PowerForensics.Registry
         {
             if (NumberOfValues > 0)
             {
-                byte[] bytes = Helper.GetHiveBytes(this.HivePath);
+                byte[] bytes = RegistryHelper.GetHiveBytes(this.HivePath);
                 
                 return GetValues(bytes);
             }
@@ -283,8 +283,8 @@ namespace PowerForensics.Registry
         {
             if (NumberOfSubKeys > 0)
             {
-                byte[] bytes = Helper.GetHiveBytes(HivePath);
-                return GetSubKeys(bytes, FullName);
+                byte[] bytes = RegistryHelper.GetHiveBytes(HivePath);
+                return GetSubKeys(bytes);
             }
             else
             {
@@ -292,7 +292,7 @@ namespace PowerForensics.Registry
             }
         }
 
-        internal NamedKey[] GetSubKeys(byte[] bytes, string key)
+        internal NamedKey[] GetSubKeys(byte[] bytes)
         {
             if (NumberOfSubKeys > 0)
             {
@@ -306,7 +306,7 @@ namespace PowerForensics.Registry
                 for (int i = 0; i < list.Count; i++)
                 {
                     int size = Math.Abs(BitConverter.ToInt32(bytes, (int)list.Offset[i]));
-                    nkArray[i] = new NamedKey(Util.GetSubArray(bytes, list.Offset[i], (uint)size), HivePath, key);
+                    nkArray[i] = new NamedKey(Util.GetSubArray(bytes, list.Offset[i], (uint)size), HivePath, this.FullName);
                 }
 
                 return nkArray;
@@ -319,7 +319,7 @@ namespace PowerForensics.Registry
 
         public SecurityDescriptor GetSecurityKey()
         {
-            byte[] bytes = Helper.GetHiveBytes(this.HivePath);
+            byte[] bytes = RegistryHelper.GetHiveBytes(this.HivePath);
             return GetSecurityKey(bytes);
         }
 

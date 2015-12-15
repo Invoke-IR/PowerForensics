@@ -1,15 +1,15 @@
 ﻿using System.Management.Automation;
-using PowerForensics.Artifacts;
+using PowerForensics.Artifacts.MicrosoftOffice;
 
 namespace PowerForensics.Cmdlets
 {
-    #region GetUserAssistCommand
+    #region GetForensicOfficeFileMruCommand
 
     /// <summary> 
-    /// This class implements the Get-UserAssist cmdlet. 
+    /// This class implements the Get-ForensicOfficeFileMru cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ForensicUserAssist")]
-    public class GetUserAssistCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "ForensicOfficeFileMru")]
+    public class GetForensicOfficeFileMruCommand : PSCmdlet
     {
         #region Parameters
 
@@ -61,10 +61,10 @@ namespace PowerForensics.Cmdlets
             switch (ParameterSetName)
             {
                 case "ByVolume":
-                    WriteObject(UserAssist.GetInstances(volume), true);
+                    WriteObject(FileMRU.GetInstances(volume), true);
                     break;
                 case "ByPath":
-                    WriteObject(UserAssist.Get(hivePath), true);
+                    WriteObject(FileMRU.Get(hivePath), true);
                     break;
             }
         }
@@ -72,5 +72,5 @@ namespace PowerForensics.Cmdlets
         #endregion Cmdlet Overrides
     }
 
-    #endregion GetUserAssistCommand
+    #endregion GetForensicOfficeFileMruCommand
 }

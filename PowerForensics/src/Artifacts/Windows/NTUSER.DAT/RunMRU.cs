@@ -1,18 +1,39 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
     public class RunMRU
     {
-        public static string[] GetInstances(string hivePath)
+        #region Properties
+
+        public readonly string User;
+        public readonly string ImagePath;
+
+        #endregion Properties
+
+        #region Constructors
+
+        internal RunMRU(string user, string path)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
+            User = user;
+            ImagePath = path;
+        }
+
+        #endregion Constructors
+
+        #region StaticMethods
+
+        public static RunMRU[] Get(string hivePath)
+        {
+            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
             {
+                string user = RegistryHelper.GetUserHiveOwner(hivePath);
                 string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey RunMRUKey = null;
                 ValueKey MRUList = null;
@@ -35,14 +56,14 @@ namespace PowerForensics.Artifacts
                     return null;
                 }
 
-                string[] RunMRUStrings = new string[RunMRUKey.NumberOfValues - 1];
+                RunMRU[] RunMRUStrings = new RunMRU[RunMRUKey.NumberOfValues - 1];
 
-                byte[] MRUListBytes = MRUList.GetData(bytes);
+                byte[] MRUListBytes = (byte[])MRUList.GetData(bytes);
 
                 for(int i = 0; i <= MRUListBytes.Length - 4; i += 4)
                 {
                     string MRUValue = Encoding.ASCII.GetString(MRUListBytes).TrimEnd('\0');
-                    RunMRUStrings[i / 4] = Encoding.Unicode.GetString(ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
+                    RunMRUStrings[i / 4] = new RunMRU(user, (string)ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
                 }
 
                 return RunMRUStrings;
@@ -52,5 +73,26 @@ namespace PowerForensics.Artifacts
                 throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
             }
         }
+
+        public static RunMRU[] GetInstances(string volume)
+        {
+            List<RunMRU> list = new List<RunMRU>();
+
+            foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
+            {
+                try
+                {
+                    list.AddRange(Get(hivePath));
+                }
+                catch
+                {
+
+                }
+            }
+
+            return list.ToArray();
+        }
+
+        #endregion StaticMethods
     }
 }

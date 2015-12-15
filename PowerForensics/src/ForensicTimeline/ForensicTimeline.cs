@@ -209,7 +209,7 @@ namespace PowerForensics.Formats
 
         public static ForensicTimeline Get(UserAssist input)
         {
-            return new ForensicTimeline(input.LastExecutionTimeUtc, "MACB", "USERASSIST", "", input.Path, input.ToString());
+            return new ForensicTimeline(input.LastExecutionTimeUtc, "MACB", "USERASSIST", "", input.ImagePath, input.ToString());
         }
 
         public static ForensicTimeline[] GetInstances(UserAssist[] input)

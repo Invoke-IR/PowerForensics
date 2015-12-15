@@ -14,10 +14,21 @@ namespace PowerForensics.Cmdlets
         #region Parameters
 
         /// <summary> 
+        /// 
+        /// </summary> 
+        [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        public string VolumeName
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+        private string volume;
+
+        /// <summary> 
         /// This parameter provides the the path of the Registry Hive to parse.
         /// </summary> 
         [Alias("Path")]
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
         public string HivePath
         {
             get { return hivePath; }
@@ -31,11 +42,32 @@ namespace PowerForensics.Cmdlets
 
         /// <summary> 
         /// 
+        /// </summary> 
+        protected override void BeginProcessing()
+        {
+            Util.checkAdmin();
+
+            if (ParameterSetName == "ByVolume")
+            {
+                Util.getVolumeName(ref volume);
+            }
+        }
+
+        /// <summary> 
+        /// 
         /// </summary>  
         protected override void ProcessRecord()
         {
-            WriteObject(TypedPaths.GetInstances(hivePath), true);
-        } 
+            switch (ParameterSetName)
+            {
+                case "ByVolume":
+                    WriteObject(TypedPaths.GetInstances(volume), true);
+                    break;
+                case "ByPath":
+                    WriteObject(TypedPaths.Get(hivePath), true);
+                    break;
+            }
+        }
 
         #endregion Cmdlet Overrides
     }

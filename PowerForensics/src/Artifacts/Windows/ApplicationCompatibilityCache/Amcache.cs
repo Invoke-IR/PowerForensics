@@ -41,37 +41,38 @@ namespace PowerForensics.Artifacts
 
             foreach (ValueKey vk in nk.GetValues(bytes))
             {
-                switch(vk.Name)
+                switch (vk.Name)
                 {
                     case "0":
-                        ProductName = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        ProductName = (string)vk.GetData(bytes);
                         break;
                     case "1":
-                        CompanyName = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        CompanyName = (string)vk.GetData(bytes);
                         break;
                     case "6":
-                        FileSize = BitConverter.ToUInt32(vk.GetData(bytes), 0x00);
+                        FileSize = BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00);
                         break;
                     case "c":
-                        Description = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        Description = (string)vk.GetData(bytes);
                         break;
                     case "f":
-                        CompileTime = Util.FromUnixTime(BitConverter.ToUInt32(vk.GetData(bytes), 0x00));
+                        CompileTime = Util.FromUnixTime(BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00));
                         break;
                     case "11":
-                        ModifiedTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
+                        ModifiedTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64((byte[])vk.GetData(bytes), 0x00));
                         break;
                     case "12":
-                        BornTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
+                        BornTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64((byte[]) vk.GetData(bytes), 0x00));
                         break;
                     case "15":
-                        Path = Encoding.Unicode.GetString(vk.GetData(bytes));
+                        Path = (string)vk.GetData(bytes);
                         break;
                     case "17":
-                        ModifiedTime2Utc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(vk.GetData(bytes), 0x00));
+                        ModifiedTime2Utc = DateTime.FromFileTimeUtc(BitConverter.ToInt64((byte[])vk.GetData(bytes), 0x00));
                         break;
                     case "101":
-                        Hash = Encoding.Unicode.GetString(vk.GetData(bytes)).TrimStart('0');
+                        string hash = (string)vk.GetData(bytes);
+                        Hash = hash.TrimStart('0');
                         break;
                     default:
                         break;
@@ -104,7 +105,7 @@ namespace PowerForensics.Artifacts
             {
                 string Key = @"Root\File";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
 
@@ -114,7 +115,7 @@ namespace PowerForensics.Artifacts
                 {
                     if(key.NumberOfSubKeys != 0)
                     {
-                        foreach (NamedKey nk in key.GetSubKeys(bytes, key.FullName))
+                        foreach (NamedKey nk in key.GetSubKeys(bytes))
                         {
                             amcacheList.Add(new Amcache(nk, bytes));
                         }

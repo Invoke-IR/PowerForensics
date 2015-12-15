@@ -335,9 +335,9 @@ namespace PowerForensics.Artifacts
 
         public static PREFETCH_ENABLED CheckStatus(string path)
         {
-            byte[] bytes = Registry.Helper.GetHiveBytes(path);
+            byte[] bytes = Registry.RegistryHelper.GetHiveBytes(path);
             Registry.ValueKey vk = Registry.ValueKey.Get(bytes, path, @"ControlSet001\Control\Session Manager\Memory Management\PrefetchParameters", @"EnablePrefetcher");
-            return (PREFETCH_ENABLED)BitConverter.ToInt32(vk.GetData(bytes), 0x00);
+            return (PREFETCH_ENABLED)BitConverter.ToInt32((byte[])vk.GetData(bytes), 0x00);
         }
 
         #endregion StaticMethods

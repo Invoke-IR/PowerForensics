@@ -9,6 +9,7 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Content cmdlet. 
     /// </summary> 
+    [Alias("4n6c")]
     [Cmdlet(VerbsCommon.Get, "ForensicContent", DefaultParameterSetName = "ByPath")]
     public class GetContentRawCommand : PSCmdlet
     {

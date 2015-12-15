@@ -1673,29 +1673,44 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-ForensicExplorerTypedPath</maml:name>
-				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicExplorerTypedPath</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>HivePath</maml:name>
 					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+						<maml:para>Registry hive to parse.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 				<maml:name>HivePath</maml:name>
 				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					<maml:para>Registry hive to parse.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="true">String</command:parameterValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -1723,6 +1738,16 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicExplorerTypedPath -VolumeName \\.\C:</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from all user&apos;s NTUSER.DAT hives on the C: logical volume.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
 				<maml:introduction>
 					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
 				</maml:introduction>
@@ -3729,7 +3754,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
 		<!--Command-->
 		<command:details>
-			<command:name>Get-ForensicRunMostRecentlyUsed</command:name>
+			<command:name>Get-ForensicRunMru</command:name>
 			<maml:description>
 				<maml:para>Gets the commands that were issued by the user to the run dialog.</maml:para>
 			</maml:description>
@@ -3737,7 +3762,7 @@ Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:p
 				<maml:para/>
 			</maml:copyright>
 			<command:verb>Get</command:verb>
-			<command:noun>ForensicRunMostRecentlyUsed</command:noun>
+			<command:noun>ForensicRunMru</command:noun>
 			<dev:version/>
 		</command:details>
 		<maml:description>
@@ -3748,30 +3773,45 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 		<command:syntax>
 			<!--Parameter Sets-->
 			<command:syntaxItem>
-				<maml:name>Get-ForensicRunMostRecentlyUsed</maml:name>
-				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+				<maml:name>Get-ForensicRunMru</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRunMru</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>HivePath</maml:name>
 					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+						<maml:para>Registry hive to parse.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 				<maml:name>HivePath</maml:name>
 				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					<maml:para>Registry hive to parse.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="true">String</command:parameterValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -3799,6 +3839,16 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRunMostRecentlyUsed -VolumeName \\.\C:</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from all user&apos;s NTUSER.DAT hives on the C: logical volume.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
 				<maml:introduction>
 					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
 				</maml:introduction>
@@ -4639,28 +4689,44 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-ForensicTypedUrl</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="Path">
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicTypedUrl</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>HivePath</maml:name>
 					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+						<maml:para>Registry hive to parse.</maml:para>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="Path">
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 				<maml:name>HivePath</maml:name>
 				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					<maml:para>Registry hive to parse.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -4694,6 +4760,16 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicTypedUrl -VolumeName \\.\C:</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from all user&apos;s NTUSER.DAT hives on the C: logical volume.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
 				<maml:introduction>
 					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
 				</maml:introduction>
@@ -4839,28 +4915,44 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-ForensicUserAssist</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="Path">
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicUserAssist</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>HivePath</maml:name>
 					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+						<maml:para>Registry hive to parse.</maml:para>
 					</maml:description>
-					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<command:parameterValue required="true">String</command:parameterValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="Path">
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 				<maml:name>HivePath</maml:name>
 				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					<maml:para>Registry hive to parse.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="true">String</command:parameterValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -4894,6 +4986,16 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicUserAssist -VolumeName \\.\C:</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets applications that the Public user used from all user&apos;s NTUSER.DAT hives on the C: logical volume.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
 				<maml:introduction>
 					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
 				</maml:introduction>
@@ -5795,29 +5897,44 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-ForensicWindowsSearchHistory</maml:name>
-				<command:parameter required="true" pipelineinput="false" globbing="false" position="0" aliases="">
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicWindowsSearchHistory</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 					<maml:name>HivePath</maml:name>
 					<maml:description>
-						<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+						<maml:para>Registry hive to parse.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true">String</command:parameterValue>
-					<dev:defaultValue/>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!--All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="0" aliases="">
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
 				<maml:name>HivePath</maml:name>
 				<maml:description>
-					<maml:para>Registry hive to parse. This should be a NTUSER.DAT registry hive.</maml:para>
+					<maml:para>Registry hive to parse.</maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-				<dev:type>
-					<maml:name>String</maml:name>
-					<maml:uri/>
-				</dev:type>
-				<dev:defaultValue/>
+				<command:parameterValue required="true">String</command:parameterValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -5845,6 +5962,16 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 			<!--Examples-->
 			<command:example>
 				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicWindowsSearchHistory -VolumeName C:</dev:code>
+				<dev:remarks>
+					<maml:para>This command gets the URLs typed into Internet Explorer from all user&apos;s NTUSER.DAT hives on the C: logical volume.</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
 				<maml:introduction>
 					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
 				</maml:introduction>
@@ -6060,5 +6187,577 @@ It also uses the OutFile parameter to specify a location for the output. The def
 	<!--Generated by: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicOfficeFileMru</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicOfficeFileMru</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeFileMru</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeFileMru</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.MicrosoftOffice.FileMRU</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficeFileMru
+
+				</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficeFileMru -HivePath C:\Users\tester\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicOfficePlaceMru</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicOfficePlaceMru</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficePlaceMru</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficePlaceMru</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.MicrosoftOffice.PlaceMRU</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficePlaceMru</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficePlaceMru -HivePath C:\Users\tester\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command uses the HivePath parameter of Get-ForensicSid to specify an exported SAM hive
+to parse.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicOfficeTrustRecord</command:name>
+			<maml:description>
+				<maml:para/>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicOfficeTrustRecord</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeTrustRecord</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeTrustRecord</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.MicrosoftOffice.TrustRecords</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficeTrustRecord</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicSid -HivePath C:\Users\tester\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicRunKey</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicRunKey</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRunKey</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicRunKey</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.Persistence.RunKey</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRunKey</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicRunKey -HivePath C:\Windows\System32\config\SOFTWARE</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-ForensicOfficeOutlookCatalog</command:name>
+			<maml:description>
+				<maml:para>
+				</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para/>
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>ForensicOfficeOutlookCatalog</command:noun>
+			<dev:version/>
+		</command:details>
+		<maml:description>
+			<maml:para>
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the &apos;Run as administrator&apos; option.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeOutlookCatalog</maml:name>
+				<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+					<maml:name>VolumeName</maml:name>
+					<maml:description>
+						<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+					</maml:description>
+					<command:parameterValue required="false">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+			<command:syntaxItem>
+				<maml:name>Get-ForensicOfficeOutlookCatalog</maml:name>
+				<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+					<maml:name>HivePath</maml:name>
+					<maml:description>
+						<maml:para>Registry hive to parse.</maml:para>
+					</maml:description>
+					<command:parameterValue required="true">String</command:parameterValue>
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!--All Parameters-->
+			<command:parameter required="false" pipelineinput="false" globbing="false" position="named">
+				<maml:name>VolumeName</maml:name>
+				<maml:description>
+					<maml:para>Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.</maml:para>
+				</maml:description>
+				<command:parameterValue required="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" pipelineinput="false" globbing="false" position="named">
+				<maml:name>HivePath</maml:name>
+				<maml:description>
+					<maml:para>Registry hive to parse.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true">String</command:parameterValue>
+			</command:parameter>
+		</command:parameters>
+		<command:inputTypes>
+			<!--Inputs-->
+			<command:inputType>
+				<dev:type>
+					<maml:name>None</maml:name>
+					<maml:uri/>
+				</dev:type>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+			</command:inputType>
+		</command:inputTypes>
+		<command:returnValues>
+			<!--Outputs-->
+			<command:returnValue>
+				<maml:description>
+					<maml:para/>
+				</maml:description>
+				<dev:type>
+					<maml:name>PowerForensics.Artifacts.MicrosoftOffice.OutlookCatalog</maml:name>
+					<maml:uri/>
+				</dev:type>
+			</command:returnValue>
+		</command:returnValues>
+		<command:examples>
+			<!--Examples-->
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficeOutlookCatalog</dev:code>
+				<dev:remarks>
+					<maml:para>
+					</maml:para>
+				</dev:remarks>
+			</command:example>
+			<command:example>
+				<maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+				<maml:introduction>
+					<maml:para>[ADMIN]: PS C:\&gt;</maml:para>
+				</maml:introduction>
+				<dev:code>Get-ForensicOfficeOutlookCatalog -HivePath C:\Users\tester\NTUSER.DAT</dev:code>
+				<dev:remarks>
+					<maml:para>This command uses the HivePath parameter of Get-ForensicSid to specify an exported SAM hive
+to parse.</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
 	<!--Edited with: SAPIEN PowerShell HelpWriter 2015 v1.0.16-->
 </helpItems>

@@ -1,15 +1,15 @@
 ﻿using System.Management.Automation;
-using PowerForensics.Artifacts;
+using PowerForensics.Artifacts.MicrosoftOffice;
 
 namespace PowerForensics.Cmdlets
 {
-    #region GetUserAssistCommand
+    #region GetForensicOfficeOutlookCatalogCommand
 
     /// <summary> 
-    /// This class implements the Get-UserAssist cmdlet. 
+    /// This class implements the Get-ForensicOfficeOutlookCatalog cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ForensicUserAssist")]
-    public class GetUserAssistCommand : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "ForensicOfficeOutlookCatalog")]
+    public class GetForensicOfficeOutlookCatalogCommand : PSCmdlet
     {
         #region Parameters
 
@@ -61,10 +61,10 @@ namespace PowerForensics.Cmdlets
             switch (ParameterSetName)
             {
                 case "ByVolume":
-                    WriteObject(UserAssist.GetInstances(volume), true);
+                    WriteObject(OutlookCatalog.GetInstances(volume), true);
                     break;
                 case "ByPath":
-                    WriteObject(UserAssist.Get(hivePath), true);
+                    WriteObject(OutlookCatalog.Get(hivePath), true);
                     break;
             }
         }
@@ -72,5 +72,5 @@ namespace PowerForensics.Cmdlets
         #endregion Cmdlet Overrides
     }
 
-    #endregion GetUserAssistCommand
+    #endregion GetForensicOfficeOutlookCatalogCommand
 }

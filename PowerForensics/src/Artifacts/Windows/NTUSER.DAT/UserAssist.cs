@@ -123,7 +123,8 @@ namespace PowerForensics.Artifacts
 
         #region Properties
 
-        public readonly string Path;
+        public readonly string User;
+        public readonly string ImagePath;
         public readonly uint RunCount;
         public readonly uint FocusTime;
         public readonly DateTime LastExecutionTimeUtc;
@@ -132,12 +133,12 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal UserAssist(ValueKey vk, byte[] bytes)
+        internal UserAssist(string user, ValueKey vk, byte[] bytes)
         {
-            Path = Decode(vk.Name);
+            User = user;
+            ImagePath = Decode(vk.Name);
 
-            byte[] data = vk.GetData(bytes);
-
+            byte[] data = (byte[])vk.GetData(bytes);
             RunCount = BitConverter.ToUInt32(data, 0x04);
             FocusTime = BitConverter.ToUInt32(data, 0x0C);            
             LastExecutionTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(data, 0x03C));
@@ -147,27 +148,27 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
-        public static UserAssist[] GetInstances(string hivePath)
+        public static UserAssist[] Get(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
+            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
             {
                 List<UserAssist> uaList = new List<UserAssist>();
 
                 string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
 
                 foreach (NamedKey key in FileSubKey)
                 {
-                    foreach (NamedKey nk in key.GetSubKeys(bytes, key.FullName))
+                    foreach (NamedKey nk in key.GetSubKeys(bytes))
                     {
                         if (nk.NumberOfValues != 0)
                         {
                             foreach (ValueKey vk in nk.GetValues(bytes))
                             {
-                                uaList.Add(new UserAssist(vk, bytes));
+                                uaList.Add(new UserAssist(RegistryHelper.GetUserHiveOwner(hivePath), vk, bytes));
                             }
                         }
                     }
@@ -180,11 +181,30 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        public static UserAssist[] GetInstances(string volume)
+        {
+            List<UserAssist> list = new List<UserAssist>();
+
+            foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
+            {
+                try
+                {
+                    list.AddRange(Get(hivePath));
+                }
+                catch
+                {
+
+                }
+            }
+
+            return list.ToArray();
+        }
+
         #endregion StaticMethods
 
         public override string ToString()
         {
-            return String.Format("[PROGRAM EXECUTION] {0} run {1} times", this.Path, this.RunCount);
+            return String.Format("[PROGRAM EXECUTION] {0} run {1} times", this.ImagePath, this.RunCount);
         }
     }
 

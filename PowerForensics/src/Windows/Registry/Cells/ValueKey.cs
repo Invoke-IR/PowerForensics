@@ -128,9 +128,9 @@ namespace PowerForensics.Registry
 
         public static ValueKey Get(string path, string key, string val)
         {
-            byte[] bytes = Helper.GetHiveBytes(path);
+            byte[] bytes = RegistryHelper.GetHiveBytes(path);
 
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -138,7 +138,7 @@ namespace PowerForensics.Registry
             {
                 foreach (string k in key.Split('\\'))
                 {
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -167,7 +167,7 @@ namespace PowerForensics.Registry
 
         internal static ValueKey Get(byte[] bytes, string path, string key, string val)
         {
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -175,7 +175,7 @@ namespace PowerForensics.Registry
             {
                 foreach (string k in key.Split('\\'))
                 {
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -200,9 +200,9 @@ namespace PowerForensics.Registry
 
         public static ValueKey[] GetInstances(string path, string key)
         {
-            byte[] bytes = Helper.GetHiveBytes(path);
+            byte[] bytes = RegistryHelper.GetHiveBytes(path);
 
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -210,7 +210,7 @@ namespace PowerForensics.Registry
             {
                 foreach (string k in key.Split('\\'))
                 {
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -225,7 +225,7 @@ namespace PowerForensics.Registry
 
         internal static ValueKey[] GetInstances(byte[] bytes, string path, string key)
         {
-            NamedKey hiveroot = Helper.GetRootKey(bytes, path);
+            NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
 
             NamedKey nk = hiveroot;
 
@@ -233,7 +233,7 @@ namespace PowerForensics.Registry
             {
                 foreach (string k in key.Split('\\'))
                 {
-                    foreach (NamedKey n in nk.GetSubKeys(bytes, key))
+                    foreach (NamedKey n in nk.GetSubKeys(bytes))
                     {
                         if (n.Name.ToUpper() == k.ToUpper())
                         {
@@ -250,12 +250,12 @@ namespace PowerForensics.Registry
 
         #region InstanceMethods
 
-        public byte[] GetData()
+        public object GetData()
         {
-            return this.GetData(Helper.GetHiveBytes(this.HivePath));
+            return this.GetData(RegistryHelper.GetHiveBytes(this.HivePath));
         }
 
-        internal byte[] GetData(byte[] bytes)
+        internal object GetData(byte[] bytes)
         {
             if (this.ResidentData)
             {
@@ -267,7 +267,36 @@ namespace PowerForensics.Registry
             }
             else
             {
-                return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                switch (this.DataType)
+                {
+                    case VALUE_KEY_DATA_TYPES.REG_NONE:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_SZ:
+                        return Encoding.Unicode.GetString(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength).TrimEnd('\0');
+                    case VALUE_KEY_DATA_TYPES.REG_EXPAND_SZ:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_BINARY:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_DWORD:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_DWORD_BIG_ENDIAN:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_LINK:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_MULTI_SZ:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_RESOURCE_LIST:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_FULL_RESOURCE_DESCRIPTOR:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_RESOURCE_REQUIREMENTS_LIST:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    case VALUE_KEY_DATA_TYPES.REG_QWORD:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                    default:
+                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                }
+                
             }
         }
 

@@ -37,12 +37,12 @@ namespace PowerForensics.Artifacts
 
         public static Timezone Get(string hivePath)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.Contains("SYSTEM"))
+            if (RegistryHelper.isCorrectHive(hivePath, "SYSTEM"))
             {
                 ValueKey vk = ValueKey.Get(hivePath, @"ControlSet001\Control\TimeZoneInformation", "TimeZoneKeyName");
                 TimeZone tz = TimeZone.CurrentTimeZone;
 
-                return new Timezone(System.Text.Encoding.Unicode.GetString(vk.GetData()), tz.StandardName, tz.DaylightName, tz.IsDaylightSavingTime(DateTime.Now));
+                return new Timezone((string)vk.GetData(), tz.StandardName, tz.DaylightName, tz.IsDaylightSavingTime(DateTime.Now));
             }
             else
             {

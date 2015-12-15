@@ -7,7 +7,7 @@ namespace PowerForensics.Utilities
 {
     #region Rot13Class
 
-    static class Rot13
+    public static class Rot13
     {
         /// <summary>
         /// Performs the ROT13 character rotation.

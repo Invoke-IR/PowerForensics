@@ -6,13 +6,32 @@ namespace PowerForensics.Artifacts
 {
     public class LastVisitedMRU
     {
-        public static string[] GetInstances(string hivePath)
+        #region Properties
+
+        public readonly string User;
+        public readonly string ImagePath;
+
+        #endregion Properties
+
+        #region Constructors
+
+        internal LastVisitedMRU(string user, string data)
         {
-            if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains("NTUSER.DAT"))
+            User = user;
+            ImagePath = data;
+        }
+
+        #endregion Constructors
+
+        #region StaticMethods
+
+        public static LastVisitedMRU[] Get(string hivePath)
+        {
+            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
             {
                 string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\LastVisitedPidlMRU";
 
-                byte[] bytes = Registry.Helper.GetHiveBytes(hivePath);
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
 
                 NamedKey nk = null;
 
@@ -35,14 +54,14 @@ namespace PowerForensics.Artifacts
 
                 ValueKey MRUList = ValueKey.Get(bytes, hivePath, Key, "MRUListEx");
 
-                string[] dataStrings = new string[nk.NumberOfValues - 1];
+                LastVisitedMRU[] dataStrings = new LastVisitedMRU[nk.NumberOfValues - 1];
 
-                byte[] MRUListBytes = MRUList.GetData(bytes);
+                byte[] MRUListBytes = (byte[])MRUList.GetData(bytes);
 
                 for (int i = 0; i < MRUListBytes.Length - 4; i += 4)
                 {
                     uint MRUValue = BitConverter.ToUInt32(MRUListBytes, i);
-                    dataStrings[i / 4] = Encoding.Unicode.GetString(ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
+                    dataStrings[i / 4] = new LastVisitedMRU(RegistryHelper.GetUserHiveOwner(hivePath), (string)ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
                 }
 
                 return dataStrings;
@@ -52,5 +71,7 @@ namespace PowerForensics.Artifacts
                 throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
             }
         }
+
+        #endregion StaticMethods
     }
 }
