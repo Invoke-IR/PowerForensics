@@ -55,7 +55,12 @@ Get-AlternateDataStream - gets the NTFS Alternate Data Streams on the specified 
 Get-ForensicEventLog - gets the events in an event log or in all event logs
 Get-ForensicExplorerTypedPath - gets the file paths that have been typed into the Windows Explorer application
 Get-ForensicNetworkList - gets a list of networks that the system has previously been connected to 
+Get-ForensicOfficeFileMru - gets a files that have been recently opened in Microsoft Office
+Get-ForensicOfficeOutlookCatalog - gets a Outlook pst file paths
+Get-ForensicOfficePlaceMru - gets a directories that have recently been opened in Microsoft Office
+Get-ForensicOfficeTrustRecord - gets files that have been explicitly trusted within MicrosoftOffice
 Get-ForensicPrefetch - gets Windows Prefetch artifacts by parsing the file's binary structure
+Get-ForensicRunKey - gets the persistence mechanism stored in registry run keys
 Get-ForensicRunMostRecentlyUsed - gets the commands that were issued by the user to the run dialog
 Get-ForensicScheduledJob - gets Scheduled Jobs (at jobs) by parsing the file's binary structures
 Get-ForensicShellLink - gets ShellLink (.lnk) artifacts by parsing the file's binary structure
