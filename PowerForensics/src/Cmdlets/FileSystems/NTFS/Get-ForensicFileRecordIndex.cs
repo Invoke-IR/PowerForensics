@@ -34,14 +34,6 @@ namespace PowerForensics.Cmdlets
         /// <summary> 
         /// 
         /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-        }
-
-        /// <summary> 
-        /// 
-        /// </summary> 
         protected override void ProcessRecord()
         {
             WriteObject(IndexEntry.Get(path).RecordNumber);

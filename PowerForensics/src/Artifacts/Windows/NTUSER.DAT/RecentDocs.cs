@@ -17,13 +17,13 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal RecentDocs(string user, string path)
+        private RecentDocs(string user, string path)
         {
             User = user;
             Path = path;
         }
 
-        internal RecentDocs(string user, string path, DateTime lastWriteTime)
+        private RecentDocs(string user, string path, DateTime lastWriteTime)
         {
             User = user;
             Path = path;
@@ -69,6 +69,8 @@ namespace PowerForensics.Artifacts
 
         public static RecentDocs[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<RecentDocs> list = new List<RecentDocs>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

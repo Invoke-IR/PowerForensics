@@ -41,7 +41,7 @@ namespace PowerForensics.Registry
 
                 for (int i = 0; i < ri.Offset.Length; i++)
                 {
-                    byte[] sublistBytes = Util.GetSubArray(bytes, ri.Offset[i], (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)ri.Offset[i])));
+                    byte[] sublistBytes = Helper.GetSubArray(bytes, (int)ri.Offset[i], Math.Abs(BitConverter.ToInt32(bytes, (int)ri.Offset[i])));
                     string subtype = Encoding.ASCII.GetString(sublistBytes, 0x04, 0x02);
 
                     listArray[i] = List.Factory(bytes, sublistBytes, subtype);

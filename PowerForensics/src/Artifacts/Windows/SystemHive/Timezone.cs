@@ -10,39 +10,33 @@ namespace PowerForensics.Artifacts
         #region Properties
 
         public readonly string RegistryTimezone;
-        public readonly string dotNetStandardTimezone;
-        public readonly string dotNetDaylightTimezone;
-        public readonly bool IsDaylightSavingTime;
 
         #endregion Properties
 
         #region Constructors
 
-        internal Timezone(string registry, string standard, string daylight, bool dst)
+        internal Timezone(string registry)
         {
             RegistryTimezone = registry;
-            dotNetStandardTimezone = standard;
-            dotNetDaylightTimezone = daylight;
-            IsDaylightSavingTime = dst;
         }
 
         #endregion Constructors
 
         #region StaticMethods
 
-        public static Timezone Get()
+        public static Timezone Get(string volume)
         {
-            return Timezone.Get(@"C:\Windows\system32\config\SYSTEM");
+            Helper.getVolumeName(ref volume);
+            string volLetter = Helper.GetVolumeLetter(volume);
+            return Timezone.GetByPath(volLetter + @"\Windows\system32\config\SYSTEM");
         }
 
-        public static Timezone Get(string hivePath)
+        public static Timezone GetByPath(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "SYSTEM"))
             {
                 ValueKey vk = ValueKey.Get(hivePath, @"ControlSet001\Control\TimeZoneInformation", "TimeZoneKeyName");
-                TimeZone tz = TimeZone.CurrentTimeZone;
-
-                return new Timezone((string)vk.GetData(), tz.StandardName, tz.DaylightName, tz.IsDaylightSavingTime(DateTime.Now));
+                return new Timezone((string)vk.GetData());
             }
             else
             {

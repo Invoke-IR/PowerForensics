@@ -17,6 +17,7 @@ namespace PowerForensics.Cmdlets
         /// This parameter provides the the name of the target volume.
         /// </summary> 
         [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -54,19 +55,6 @@ namespace PowerForensics.Cmdlets
         /// <summary> 
         /// 
         /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-            
-            if (ParameterSetName == "ByVolume")
-            {
-                Util.getVolumeName(ref volume);
-            }
-        }
-
-        /// <summary> 
-        /// 
-        /// </summary> 
         protected override void ProcessRecord()
         {
             switch (ParameterSetName)
@@ -74,21 +62,21 @@ namespace PowerForensics.Cmdlets
                 case "ByVolume":
                     if (asBytes)
                     {
-                        WriteObject(UsnJrnlDetail.GetBytes(volume.Split('\\')[3] + "\\$Extend\\$UsnJrnl"), true);
+                        WriteObject(UsnJrnlDetail.GetBytes(volume), true);
                     }
                     else
                     {
-                        WriteObject(UsnJrnlDetail.Get(volume.Split('\\')[3] + "\\$Extend\\$UsnJrnl"), true);
+                        WriteObject(UsnJrnlDetail.Get(volume), true);
                     }
                     break;
                 case "ByPath":
                     if (asBytes)
                     {
-                        WriteObject(UsnJrnlDetail.GetBytes(path));
+                        WriteObject(UsnJrnlDetail.GetBytesByPath(path));
                     }
                     else
                     {
-                        WriteObject(UsnJrnlDetail.Get(path));
+                        WriteObject(UsnJrnlDetail.GetByPath(path));
                     }
                     break;
             }

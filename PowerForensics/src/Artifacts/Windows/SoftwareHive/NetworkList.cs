@@ -18,13 +18,13 @@ namespace PowerForensics.Artifacts
         public readonly uint Source;
         public readonly string DnsSuffix;
         public readonly string FirstNetwork;
-        public readonly PhysicalAddress DefaultGatewayMac;
+        public readonly byte[] DefaultGatewayMac;
 
         #endregion Properties
 
         #region Constructors
 
-        internal NetworkList(NamedKey nk, byte[] bytes)
+        private NetworkList(NamedKey nk, byte[] bytes)
         {
             WriteTimeUtc = nk.WriteTime;
 
@@ -48,7 +48,7 @@ namespace PowerForensics.Artifacts
                         FirstNetwork = (string)vk.GetData(bytes);
                         break;
                     case "DefaultGatewayMac":
-                        DefaultGatewayMac = new PhysicalAddress((byte[])vk.GetData(bytes));
+                        DefaultGatewayMac = (byte[])vk.GetData(bytes);
                         break;
                     default:
                         break;
@@ -64,10 +64,11 @@ namespace PowerForensics.Artifacts
 
         public static NetworkList[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
             WindowsVersion version = WindowsVersion.Get(volume);
             if (version.CurrentVersion.CompareTo(new Version("6.0")) >= 0)
             {
-                return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
+                return GetInstancesByPath(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
             }
             else
             {

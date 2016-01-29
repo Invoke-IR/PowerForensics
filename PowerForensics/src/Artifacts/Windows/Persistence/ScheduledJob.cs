@@ -97,13 +97,13 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal ScheduledJob(byte[] bytes)
+        private ScheduledJob(byte[] bytes)
         {
             #region FIXDLEN_DATA
 
             ProductVersion = (PRODUCT_VERSION)BitConverter.ToUInt16(bytes, 0x00);
             FileVersion = BitConverter.ToUInt16(bytes, 0x02);
-            Uuid = new Guid(BitConverter.ToInt32(bytes, 0x04), BitConverter.ToInt16(bytes, 0x08), BitConverter.ToInt16(bytes, 0x0A), Util.GetSubArray(bytes, 0x0C, 0x08));
+            Uuid = new Guid(BitConverter.ToInt32(bytes, 0x04), BitConverter.ToInt16(bytes, 0x08), BitConverter.ToInt16(bytes, 0x0A), Helper.GetSubArray(bytes, 0x0C, 0x08));
             ApplicationNameOffset = BitConverter.ToUInt16(bytes, 0x14);
             TriggerOffset = BitConverter.ToUInt16(bytes, 0x16);
             ErrorRetryCount = BitConverter.ToUInt16(bytes, 0x18);
@@ -187,6 +187,7 @@ namespace PowerForensics.Artifacts
 
         internal static ScheduledJob Get(string volume, int recordNumber)
         {
+            Helper.getVolumeName(ref volume);
             FileRecord record = FileRecord.Get(volume, recordNumber, true);
             return new ScheduledJob(record.GetContent());
         }
@@ -197,7 +198,8 @@ namespace PowerForensics.Artifacts
 
         public static ScheduledJob[] GetInstances(string volume)
         {
-            string path = volume.Split('\\')[3] + @"\Windows\Tasks";
+            Helper.getVolumeName(ref volume);
+            string path = Helper.GetVolumeLetter(volume) + @"\Windows\Tasks";
             return GetInstances(volume, path);
         }
 

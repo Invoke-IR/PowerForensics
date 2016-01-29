@@ -22,7 +22,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal UserDetail(byte[] bytes, NamedKey nk)
+        private UserDetail(byte[] bytes, NamedKey nk)
         {
             ValueKey[] values = nk.GetValues(bytes);
             foreach (ValueKey vk in values)

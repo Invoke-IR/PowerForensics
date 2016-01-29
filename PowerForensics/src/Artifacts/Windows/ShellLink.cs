@@ -214,7 +214,7 @@ namespace PowerForensics.Artifacts
             {
                 #region SHELL_LINK_HEADER
 
-                LinkCLSID = new Guid(Util.GetSubArray(bytes, 0x04, 0x10));
+                LinkCLSID = new Guid(Helper.GetSubArray(bytes, 0x04, 0x10));
                 LinkFlags = (LINK_FLAGS)BitConverter.ToUInt32(bytes, 0x14);
                 FileAttributes = (FILEATTRIBUTE_FLAGS)BitConverter.ToUInt32(bytes, 0x18);
                 CreationTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(bytes, 0x1C));
@@ -399,6 +399,8 @@ namespace PowerForensics.Artifacts
 
         public static ShellLink[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
 
             List<ShellLink> slList = new List<ShellLink>();
@@ -476,7 +478,7 @@ namespace PowerForensics.Artifacts
         internal ItemId(byte[] bytes, ref int offset)
         {
             ItemIdSize = BitConverter.ToUInt16(bytes, offset);
-            Data = Util.GetSubArray(bytes, (uint)offset + 0x02, (uint)ItemIdSize - 0x02);
+            Data = Helper.GetSubArray(bytes, offset + 0x02, ItemIdSize - 0x02);
 
             offset += (int)ItemIdSize;
         }
@@ -537,7 +539,7 @@ namespace PowerForensics.Artifacts
                 suboffset = 0x10;
             }
             
-            Data = Util.GetSubArray(bytes, (uint)offset + (uint)suboffset, VolumeIdSize - (uint)suboffset);
+            Data = Helper.GetSubArray(bytes, offset + suboffset, (int)VolumeIdSize - suboffset);
         }
 
         #endregion Constructors
@@ -790,7 +792,7 @@ namespace PowerForensics.Artifacts
             NumberOfHistroyBuffers = BitConverter.ToUInt32(bytes, offset + 0x48);
             HistoryNoDup = BitConverter.ToUInt32(bytes, offset + 0x4C) != 0;
             // More research needed
-            ColorTable = Util.GetSubArray(bytes, (uint)offset + 0x50, 0x40);
+            ColorTable = Helper.GetSubArray(bytes, offset + 0x50, 0x40);
         }
 
         #endregion Constructors
@@ -897,7 +899,7 @@ namespace PowerForensics.Artifacts
         {
             BlockSize = BitConverter.ToUInt32(bytes, offset);
             Name = (EXTRA_DATA_TYPE)BitConverter.ToUInt32(bytes, offset + 0x04);
-            KnownFolderId = new Guid(Util.GetSubArray(bytes, (uint)offset + 0x08, 0x10));
+            KnownFolderId = new Guid(Helper.GetSubArray(bytes, offset + 0x08, 0x10));
             Offset = BitConverter.ToUInt32(bytes, offset + 0x18);
         }
 
@@ -919,7 +921,7 @@ namespace PowerForensics.Artifacts
         {
             BlockSize = BitConverter.ToUInt32(bytes, offset);
             Name = (EXTRA_DATA_TYPE)BitConverter.ToUInt32(bytes, offset + 0x04);
-            PropertyStore = Util.GetSubArray(bytes, (uint)offset + 0x08, BlockSize - 0x08);
+            PropertyStore = Helper.GetSubArray(bytes, offset + 0x08, (int)BlockSize - 0x08);
         }
 
         #endregion Constructors
@@ -991,13 +993,13 @@ namespace PowerForensics.Artifacts
             #region Droid
             uint DroidOffset = (uint)offset + 0x10 + (uint)MachineId.Length + 0x01;
             Droid = new Guid[2];
-            Droid[0] = new Guid(Util.GetSubArray(bytes, DroidOffset, 0x10));
-            Droid[1] = new Guid(Util.GetSubArray(bytes, DroidOffset + 0x10, 0x10));
+            Droid[0] = new Guid(Helper.GetSubArray(bytes, (int)DroidOffset, 0x10));
+            Droid[1] = new Guid(Helper.GetSubArray(bytes, (int)DroidOffset + 0x10, 0x10));
             #endregion Droid
             #region DroidBirth
             DroidBirth = new Guid[2];
-            DroidBirth[0] = new Guid(Util.GetSubArray(bytes, DroidOffset + 0x20, 0x10));
-            DroidBirth[1] = new Guid(Util.GetSubArray(bytes, DroidOffset + 0x30, 0x10));
+            DroidBirth[0] = new Guid(Helper.GetSubArray(bytes, (int)DroidOffset + 0x20, 0x10));
+            DroidBirth[1] = new Guid(Helper.GetSubArray(bytes, (int)DroidOffset + 0x30, 0x10));
             #endregion DroidBirth
         }
 

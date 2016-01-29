@@ -40,7 +40,7 @@ namespace PowerForensics.Formats
 
         #region Constructors
 
-        internal ForensicTimeline(DateTime date, string activity, string source, string user, string fileName, string description)
+        private ForensicTimeline(DateTime date, string activity, string source, string user, string fileName, string description)
         {
             Date = date;
             ActivityType = activity;

@@ -12,10 +12,12 @@ namespace PowerForensics.Artifacts
 
         public static string[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             WindowsVersion version = WindowsVersion.Get(volume);
             if (version.CurrentVersion.CompareTo(new Version("6.1")) == 0)
             {
-                return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\RecentFileCache.bcf");
+                return GetInstancesByPath(Helper.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\RecentFileCache.bcf");
             }
             else
             {

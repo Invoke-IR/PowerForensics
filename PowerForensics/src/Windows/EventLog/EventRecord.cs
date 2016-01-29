@@ -149,9 +149,11 @@ namespace PowerForensics.EventLog
 
         public static EventRecord[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<EventRecord> recordList = new List<EventRecord>();
 
-            string volLetter = Util.GetVolumeLetter(volume);
+            string volLetter = Helper.GetVolumeLetter(volume);
 
             string EventLogPath = volLetter + @"\Windows\system32\winevt\Logs";
 

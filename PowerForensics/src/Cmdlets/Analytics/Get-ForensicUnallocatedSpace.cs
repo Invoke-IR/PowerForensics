@@ -19,6 +19,7 @@ namespace PowerForensics.Cmdlets
         /// This parameter provides the the name of the target volume.
         /// </summary> 
         [Parameter(Position = 0)]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -47,8 +48,7 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         protected override void BeginProcessing()
         {
-            Util.checkAdmin();
-            Util.getVolumeName(ref volume);
+            Helper.getVolumeName(ref volume);
         }
 
         /// <summary> 
@@ -56,8 +56,7 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         protected override void ProcessRecord()
         {
-            IntPtr hVolume = Util.getHandle(volume);
-            using(FileStream streamToRead = Util.getFileStream(hVolume))
+            using(FileStream streamToRead = Helper.getFileStream(volume))
             {
                 foreach (Bitmap b in Bitmap.GetInstances(volume))
                 {

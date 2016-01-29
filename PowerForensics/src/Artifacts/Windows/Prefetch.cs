@@ -67,7 +67,7 @@ namespace PowerForensics.Artifacts
 
                 //// Get Prefetch Path Hash Value ////
                 // Instantiate byte array
-                byte[] pfHashBytes = Util.GetSubArray(bytes, 0x4C, 0x04);
+                byte[] pfHashBytes = Helper.GetSubArray(bytes, 0x4C, 0x04);
                 // Reverse Little Endian bytes
                 Array.Reverse(pfHashBytes);
                 // Return string representing Prefetch Path Hash
@@ -88,17 +88,17 @@ namespace PowerForensics.Artifacts
                 {
                     // Windows 8 Version
                     case PREFETCH_VERSION.WINDOWS_8:
-                        pfAccessTimeBytes = Util.GetSubArray(bytes, 0x80, 0x40);
+                        pfAccessTimeBytes = Helper.GetSubArray(bytes, 0x80, 0x40);
                         counter = 64;
                         break;
                     // Windows 7 Version
                     case PREFETCH_VERSION.WINDOWS_7:
-                        pfAccessTimeBytes = Util.GetSubArray(bytes, 0x80, 0x08);
+                        pfAccessTimeBytes = Helper.GetSubArray(bytes, 0x80, 0x08);
                         counter = 8;
                         break;
                     // Windows XP Version
                     case PREFETCH_VERSION.WINDOWS_XP:
-                        pfAccessTimeBytes = Util.GetSubArray(bytes, 0x78, 0x08);
+                        pfAccessTimeBytes = Helper.GetSubArray(bytes, 0x78, 0x08);
                         counter = 8;
                         break;
                 }
@@ -224,13 +224,9 @@ namespace PowerForensics.Artifacts
         public static Prefetch[] GetInstances(string volume)
         {
             // Get current volume
-            Util.getVolumeName(ref volume);
+            Helper.getVolumeName(ref volume);
 
-            // Get a handle to the volume
-            IntPtr hVolume = Util.getHandle(volume);
-
-            // Create a FileStream to read from the volume handle
-            using (FileStream streamToRead = Util.getFileStream(hVolume))
+            using (FileStream streamToRead = Helper.getFileStream(volume))
             {
                 VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
 
@@ -238,11 +234,11 @@ namespace PowerForensics.Artifacts
                 byte[] MFT = MasterFileTable.GetBytes(streamToRead, volume);
 
                 // Build Prefetch directory path
-                string pfPath = volume.Split('\\')[3] + @"\Windows\Prefetch";
+                string pfPath = Helper.GetVolumeLetter(volume) + @"\Windows\Prefetch";
 
-                /*if(CheckStatus(volume.Split('\\')[3] + @"\Windows\system32\config\SAM") != PREFETCH_ENABLED.DISABLED)
+                /*if(CheckStatus(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SAM") != PREFETCH_ENABLED.DISABLED)
                 {*/
-                    // Get IndexEntry 
+                // Get IndexEntry 
                     IndexEntry[] pfEntries = IndexEntry.GetInstances(pfPath);
                     Prefetch[] pfArray = new Prefetch[pfEntries.Length];
 
@@ -252,7 +248,7 @@ namespace PowerForensics.Artifacts
                     {
                         if (entry.Filename.Contains(".pf"))
                         {
-                            pfArray[i] = new Prefetch(new FileRecord(Util.GetSubArray(MFT, (uint)entry.RecordNumber * 0x400, 0x400), volume, true).GetContent(VBR));
+                            pfArray[i] = new Prefetch(new FileRecord(Helper.GetSubArray(MFT, (int)entry.RecordNumber * 0x400, 0x400), volume, true).GetContent(VBR));
                             i++;
                         }
                     }
@@ -269,13 +265,13 @@ namespace PowerForensics.Artifacts
         public static Prefetch[] GetInstances(string volume, bool fast)
         {
             // Get current volume
-            Util.getVolumeName(ref volume);
+            Helper.getVolumeName(ref volume);
 
             // Get volume letter
-            string volLetter = volume.Split('\\')[3];
+            string volLetter = Helper.GetVolumeLetter(volume);
 
             // Build Prefetch directory path
-            string prefetchPath = volLetter + @"\\Windows\\Prefetch";
+            string prefetchPath = volLetter + @"\Windows\Prefetch";
 
             // Check prefetchPath exists
             if (Directory.Exists(prefetchPath))

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Security.Principal;
 
 namespace PowerForensics.EventLog
 {
@@ -192,7 +191,7 @@ namespace PowerForensics.EventLog
 
             int dataoffset = DataOffset + chunkOffset;
 
-            TemplateId = new Guid(Util.GetSubArray(bytes, (uint)dataoffset + 0x04, 0x10));
+            TemplateId = new Guid(Helper.GetSubArray(bytes, dataoffset + 0x04, 0x10));
             DataSize = BitConverter.ToInt32(bytes, dataoffset + 0x14);
 
             /*List<BinXmlElement> elementList = new List<BinXmlElement>();
@@ -311,7 +310,7 @@ namespace PowerForensics.EventLog
                             ValueArray[i] = null;
                             break;
                         case BinaryXml.VALUE_TYPE.GuidType:
-                            ValueArray[i] = new Guid(Util.GetSubArray(bytes, (uint)offset, 0x10));
+                            ValueArray[i] = new Guid(Helper.GetSubArray(bytes, offset, 0x10));
                             break;
                         case BinaryXml.VALUE_TYPE.SizeTType:
                             Console.WriteLine("Type: {0}, Size: {1}", ValueTypeArray[i].ValueType, ValueTypeArray[i].ValueSize);
@@ -324,7 +323,7 @@ namespace PowerForensics.EventLog
                             ValueArray[i] = Systemtime.Get(bytes, offset);
                             break;
                         case BinaryXml.VALUE_TYPE.SidType:
-                            ValueArray[i] = new SecurityIdentifier(bytes, offset);
+                            //ValueArray[i] = new SecurityIdentifier(bytes, offset);
                             break;
                         case BinaryXml.VALUE_TYPE.HexInt32Type:
                             ValueArray[i] = String.Format("0x{0:X}", BitConverter.ToInt32(bytes, offset));
@@ -570,7 +569,7 @@ namespace PowerForensics.EventLog
         internal BinXmlCharacterEntityReference(byte[] bytes, int offset)
         {
             Token = (BinaryXml.TOKEN_TYPE)bytes[offset];
-            Value = Util.GetSubArray(bytes, (uint)offset + 0x01, 0x02);
+            Value = Helper.GetSubArray(bytes, offset + 0x01, 0x02);
         }
 
         #endregion Constructors

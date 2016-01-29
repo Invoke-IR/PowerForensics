@@ -18,7 +18,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #region Constructors
 
-        internal TrustRecord(byte[] bytes, string user, ValueKey vk)
+        private TrustRecord(byte[] bytes, string user, ValueKey vk)
         {
             User = user;
             Path = vk.Name;
@@ -69,6 +69,8 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         public static TrustRecord[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<TrustRecord> list = new List<TrustRecord>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

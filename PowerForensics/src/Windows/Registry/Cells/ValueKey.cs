@@ -270,31 +270,31 @@ namespace PowerForensics.Registry
                 switch (this.DataType)
                 {
                     case VALUE_KEY_DATA_TYPES.REG_NONE:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_SZ:
                         return Encoding.Unicode.GetString(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength).TrimEnd('\0');
                     case VALUE_KEY_DATA_TYPES.REG_EXPAND_SZ:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_BINARY:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_DWORD:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_DWORD_BIG_ENDIAN:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_LINK:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_MULTI_SZ:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_RESOURCE_LIST:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_FULL_RESOURCE_DESCRIPTOR:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_RESOURCE_REQUIREMENTS_LIST:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     case VALUE_KEY_DATA_TYPES.REG_QWORD:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                     default:
-                        return Util.GetSubArray(bytes, this.DataOffset + 0x04, this.DataLength);
+                        return Helper.GetSubArray(bytes, (int)this.DataOffset + 0x04, (int)this.DataLength);
                 }
                 
             }
@@ -313,21 +313,21 @@ namespace PowerForensics.Registry
         {
             List<byte> contents = new List<byte>();
             
-            byte[] dataBytes = PowerForensics.Util.GetSubArray(bytes, vk.DataOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)vk.DataOffset)));
+            byte[] dataBytes = PowerForensics.Helper.GetSubArray(bytes, (int)vk.DataOffset, Math.Abs(BitConverter.ToInt32(bytes, (int)vk.DataOffset)));
 
             short offsetCount = BitConverter.ToInt16(dataBytes, 0x06);
             uint offsetOffset = BitConverter.ToUInt32(dataBytes, 0x08) + RegistryHeader.HBINOFFSET;
 
-            byte[] offsetBytes = Util.GetSubArray(bytes, offsetOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)offsetOffset)));
+            byte[] offsetBytes = Helper.GetSubArray(bytes, (int)offsetOffset, Math.Abs(BitConverter.ToInt32(bytes, (int)offsetOffset)));
 
             for (short i = 1; i <= offsetCount; i++)
             {
                 uint segmentOffset = BitConverter.ToUInt32(offsetBytes, i * 0x04) + RegistryHeader.HBINOFFSET;
-                contents.AddRange(Util.GetSubArray(bytes, segmentOffset + 0x04, (uint)Math.Abs(BitConverter.ToInt32(bytes, (int)segmentOffset)) - 0x08));
+                contents.AddRange(Helper.GetSubArray(bytes, (int)segmentOffset + 0x04, Math.Abs(BitConverter.ToInt32(bytes, (int)segmentOffset)) - 0x08));
             }
 
             byte[] b = contents.ToArray();
-            return Util.GetSubArray(b, 0x00, (uint)b.Length);
+            return Helper.GetSubArray(b, 0x00, b.Length);
         }
 
         #endregion StaticMethods

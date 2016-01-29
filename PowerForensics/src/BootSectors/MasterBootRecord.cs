@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using PowerForensics.Utilities;
+using System.Management.Automation;
 
 namespace PowerForensics
 {
@@ -32,7 +33,7 @@ namespace PowerForensics
 
         public readonly string MbrSignature;
         public readonly string DiskSignature;
-        public readonly byte[] BootCode;
+        public readonly byte[] CodeSection;
         public readonly PartitionEntry[] PartitionTable;
 
         #endregion Properties
@@ -41,16 +42,13 @@ namespace PowerForensics
 
         internal MasterBootRecord(byte[] bytes)
         {
-            // Instantiate a byte array to hold 440 bytes (size of MBR Boot Code)
-            // Copy MBR sub-array into mbrCode
-            BootCode = Util.GetSubArray(bytes, 0x00, 0x1B8);
+            // Copy MBR sub-array into CodeSection
+            CodeSection = Helper.GetSubArray(bytes, 0x00, 0x1B8);
 
             // Check MBR Code Section against a list of known signatures
             #region MD5Signature
 
-            string MD5Signature = null;
-
-            switch (Hash.Get(BootCode, BootCode.Length, "MD5"))
+            /*switch (Hash.Get(CodeSection, CodeSection.Length, "MD5"))
             {
                 case WINDOWS5_X:
                     MD5Signature = "Windows 5.X";
@@ -76,7 +74,7 @@ namespace PowerForensics
                 default:
                     MD5Signature = "UNKNOWN";
                     break;
-            }
+            }*/
 
             #endregion MD5Signature
 
@@ -84,12 +82,12 @@ namespace PowerForensics
             List<PartitionEntry> partitionList = new List<PartitionEntry>();
 
             // Set object properties
-            DiskSignature = BitConverter.ToString(Util.GetSubArray(bytes, 0x1B8, 0x04)).Replace("-", "");
-            MbrSignature = MD5Signature;
+            DiskSignature = BitConverter.ToString(Helper.GetSubArray(bytes, 0x1B8, 0x04)).Replace("-", "");
+            //MbrSignature = MD5Signature;
 
-            for (uint i = 0x1BE; i <= 0x1DE; i += PARTITION_ENTRY_SIZE)
+            for (int i = 0x1BE; i <= 0x1DE; i += PARTITION_ENTRY_SIZE)
             {
-                PartitionEntry entry = new PartitionEntry(Util.GetSubArray(bytes, i, PARTITION_ENTRY_SIZE));
+                PartitionEntry entry = new PartitionEntry(Helper.GetSubArray(bytes, i, PARTITION_ENTRY_SIZE));
 
                 if(entry.SystemId == "MS_EXTENDED")
                 {
@@ -111,15 +109,7 @@ namespace PowerForensics
 
         public static byte[] GetBytes(string drivePath)
         {
-            // Get Handle to Hard Drive
-            IntPtr hDrive = Util.getHandle(drivePath);
-
-            // Create a FileStream to read from hDrive
-            using (FileStream streamToRead = Util.getFileStream(hDrive))
-            {
-                // Read Master Boot Record (first 512 bytes) from disk
-                return Util.readDrive(streamToRead, 0, 512);
-            }
+            return Helper.readDrive(drivePath, 0x00, 0x200);
         }
 
         public static MasterBootRecord Get(string drivePath)
@@ -138,13 +128,13 @@ namespace PowerForensics
         {
             List<PartitionEntry> pList = new List<PartitionEntry>();
 
-            ulong offset = 512 * (ulong)startSector;
+            ulong offset = 0x200 * (ulong)startSector;
 
-            byte[] extendedMBR = Util.readDrive(streamToRead, offset, 0x200);
+            byte[] extendedMBR = Helper.readDrive(streamToRead, offset, 0x200);
 
-            pList.Add(new PartitionEntry(Util.GetSubArray(extendedMBR, 0x1BE, PARTITION_ENTRY_SIZE), startSector));
+            pList.Add(new PartitionEntry(Helper.GetSubArray(extendedMBR, 0x1BE, PARTITION_ENTRY_SIZE), startSector));
 
-            PartitionEntry secondEntry = new PartitionEntry(Util.GetSubArray(extendedMBR, 0x1CE, PARTITION_ENTRY_SIZE), startSector);
+            PartitionEntry secondEntry = new PartitionEntry(Helper.GetSubArray(extendedMBR, 0x1CE, PARTITION_ENTRY_SIZE), startSector);
             pList.Add(secondEntry);
 
             if (secondEntry.SystemId == "MS_EXTENDED")

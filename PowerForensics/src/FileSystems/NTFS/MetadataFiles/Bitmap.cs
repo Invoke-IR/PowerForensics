@@ -30,12 +30,13 @@ namespace PowerForensics.Ntfs
 
         public static Bitmap Get(string volume, ulong cluster)
         {
+            Helper.getVolumeName(ref volume);
             return Get(volume, MftIndex.BITMAP_INDEX, cluster);
         }
 
         public static Bitmap GetByPath(string path, ulong cluster)
         {
-            string volume = Util.GetVolumeFromPath(path);
+            string volume = Helper.GetVolumeFromPath(path);
             IndexEntry entry = IndexEntry.Get(path);
             return Get(volume, (int)entry.RecordNumber, cluster);
         }
@@ -45,12 +46,10 @@ namespace PowerForensics.Ntfs
             ulong sectorOffset = cluster / 4096;
 
             // Check for valid Volume name
-            Util.getVolumeName(ref volume);
-
-            IntPtr hVolume = Util.getHandle(volume);
+            Helper.getVolumeName(ref volume);
 
             // Set up FileStream to read volume
-            FileStream streamToRead = Util.getFileStream(hVolume);
+            FileStream streamToRead = Helper.getFileStream(volume);
 
             // Get VolumeBootRecord object for logical addressing
             VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
@@ -65,7 +64,7 @@ namespace PowerForensics.Ntfs
             ulong offset = dataRunOffset + (VBR.BytesPerSector * sectorOffset);
 
             // Read appropriate sector
-            byte[] bytes = Util.readDrive(streamToRead, offset, VBR.BytesPerSector);
+            byte[] bytes = Helper.readDrive(streamToRead, offset, VBR.BytesPerSector);
 
             return Get(bytes, cluster);
         }
@@ -115,7 +114,7 @@ namespace PowerForensics.Ntfs
         public static Bitmap[] GetInstancesByPath(string path)
         {
             // Get Volume string from specified path
-            string volume = Util.GetVolumeFromPath(path);
+            string volume = Helper.GetVolumeFromPath(path);
 
             // Determine Record Number for specified file
             IndexEntry entry = IndexEntry.Get(path);
@@ -185,9 +184,9 @@ namespace PowerForensics.Ntfs
 
         internal static NonResident GetDataStream(FileRecord fileRecord)
         {
-            foreach (Attr attr in fileRecord.Attribute)
+            foreach (FileRecordAttribute attr in fileRecord.Attribute)
             {
-                if (attr.Name == Attr.ATTR_TYPE.DATA)
+                if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
                 {
                     return attr as NonResident;
                 }

@@ -21,7 +21,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal WindowsVersion(byte[] bytes, NamedKey nk)
+        private WindowsVersion(byte[] bytes, NamedKey nk)
         {
             foreach (ValueKey vk in nk.GetValues(bytes))
             {
@@ -63,7 +63,8 @@ namespace PowerForensics.Artifacts
 
         public static WindowsVersion Get(string volume)
         {
-            return WindowsVersion.GetByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
+            Helper.getVolumeName(ref volume);
+            return WindowsVersion.GetByPath(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
         }
 
         public static WindowsVersion GetByPath(string hivePath)

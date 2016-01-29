@@ -71,7 +71,7 @@ namespace PowerForensics.Registry
             byte[] bytes = record.GetContent();
 
             // Registry Header
-            return Util.GetSubArray(bytes, 0x00, 0x200);
+            return Helper.GetSubArray(bytes, 0x00, 0x200);
         }
 
         public static RegistryHeader Get(string path)

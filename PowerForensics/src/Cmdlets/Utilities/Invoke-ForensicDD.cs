@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-using System.Text.RegularExpressions;
 using PowerForensics.Utilities;
 
 namespace PowerForensics.Cmdlets
@@ -9,7 +8,6 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Invoke-DD cmdlet. 
     /// </summary> 
-    [Alias("4n6dd")]
     [Cmdlet("Invoke", "ForensicDD")]
     public class InvokeDDCommand : PSCmdlet
     {
@@ -80,14 +78,6 @@ namespace PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        ///
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-        }
-
-        /// <summary> 
         /// The ProcessRecord Reads bytes from the InFile
         /// and outputs them to the OutFile.
         /// </summary> 
@@ -102,7 +92,7 @@ namespace PowerForensics.Cmdlets
                 blockSize = 512;
             }
 
-            Util.getVolumeName(ref inFile);
+            Helper.getVolumeName(ref inFile);
 
             if (this.MyInvocation.BoundParameters.ContainsKey("OutFile"))
             {
@@ -110,11 +100,7 @@ namespace PowerForensics.Cmdlets
             }
             else
             {
-                for(int i = 0; i < count; i++)
-                {
-                    WriteObject(DD.Get(inFile, offset, blockSize));
-                    offset += blockSize;
-                }
+                WriteObject(DD.Get(inFile, offset, blockSize, count));
             }
 
         }

@@ -18,7 +18,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal TypedPaths(string user, string path)
+        private TypedPaths(string user, string path)
         {
             User = user;
             ImagePath = path;
@@ -44,7 +44,17 @@ namespace PowerForensics.Artifacts
 
                 foreach (ValueKey vk in nk.GetValues(bytes))
                 {
-                    paths[i] = new TypedPaths(RegistryHelper.GetUserHiveOwner(hivePath), (string)vk.GetData(bytes));
+                    string ImagePath = null;
+                    try
+                    {
+                        ImagePath = (string)vk.GetData(bytes);
+                    }
+                    catch
+                    {
+                        ImagePath = Encoding.Unicode.GetString((byte[])vk.GetData(bytes));
+                    }
+                    
+                    paths[i] = new TypedPaths(RegistryHelper.GetUserHiveOwner(hivePath), ImagePath);
                     i++;
                 }
                 return paths;
@@ -57,6 +67,8 @@ namespace PowerForensics.Artifacts
 
         public static TypedPaths[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<TypedPaths> list = new List<TypedPaths>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

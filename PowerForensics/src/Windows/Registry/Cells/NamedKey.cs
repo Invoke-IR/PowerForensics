@@ -263,14 +263,14 @@ namespace PowerForensics.Registry
         {
             if (NumberOfValues > 0)
             {
-                ValuesList list = new ValuesList(Util.GetSubArray(bytes, (uint)ValuesListOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, ValuesListOffset))), NumberOfValues);
+                ValuesList list = new ValuesList(Helper.GetSubArray(bytes, ValuesListOffset, Math.Abs(BitConverter.ToInt32(bytes, ValuesListOffset))), NumberOfValues);
 
                 ValueKey[] vkArray = new ValueKey[list.Offset.Length];
 
                 for (int i = 0; i < list.Offset.Length; i++)
                 {
                     int size = Math.Abs(BitConverter.ToInt32(bytes, (int)list.Offset[i]));
-                    vkArray[i] = new ValueKey(Util.GetSubArray(bytes, list.Offset[i], (uint)size), HivePath, Name);
+                    vkArray[i] = new ValueKey(Helper.GetSubArray(bytes, (int)list.Offset[i], size), HivePath, Name);
                 }
 
                 return vkArray;
@@ -296,7 +296,7 @@ namespace PowerForensics.Registry
         {
             if (NumberOfSubKeys > 0)
             {
-                byte[] subKeyListBytes = Util.GetSubArray(bytes, (uint)SubKeysListOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, this.SubKeysListOffset)));
+                byte[] subKeyListBytes = Helper.GetSubArray(bytes, SubKeysListOffset, Math.Abs(BitConverter.ToInt32(bytes, this.SubKeysListOffset)));
                 string type = Encoding.ASCII.GetString(subKeyListBytes, 0x04, 0x02);
 
                 List list = List.Factory(bytes, subKeyListBytes, type);
@@ -306,7 +306,7 @@ namespace PowerForensics.Registry
                 for (int i = 0; i < list.Count; i++)
                 {
                     int size = Math.Abs(BitConverter.ToInt32(bytes, (int)list.Offset[i]));
-                    nkArray[i] = new NamedKey(Util.GetSubArray(bytes, list.Offset[i], (uint)size), HivePath, this.FullName);
+                    nkArray[i] = new NamedKey(Helper.GetSubArray(bytes, (int)list.Offset[i], size), HivePath, this.FullName);
                 }
 
                 return nkArray;
@@ -325,7 +325,7 @@ namespace PowerForensics.Registry
 
         internal SecurityDescriptor GetSecurityKey(byte[] bytes)
         {
-            return (new SecurityKey(Util.GetSubArray(bytes, (uint)SecurityKeyOffset, (uint)Math.Abs(BitConverter.ToInt32(bytes, SecurityKeyOffset))))).Descriptor;
+            return (new SecurityKey(Helper.GetSubArray(bytes, SecurityKeyOffset, Math.Abs(BitConverter.ToInt32(bytes, SecurityKeyOffset))))).Descriptor;
         }
 
         #endregion InstanceMethods

@@ -17,6 +17,7 @@ namespace PowerForensics.Cmdlets
         /// Partition Table that will be returned.
         /// </summary> 
         [Alias("DrivePath")]
+        [ValidatePattern(@"^\\\\.\\PHYSICALDRIVE\d*$")]
         [Parameter(Mandatory = true, Position = 0)]
         public string Path
         {
@@ -28,17 +29,6 @@ namespace PowerForensics.Cmdlets
         #endregion Parameters
 
         #region Cmdlet Overrides
-
-        /// <summary> 
-        /// 
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            // Ensure cmdlet is being run as Administrator
-            Util.checkAdmin();
-            // Check that drivePath is valid
-            Util.getDriveName(drivePath);
-        }
 
         /// <summary> 
         /// The ProcessRecord instantiates a MasterBootRecord Object
@@ -54,8 +44,7 @@ namespace PowerForensics.Cmdlets
             }
             else
             {
-                GuidPartitionTable gpt = new GuidPartitionTable(drivePath);
-                WriteObject(gpt.GetPartitionTable(), true);
+                WriteObject(GuidPartitionTable.Get(drivePath).GetPartitionTable(), true);
             }
 
         }

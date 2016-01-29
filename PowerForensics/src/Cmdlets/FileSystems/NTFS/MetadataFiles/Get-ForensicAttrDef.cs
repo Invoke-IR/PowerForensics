@@ -18,6 +18,7 @@ namespace PowerForensics.Cmdlets
         /// AttrDef objects that will be returned.
         /// </summary> 
         [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -42,19 +43,6 @@ namespace PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// 
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-            
-            if (ParameterSetName == "ByVolume")
-            {
-                Util.getVolumeName(ref volume);
-            }
-        }
-
-        /// <summary> 
         /// The ProcessRecord method calls AttrDef.GetInstances() 
         /// method to iterate through each AttrDef object on the specified volume.
         /// </summary> 
@@ -63,7 +51,6 @@ namespace PowerForensics.Cmdlets
             switch (ParameterSetName)
             {
                 case "ByVolume":
-                    Util.getVolumeName(ref volume);
                     WriteObject(AttrDef.GetInstances(volume));
                     break;
                 case "ByPath":

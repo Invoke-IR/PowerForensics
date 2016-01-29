@@ -96,9 +96,15 @@ namespace PowerForensics.Ntfs
 
         #region GetMethods
 
-        public static UsnJrnl Get(string path, ulong usn)
+        public static UsnJrnl Get(string volume, ulong usn)
         {
-            string volume = Util.GetVolumeFromPath(path);
+            Helper.getVolumeName(ref volume);
+            return GetByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl", usn);
+        }
+
+        public static UsnJrnl GetByPath(string path, ulong usn)
+        {
+            string volume = Helper.GetVolumeFromPath(path);
             IndexEntry entry = IndexEntry.Get(path);
             return Get(volume, (int)entry.RecordNumber, usn);
         }
@@ -106,11 +112,10 @@ namespace PowerForensics.Ntfs
         private static UsnJrnl Get(string volume, int recordnumber, ulong usn)
         {
             // Check for valid Volume name
-            Util.getVolumeName(ref volume);
+            Helper.getVolumeName(ref volume);
 
             // Set up FileStream to read volume
-            IntPtr hVolume = Util.getHandle(volume);
-            FileStream streamToRead = Util.getFileStream(hVolume);
+            FileStream streamToRead = Helper.getFileStream(volume);
 
             // Get VolumeBootRecord object for logical addressing
             VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
@@ -145,13 +150,13 @@ namespace PowerForensics.Ntfs
                     else
                     {
                         // Read DataRun from disk
-                        byte[] fragmentBytes = Util.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)J.DataRun[i].ClusterLength * VBR.BytesPerCluster));
+                        byte[] fragmentBytes = Helper.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)J.DataRun[i].ClusterLength * VBR.BytesPerCluster));
 
                         // Instatiate a byte array that is the size of a single cluster
                         byte[] clusterBytes = new byte[VBR.BytesPerCluster];
 
                         // Iterate through the clusters in the DataRun
-                        for (long j = 0; j < J.DataRun[i].ClusterLength; j++)
+                        for (int j = 0; j < J.DataRun[i].ClusterLength; j++)
                         {
                             // If usnOffset is not in current cluster, then subtract cluster size from offset and iterate
                             if (VBR.BytesPerCluster <= usnOffset)
@@ -162,7 +167,7 @@ namespace PowerForensics.Ntfs
                             else
                             {
                                 // Copy current cluster bytes to clusterBytes variable
-                                Array.Copy(fragmentBytes, ((long)j * VBR.BytesPerCluster), clusterBytes, 0, clusterBytes.Length);
+                                Array.Copy(fragmentBytes, (int)(j * VBR.BytesPerCluster), clusterBytes, 0, clusterBytes.Length);
 
                                 // Parse desired UsnJrnl entry from cluster
                                 int offset = (int)usnOffset;
@@ -185,13 +190,14 @@ namespace PowerForensics.Ntfs
 
         public static UsnJrnl[] GetInstances(string volume)
         {
-            IndexEntry entry = IndexEntry.Get(volume.Split('\\')[3] + "\\$Extend\\$UsnJrnl");
+            Helper.getVolumeName(ref volume);
+            IndexEntry entry = IndexEntry.Get(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl");
             return GetInstances(volume, (int)entry.RecordNumber);
         }
 
         public static UsnJrnl[] GetInstancesByPath(string path)
         {
-            string volume = Util.GetVolumeFromPath(path);
+            string volume = Helper.GetVolumeFromPath(path);
             IndexEntry entry = IndexEntry.Get(path);
             return GetInstances(volume, (int)entry.RecordNumber);
         }
@@ -199,7 +205,7 @@ namespace PowerForensics.Ntfs
         public static UsnJrnl[] GetTestInstances(string path)
         {
             byte[] bytes = FileRecord.GetContentBytes(path, "$J");
-            string volume = Util.GetVolumeFromPath(path);
+            string volume = Helper.GetVolumeFromPath(path);
 
             VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
             List<UsnJrnl> usnList = new List<UsnJrnl>();
@@ -237,12 +243,8 @@ namespace PowerForensics.Ntfs
 
         private static UsnJrnl[] GetInstances(string volume, int recordnumber)
         {
-            // Check for valid Volume name
-            Util.getVolumeName(ref volume);
-
             // Set up FileStream to read volume
-            IntPtr hVolume = Util.getHandle(volume);
-            FileStream streamToRead = Util.getFileStream(hVolume);
+            FileStream streamToRead = Helper.getFileStream(volume);
 
             // Get VolumeBootRecord object for logical addressing
             VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
@@ -260,13 +262,13 @@ namespace PowerForensics.Ntfs
                 {
                     long clusterCount = J.DataRun[i].ClusterLength;
 
-                    byte[] fragmentBytes = Util.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)clusterCount * VBR.BytesPerCluster));
+                    byte[] fragmentBytes = Helper.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)clusterCount * VBR.BytesPerCluster));
 
                     byte[] clusterBytes = new byte[VBR.BytesPerCluster];
 
-                    for (long j = 0; j < clusterCount; j++)
+                    for (int j = 0; j < clusterCount; j++)
                     {
-                        Array.Copy(fragmentBytes, ((long)j * VBR.BytesPerCluster), clusterBytes, 0, clusterBytes.Length);
+                        Array.Copy(fragmentBytes, (int)(j * VBR.BytesPerCluster), clusterBytes, 0, clusterBytes.Length);
 
                         int offset = 0;
 
@@ -302,7 +304,7 @@ namespace PowerForensics.Ntfs
 
         internal static NonResident GetJStream(FileRecord fileRecord)
         {
-            foreach (Attr attr in fileRecord.Attribute)
+            foreach (FileRecordAttribute attr in fileRecord.Attribute)
             {
                 if (attr.NameString == "$J")
                 {
@@ -400,35 +402,35 @@ namespace PowerForensics.Ntfs
 
         #region GetMethod
 
-        public static UsnJrnlDetail Get(string path)
+        public static UsnJrnlDetail Get(string volume)
+        {
+            Helper.getVolumeName(ref volume);
+            return GetByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl");
+        }
+        
+        public static UsnJrnlDetail GetByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
-            return new UsnJrnlDetail(GetMaxStream(record).RawData);
+            return new UsnJrnlDetail(record.GetContent(@"$Max"));
         }
 
         #endregion GetMethod
 
         #region GetBytesMethod
 
-        public static byte[] GetBytes(string path)
+        public static byte[] GetBytes(string volume)
+        {
+            Helper.getVolumeName(ref volume);
+            return GetBytesByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl");
+        }
+
+        public static byte[] GetBytesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
-            return GetMaxStream(record).RawData;
+            return record.GetContent(@"$Max");
         }
 
         #endregion GetBytesMethod
-
-        internal static Data GetMaxStream(FileRecord fileRecord)
-        {
-            foreach (Attr attr in fileRecord.Attribute)
-            {
-                if (attr.NameString == "$Max")
-                {
-                    return attr as Data;
-                }
-            }
-            throw new Exception("No $MAX attribute found.");
-        }
 
         #endregion StaticMethods
     }

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8FDF518-A2AB-4948-B082-24866AC74ECA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PowerForensicsv2</RootNamespace>
+    <AssemblyName>PowerForensicsv2</AssemblyName>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Module\PowerForensicsv2\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FrameworkPathOverride>C:\Windows\system32\DotNetCore\v1.0\</FrameworkPathOverride>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FrameworkPathOverride>C:\Windows\system32\DotNetCore\v1.0\</FrameworkPathOverride>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Reference Assemblies\Microsoft\WindowsPowerShell\v1.0\System.Management.Automation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\RecentFileCache.cs" />
+    <Compile Include="src\Artifacts\Windows\JavaCache.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\MicrosoftOffice\FileMRU.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\MicrosoftOffice\OutlookCatalog.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\MicrosoftOffice\PlaceMRU.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\MicrosoftOffice\TrustRecord.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\RecentDocs.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedPath.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\RunMRU.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\LastVisitedMRU.cs" />
+    <Compile Include="src\Artifacts\Windows\Persistence\RunKey.cs" />
+    <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Shimcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicShimcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicRecentFileCache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeOutlookCatalog.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicRunKey.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicScheduledJob.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Get-ForensicShellLink.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicTypedUrl.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicRunMru.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicWindowsSearchHistory .cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicExplorerTypedPath.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeFileMru.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficePlaceMru.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeTrustRecord.cs" />
+    <Compile Include="src\Cmdlets\ForensicTimeline\ConvertTo-ForensicTimeline.cs" />
+    <Compile Include="src\Cmdlets\ForensicTimeline\Get-ForensicTimeline.cs" />
+    <Compile Include="src\Cmdlets\Windows\Get-ForensicEventLog.cs" />
+    <Compile Include="src\Cmdlets\Windows\Get-ForensicRegistryKey.cs" />
+    <Compile Include="src\Cmdlets\Windows\Get-ForensicRegistryValue.cs" />
+    <Compile Include="src\Artifacts\Windows\Persistence\AlternateDataStream.cs" />
+    <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Amcache.cs" />
+    <Compile Include="src\Artifacts\Windows\SoftwareHive\NetworkList.cs" />
+    <Compile Include="src\Artifacts\Windows\SamHive\Sid.cs" />
+    <Compile Include="src\Artifacts\Windows\SamHive\UserDetails.cs" />
+    <Compile Include="src\Artifacts\Windows\Persistence\ScheduledJob.cs" />
+    <Compile Include="src\Artifacts\Windows\Persistence\ScheduledTask.cs" />
+    <Compile Include="src\Artifacts\Windows\ShellLink.cs" />
+    <Compile Include="src\Artifacts\Windows\SystemHive\Timezone.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedUrls.cs" />
+    <Compile Include="src\Artifacts\Windows\NTUSER.DAT\UserAssist.cs" />
+    <Compile Include="src\FileSystems\ExFat\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Fat\DirectoryEntry.cs" />
+    <Compile Include="src\FileSystems\Fat\FileAllocationTable.cs" />
+    <Compile Include="src\FileSystems\Fat\FsInformationSector.cs" />
+    <Compile Include="src\FileSystems\Fat\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\EA.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\EAInformation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\NonResidentHeader.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\ResidentHeader.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\CommonHeader.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocationTest.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\Bitmap.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\BadClus.cs" />
+    <Compile Include="src\FileSystems\Generic\VolumeBootRecord.cs" />
+    <Compile Include="src\Helper\Helper.cs" />
+    <Compile Include="src\Windows\EventLog\BinaryXml.cs" />
+    <Compile Include="src\Windows\EventLog\EventRecord.cs" />
+    <Compile Include="src\Windows\Registry\Cells\Cell.cs" />
+    <Compile Include="src\Windows\Registry\Cells\SecurityDescriptor.cs" />
+    <Compile Include="src\Windows\Registry\Cells\SecurityKey.cs" />
+    <Compile Include="src\Windows\Registry\Cells\ValueKey.cs" />
+    <Compile Include="src\Windows\Registry\RegistryHelper.cs" />
+    <Compile Include="src\Windows\Registry\List\HashedLeaf.cs" />
+    <Compile Include="src\Windows\Registry\List\Leaf.cs" />
+    <Compile Include="src\Windows\Registry\List\LeafItem.cs" />
+    <Compile Include="src\Windows\Registry\List\List.cs" />
+    <Compile Include="src\Windows\Registry\List\OffsetRecord.cs" />
+    <Compile Include="src\Windows\Registry\List\ReferenceItem.cs" />
+    <Compile Include="src\Windows\Registry\List\ValuesList.cs" />
+    <Compile Include="src\Utilities\Hash.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicAlternateDataStream.cs" />
+    <Compile Include="src\Cmdlets\Analytics\Get-ForensicUnallocatedSpace.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicAmcache.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\SoftwareHive\Get-ForensicNetworkList.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicUserAssist.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\SamHive\Get-ForensicSid.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileSlack.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicMftSlack.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicBitmap.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnlInformation.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnl.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeInformation.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeName.cs" />
+    <Compile Include="src\Windows\Registry\Cells\NamedKey.cs" />
+    <Compile Include="src\Windows\Registry\RegistryHeader.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\Get-ForensicPrefetch.cs" />
+    <Compile Include="src\Artifacts\Windows\Prefetch.cs" />
+    <Compile Include="src\Cmdlets\Artifacts\SystemHive\Get-ForensicTimezone.cs" />
+    <Compile Include="src\Cmdlets\BootSector\Get-BootSector.cs" />
+    <Compile Include="src\Utilities\DD.cs" />
+    <Compile Include="src\ForensicTimeline\ForensicTimeline.cs" />
+    <Compile Include="src\Cmdlets\BootSector\Get-GuidPartitionTable.cs" />
+    <Compile Include="src\BootSectors\GuidPartitionTable.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\AttrDef.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicAttrDef.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Get-ForensicVolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\LogFile.cs" />
+    <Compile Include="src\Cmdlets\BootSector\Get-MasterBootRecord.cs" />
+    <Compile Include="src\BootSectors\MasterBootRecord.cs" />
+    <Compile Include="src\Cmdlets\Utilities\Copy-ForensicFile.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\Data.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\FileName.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexRoot.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\ObjectId.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\StandardInformation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\VolumeInformation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\VolumeName.cs" />
+    <Compile Include="src\FileSystems\Ntfs\FileRecord\FileRecord.cs" />
+    <Compile Include="src\FileSystems\Ntfs\FileRecord\IndexEntry.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\NonResident\NonResident.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\NonResident\DataRun.cs" />
+    <Compile Include="src\Cmdlets\Utilities\Get-ForensicChildItem.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileRecordIndex.cs" />
+    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileRecord.cs" />
+    <Compile Include="src\Cmdlets\Utilities\Invoke-ForensicDD.cs" />
+    <Compile Include="src\Cmdlets\BootSector\Get-PartitionTable.cs" />
+    <Compile Include="src\Cmdlets\Utilities\Get-ForensicContent.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MasterFileTable.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MftIndex.cs" />
+    <Compile Include="src\Helper\NativeMethods.cs" />
+    <Compile Include="Properties\AssemblyInfov2.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

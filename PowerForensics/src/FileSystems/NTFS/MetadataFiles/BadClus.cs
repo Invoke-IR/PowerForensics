@@ -27,12 +27,13 @@ namespace PowerForensics.Ntfs
         
         internal static FileRecord GetFileRecord(string volume)
         {
+            Helper.getVolumeName(ref volume);
             return FileRecord.Get(volume, MftIndex.BADCLUS_INDEX, true);
         }
 
         internal static NonResident GetBadStream(FileRecord fileRecord)
         {
-            foreach (Attr attr in fileRecord.Attribute)
+            foreach (FileRecordAttribute attr in fileRecord.Attribute)
             {
                 if (attr.NameString == "$Bad")
                 {

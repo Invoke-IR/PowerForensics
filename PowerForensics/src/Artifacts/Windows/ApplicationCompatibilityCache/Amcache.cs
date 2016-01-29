@@ -29,7 +29,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal Amcache(NamedKey nk, byte[] bytes)
+        private Amcache(NamedKey nk, byte[] bytes)
         {
             /*
             Console.WriteLine(nk.Name);
@@ -44,10 +44,24 @@ namespace PowerForensics.Artifacts
                 switch (vk.Name)
                 {
                     case "0":
-                        ProductName = (string)vk.GetData(bytes);
+                        try
+                        {
+                            ProductName = (string)vk.GetData(bytes);
+                        }
+                        catch
+                        {
+                            ProductName = Encoding.ASCII.GetString((byte[])vk.GetData(bytes));
+                        }
                         break;
                     case "1":
-                        CompanyName = (string)vk.GetData(bytes);
+                        try
+                        {
+                            CompanyName = (string)vk.GetData(bytes);
+                        }
+                        catch
+                        {
+                            CompanyName = Encoding.ASCII.GetString((byte[])vk.GetData(bytes));
+                        }
                         break;
                     case "6":
                         FileSize = BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00);
@@ -56,7 +70,7 @@ namespace PowerForensics.Artifacts
                         Description = (string)vk.GetData(bytes);
                         break;
                     case "f":
-                        CompileTime = Util.FromUnixTime(BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00));
+                        CompileTime = Helper.FromUnixTime(BitConverter.ToUInt32((byte[])vk.GetData(bytes), 0x00));
                         break;
                     case "11":
                         ModifiedTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64((byte[])vk.GetData(bytes), 0x00));
@@ -88,10 +102,12 @@ namespace PowerForensics.Artifacts
 
         public static Amcache[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             WindowsVersion version = WindowsVersion.Get(volume);
             if(version.CurrentVersion.CompareTo(new Version("6.2")) >= 0)
             {
-                return GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\Amcache.hve");
+                return GetInstancesByPath(Helper.GetVolumeLetter(volume) + @"\Windows\AppCompat\Programs\Amcache.hve");
             }
             else
             {

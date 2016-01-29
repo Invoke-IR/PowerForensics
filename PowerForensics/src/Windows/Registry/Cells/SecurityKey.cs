@@ -43,7 +43,7 @@ namespace PowerForensics.Registry
                 Blink = BitConverter.ToUInt32(bytes, 0x0C);
                 ReferenceCount = BitConverter.ToUInt32(bytes, 0x10);
                 DescriptorLength = BitConverter.ToUInt32(bytes, 0x14);
-                Descriptor = new SecurityDescriptor(Util.GetSubArray(bytes, 0x18, DescriptorLength));
+                Descriptor = new SecurityDescriptor(Helper.GetSubArray(bytes, 0x18, (int)DescriptorLength));
             }
             else
             {

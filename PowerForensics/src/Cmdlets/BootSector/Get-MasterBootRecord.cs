@@ -17,6 +17,7 @@ namespace PowerForensics.Cmdlets
         /// for the MBR that will be returned.
         /// </summary> 
         [Alias("DrivePath")]
+        [ValidatePattern(@"^\\\\.\\PHYSICALDRIVE\d*$")]
         [Parameter(Mandatory = true, Position = 0)]
         public string Path
         {
@@ -41,23 +42,11 @@ namespace PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// 
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            // Ensure cmdlet is being run as Administrator
-            Util.checkAdmin();
-        }
-
-        /// <summary> 
         /// The ProcessRecord outputs a MasterBootRecord object for the
         /// specified Drive Path
         /// </summary> 
         protected override void ProcessRecord()
         {
-            // Check that drivePath is valid
-            Util.getDriveName(drivePath);
-
             if (asBytes)
             {
                 WriteObject(MasterBootRecord.GetBytes(drivePath));

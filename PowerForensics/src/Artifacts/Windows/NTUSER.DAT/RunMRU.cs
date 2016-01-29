@@ -16,7 +16,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal RunMRU(string user, string path)
+        private RunMRU(string user, string path)
         {
             User = user;
             ImagePath = path;
@@ -76,6 +76,8 @@ namespace PowerForensics.Artifacts
 
         public static RunMRU[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<RunMRU> list = new List<RunMRU>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

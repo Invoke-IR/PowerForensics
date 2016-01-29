@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using System.Xml;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
@@ -19,7 +18,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal ScheduledTask(string xml)
+        private ScheduledTask(string xml)
         {
 
         }
@@ -40,6 +39,7 @@ namespace PowerForensics.Artifacts
 
         public static ScheduledTask[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
             return null;
         }
 

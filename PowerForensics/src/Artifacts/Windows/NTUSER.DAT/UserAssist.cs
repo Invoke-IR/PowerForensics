@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using PowerForensics.Registry;
-using PowerForensics.Utilities;
 
 namespace PowerForensics.Artifacts
 {
@@ -13,7 +12,7 @@ namespace PowerForensics.Artifacts
 
         private static string Decode(string Path)
         {
-            Path = Rot13.Transform(Path);
+            Path = Helper.FromRot13(Path);
 
             Path = Path.Replace("{de61d971-5ebc-4f02-a3a9-6c82895e5c04}", @"Add or Remove Programs (Control Panel)");
             Path = Path.Replace("{F38BF404-1D43-42F2-9305-67DE0B28FC23}", @"%windir%");
@@ -133,7 +132,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal UserAssist(string user, ValueKey vk, byte[] bytes)
+        private UserAssist(string user, ValueKey vk, byte[] bytes)
         {
             User = user;
             ImagePath = Decode(vk.Name);
@@ -183,6 +182,8 @@ namespace PowerForensics.Artifacts
 
         public static UserAssist[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<UserAssist> list = new List<UserAssist>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
@@ -202,10 +203,14 @@ namespace PowerForensics.Artifacts
 
         #endregion StaticMethods
 
+        #region OverrideMethods
+
         public override string ToString()
         {
             return String.Format("[PROGRAM EXECUTION] {0} run {1} times", this.ImagePath, this.RunCount);
         }
+
+        #endregion OverrideMethods
     }
 
     #endregion UserAssistClass

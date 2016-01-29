@@ -12,8 +12,8 @@ namespace PowerForensics
 
         #region Constants
 
-        private const ulong GPT_OFFSET = 512;
-        private const ulong SECTOR_SIZE = 512;
+        private const int GPT_OFFSET = 512;
+        private const int SECTOR_SIZE = 512;
 
         #endregion Constants
 
@@ -40,11 +40,10 @@ namespace PowerForensics
             MasterBootRecord mbr = MasterBootRecord.Get(devicePath);
             if (mbr.PartitionTable[0].SystemId == "EFI_GPT_DISK")
             {
-                IntPtr hDevice = Util.getHandle(devicePath);
-                using (FileStream streamToRead = Util.getFileStream(hDevice))
+                using (FileStream streamToRead = Helper.getFileStream(devicePath))
                 {
                     // Get Header
-                    GuidPartitionTableHeader GPTHeader = new GuidPartitionTableHeader(Util.readDrive(streamToRead, GPT_OFFSET, SECTOR_SIZE));
+                    GuidPartitionTableHeader GPTHeader = new GuidPartitionTableHeader(Helper.readDrive(streamToRead, GPT_OFFSET, SECTOR_SIZE));
                     Revision = GPTHeader.Revision;
                     HeaderSize = GPTHeader.HeaderSize;
                     MyLBA = GPTHeader.MyLBA;
@@ -65,14 +64,14 @@ namespace PowerForensics
                     for(ulong j = GPTHeader.PartitionEntryLBA; (j < GPTHeader.PartitionEntryLBA + (GPTHeader.NumberOfPartitionEntries / (SECTOR_SIZE / GPTHeader.SizeOfPartitionEntry))); j++)
                     {
                         // Read one sector
-                        byte[] partitionSectorBytes = Util.readDrive(streamToRead, (SECTOR_SIZE * j), SECTOR_SIZE);
+                        byte[] partitionSectorBytes = Helper.readDrive(streamToRead, (SECTOR_SIZE * j), SECTOR_SIZE);
                         
                         // Iterate through Partition Entries in Sector
                         // Sectors (512 bytes) / Partitions (128 bytes) = 4 partitions per sector 
-                        for (uint i = 0; i < 512; i += GPTHeader.SizeOfPartitionEntry)
+                        for (int i = 0; i < 512; i += (int)GPTHeader.SizeOfPartitionEntry)
                         {
                             // Instantiate a GuidPartitionTableEntry object
-                            GuidPartitionTableEntry entry = new GuidPartitionTableEntry(Util.GetSubArray(partitionSectorBytes, i, GPTHeader.SizeOfPartitionEntry));
+                            GuidPartitionTableEntry entry = new GuidPartitionTableEntry(Helper.GetSubArray(partitionSectorBytes, i, (int)GPTHeader.SizeOfPartitionEntry));
                             
                             // If entry's PartitionTypeGUID is 00000000-0000-0000-0000-000000000000 then it is not a partition
                             if (entry.PartitionTypeGuid == new Guid("00000000-0000-0000-0000-000000000000"))
@@ -103,7 +102,7 @@ namespace PowerForensics
         {
             #region Header
 
-            GuidPartitionTableHeader GPTHeader = new GuidPartitionTableHeader(Util.GetSubArray(bytes, 0x00, (uint)SECTOR_SIZE));
+            GuidPartitionTableHeader GPTHeader = new GuidPartitionTableHeader(Helper.GetSubArray(bytes, 0x00, SECTOR_SIZE));
             Revision = GPTHeader.Revision;
             HeaderSize = GPTHeader.HeaderSize;
             MyLBA = GPTHeader.MyLBA;
@@ -120,10 +119,10 @@ namespace PowerForensics
             // Get PartitionTable
             List<GuidPartitionTableEntry> partitionList = new List<GuidPartitionTableEntry>();
 
-            for (uint i = 0; i < (bytes.Length - (int)SECTOR_SIZE); i += GPTHeader.SizeOfPartitionEntry)
+            for (int i = 0; i < (bytes.Length - SECTOR_SIZE); i += (int)GPTHeader.SizeOfPartitionEntry)
             {
                 // Instantiate a GuidPartitionTableEntry object
-                GuidPartitionTableEntry entry = new GuidPartitionTableEntry(Util.GetSubArray(bytes, (i + (uint)SECTOR_SIZE), GPTHeader.SizeOfPartitionEntry));
+                GuidPartitionTableEntry entry = new GuidPartitionTableEntry(Helper.GetSubArray(bytes, (i + SECTOR_SIZE), (int)GPTHeader.SizeOfPartitionEntry));
                 // If entry's PartitionTypeGUID is 00000000-0000-0000-0000-000000000000 then it is not a partition
                 if (entry.PartitionTypeGuid == new Guid("00000000-0000-0000-0000-000000000000"))
                 {
@@ -139,15 +138,21 @@ namespace PowerForensics
 
         #region StaticMethods
 
+        public static GuidPartitionTable Get(string devicePath)
+        {
+            return new GuidPartitionTable(GuidPartitionTable.GetBytes(devicePath));
+        }
+
         public static byte[] GetBytes(string devicePath)
         {
             MasterBootRecord mbr = MasterBootRecord.Get(devicePath);
             if (mbr.PartitionTable[0].SystemId == "EFI_GPT_DISK")
             {
-                IntPtr hDevice = Util.getHandle(devicePath);
-                using (FileStream streamToRead = Util.getFileStream(hDevice))
+                //IntPtr hDevice = Helper.getHandle(devicePath);
+                //using (FileStream streamToRead = Helper.getFileStream(hDevice))
+                using (FileStream streamToRead = Helper.getFileStream(devicePath))
                 {
-                    return Util.readDrive(streamToRead, GPT_OFFSET, SECTOR_SIZE);
+                    return Helper.readDrive(streamToRead, GPT_OFFSET, SECTOR_SIZE);
                 }
             }
             else
@@ -156,10 +161,7 @@ namespace PowerForensics
             }
         }
 
-        public static GuidPartitionTable Get(string devicePath)
-        {
-            return new GuidPartitionTable(GuidPartitionTable.GetBytes(devicePath));
-        }
+        
 
         #endregion StaticMethods
 
@@ -227,7 +229,7 @@ namespace PowerForensics
                 AlternateLBA = BitConverter.ToUInt64(bytes, 0x20);
                 FirstUsableLBA = BitConverter.ToUInt64(bytes, 0x28);
                 LastUsableLBA = BitConverter.ToUInt64(bytes, 0x30);
-                DiskGUID = new Guid(Util.GetSubArray(bytes, 0x38, 0x10));
+                DiskGUID = new Guid(Helper.GetSubArray(bytes, 0x38, 0x10));
                 PartitionEntryLBA = BitConverter.ToUInt64(bytes, 0x48);
                 NumberOfPartitionEntries = BitConverter.ToUInt32(bytes, 0x50);
                 SizeOfPartitionEntry = BitConverter.ToUInt32(bytes, 0x54);
@@ -282,8 +284,8 @@ namespace PowerForensics
 
         internal GuidPartitionTableEntry(byte[] bytes)
         {
-            PartitionTypeGuid = new Guid(Util.GetSubArray(bytes, 0x00, 0x10));
-            UniquePartitionGuid = new Guid(Util.GetSubArray(bytes, 0x10, 0x10));
+            PartitionTypeGuid = new Guid(Helper.GetSubArray(bytes, 0x00, 0x10));
+            UniquePartitionGuid = new Guid(Helper.GetSubArray(bytes, 0x10, 0x10));
             StartingLBA = BitConverter.ToUInt64(bytes, 32);
             EndingLBA = BitConverter.ToUInt64(bytes, 40);
             Attributes = (PARTITION_ATTRIBUTE)BitConverter.ToUInt64(bytes, 48);

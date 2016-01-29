@@ -9,7 +9,6 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Content cmdlet. 
     /// </summary> 
-    [Alias("4n6c")]
     [Cmdlet(VerbsCommon.Get, "ForensicContent", DefaultParameterSetName = "ByPath")]
     public class GetContentRawCommand : PSCmdlet
     {
@@ -30,6 +29,7 @@ namespace PowerForensics.Cmdlets
         private string filePath;
 
         [Parameter(ParameterSetName = "ByIndex")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -76,25 +76,15 @@ namespace PowerForensics.Cmdlets
         #region Cmdlet Overrides
 
         /// <summary> 
-        /// 
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-        }
-
-        /// <summary> 
         /// The ProcessRecord outputs the raw bytes of the specified File
         /// </summary> 
         protected override void ProcessRecord()
         {
-
-            int indexNo = 0;
             byte[] contentArray = null;
 
             #region Encoding
 
-            System.Text.Encoding contentEncoding = System.Text.Encoding.Default;
+            System.Text.Encoding contentEncoding = System.Text.Encoding.ASCII;
             bool asBytes = false;
 
             if(this.MyInvocation.BoundParameters.ContainsKey("Encoding"))
@@ -142,7 +132,7 @@ namespace PowerForensics.Cmdlets
 
             else if(this.MyInvocation.BoundParameters.ContainsKey("Index"))
             {
-                Util.getVolumeName(ref volume);
+                Helper.getVolumeName(ref volume);
                 contentArray = FileRecord.Get(volume, index, true).GetContent();
             }
 

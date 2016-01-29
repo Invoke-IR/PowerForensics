@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace PowerForensics.Utilities
 {
@@ -8,12 +9,9 @@ namespace PowerForensics.Utilities
     public class DD
     {
         public static void Get(string inFile, string outFile, ulong offset, uint blockSize, uint count)
-        { 
-            // Get handle (hVolume) for inFile
-            IntPtr hVolume = Util.getHandle(inFile);
-            
+        {   
             // Get FileStream for reading from the hVolume handle
-            using (FileStream streamToRead = Util.getFileStream(hVolume))
+            using (FileStream streamToRead = Helper.getFileStream(inFile))
             {
                 // Open file for reading
                 using (FileStream streamToWrite = new FileStream(outFile, System.IO.FileMode.Append, System.IO.FileAccess.Write))
@@ -21,7 +19,7 @@ namespace PowerForensics.Utilities
                     for (int i = 0; i < count; i++)
                     {
                         // Read the block size amount of bytes from the Volume
-                        byte[] buffer = Util.readDrive(streamToRead, offset, blockSize);
+                        byte[] buffer = Helper.readDrive(streamToRead, offset, blockSize);
 
                         // Writes a block of bytes to this stream using data from a byte array.
                         streamToWrite.Write(buffer, 0, buffer.Length);
@@ -33,17 +31,20 @@ namespace PowerForensics.Utilities
             }
         }
 
-        public static byte[] Get(string inFile, ulong offset, uint blockSize)
+        public static byte[] Get(string inFile, ulong offset, uint blockSize, uint count)
         {
-            // Get handle (hVolume) for inFile
-            IntPtr hVolume = Util.getHandle(inFile);
+            List<byte> byteList = new List<byte>();
 
-            // Get FileStream for reading from the hVolume handle
-            using (FileStream streamToRead = Util.getFileStream(hVolume))
+            using (FileStream streamToRead = Helper.getFileStream(inFile))
             {
-                // Read the block size amount of bytes from the Volume
-                return Util.readDrive(streamToRead, offset, blockSize);
+                for(int i = 0; i < count; i++)
+                {
+                    byteList.AddRange(Helper.readDrive(streamToRead, offset, blockSize));
+                    offset += blockSize;
+                }
             }
+            
+            return byteList.ToArray();
         }
     }  
 

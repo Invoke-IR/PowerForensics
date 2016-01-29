@@ -31,7 +31,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal Shimcache(string path, DateTime lastModTime, ulong size, DateTime lastUpTime)
+        private Shimcache(string path, DateTime lastModTime, ulong size, DateTime lastUpTime)
         {
             Path = path;
             LastModifiedTime = lastModTime;
@@ -45,7 +45,8 @@ namespace PowerForensics.Artifacts
 
         public static Shimcache[] GetInstances(string volume)
         {
-            return Shimcache.GetInstancesByPath(Util.GetVolumeLetter(volume) + @"\Windows\system32\config\SYSTEM");
+            Helper.getVolumeName(ref volume);
+            return Shimcache.GetInstancesByPath(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SYSTEM");
         }
 
         public static Shimcache[] GetInstancesByPath(string hivePath)

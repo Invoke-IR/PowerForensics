@@ -17,7 +17,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #region Constructors
 
-        internal PlaceMRU(string user, string data)
+        private PlaceMRU(string user, string data)
         {
             User = user;
             Path = data.Split('*')[1];
@@ -67,6 +67,8 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         public static PlaceMRU[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<PlaceMRU> list = new List<PlaceMRU>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

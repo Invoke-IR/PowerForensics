@@ -52,10 +52,10 @@ namespace PowerForensics.Registry
             GroupOffset = BitConverter.ToUInt32(bytes, 0x08);
             SACLOffset = BitConverter.ToUInt32(bytes, 0x0C);
             DACLOffset = BitConverter.ToUInt32(bytes, 0x10);
-            Owner = Util.GetSubArray(bytes, OwnerOffset, 0x10);
-            Group = Util.GetSubArray(bytes, GroupOffset, 0x0C);
-            SACL = Util.GetSubArray(bytes, SACLOffset, 0x08);
-            DACL = Util.GetSubArray(bytes, DACLOffset, 0x84);
+            Owner = Helper.GetSubArray(bytes, (int)OwnerOffset, 0x10);
+            Group = Helper.GetSubArray(bytes, (int)GroupOffset, 0x0C);
+            SACL = Helper.GetSubArray(bytes, (int)SACLOffset, 0x08);
+            DACL = Helper.GetSubArray(bytes, (int)DACLOffset, 0x84);
         }
 
         #endregion Constructors

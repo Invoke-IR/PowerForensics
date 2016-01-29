@@ -15,7 +15,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal LastVisitedMRU(string user, string data)
+        private LastVisitedMRU(string user, string data)
         {
             User = user;
             ImagePath = data;

@@ -16,7 +16,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal WordWheelQuery(string user, string path)
+        private WordWheelQuery(string user, string path)
         {
             User = user;
             SearchString = path;
@@ -54,7 +54,16 @@ namespace PowerForensics.Artifacts
                 for (int i = 0; i < MRUListBytes.Length - 4; i += 4)
                 {
                     uint MRUValue = BitConverter.ToUInt32(MRUListBytes, i);
-                    dataStrings[i / 4] = new WordWheelQuery(RegistryHelper.GetUserHiveOwner(hivePath), (string)ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
+                    string SearchString = null;
+                    try
+                    {
+                        SearchString = (string)ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes);
+                    }
+                    catch
+                    {
+                        SearchString = Encoding.Unicode.GetString((byte[])ValueKey.Get(bytes, hivePath, Key, MRUValue.ToString()).GetData(bytes));
+                    }
+                    dataStrings[i / 4] = new WordWheelQuery(RegistryHelper.GetUserHiveOwner(hivePath), SearchString);
                 }
 
                 return dataStrings;
@@ -67,6 +76,8 @@ namespace PowerForensics.Artifacts
 
         public static WordWheelQuery[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<WordWheelQuery> list = new List<WordWheelQuery>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

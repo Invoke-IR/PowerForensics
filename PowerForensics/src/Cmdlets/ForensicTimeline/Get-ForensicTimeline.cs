@@ -13,7 +13,6 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-ForensicTimeline cmdlet. 
     /// </summary> 
-    [Alias("4n6timeline")]
     [Cmdlet(VerbsCommon.Get, "ForensicTimeline")]
     public class GetForensicTimelineCommand : PSCmdlet
     {
@@ -25,6 +24,7 @@ namespace PowerForensics.Cmdlets
         /// returned.
         /// </summary> 
         [Parameter(Position = 0)]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -43,9 +43,8 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         protected override void BeginProcessing()
         {
-            Util.checkAdmin();
-            Util.getVolumeName(ref volume);
-            volLetter = Util.GetVolumeLetter(volume);
+            Helper.getVolumeName(ref volume);
+            volLetter = Helper.GetVolumeLetter(volume);
         }
 
         /// <summary> 

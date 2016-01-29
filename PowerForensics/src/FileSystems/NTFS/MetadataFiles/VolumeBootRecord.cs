@@ -6,41 +6,22 @@ namespace PowerForensics.Ntfs
 {
     #region VolumeBootRecordClass
 
-    public class VolumeBootRecord
+    public class VolumeBootRecord : PowerForensics.FileSystems.VolumeBootRecord
     {
-        #region Enums
-
-        public enum MEDIA_DESCRIPTOR
-        {
-            FloppyDisk = 0xF0,
-            HardDriveDisk = 0xF8
-        }
-
-        #endregion Enums
-
         #region Properties
 
-        public readonly string Signature;
-        public readonly MEDIA_DESCRIPTOR MediaDescriptor;
-        public readonly ushort BytesPerSector;
-        public readonly uint BytesPerCluster;
         public readonly double BytesPerFileRecord;
         public readonly double BytesPerIndexBlock;
-        public readonly ushort ReservedSectors;
-        public readonly ushort SectorsPerTrack;
-        public readonly ushort NumberOfHeads;
-        public readonly uint HiddenSectors;
         public readonly ulong TotalSectors;
         public readonly ulong MFTStartIndex;
         public readonly ulong MFTMirrStartIndex;
         public readonly string VolumeSerialNumber;
-        public readonly byte[] CodeSection;
 
         #endregion Properties
 
         #region Constructors
 
-        private VolumeBootRecord(byte[] bytes)
+        internal VolumeBootRecord(byte[] bytes)
         {
             // Get VolumeBootRecord Signature to determine File System Type
             Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08);
@@ -48,19 +29,19 @@ namespace PowerForensics.Ntfs
             // Check if NTFS Partition
             if (Signature == "NTFS    ")
             {
-                BytesPerSector = BitConverter.ToUInt16(bytes, 11);
-                BytesPerCluster = (uint)(bytes[13] * BytesPerSector);
-                ReservedSectors = BitConverter.ToUInt16(bytes, 14);
-                MediaDescriptor = (MEDIA_DESCRIPTOR)bytes[21];
-                SectorsPerTrack = BitConverter.ToUInt16(bytes, 24);
-                NumberOfHeads = BitConverter.ToUInt16(bytes, 26);
-                HiddenSectors = BitConverter.ToUInt32(bytes, 28);
-                TotalSectors = BitConverter.ToUInt64(bytes, 40);
-                MFTStartIndex = BitConverter.ToUInt64(bytes, 48);
-                MFTMirrStartIndex = BitConverter.ToUInt64(bytes, 56);
+                BytesPerSector = BitConverter.ToUInt16(bytes, 0x0B);
+                BytesPerCluster = (uint)(bytes[0x0D] * BytesPerSector);
+                ReservedSectors = BitConverter.ToUInt16(bytes, 0x0E);
+                MediaDescriptor = (MEDIA_DESCRIPTOR)bytes[0x15];
+                SectorsPerTrack = BitConverter.ToUInt16(bytes, 0x18);
+                NumberOfHeads = BitConverter.ToUInt16(bytes, 0x1A);
+                HiddenSectors = BitConverter.ToUInt32(bytes, 0x1C);
+                TotalSectors = BitConverter.ToUInt64(bytes, 0x28);
+                MFTStartIndex = BitConverter.ToUInt64(bytes, 0x30);
+                MFTMirrStartIndex = BitConverter.ToUInt64(bytes, 0x38);
                 #region BytesPerFileRecord
 
-                sbyte clustersPerFileRecord = (sbyte)bytes[64];
+                sbyte clustersPerFileRecord = (sbyte)bytes[0x40];
                 if (clustersPerFileRecord < 0)
                 {
                     BytesPerFileRecord = Math.Pow(2, Math.Abs(clustersPerFileRecord));
@@ -73,7 +54,7 @@ namespace PowerForensics.Ntfs
                 #endregion BytesPerFileRecord
                 #region BytesPerIndexBlock
 
-                sbyte clustersPerIndexBlock = (sbyte)bytes[68];
+                sbyte clustersPerIndexBlock = (sbyte)bytes[0x44];
                 if (clustersPerIndexBlock < 0)
                 {
                     BytesPerIndexBlock = Math.Pow(2, Math.Abs(clustersPerIndexBlock));
@@ -86,12 +67,12 @@ namespace PowerForensics.Ntfs
                 #endregion BytesPerIndexBlock
                 #region VolumeSerialNumber
 
-                byte[] serialNumberBytes = Util.GetSubArray(bytes, 0x48, 0x04);
+                byte[] serialNumberBytes = Helper.GetSubArray(bytes, 0x48, 0x04);
                 Array.Reverse(serialNumberBytes);
                 VolumeSerialNumber = BitConverter.ToString(serialNumberBytes).Remove(2, 1).Remove(7, 1);
 
                 #endregion VolumeSerialNumber
-                CodeSection = Util.GetSubArray(bytes, 0x50, 0x1AE);
+                CodeSection = Helper.GetSubArray(bytes, 0x50, 0x1AE);
             }
             else
             {
@@ -107,6 +88,7 @@ namespace PowerForensics.Ntfs
 
         public static VolumeBootRecord Get(string volume)
         {
+            Helper.getVolumeName(ref volume);
             return new VolumeBootRecord(GetBytes(volume));
         }
 
@@ -126,25 +108,19 @@ namespace PowerForensics.Ntfs
 
         public static byte[] GetBytes(string volume)
         {
-            // Get Handle to Hard Drive
-            IntPtr hDrive = Util.getHandle(volume);
+            Helper.getVolumeName(ref volume);
+            return Helper.readDrive(volume, 0x00, 0x200);
+        }
 
-            // Create a FileStream to read from hDrive
-            using (FileStream streamToRead = Util.getFileStream(hDrive))
-            {
-                return GetBytes(streamToRead);
-            }
+        private static byte[] GetBytes(FileStream streamToRead)
+        {
+            return Helper.readDrive(streamToRead, 0x00, 0x200);
         }
 
         public static byte[] GetBytesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
             return record.GetContent();
-        }
-
-        internal static byte[] GetBytes(FileStream streamToRead)
-        {
-            return Util.readDrive(streamToRead, 0, 512);
         }
 
         #endregion GetBytes

@@ -15,16 +15,8 @@ namespace PowerForensics.Utilities
             {
                 case "MD5":
                     return new MD5CryptoServiceProvider();
-                case "RIPEMD160":
-                    return RIPEMD160Managed.Create();
                 case "SHA1":
                     return new SHA1CryptoServiceProvider();
-                case "SHA256":
-                    return new SHA256CryptoServiceProvider();
-                case "SHA384":
-                    return new SHA384CryptoServiceProvider();
-                case "SHA512":
-                    return new SHA512CryptoServiceProvider();
                 default:
                     throw new Exception("Invalid Hash Algorithm Provided");
             }
@@ -45,7 +37,7 @@ namespace PowerForensics.Utilities
             HashAlgorithm hashAlgorithm = GetAlgorithm(algorithm);
 
             //Output the computed MD5 Hash as a string to the PowerShell pipeline
-            return BitConverter.ToString(hashAlgorithm.ComputeHash(Util.GetSubArray(bytes, 0x00, (uint)count))).Replace("-", "");
+            return BitConverter.ToString(hashAlgorithm.ComputeHash(Helper.GetSubArray(bytes, 0x00, count))).Replace("-", "");
         }
 
         #endregion StaticMethods

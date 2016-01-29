@@ -43,6 +43,7 @@ namespace PowerForensics.Cmdlets
         /// 
         /// </summary> 
         [Parameter(ParameterSetName = "ByIndex")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -71,11 +72,9 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         protected override void BeginProcessing()
         {
-            Util.checkAdmin();
-            
             if (ParameterSetName == "ByIndex")
             {
-                Util.getVolumeName(ref volume);
+                Helper.getVolumeName(ref volume);
             }
         }
 

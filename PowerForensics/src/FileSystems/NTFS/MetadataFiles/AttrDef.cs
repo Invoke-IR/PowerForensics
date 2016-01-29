@@ -34,28 +34,28 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        private AttrDef(byte[] bytes)
+        private AttrDef(byte[] bytes, int offset)
         {
-            Name = Encoding.Unicode.GetString(bytes, 0x00, 0x80).TrimEnd('\0');
-            Type = BitConverter.ToUInt32(bytes, 0x80);
-            DisplayRule = BitConverter.ToUInt32(bytes, 0x84);
+            Name = Encoding.Unicode.GetString(bytes, offset, 0x80).TrimEnd('\0');
+            Type = BitConverter.ToUInt32(bytes, offset + 0x80);
+            DisplayRule = BitConverter.ToUInt32(bytes, offset + 0x84);
             #region CollationRuleSwitch
-            
+
             switch (BitConverter.ToUInt32(bytes, 0x88))
             {
                 case 0x00:
                     CollationRule = "Binary";
                     break;
-                case 0x01: 
+                case 0x01:
                     CollationRule = "Filename";
                     break;
-                case 0x02: 
+                case 0x02:
                     CollationRule = "Unicode String";
                     break;
-                case 0x10: 
+                case 0x10:
                     CollationRule = "Unsigned Long";
                     break;
-                case 0x11: 
+                case 0x11:
                     CollationRule = "SID";
                     break;
                 case 0x12:
@@ -70,9 +70,9 @@ namespace PowerForensics.Ntfs
             }
 
             #endregion CollationRuleSwitch
-            Flags = (ATTR_DEF_ENTRY)BitConverter.ToUInt32(bytes, 0x8C);
-            MinSize = BitConverter.ToUInt64(bytes, 0x90);
-            MaxSize = BitConverter.ToUInt64(bytes, 0x98);
+            Flags = (ATTR_DEF_ENTRY)BitConverter.ToUInt32(bytes, offset + 0x8C);
+            MinSize = BitConverter.ToUInt64(bytes, offset + 0x90);
+            MaxSize = BitConverter.ToUInt64(bytes, offset + 0x98);
         }
 
         #endregion Constructors
@@ -81,6 +81,7 @@ namespace PowerForensics.Ntfs
 
         public static AttrDef[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
             FileRecord record = FileRecord.Get(volume, MftIndex.ATTRDEF_INDEX, true);
             return AttrDef.GetInstances(record.GetContent());
         }
@@ -97,10 +98,10 @@ namespace PowerForensics.Ntfs
             List<AttrDef> adList = new List<AttrDef>();
 
             // Iterate through 160 byte chunks (representing an AttrDef object)
-            for (uint i = 0; (i < bytes.Length) && (bytes[i] != 0); i += 160)
+            for (int i = 0; (i < bytes.Length) && (bytes[i] != 0); i += 0xA0)
             {
                 // Intantiate a new AttrDef object and add it to the adList List of AttrDef objects
-                adList.Add(new AttrDef(Util.GetSubArray(bytes, i, 0xA0)));
+                adList.Add(new AttrDef(bytes, i));
             }
             return adList.ToArray();
         }

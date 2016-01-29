@@ -8,16 +8,28 @@ namespace PowerForensics.Cmdlets
     /// <summary> 
     /// This class implements the Get-Timezone cmdlet. 
     /// </summary> 
-    [Cmdlet(VerbsCommon.Get, "ForensicTimezone")]
+    [Cmdlet(VerbsCommon.Get, "ForensicTimezone", DefaultParameterSetName = "ByVolume")]
     public class GetTimezoneCommand : PSCmdlet
     {
         #region Parameters
 
         /// <summary> 
+        ///
+        /// </summary> 
+        [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
+        public string VolumeName
+        {
+            get { return volume; }
+            set { volume = value; }
+        }
+        private string volume;
+
+        /// <summary> 
         /// This parameter provides the the path of the Registry Hive to parse.
         /// </summary> 
         [Alias("Path")]
-        [Parameter(Position = 0)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
         public string HivePath
         {
             get { return hivePath; }
@@ -28,21 +40,22 @@ namespace PowerForensics.Cmdlets
         #endregion Parameters
 
         #region Cmdlet Overrides
-
+        
         /// <summary> 
-        /// The ProcessRecord method calls TimeZone.CurrentTimeZone to return a TimeZone object.
-        /// </summary> 
+        /// 
+        /// </summary>  
         protected override void ProcessRecord()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("HivePath"))
+            switch (ParameterSetName)
             {
-                 WriteObject(Timezone.Get(hivePath));
+                case "ByVolume":
+                    WriteObject(Timezone.Get(volume), true);
+                    break;
+                case "ByPath":
+                    WriteObject(Timezone.GetByPath(hivePath), true);
+                    break;
             }
-            else
-            {
-                WriteObject(Timezone.Get());
-            }
-        } 
+        }
 
         #endregion Cmdlet Overrides
     }

@@ -16,7 +16,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #region Constructors
 
-        internal OutlookCatalog(string user, ValueKey vk)
+        private OutlookCatalog(string user, ValueKey vk)
         {
             User = user;
             Path = vk.Name;
@@ -67,6 +67,8 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         public static OutlookCatalog[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<OutlookCatalog> list = new List<OutlookCatalog>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))

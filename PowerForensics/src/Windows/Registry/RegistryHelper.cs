@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Registry
@@ -21,25 +20,25 @@ namespace PowerForensics.Registry
         {
             byte[] bytes = GetHiveBytes(path);
 
-            RegistryHeader header = new RegistryHeader(Util.GetSubArray(bytes, 0x00, 0x200));
+            RegistryHeader header = new RegistryHeader(Helper.GetSubArray(bytes, 0x00, 0x200));
             int offset = (int)header.RootKeyOffset + RegistryHeader.HBINOFFSET;
             int size = Math.Abs(BitConverter.ToInt32(bytes, offset));
 
-            return new NamedKey(Util.GetSubArray(bytes, (uint)offset, (uint)size), path, "");
+            return new NamedKey(Helper.GetSubArray(bytes, offset, size), path, "");
         }
 
         internal static NamedKey GetRootKey(byte[] bytes, string path)
         {
             #region RegistryHeader
 
-            RegistryHeader header = new RegistryHeader(Util.GetSubArray(bytes, 0x00, 0x200));
+            RegistryHeader header = new RegistryHeader(Helper.GetSubArray(bytes, 0x00, 0x200));
 
             #endregion RegistryHeader
 
             int offset = (int)header.RootKeyOffset + RegistryHeader.HBINOFFSET;
             int size = Math.Abs(BitConverter.ToInt32(bytes, offset));
 
-            return new NamedKey(Util.GetSubArray(bytes, (uint)offset, (uint)size), path, "");
+            return new NamedKey(Helper.GetSubArray(bytes, offset, size), path, "");
         }
         
         internal static bool isCorrectHive(string hivePath, string hivetype)
@@ -67,13 +66,13 @@ namespace PowerForensics.Registry
 
             try
             {
-                entries = IndexEntry.GetInstances(Util.GetVolumeLetter(volume) + @"\Users");
+                entries = IndexEntry.GetInstances(Helper.GetVolumeLetter(volume) + @"\Users");
             }
             catch
             {
                 try
                 {
-                    entries = IndexEntry.GetInstances(Util.GetVolumeLetter(volume) + @"\Documents and Settings");
+                    entries = IndexEntry.GetInstances(Helper.GetVolumeLetter(volume) + @"\Documents and Settings");
                 }
                 catch
                 {
@@ -98,8 +97,6 @@ namespace PowerForensics.Registry
 
         internal static string GetOfficeVersion(byte[] bytes, string hivePath)
         {
-            Regex version = new Regex(@"\d+\.\d");
-
             NamedKey OfficeKey = null;
 
             try
@@ -113,7 +110,7 @@ namespace PowerForensics.Registry
 
             foreach (NamedKey nk in OfficeKey.GetSubKeys(bytes))
             {
-                if (version.IsMatch(nk.Name))
+                if (nk.Name.Contains(@".0"))
                 {
                     if (nk.Name != "8.0")
                     {
@@ -127,8 +124,6 @@ namespace PowerForensics.Registry
 
         internal static NamedKey GetOfficeKey(byte[] bytes, string path)
         {
-            Regex version = new Regex(@"\d+\.\d");
-
             string key = @"Software\Microsoft\Office";
 
             NamedKey OfficeKey = null;
@@ -144,7 +139,7 @@ namespace PowerForensics.Registry
 
             foreach (NamedKey nk in OfficeKey.GetSubKeys(bytes))
             {
-                if (version.IsMatch(nk.Name))
+                if (nk.Name.Contains(@".0"))
                 {
                     if (nk.Name != "8.0")
                     {

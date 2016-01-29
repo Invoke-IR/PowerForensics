@@ -17,6 +17,7 @@ namespace PowerForensics.Cmdlets
         ///
         /// </summary> 
         [Parameter(Position = 0, ParameterSetName = "ByVolume")]
+        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
         public string VolumeName
         {
             get { return volume; }
@@ -39,20 +40,7 @@ namespace PowerForensics.Cmdlets
         #endregion Parameters
 
         #region Cmdlet Overrides
-
-        /// <summary> 
-        ///
-        /// </summary> 
-        protected override void BeginProcessing()
-        {
-            Util.checkAdmin();
-
-            if (ParameterSetName == "ByVolume")
-            {
-                Util.getVolumeName(ref volume);
-            }
-        }
-
+       
         /// <summary> 
         /// The ProcessRecord method calls TimeZone.CurrentTimeZone to return a TimeZone object.
         /// </summary> 

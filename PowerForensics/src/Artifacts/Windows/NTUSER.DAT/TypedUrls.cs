@@ -18,7 +18,7 @@ namespace PowerForensics.Artifacts
 
         #region Constructors
 
-        internal TypedUrls(string user, string path)
+        private TypedUrls(string user, string path)
         {
             User = user;
             UrlString = path;
@@ -57,6 +57,8 @@ namespace PowerForensics.Artifacts
 
         public static TypedUrls[] GetInstances(string volume)
         {
+            Helper.getVolumeName(ref volume);
+
             List<TypedUrls> list = new List<TypedUrls>();
 
             foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
