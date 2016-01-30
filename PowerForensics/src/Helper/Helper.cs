@@ -9,12 +9,6 @@ namespace PowerForensics
     {
         #region Helper Functions
 
-        public static bool testRegex(string volume)
-        {
-            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"^(\\\\\.\\)?[A-Zaz]:$");
-            return regex.IsMatch(volume);
-        }
-
         internal static string getVolumeName(ref string volume)
         {
             if (volume == null)

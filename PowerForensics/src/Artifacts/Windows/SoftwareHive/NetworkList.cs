@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
