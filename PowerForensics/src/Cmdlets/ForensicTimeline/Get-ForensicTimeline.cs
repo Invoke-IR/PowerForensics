@@ -112,7 +112,7 @@ namespace PowerForensics.Cmdlets
                 //WriteWarning("Error getting EventLog Instances");
             }
 
-            try
+            /*try
             {
                 WriteVerbose("Getting DRIVERS Hive Keys");
                 WriteObject(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\DRIVERS")), true);
@@ -120,7 +120,7 @@ namespace PowerForensics.Cmdlets
             catch
             {
                 WriteWarning("Error getting DRIVERS Hive Keys");
-            }
+            }*/
 
             try
             {

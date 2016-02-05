@@ -139,7 +139,8 @@
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\Data.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileName.cs" />
-    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation\IndexAllocation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation\IndexBlock.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\IndexRoot.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\ObjectId.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\StandardInformation.cs" />

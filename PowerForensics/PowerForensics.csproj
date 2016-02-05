@@ -111,6 +111,7 @@
     <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\ResidentHeader.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\CommonHeader.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocationTest.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation\IndexBlock.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\NonResident\DataRun.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\Bitmap.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\BadClus.cs" />
@@ -165,7 +166,7 @@
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\Data.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileName.cs" />
-    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\IndexAllocation\IndexAllocation.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\IndexRoot.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\NonResident\NonResident.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\ObjectId.cs" />
