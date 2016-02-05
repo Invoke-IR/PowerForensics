@@ -29,7 +29,7 @@ namespace PowerForensics.Cmdlets
         private string filePath;
 
         [Parameter(ParameterSetName = "ByIndex")]
-        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
+        [ValidatePattern(@"^(\\\\\.\\)?([A-Za-z]:|PHYSICALDRIVE\d)$")]
         public string VolumeName
         {
             get { return volume; }

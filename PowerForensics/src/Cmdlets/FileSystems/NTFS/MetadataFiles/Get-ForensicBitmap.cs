@@ -17,7 +17,7 @@ namespace PowerForensics.Cmdlets
         /// This parameter provides the the name of the target volume.
         /// </summary> 
         [Parameter(Position = 0, ParameterSetName = "ByVolume")]
-        [ValidatePattern(@"^(\\\\\.\\)?[A-Zaz]:$")]
+        [ValidatePattern(@"^(\\\\\.\\)?([A-Za-z]:|PHYSICALDRIVE\d)$")]
         public string VolumeName
         {
             get { return volume; }
