@@ -248,7 +248,7 @@ namespace PowerForensics.Artifacts
                     {
                         if (entry.Filename.Contains(".pf"))
                         {
-                            pfArray[i] = new Prefetch(new FileRecord(Helper.GetSubArray(MFT, (int)entry.RecordNumber * 0x400, 0x400), volume, true).GetContent(VBR));
+                            pfArray[i] = new Prefetch(FileRecord.Get(volume, (int)entry.RecordNumber, true).GetContent(VBR));
                             i++;
                         }
                     }

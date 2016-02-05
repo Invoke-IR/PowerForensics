@@ -44,6 +44,26 @@ namespace PowerForensics.Ntfs
             DataRun = Ntfs.DataRun.GetInstances(bytes);
         }
 
+        internal NonResident(NonResidentHeader header, byte[] bytes, int offset, string attrName)
+        {
+            // Attr Object
+            Name = (ATTR_TYPE)header.commonHeader.ATTRType;
+            NameString = attrName;
+            NonResident = header.commonHeader.NonResident;
+            AttributeId = header.commonHeader.Id;
+
+            // NonResident Attribute
+            commonHeader = header.commonHeader;
+            StartVCN = header.StartVCN;
+            LastVCN = header.LastVCN;
+            DataRunOffset = header.DataRunOffset;
+            CompUnitSize = header.CompUnitSize;
+            AllocatedSize = header.AllocatedSize;
+            RealSize = header.RealSize;
+            InitializedSize = header.InitializedSize;
+            DataRun = Ntfs.DataRun.GetInstances(bytes, offset);
+        }
+
         #endregion Constructors
 
         #region InstanceMethods

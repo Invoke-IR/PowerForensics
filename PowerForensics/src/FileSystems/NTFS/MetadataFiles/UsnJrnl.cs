@@ -71,7 +71,7 @@ namespace PowerForensics.Ntfs
 
         private UsnJrnl(byte[] bytes, string volume, ref int offset)
         {
-            uint RecordLength = RecordLength = BitConverter.ToUInt32(bytes, (0x00 + offset));
+            int RecordLength = BitConverter.ToInt32(bytes, (0x00 + offset));
             VolumePath = volume;
             Version = new System.Version(BitConverter.ToUInt16(bytes, (0x04 + offset)), BitConverter.ToUInt16(bytes, (0x06 + offset)));
             RecordNumber = (BitConverter.ToUInt64(bytes, (0x08 + offset)) & 0x0000FFFFFFFFFFFF);
@@ -87,7 +87,7 @@ namespace PowerForensics.Ntfs
             ushort fileNameLength = BitConverter.ToUInt16(bytes, (0x38 + offset));
             ushort fileNameOffset = BitConverter.ToUInt16(bytes, (0x3A + offset));
             FileName = Encoding.Unicode.GetString(bytes, 0x3C + offset, fileNameLength); 
-            offset += (int)RecordLength;
+            offset += RecordLength;
         }
 
         #endregion Constructors
@@ -318,7 +318,7 @@ namespace PowerForensics.Ntfs
                     {
                         if (ar.NameString == "$J")
                         {
-                            FileRecord record = new FileRecord(FileRecord.GetRecordBytes(fileRecord.VolumePath, (int)ar.RecordNumber), fileRecord.VolumePath, true);
+                            FileRecord record = FileRecord.Get(fileRecord.VolumePath, (int)ar.RecordNumber, true);
                             return GetJStream(record);
                         }
                     }

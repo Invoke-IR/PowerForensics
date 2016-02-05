@@ -169,15 +169,15 @@ namespace PowerForensics.Artifacts
         public readonly IdList IdList;
 
         // LINKINFO
-        private readonly uint LinkInfoSize;
+        private readonly int LinkInfoSize;
         private readonly uint LinkInfoHeaderSize;
         private readonly LINKINFO_FLAGS LinkInfoFlags;
-        private readonly uint VolumeIdOffset;
-        private readonly uint LocalBasePathOffset;
-        private readonly uint CommonNetworkRelativeLinkOffset;
-        private readonly uint CommonPathSuffixOffset;
-        private readonly uint LocalBasePathOffsetUnicode;
-        private readonly uint CommonPathSuffixOffsetUnicode;
+        private readonly int VolumeIdOffset;
+        private readonly int LocalBasePathOffset;
+        private readonly int CommonNetworkRelativeLinkOffset;
+        private readonly int CommonPathSuffixOffset;
+        private readonly int LocalBasePathOffsetUnicode;
+        private readonly int CommonPathSuffixOffsetUnicode;
         public readonly VolumeId VolumeId;
         public readonly string LocalBasePath;
         public readonly CommonNetworkRelativeLink CommonNetworkRelativeLink;
@@ -250,38 +250,38 @@ namespace PowerForensics.Artifacts
                 
                 if ((LinkFlags & LINK_FLAGS.HasLinkInfo) == LINK_FLAGS.HasLinkInfo)
                 {
-                    LinkInfoSize = BitConverter.ToUInt32(bytes, offset);
+                    LinkInfoSize = BitConverter.ToInt32(bytes, offset);
                     LinkInfoHeaderSize = BitConverter.ToUInt32(bytes, offset + 0x04);
                     LinkInfoFlags = (LINKINFO_FLAGS)BitConverter.ToUInt32(bytes, offset + 0x08);
                     
                     if ((LinkInfoFlags & LINKINFO_FLAGS.VolumeIDAndLocalBasePath) == LINKINFO_FLAGS.VolumeIDAndLocalBasePath)
                     {
-                        VolumeIdOffset = BitConverter.ToUInt32(bytes, offset + 0x0C);
-                        VolumeId = new VolumeId(bytes, offset + (int)VolumeIdOffset);
+                        VolumeIdOffset = BitConverter.ToInt32(bytes, offset + 0x0C);
+                        VolumeId = new VolumeId(bytes, offset + VolumeIdOffset);
 
-                        LocalBasePathOffset = BitConverter.ToUInt32(bytes, offset + 0x10);
-                        LocalBasePath = Encoding.Default.GetString(bytes, offset + (int)LocalBasePathOffset, (int)LinkInfoSize - (int)LocalBasePathOffset).Split('\0')[0];
+                        LocalBasePathOffset = BitConverter.ToInt32(bytes, offset + 0x10);
+                        LocalBasePath = Encoding.Default.GetString(bytes, offset + LocalBasePathOffset, LinkInfoSize - LocalBasePathOffset).Split('\0')[0];
                     }
 
                     if ((LinkInfoFlags & LINKINFO_FLAGS.CommonNetworkRelativeLinkAndPathSuffix) == LINKINFO_FLAGS.CommonNetworkRelativeLinkAndPathSuffix)
                     {
-                        CommonNetworkRelativeLinkOffset = BitConverter.ToUInt32(bytes, offset + 0x14);    
-                        CommonNetworkRelativeLink = new CommonNetworkRelativeLink(bytes, offset + (int)CommonNetworkRelativeLinkOffset);
+                        CommonNetworkRelativeLinkOffset = BitConverter.ToInt32(bytes, offset + 0x14);    
+                        CommonNetworkRelativeLink = new CommonNetworkRelativeLink(bytes, offset + CommonNetworkRelativeLinkOffset);
 
-                        CommonPathSuffixOffset = BitConverter.ToUInt32(bytes, offset + 0x18);
-                        CommonPathSuffix = Encoding.Default.GetString(bytes, offset + (int)CommonPathSuffixOffset, (int)LinkInfoSize - (int)CommonPathSuffixOffset).Split('\0')[0];
+                        CommonPathSuffixOffset = BitConverter.ToInt32(bytes, offset + 0x18);
+                        CommonPathSuffix = Encoding.Default.GetString(bytes, offset + CommonPathSuffixOffset, LinkInfoSize - CommonPathSuffixOffset).Split('\0')[0];
                     }
 
                     if (LinkInfoHeaderSize >= 0x24)
                     {
-                        LocalBasePathOffsetUnicode = BitConverter.ToUInt32(bytes, offset + 0x1C);
-                        LocalBasePathUnicode = Encoding.Unicode.GetString(bytes, offset + (int)LocalBasePathOffsetUnicode, (int)LinkInfoSize - (int)LocalBasePathOffsetUnicode).Split('\0')[0];
+                        LocalBasePathOffsetUnicode = BitConverter.ToInt32(bytes, offset + 0x1C);
+                        LocalBasePathUnicode = Encoding.Unicode.GetString(bytes, offset + LocalBasePathOffsetUnicode, LinkInfoSize - LocalBasePathOffsetUnicode).Split('\0')[0];
 
-                        CommonPathSuffixOffsetUnicode = BitConverter.ToUInt32(bytes, offset + 0x20);
-                        CommonPathSuffixUnicode = Encoding.Unicode.GetString(bytes, offset + (int)CommonPathSuffixOffsetUnicode, (int)LinkInfoSize - (int)CommonPathSuffixOffsetUnicode).Split('\0')[0];
+                        CommonPathSuffixOffsetUnicode = BitConverter.ToInt32(bytes, offset + 0x20);
+                        CommonPathSuffixUnicode = Encoding.Unicode.GetString(bytes, offset + CommonPathSuffixOffsetUnicode, LinkInfoSize - CommonPathSuffixOffsetUnicode).Split('\0')[0];
                     }
 
-                    offset += (int)LinkInfoSize;
+                    offset += LinkInfoSize;
                 }
 
                 #endregion LINKINFO
@@ -449,7 +449,7 @@ namespace PowerForensics.Artifacts
 
         internal IdList(byte[] bytes, int offset, ushort IdListSize)
         {
-            int endoffset = offset + (int)IdListSize - 0x02;
+            int endoffset = offset + IdListSize - 0x02;
 
             List<ItemId> list = new List<ItemId>();
 
@@ -480,7 +480,7 @@ namespace PowerForensics.Artifacts
             ItemIdSize = BitConverter.ToUInt16(bytes, offset);
             Data = Helper.GetSubArray(bytes, offset + 0x02, ItemIdSize - 0x02);
 
-            offset += (int)ItemIdSize;
+            offset += ItemIdSize;
         }
 
         #endregion Constructors
@@ -509,7 +509,7 @@ namespace PowerForensics.Artifacts
 
         #region Properties
 
-        private readonly uint VolumeIdSize;
+        private readonly int VolumeIdSize;
         public readonly DRIVE_TYPE DriveType;
         public readonly uint DriveSerialNumber;
         private readonly uint VolumeLabelOffset;
@@ -522,7 +522,7 @@ namespace PowerForensics.Artifacts
 
         internal VolumeId(byte[] bytes, int offset)
         {
-            VolumeIdSize = BitConverter.ToUInt32(bytes, offset);
+            VolumeIdSize = BitConverter.ToInt32(bytes, offset);
             DriveType = (DRIVE_TYPE)BitConverter.ToUInt32(bytes, offset + 0x04);
             DriveSerialNumber = BitConverter.ToUInt32(bytes, offset + 0x08);
             VolumeLabelOffset = BitConverter.ToUInt32(bytes, offset + 0x0C);
@@ -539,7 +539,7 @@ namespace PowerForensics.Artifacts
                 suboffset = 0x10;
             }
             
-            Data = Helper.GetSubArray(bytes, offset + suboffset, (int)VolumeIdSize - suboffset);
+            Data = Helper.GetSubArray(bytes, offset + suboffset, VolumeIdSize - suboffset);
         }
 
         #endregion Constructors
@@ -607,7 +607,7 @@ namespace PowerForensics.Artifacts
 
         private readonly uint CommonNetworkRelativeLinkSize;
         private readonly COMMON_NETWORK_RELATIVE_LINK_FLAGS CommonNetworkRelativeLinkFlags;
-        private readonly uint NetNameOffset;
+        private readonly int NetNameOffset;
         private readonly uint DeviceNameOffset;
         public readonly NETWORK_PROVIDER_TYPE NetworkProviderType;
         private readonly uint NetNameOffsetUnicode;
@@ -630,8 +630,8 @@ namespace PowerForensics.Artifacts
                 CommonNetworkRelativeLinkFlags = (COMMON_NETWORK_RELATIVE_LINK_FLAGS)BitConverter.ToUInt32(bytes, offset + 0x04);
 
                 #region NetName
-                NetNameOffset = BitConverter.ToUInt32(bytes, offset + 0x08);
-                NetName = Encoding.Default.GetString(bytes, offset + (int)NetNameOffset, (int)CommonNetworkRelativeLinkSize - (int)NetNameOffset).Split('\0')[0];
+                NetNameOffset = BitConverter.ToInt32(bytes, offset + 0x08);
+                NetName = Encoding.Default.GetString(bytes, offset + NetNameOffset, (int)CommonNetworkRelativeLinkSize - (int)NetNameOffset).Split('\0')[0];
                 #endregion NetName
 
                 #region DeviceName

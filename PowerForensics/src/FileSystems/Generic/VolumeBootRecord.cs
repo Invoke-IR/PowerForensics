@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using PowerForensics.Ntfs;
 
-namespace PowerForensics.FileSystems
+namespace PowerForensics.Generic
 {
     public class VolumeBootRecord
     {

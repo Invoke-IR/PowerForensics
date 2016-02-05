@@ -44,12 +44,6 @@ namespace PowerForensics
                 out IntPtr ptrSid
             );
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern IntPtr LocalFree
-            (
-                IntPtr hMem
-            );
-
         #endregion PInvoke
     }
 }

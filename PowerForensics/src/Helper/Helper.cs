@@ -13,7 +13,7 @@ namespace PowerForensics
         {
             if (volume == null)
             {
-                volume = System.IO.Directory.GetCurrentDirectory().Split('\\')[0];
+                volume = Helper.GetVolumeFromPath(System.IO.Directory.GetCurrentDirectory());
             }
 
             if (!(volume.Contains(@"\\.\")))
@@ -34,7 +34,7 @@ namespace PowerForensics
             return volume.Split('\\')[3];
         }
 
-        internal static string GetSecurityDescriptor(byte[] bytes)
+        internal static string GetSecurityIdentifier(byte[] bytes)
         {
             IntPtr ptrSid;
             string sidString;
@@ -45,16 +45,7 @@ namespace PowerForensics
                 Marshal.ThrowExceptionForHR(HRESULT);
             }
 
-            try
-            {
-                sidString = Marshal.PtrToStringAnsi(ptrSid);
-            }
-            finally
-            {
-                NativeMethods.LocalFree(ptrSid);
-            }
-
-            return sidString;
+            return Marshal.PtrToStringAnsi(ptrSid);
         }
 
         internal static FileStream getFileStream(string fileName)
@@ -158,6 +149,13 @@ namespace PowerForensics
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
+        }
+
+        internal static byte[] GetSubArray(byte[] InputBytes, long offset, long length)
+        {
+            byte[] outputBytes = new byte[length];
+            Array.Copy(InputBytes, offset, outputBytes, 0x00, outputBytes.Length);
+            return outputBytes;
         }
 
         internal static byte[] GetSubArray(byte[] InputBytes, int offset, int length)

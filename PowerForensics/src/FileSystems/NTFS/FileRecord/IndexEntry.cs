@@ -41,6 +41,22 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        internal IndexEntry(byte[] bytes, int offset)
+        {
+            RecordNumber = (BitConverter.ToUInt64(bytes, 0x00 + offset) & 0x0000FFFFFFFFFFFF);
+            Size = BitConverter.ToUInt16(bytes, 0x08 + offset);
+            StreamSize = BitConverter.ToUInt16(bytes, 0x0A + offset);
+            Flags = bytes[0x0C + offset];
+            Stream = Helper.GetSubArray(bytes, 0x10 + offset, this.StreamSize);
+
+            if (!(this.Stream.Length == 0))
+            {
+                // Instantiate a FileName Object from IndexEntry Stream
+                Entry = new FileName(this.Stream);
+                Filename = Entry.Filename;
+            }
+        }
+
         private IndexEntry(FileRecord record)
         {
             RecordNumber = record.RecordNumber;
@@ -169,7 +185,7 @@ namespace PowerForensics.Ntfs
                     }
                 }
 
-                FileRecord record = new FileRecord(FileRecord.GetRecordBytes(volume, index), volume, true);
+                FileRecord record = FileRecord.Get(volume, index, true);
 
                 indexEntryList.Clear();
 

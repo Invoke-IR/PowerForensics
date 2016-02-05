@@ -22,7 +22,7 @@ namespace PowerForensics.Utilities
                         byte[] buffer = Helper.readDrive(streamToRead, offset, blockSize);
 
                         // Writes a block of bytes to this stream using data from a byte array.
-                        streamToWrite.Write(buffer, 0, buffer.Length);
+                        streamToWrite.Write(buffer, 0x00, buffer.Length);
 
                         // Increment offset to read from
                         offset += blockSize;

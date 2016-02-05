@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Fat
 {
@@ -9,7 +10,7 @@ namespace PowerForensics.Fat
 
         public static byte[] GetBytes(string volume)
         {
-            return GetBytes(volume, FileSystems.VolumeBootRecord.Get(volume) as VolumeBootRecord);
+            return GetBytes(volume, VolumeBootRecord.Get(volume) as VolumeBootRecord);
         }
         
         internal static byte[] GetBytes(string volume, VolumeBootRecord vbr)
@@ -44,7 +45,7 @@ namespace PowerForensics.Fat
 
         public static FileAllocationTableEntry Get(string volume, int sector)
         {
-            VolumeBootRecord vbr = FileSystems.VolumeBootRecord.Get(volume) as VolumeBootRecord;
+            VolumeBootRecord vbr = VolumeBootRecord.Get(volume) as VolumeBootRecord;
             byte[] bytes = FileAllocationTable.GetBytes(volume, vbr);
 
             int endSector = 0;

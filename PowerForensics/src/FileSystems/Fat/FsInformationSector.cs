@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using PowerForensics.FileSystems;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Fat
 {

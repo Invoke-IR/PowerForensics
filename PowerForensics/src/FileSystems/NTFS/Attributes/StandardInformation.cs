@@ -47,31 +47,6 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        internal StandardInformation(ResidentHeader header, byte[] attrBytes, string attrName)
-        {
-            Name = (ATTR_TYPE)header.commonHeader.ATTRType;
-            NameString = attrName;
-            NonResident = header.commonHeader.NonResident;
-            AttributeId = header.commonHeader.Id;
-
-            BornTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(attrBytes, 0x00));
-            ModifiedTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(attrBytes, 0x08));
-            ChangedTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(attrBytes, 0x10));
-            AccessedTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(attrBytes, 0x18));
-            Permission = ((ATTR_STDINFO_PERMISSION)BitConverter.ToUInt32(attrBytes, 0x20));
-            MaxVersionNumber = BitConverter.ToUInt32(attrBytes, 0x24);
-            VersionNumber = BitConverter.ToUInt32(attrBytes, 0x28);
-            ClassId = BitConverter.ToUInt32(attrBytes, 0x2C);
-            
-            if (attrBytes.Length == 0x48)
-            {
-                OwnerId = BitConverter.ToUInt32(attrBytes, 0x30);
-                SecurityId = BitConverter.ToUInt32(attrBytes, 0x34);
-                QuotaCharged = BitConverter.ToUInt64(attrBytes, 0x38);
-                UpdateSequenceNumber = BitConverter.ToUInt64(attrBytes, 0x40);
-            }
-        }
-
         internal StandardInformation(ResidentHeader header, byte[] bytes, int offset, string attrName)
         {
             Name = (ATTR_TYPE)header.commonHeader.ATTRType;

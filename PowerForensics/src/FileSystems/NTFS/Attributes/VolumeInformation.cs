@@ -31,17 +31,6 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        internal VolumeInformation(ResidentHeader header, byte[] bytes, string attrName)
-        {
-            Name = (ATTR_TYPE)header.commonHeader.ATTRType;
-            NameString = attrName;
-            NonResident = header.commonHeader.NonResident;
-            AttributeId = header.commonHeader.Id;
-
-            Version = new Version(bytes[0x08], bytes[0x09]);
-            Flags = (ATTR_VOLINFO)BitConverter.ToInt16(bytes, 0x0A);
-        }
-
         internal VolumeInformation(ResidentHeader header, byte[] bytes, int offset, string attrName)
         {
             Name = (ATTR_TYPE)header.commonHeader.ATTRType;
@@ -49,7 +38,7 @@ namespace PowerForensics.Ntfs
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
 
-            Version = new Version(bytes[0x08], bytes[0x09 + offset]);
+            Version = new Version(bytes[0x08 + offset], bytes[0x09 + offset]);
             Flags = (ATTR_VOLINFO)BitConverter.ToInt16(bytes, 0x0A + offset);
         }
 

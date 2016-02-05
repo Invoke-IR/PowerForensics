@@ -16,29 +16,6 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        internal AttributeList(ResidentHeader header, byte[] bytes, string attrName)
-        {
-            Name = (FileRecordAttribute.ATTR_TYPE)header.commonHeader.ATTRType;
-            NameString = attrName;
-            NonResident = header.commonHeader.NonResident;
-            AttributeId = header.commonHeader.Id;
-
-            #region AttributeReference
-            
-            int i = 0;
-            List<AttrRef> refList = new List<AttrRef>();
-
-            while (i < bytes.Length)
-            {
-                AttrRef attrRef = new AttrRef(Helper.GetSubArray(bytes, i, BitConverter.ToUInt16(bytes, i + 0x04)));
-                refList.Add(attrRef);
-                i += attrRef.RecordLength;
-            }
-            AttributeReference = refList.ToArray();
-
-            #endregion AttributeReference
-        }
-
         internal AttributeList(ResidentHeader header, byte[] bytes, int offset, string attrName)
         {
             Name = (FileRecordAttribute.ATTR_TYPE)header.commonHeader.ATTRType;
@@ -48,12 +25,12 @@ namespace PowerForensics.Ntfs
 
             #region AttributeReference
 
-            int i = 0;
+            int i = offset;
             List<AttrRef> refList = new List<AttrRef>();
-
-            while (i < bytes.Length)
+            
+            while (i < offset + header.AttrSize)
             {
-                AttrRef attrRef = new AttrRef(bytes, i + offset);
+                AttrRef attrRef = new AttrRef(bytes, i);
                 refList.Add(attrRef);
                 i += attrRef.RecordLength;
             }
@@ -85,18 +62,6 @@ namespace PowerForensics.Ntfs
         #endregion Properties
 
         #region Constructors
-
-        internal AttrRef(byte[] bytes)
-        {
-            Name = Enum.GetName(typeof(FileRecordAttribute.ATTR_TYPE), BitConverter.ToInt32(bytes, 0x00));
-            RecordLength = BitConverter.ToUInt16(bytes, 0x04);
-            AttributeNameLength = bytes[0x06];
-            AttributeNameOffset = bytes[0x07];
-            LowestVCN = BitConverter.ToUInt64(bytes, 0x08);
-            RecordNumber = BitConverter.ToUInt64(bytes, 0x10) & 0x0000FFFFFFFFFFFF;
-            SequenceNumber = BitConverter.ToUInt16(bytes, 0x16);
-            NameString = Encoding.Unicode.GetString(bytes, AttributeNameOffset, AttributeNameLength * 2);
-        }
 
         internal AttrRef(byte[] bytes, int offset)
         {

@@ -29,15 +29,18 @@ namespace PowerForensics.Ntfs
                 Sparse = true;
             }
 
-            byte[] DataRunLengthBytes = new byte[8];
-            Array.Copy(bytes, offset + 1, DataRunLengthBytes, 0, lengthByteCount);
-            ClusterLength = BitConverter.ToInt64(DataRunLengthBytes, 0);
+            if (!((lengthByteCount > 8) || (offsetByteCount > 8)))
+            {
+                byte[] DataRunLengthBytes = new byte[0x08];
+                Array.Copy(bytes, offset + 1, DataRunLengthBytes, 0x00, lengthByteCount);
+                ClusterLength = BitConverter.ToInt64(DataRunLengthBytes, 0x00);
 
-            byte[] offsetBytes = new byte[0x08];
-            int arrayOffset = 0x08 - offsetByteCount;
-            Array.Copy(bytes, offset + 0x01 + lengthByteCount, offsetBytes, arrayOffset, offsetByteCount);
-            long relativeOffset = BitConverter.ToInt64(offsetBytes, 0x00) >> arrayOffset * 0x08;
-            StartCluster = previousDR.StartCluster + relativeOffset;
+                byte[] offsetBytes = new byte[0x08];
+                int arrayOffset = 0x08 - offsetByteCount;
+                Array.Copy(bytes, offset + 0x01 + lengthByteCount, offsetBytes, arrayOffset, offsetByteCount);
+                long relativeOffset = BitConverter.ToInt64(offsetBytes, 0x00) >> arrayOffset * 0x08;
+                StartCluster = previousDR.StartCluster + relativeOffset;
+            }
         }
 
         #endregion Constructors
@@ -48,6 +51,35 @@ namespace PowerForensics.Ntfs
         {
             List<DataRun> datarunList = new List<DataRun>();
             int i = 0;
+            DataRun dr = new DataRun();
+
+            while (i < bytes.Length - 1)
+            {
+                int DataRunLengthByteCount = bytes[i] & 0x0F;
+                int DataRunOffsetByteCount = ((bytes[i] & 0xF0) >> 4);
+
+                if (DataRunLengthByteCount == 0)
+                {
+                    break;
+                }
+                else if ((i + DataRunLengthByteCount + DataRunOffsetByteCount + 1) > bytes.Length)
+                {
+                    break;
+                }
+
+                dr = Get(bytes, i, DataRunLengthByteCount, DataRunOffsetByteCount, dr);
+                datarunList.Add(dr);
+                i += (1 + DataRunLengthByteCount + DataRunOffsetByteCount);
+            }
+
+            return datarunList.ToArray();
+        }
+
+        public static DataRun[] GetInstances(byte[] bytes, int offset)
+        {
+            List<DataRun> datarunList = new List<DataRun>();
+
+            int i = offset;
             DataRun dr = new DataRun();
 
             while (i < bytes.Length - 1)

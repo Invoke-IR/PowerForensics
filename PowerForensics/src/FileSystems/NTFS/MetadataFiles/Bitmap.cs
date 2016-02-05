@@ -120,7 +120,7 @@ namespace PowerForensics.Ntfs
             IndexEntry entry = IndexEntry.Get(path);
 
             // Get the proper data stream from the FileRecord
-            NonResident dataStream = Bitmap.GetDataStream(new FileRecord(FileRecord.GetRecordBytes(volume, (int)entry.RecordNumber), volume, true));
+            NonResident dataStream = Bitmap.GetDataStream(FileRecord.Get(volume, MftIndex.BITMAP_INDEX, true));
 
             // Call GetInstances to return all associated Bitmap Values
             return GetInstances(dataStream.GetBytes(volume));
@@ -129,7 +129,7 @@ namespace PowerForensics.Ntfs
         public static Bitmap[] GetInstances(string volume)
         {
             // Get the proper data stream from the FileRecord
-            NonResident dataStream = Bitmap.GetDataStream(new FileRecord(FileRecord.GetRecordBytes(volume, MftIndex.BITMAP_INDEX), volume, true));
+            NonResident dataStream = Bitmap.GetDataStream(FileRecord.Get(volume, MftIndex.BITMAP_INDEX, true));
 
             // Call GetInstances to return all associated Bitmap Values
             return GetInstances(dataStream.GetBytes(volume));

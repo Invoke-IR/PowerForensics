@@ -6,7 +6,7 @@ namespace PowerForensics.ExFat
 {
     #region VolumeBootRecordClass
 
-    public class VolumeBootRecord : PowerForensics.FileSystems.VolumeBootRecord
+    public class VolumeBootRecord : PowerForensics.Generic.VolumeBootRecord
     {
         #region Properties
 

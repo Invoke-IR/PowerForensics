@@ -18,7 +18,7 @@ namespace PowerForensics.Ntfs
         internal uint ATTRType;			// Attribute Type
         internal uint TotalSize;		// Length (including this header)
         internal bool NonResident;	    // 0 - resident, 1 - non resident
-        internal byte NameLength;		// name length in words
+        internal int NameLength;		// name length in words
         internal ushort NameOffset;		// offset to the name
         internal ushort Flags;			// Flags
         internal ushort Id;				// Attribute Id
@@ -32,7 +32,7 @@ namespace PowerForensics.Ntfs
             ATTRType = BitConverter.ToUInt32(bytes, 0x00);
             TotalSize = BitConverter.ToUInt32(bytes, 0x04);
             NonResident = (bytes[0x08] == NONRESIDENT);
-            NameLength = bytes[0x09];
+            NameLength = bytes[0x09] * 2;
             NameOffset = BitConverter.ToUInt16(bytes, 0x0A);
             Flags = BitConverter.ToUInt16(bytes, 0x0C);
             Id = BitConverter.ToUInt16(bytes, 0x0E);
@@ -43,7 +43,7 @@ namespace PowerForensics.Ntfs
             ATTRType = BitConverter.ToUInt32(bytes, 0x00 + offset);
             TotalSize = BitConverter.ToUInt32(bytes, 0x04 + offset);
             NonResident = (bytes[0x08 + offset] == NONRESIDENT);
-            NameLength = bytes[0x09 + offset];
+            NameLength = bytes[0x09 + offset] * 2;
             NameOffset = BitConverter.ToUInt16(bytes, 0x0A + offset);
             Flags = BitConverter.ToUInt16(bytes, 0x0C + offset);
             Id = BitConverter.ToUInt16(bytes, 0x0E + offset);

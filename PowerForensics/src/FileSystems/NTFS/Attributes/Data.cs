@@ -14,15 +14,6 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        internal Data(ResidentHeader header, byte[] attrBytes, string attrName)
-        {
-            Name = (ATTR_TYPE)header.commonHeader.ATTRType;
-            NameString = attrName;
-            NonResident = header.commonHeader.NonResident;
-            AttributeId = header.commonHeader.Id;
-            RawData = Helper.GetSubArray(attrBytes, 0x00, (int)header.AttrSize);
-        }
-
         internal Data(ResidentHeader header, byte[] bytes, int offset, string attrName)
         {
             Name = (ATTR_TYPE)header.commonHeader.ATTRType;

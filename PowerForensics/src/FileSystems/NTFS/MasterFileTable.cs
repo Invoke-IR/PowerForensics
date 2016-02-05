@@ -20,8 +20,11 @@ namespace PowerForensics.Ntfs
             // Calculate byte offset to the Master File Table (MFT)
             ulong mftOffset = ((ulong)VBR.BytesPerCluster * VBR.MFTStartIndex);
 
-            // Read bytes belonging to specified MFT Record and store in byte array
-            return new FileRecord(Helper.readDrive(streamToRead, mftOffset, (ulong)VBR.BytesPerFileRecord), volume, true);
+            // Read bytes belonging to specified MFT Record
+            byte[] recordBytes = Helper.readDrive(streamToRead, mftOffset, (ulong)VBR.BytesPerFileRecord);
+
+            // Instantiate a FileRecord object for the $MFT file
+            return FileRecord.Get(recordBytes, volume, (int)VBR.BytesPerFileRecord, true);
         }
 
         #endregion GetRecordMethods

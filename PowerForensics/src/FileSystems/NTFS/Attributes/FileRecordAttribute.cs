@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PowerForensics.Ntfs
@@ -9,7 +10,6 @@ namespace PowerForensics.Ntfs
     {
         #region Constants
 
-        internal const byte RESIDENT = 0x00;
         private const int COMMONHEADERSIZE = 0x10;
         private const int RESIDENTHEADERSIZE = 0x08;
         private const int NONRESIDENTHEADERSIZE = 0x30;
@@ -54,7 +54,36 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
-        internal static FileRecordAttribute Get(byte[] bytes, string volume)
+        public static FileRecordAttribute[] GetInstances(byte[] bytes, int offset, int bytesPerFileRecord, string volume)
+        {
+            List<FileRecordAttribute> AttributeList = new List<FileRecordAttribute>();
+
+            int i = offset;
+
+            while (i < offset + bytesPerFileRecord)
+            {
+                // Get attribute size
+                int attrSize = BitConverter.ToInt32(bytes, i + 0x04);
+
+                if((attrSize == 0) || (attrSize + i > offset + bytesPerFileRecord))
+                {
+                    break;
+                }
+
+                FileRecordAttribute attr = Get(bytes, i, volume);
+
+                i += attrSize;
+
+                if (attr != null)
+                {
+                    AttributeList.Add(attr);
+                }
+            } 
+
+            return AttributeList.ToArray();
+        }
+
+        /*internal static FileRecordAttribute Get(byte[] bytes, string volume)
         {
             #region CommonHeader
 
@@ -65,21 +94,47 @@ namespace PowerForensics.Ntfs
 
             // Instantiate a Common Header Object
             CommonHeader commonHeader = new CommonHeader(bytes);
+            
+            // Decode Name byte[] into Unicode String
+            string attributeName = Encoding.Unicode.GetString(bytes, commonHeader.NameOffset, commonHeader.NameLength);
 
             #endregion CommonHeader
 
-            uint NameLength = (uint)commonHeader.NameLength * 2;
+            #region NonResidentAttribute
 
-            // Decode Name byte[] into Unicode String
-            string attributeName = Encoding.Unicode.GetString(bytes, (int)commonHeader.NameOffset, (int)NameLength);
+            // If Attribute is NonResident
+            if (commonHeader.NonResident)
+            {
+                #region NonResidentHeader
 
-            // Determine if Attribute is Resident or NonResident
-            bool resident = (bytes[8] == 0x00);
+                // Instantiate a Resident Header Object
+                NonResidentHeader nonresidentHeader = new NonResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE, NONRESIDENTHEADERSIZE), commonHeader);
+
+                #endregion NonResidentHeader
+
+                #region DataRun
+
+                int headerSize = 0x00;
+
+                if (commonHeader.NameOffset != 0x00)
+                {
+                    headerSize = commonHeader.NameOffset + commonHeader.NameLength + (commonHeader.NameLength % 8);
+                }
+                else
+                {
+                    headerSize = COMMONHEADERSIZE + NONRESIDENTHEADERSIZE;
+                }
+
+                return new NonResident(nonresidentHeader, Helper.GetSubArray(bytes, headerSize, (int)commonHeader.TotalSize - headerSize), attributeName);
+
+                #endregion DataRun
+            }
+
+            #endregion NonResidentAttribute
 
             #region ResidentAttribute
-
-            // If Attribute is Resident
-            if (resident)
+            // Else Attribute is Resident
+            else
             {
                 #region ResidentHeader
 
@@ -91,7 +146,7 @@ namespace PowerForensics.Ntfs
                 #region AttributeBytes
 
                 // Create a byte[] representing the attribute itself
-                int headerSize = COMMONHEADERSIZE + RESIDENTHEADERSIZE + (int)NameLength;
+                int headerSize = COMMONHEADERSIZE + RESIDENTHEADERSIZE + commonHeader.NameLength;
                 byte[] attributeBytes = Helper.GetSubArray(bytes, headerSize, (int)commonHeader.TotalSize - headerSize);
 
                 #endregion AttributeBytes
@@ -138,17 +193,30 @@ namespace PowerForensics.Ntfs
 
                 #endregion ATTRSwitch
             }
-
             #endregion ResidentAttribute
+        }*/
+
+        internal static FileRecordAttribute Get(byte[] bytes, int offset, string volume)
+        {
+            #region CommonHeader
+
+            // Instantiate a Common Header Object
+            CommonHeader commonHeader = new CommonHeader(bytes, offset);
+
+            // Decode Name byte[] into Unicode String
+            string attributeName = Encoding.Unicode.GetString(bytes, commonHeader.NameOffset + offset, commonHeader.NameLength);
+
+            #endregion CommonHeader
 
             #region NonResidentAttribute
-            // Else Attribute is Non-Resident
-            else
+
+            // If Attribute is NonResident
+            if (commonHeader.NonResident)
             {
                 #region NonResidentHeader
 
                 // Instantiate a Resident Header Object
-                NonResidentHeader nonresidentHeader = new NonResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE, NONRESIDENTHEADERSIZE), commonHeader);
+                NonResidentHeader nonresidentHeader = new NonResidentHeader(bytes, commonHeader, COMMONHEADERSIZE + offset);
 
                 #endregion NonResidentHeader
 
@@ -158,46 +226,25 @@ namespace PowerForensics.Ntfs
 
                 if (commonHeader.NameOffset != 0x00)
                 {
-                    headerSize = commonHeader.NameOffset + (int)NameLength + ((int)NameLength % 8);
+                    headerSize = commonHeader.NameOffset + commonHeader.NameLength + (commonHeader.NameLength % 8);
                 }
                 else
                 {
                     headerSize = COMMONHEADERSIZE + NONRESIDENTHEADERSIZE;
                 }
 
-                return new NonResident(nonresidentHeader, Helper.GetSubArray(bytes, headerSize, (int)commonHeader.TotalSize - headerSize), attributeName);
+                int attributeoffset = headerSize + offset;
+
+                return new NonResident(nonresidentHeader, bytes, attributeoffset, attributeName);
 
                 #endregion DataRun
             }
+
             #endregion NonResidentAttribute
-        }
-
-        internal static FileRecordAttribute GetTest(byte[] bytes, int offset, string volume)
-        {
-            #region CommonHeader
-
-            if (bytes.Length == 0)
-            {
-                return null;
-            }
-
-            // Instantiate a Common Header Object
-            CommonHeader commonHeader = new CommonHeader(bytes, offset);
-
-            #endregion CommonHeader
-
-            uint NameLength = (uint)commonHeader.NameLength * 2;
-
-            // Decode Name byte[] into Unicode String
-            string attributeName = Encoding.Unicode.GetString(bytes, (int)commonHeader.NameOffset + offset, (int)NameLength);
-
-            // Determine if Attribute is Resident or NonResident
-            bool resident = (bytes[0x08 + offset] == 0x00);
 
             #region ResidentAttribute
-
-            // If Attribute is Resident
-            if (resident)
+            // Else Attribute is Resident
+            else
             {
                 #region ResidentHeader
 
@@ -205,14 +252,9 @@ namespace PowerForensics.Ntfs
                 ResidentHeader residentHeader = new ResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE + offset, RESIDENTHEADERSIZE), commonHeader);
 
                 #endregion ResidentHeader
-
-                #region AttributeBytes
-
-                int headerSize = COMMONHEADERSIZE + RESIDENTHEADERSIZE + (int)NameLength;
+                
+                int headerSize = COMMONHEADERSIZE + RESIDENTHEADERSIZE + commonHeader.NameLength;
                 int attributeoffset = headerSize + offset;
-                //byte[] attributeBytes = Helper.GetSubArray(bytes, (uint)(headerSize + offset), commonHeader.TotalSize - (uint)headerSize);
-
-                #endregion AttributeBytes
 
                 #region ATTRSwitch
 
@@ -240,8 +282,7 @@ namespace PowerForensics.Ntfs
                         return new Data(residentHeader, bytes, attributeoffset, attributeName);
 
                     case (Int32)FileRecordAttribute.ATTR_TYPE.INDEX_ROOT:
-                        //return new IndexRoot(residentHeader, bytes, attributeoffset, attributeName);
-                        return null;
+                        return new IndexRoot(residentHeader, bytes, attributeoffset, attributeName);
 
                     case (Int32)FileRecordAttribute.ATTR_TYPE.EA:
                         //Console.WriteLine("EA");
@@ -257,41 +298,8 @@ namespace PowerForensics.Ntfs
 
                 #endregion ATTRSwitch
             }
-
             #endregion ResidentAttribute
-
-            #region NonResidentAttribute
-            // Else Attribute is Non-Resident
-            else
-            {
-                #region NonResidentHeader
-
-                // Instantiate a Resident Header Object
-                NonResidentHeader nonresidentHeader = new NonResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE, NONRESIDENTHEADERSIZE), commonHeader);
-
-                #endregion NonResidentHeader
-
-                #region DataRun
-
-                int headerSize = 0x00;
-
-                if (commonHeader.NameOffset != 0x00)
-                {
-                    headerSize = commonHeader.NameOffset + (int)NameLength + ((int)NameLength % 8);
-                }
-                else
-                {
-                    headerSize = COMMONHEADERSIZE + NONRESIDENTHEADERSIZE;
-                }
-
-                //return new NonResident(nonresidentHeader, Helper.GetSubArray(bytes, (uint)headerSize, commonHeader.TotalSize - (uint)headerSize), attributeName);
-                return null;
-
-                #endregion DataRun
-            }
-            #endregion NonResidentAttribute
         }
-
 
         #endregion StaticMethods
     }
