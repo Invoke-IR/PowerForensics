@@ -8,7 +8,7 @@ namespace PowerForensics.Utilities
 
     public class DD
     {
-        public static void Get(string inFile, string outFile, ulong offset, uint blockSize, uint count)
+        public static void Get(string inFile, string outFile, long offset, uint blockSize, uint count)
         {   
             // Get FileStream for reading from the hVolume handle
             using (FileStream streamToRead = Helper.getFileStream(inFile))
@@ -31,7 +31,7 @@ namespace PowerForensics.Utilities
             }
         }
 
-        public static byte[] Get(string inFile, ulong offset, uint blockSize, uint count)
+        public static byte[] Get(string inFile, long offset, uint blockSize, uint count)
         {
             List<byte> byteList = new List<byte>();
 

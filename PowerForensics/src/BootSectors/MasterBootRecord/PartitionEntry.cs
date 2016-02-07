@@ -98,31 +98,6 @@ namespace PowerForensics
             EndSector = StartSector + TotalSectors - 1;
         }
 
-/*        internal PartitionEntry(byte[] bytes, uint extendedStartSector)
-        {
-            Bootable = (bytes[0] == BOOTABLE);
-            startingHeadNumber = bytes[1];
-            startingSectorNumber = bytes[2];// &0xFC;
-            startingCylinderHigh2 = bytes[2];// &0x03;
-            startingCylinderLow8 = bytes[3];
-            SystemId = Enum.GetName(typeof(PARTITION_TYPE), bytes[4]);
-            endingHeadNumber = bytes[5];
-            endingSectorNumber = bytes[6];// &0xFC;
-            endingCylinderHigh2 = bytes[6];// &0x03;
-            endingCylinderHigh8 = bytes[7];
-            RelativeSector = BitConverter.ToUInt32(bytes, 8);
-            TotalSectors = BitConverter.ToUInt32(bytes, 12);
-            if (SystemId != "EMPTY")
-            {
-                StartSector = extendedStartSector + RelativeSector;
-            }
-            else
-            {
-                StartSector = RelativeSector;
-            }
-            EndSector = StartSector + TotalSectors;
-        }
-*/
         #endregion Constructors
     }
 

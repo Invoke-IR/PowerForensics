@@ -129,7 +129,7 @@ namespace PowerForensics.Fat
         public static byte[] GetBytes(string volume)
         {
             Fat.VolumeBootRecord vbr = VolumeBootRecord.Get(volume) as Fat.VolumeBootRecord;
-            ulong DirectoryEntryOffset = (ulong)(vbr.ReservedSectors * vbr.BytesPerSector) + vbr.TotalFats * (vbr.SectorsPerFat * vbr.BytesPerSector);
+            long DirectoryEntryOffset = (vbr.ReservedSectors * vbr.BytesPerSector) + vbr.TotalFats * (vbr.SectorsPerFat * vbr.BytesPerSector);
             return Helper.readDrive(volume, DirectoryEntryOffset, 0x1000);
         }
 

@@ -22,7 +22,7 @@ namespace PowerForensics.Generic
         public MEDIA_DESCRIPTOR MediaDescriptor;
         public ushort BytesPerSector;
         public byte SectorsPerCluster;
-        public uint BytesPerCluster;
+        public int BytesPerCluster;
         public ushort ReservedSectors;
         public ushort SectorsPerTrack;
         public ushort NumberOfHeads;

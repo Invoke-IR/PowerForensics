@@ -57,7 +57,7 @@ namespace PowerForensics.Ntfs
         public readonly ushort FileSequenceNumber;
         public readonly ulong ParentFileRecordNumber;
         public readonly ushort ParentFileSequenceNumber;
-        public readonly ulong Usn;
+        public readonly long Usn;
         public readonly DateTime TimeStamp;
         public readonly USN_REASON Reason;
         public readonly USN_SOURCE SourceInfo;
@@ -78,7 +78,7 @@ namespace PowerForensics.Ntfs
             FileSequenceNumber = ParentFileSequenceNumber = BitConverter.ToUInt16(bytes, (0x0E + offset));
             ParentFileRecordNumber = (BitConverter.ToUInt64(bytes, (0x10 + offset)) & 0x0000FFFFFFFFFFFF);
             ParentFileSequenceNumber = BitConverter.ToUInt16(bytes, (0x16 + offset));
-            Usn = BitConverter.ToUInt64(bytes, (0x18 + offset));
+            Usn = BitConverter.ToInt64(bytes, (0x18 + offset));
             TimeStamp = DateTime.FromFileTimeUtc(BitConverter.ToInt64(bytes, (0x20 + offset)));
             Reason = ((USN_REASON)BitConverter.ToUInt32(bytes, (0x28 + offset)));
             SourceInfo = ((USN_SOURCE)BitConverter.ToUInt32(bytes, (0x2C + offset)));
@@ -96,20 +96,20 @@ namespace PowerForensics.Ntfs
 
         #region GetMethods
 
-        public static UsnJrnl Get(string volume, ulong usn)
+        public static UsnJrnl Get(string volume, long usn)
         {
             Helper.getVolumeName(ref volume);
             return GetByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl", usn);
         }
 
-        public static UsnJrnl GetByPath(string path, ulong usn)
+        public static UsnJrnl GetByPath(string path, long usn)
         {
             string volume = Helper.GetVolumeFromPath(path);
             IndexEntry entry = IndexEntry.Get(path);
             return Get(volume, (int)entry.RecordNumber, usn);
         }
 
-        private static UsnJrnl Get(string volume, int recordnumber, ulong usn)
+        private static UsnJrnl Get(string volume, int recordnumber, long usn)
         {
             // Check for valid Volume name
             Helper.getVolumeName(ref volume);
@@ -126,18 +126,18 @@ namespace PowerForensics.Ntfs
             NonResident J = UsnJrnl.GetJStream(record);
 
             // Determine the length of the initial sparse pages
-            ulong SparseLength = (ulong)J.DataRun[0].ClusterLength * VBR.BytesPerCluster;
+            long SparseLength = J.DataRun[0].ClusterLength * VBR.BytesPerCluster;
 
             if (usn > SparseLength)
             {
                 // Subtract length of sparse data from desired usn offset
-                ulong usnOffset = usn - SparseLength;
+                long usnOffset = usn - SparseLength;
 
                 // Iterate through each data run
                 for (int i = 1; i < J.DataRun.Length; i++)
                 {
                     // Determine length of current DataRun
-                    ulong dataRunLength = (ulong)J.DataRun[i].ClusterLength * VBR.BytesPerCluster;
+                    long dataRunLength = J.DataRun[i].ClusterLength * VBR.BytesPerCluster;
 
                     // Check if usnOffset resides in current DataRun
                     if (dataRunLength <= usnOffset)
@@ -150,7 +150,7 @@ namespace PowerForensics.Ntfs
                     else
                     {
                         // Read DataRun from disk
-                        byte[] fragmentBytes = Helper.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)J.DataRun[i].ClusterLength * VBR.BytesPerCluster));
+                        byte[] fragmentBytes = Helper.readDrive(streamToRead, (J.DataRun[i].StartCluster * VBR.BytesPerCluster), (J.DataRun[i].ClusterLength * VBR.BytesPerCluster));
 
                         // Instatiate a byte array that is the size of a single cluster
                         byte[] clusterBytes = new byte[VBR.BytesPerCluster];
@@ -210,7 +210,7 @@ namespace PowerForensics.Ntfs
             VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
             List<UsnJrnl> usnList = new List<UsnJrnl>();
 
-            for(int i = 0;  i < bytes.Length; i += (int)VBR.BytesPerCluster)
+            for(int i = 0;  i < bytes.Length; i += VBR.BytesPerCluster)
             {
                 int clusteroffset = i;
 
@@ -262,7 +262,7 @@ namespace PowerForensics.Ntfs
                 {
                     long clusterCount = J.DataRun[i].ClusterLength;
 
-                    byte[] fragmentBytes = Helper.readDrive(streamToRead, ((ulong)J.DataRun[i].StartCluster * VBR.BytesPerCluster), ((ulong)clusterCount * VBR.BytesPerCluster));
+                    byte[] fragmentBytes = Helper.readDrive(streamToRead, (J.DataRun[i].StartCluster * VBR.BytesPerCluster), (clusterCount * VBR.BytesPerCluster));
 
                     byte[] clusterBytes = new byte[VBR.BytesPerCluster];
 

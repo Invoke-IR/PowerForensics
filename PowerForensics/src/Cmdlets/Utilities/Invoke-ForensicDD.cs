@@ -42,12 +42,12 @@ namespace PowerForensics.Cmdlets
         /// specified InFile to begin reading.
         /// </summary> 
         [Parameter()]
-        public ulong Offset
+        public long Offset
         {
             get { return offset; }
             set { offset = value; }
         }
-        private ulong offset;
+        private long offset;
 
         /// <summary> 
         /// This parameter provides the size of blocks to be

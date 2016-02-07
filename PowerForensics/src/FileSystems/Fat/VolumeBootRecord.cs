@@ -37,7 +37,7 @@ namespace PowerForensics.Fat
             string Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08);
             BytesPerSector = BitConverter.ToUInt16(bytes, 0x0B);
             SectorsPerCluster = bytes[0x0D];
-            BytesPerCluster = (uint)BytesPerSector * (uint)SectorsPerCluster;
+            BytesPerCluster = BytesPerSector * SectorsPerCluster;
             ReservedSectors = BitConverter.ToUInt16(bytes, 0x0E);
             TotalFats = bytes[0x10];
             RootDirectoryEntries = BitConverter.ToUInt16(bytes, 0x11);

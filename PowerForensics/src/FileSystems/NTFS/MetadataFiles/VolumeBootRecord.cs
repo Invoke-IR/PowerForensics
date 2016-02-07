@@ -10,11 +10,11 @@ namespace PowerForensics.Ntfs
     {
         #region Properties
 
-        public readonly double BytesPerFileRecord;
-        public readonly double BytesPerIndexBlock;
-        public readonly ulong TotalSectors;
-        public readonly ulong MFTStartIndex;
-        public readonly ulong MFTMirrStartIndex;
+        public readonly long BytesPerFileRecord;
+        public readonly long BytesPerIndexBlock;
+        public readonly long TotalSectors;
+        public readonly long MftStartIndex;
+        public readonly long MftMirrStartIndex;
         public readonly string VolumeSerialNumber;
 
         #endregion Properties
@@ -27,48 +27,19 @@ namespace PowerForensics.Ntfs
             if (Encoding.ASCII.GetString(bytes, 0x03, 0x08) == "NTFS    ")
             {
                 BytesPerSector = BitConverter.ToUInt16(bytes, 0x0B);
-                BytesPerCluster = (uint)(bytes[0x0D] * BytesPerSector);
+                SectorsPerCluster = bytes[0x0D];
+                BytesPerCluster = BytesPerSector * SectorsPerCluster;
                 ReservedSectors = BitConverter.ToUInt16(bytes, 0x0E);
                 MediaDescriptor = (MEDIA_DESCRIPTOR)bytes[0x15];
                 SectorsPerTrack = BitConverter.ToUInt16(bytes, 0x18);
                 NumberOfHeads = BitConverter.ToUInt16(bytes, 0x1A);
                 HiddenSectors = BitConverter.ToUInt32(bytes, 0x1C);
-                TotalSectors = BitConverter.ToUInt64(bytes, 0x28);
-                MFTStartIndex = BitConverter.ToUInt64(bytes, 0x30);
-                MFTMirrStartIndex = BitConverter.ToUInt64(bytes, 0x38);
-                #region BytesPerFileRecord
-
-                sbyte clustersPerFileRecord = (sbyte)bytes[0x40];
-                if (clustersPerFileRecord < 0)
-                {
-                    BytesPerFileRecord = Math.Pow(2, Math.Abs(clustersPerFileRecord));
-                }
-                else
-                {
-                    BytesPerFileRecord = clustersPerFileRecord * BytesPerCluster;
-                }
-
-                #endregion BytesPerFileRecord
-                #region BytesPerIndexBlock
-
-                sbyte clustersPerIndexBlock = (sbyte)bytes[0x44];
-                if (clustersPerIndexBlock < 0)
-                {
-                    BytesPerIndexBlock = Math.Pow(2, Math.Abs(clustersPerIndexBlock));
-                }
-                else
-                {
-                    BytesPerIndexBlock = clustersPerIndexBlock * BytesPerCluster;
-                }
-
-                #endregion BytesPerIndexBlock
-                #region VolumeSerialNumber
-
-                byte[] serialNumberBytes = Helper.GetSubArray(bytes, 0x48, 0x04);
-                Array.Reverse(serialNumberBytes);
-                VolumeSerialNumber = BitConverter.ToString(serialNumberBytes).Remove(2, 1).Remove(7, 1);
-
-                #endregion VolumeSerialNumber
+                TotalSectors = BitConverter.ToInt64(bytes, 0x28);
+                MftStartIndex = BitConverter.ToInt64(bytes, 0x30);
+                MftMirrStartIndex = BitConverter.ToInt64(bytes, 0x38);
+                BytesPerFileRecord = getBytesPerFileRecord(bytes, BytesPerCluster);
+                BytesPerIndexBlock = getBytesPerIndexBlock(bytes, BytesPerCluster);
+                VolumeSerialNumber = getVolumeSerialNumber(bytes);
                 CodeSection = Helper.GetSubArray(bytes, 0x50, 0x1AE);
             }
             else
@@ -123,6 +94,43 @@ namespace PowerForensics.Ntfs
         #endregion GetBytes
 
         #endregion StaticMethods
+
+        #region PrivateMethods
+
+        private static long getBytesPerFileRecord(byte[] bytes, int bytesPerCluster)
+        {
+            sbyte clustersPerFileRecord = (sbyte)bytes[0x40];
+            if (clustersPerFileRecord < 0)
+            {
+                return (long)Math.Pow(2, Math.Abs(clustersPerFileRecord));
+            }
+            else
+            {
+                return clustersPerFileRecord * bytesPerCluster;
+            }
+        }
+
+        private static long getBytesPerIndexBlock(byte[] bytes, int bytesPerCluster)
+        {
+            sbyte clustersPerIndexBlock = (sbyte)bytes[0x44];
+            if (clustersPerIndexBlock < 0)
+            {
+                return (long)Math.Pow(2, Math.Abs(clustersPerIndexBlock));
+            }
+            else
+            {
+                return clustersPerIndexBlock * bytesPerCluster;
+            }
+        }
+
+        private static string getVolumeSerialNumber(byte[] bytes)
+        {
+            byte[] serialNumberBytes = Helper.GetSubArray(bytes, 0x48, 0x04);
+            Array.Reverse(serialNumberBytes);
+            return BitConverter.ToString(serialNumberBytes).Remove(2, 1).Remove(7, 1);
+        }
+
+        #endregion PrivateMethods
     }
 
     #endregion VolumeBootRecordClass

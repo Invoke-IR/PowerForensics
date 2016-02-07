@@ -41,12 +41,12 @@ namespace PowerForensics.Cmdlets
         /// 
         /// </summary> 
         [Parameter()]
-        public ulong Usn
+        public long Usn
         {
             get { return usn; }
             set { usn = value; }
         }
-        private ulong usn;
+        private long usn;
 
         /// <summary> 
         /// 

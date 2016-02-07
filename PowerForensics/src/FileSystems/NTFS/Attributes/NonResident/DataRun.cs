@@ -112,7 +112,7 @@ namespace PowerForensics.Ntfs
         public byte[] GetBytes(string volume)
         {
             VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
-            return Helper.readDrive(volume, (ulong)this.StartCluster * vbr.BytesPerCluster, (ulong)this.ClusterLength * vbr.BytesPerCluster);
+            return Helper.readDrive(volume, this.StartCluster * vbr.BytesPerCluster, this.ClusterLength * vbr.BytesPerCluster);
         }
 
         #endregion InstanceMethods

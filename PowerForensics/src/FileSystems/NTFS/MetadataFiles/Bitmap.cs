@@ -9,14 +9,14 @@ namespace PowerForensics.Ntfs
     {
         #region Properties
 
-        public ulong Cluster;
+        public long Cluster;
         public bool InUse;
         
         #endregion Properties
 
         #region Constructors
 
-        private Bitmap(ulong cluster, bool inUse)
+        private Bitmap(long cluster, bool inUse)
         {
             Cluster = cluster;
             InUse = inUse;
@@ -28,22 +28,22 @@ namespace PowerForensics.Ntfs
 
         #region GetMethods
 
-        public static Bitmap Get(string volume, ulong cluster)
+        public static Bitmap Get(string volume, long cluster)
         {
             Helper.getVolumeName(ref volume);
             return Get(volume, MftIndex.BITMAP_INDEX, cluster);
         }
 
-        public static Bitmap GetByPath(string path, ulong cluster)
+        public static Bitmap GetByPath(string path, long cluster)
         {
             string volume = Helper.GetVolumeFromPath(path);
             IndexEntry entry = IndexEntry.Get(path);
             return Get(volume, (int)entry.RecordNumber, cluster);
         }
 
-        private static Bitmap Get(string volume, int recordNumber, ulong cluster)
+        private static Bitmap Get(string volume, int recordNumber, long cluster)
         {
-            ulong sectorOffset = cluster / 4096;
+            long sectorOffset = cluster / 4096;
 
             // Check for valid Volume name
             Helper.getVolumeName(ref volume);
@@ -58,10 +58,10 @@ namespace PowerForensics.Ntfs
             NonResident dataStream = Bitmap.GetDataStream(FileRecord.Get(volume, recordNumber, true));
 
             // Calulate the offset of the Bitmap file's data
-            ulong dataRunOffset = (ulong)dataStream.DataRun[0].StartCluster * VBR.BytesPerCluster;
+            long dataRunOffset = dataStream.DataRun[0].StartCluster * VBR.BytesPerCluster;
 
             // Calculate the offset of the sector that contains the entry for the specific cluster
-            ulong offset = dataRunOffset + (VBR.BytesPerSector * sectorOffset);
+            long offset = dataRunOffset + (VBR.BytesPerSector * sectorOffset);
 
             // Read appropriate sector
             byte[] bytes = Helper.readDrive(streamToRead, offset, VBR.BytesPerSector);
@@ -69,9 +69,9 @@ namespace PowerForensics.Ntfs
             return Get(bytes, cluster);
         }
 
-        private static Bitmap Get(byte[] bytes, ulong cluster)
+        private static Bitmap Get(byte[] bytes, long cluster)
         {
-            ulong byteOffset = (cluster % 4096) / 8;
+            long byteOffset = (cluster % 4096) / 8;
 
             byte b = bytes[byteOffset];
 
@@ -173,7 +173,7 @@ namespace PowerForensics.Ntfs
                             if ((bytes[j] & 0x80) > 0) { inUse = true; }
                             break;
                     }
-                    bitmapArray[index] = new Bitmap((ulong)index, inUse);
+                    bitmapArray[index] = new Bitmap(index, inUse);
                 }
             }
 

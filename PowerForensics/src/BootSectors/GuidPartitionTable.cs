@@ -64,7 +64,7 @@ namespace PowerForensics
                     for(ulong j = GPTHeader.PartitionEntryLBA; (j < GPTHeader.PartitionEntryLBA + (GPTHeader.NumberOfPartitionEntries / (SECTOR_SIZE / GPTHeader.SizeOfPartitionEntry))); j++)
                     {
                         // Read one sector
-                        byte[] partitionSectorBytes = Helper.readDrive(streamToRead, (SECTOR_SIZE * j), SECTOR_SIZE);
+                        byte[] partitionSectorBytes = Helper.readDrive(streamToRead, (SECTOR_SIZE * (long)j), SECTOR_SIZE);
                         
                         // Iterate through Partition Entries in Sector
                         // Sectors (512 bytes) / Partitions (128 bytes) = 4 partitions per sector 

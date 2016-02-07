@@ -77,7 +77,7 @@ namespace PowerForensics
             return new FileStream(hDevice, FileAccess.Read);
         }
 
-        internal static byte[] readDrive(string device, ulong offset, ulong sizeToRead)
+        internal static byte[] readDrive(string device, long offset, long sizeToRead)
         {
             // Create a FileStream to read from hDrive
             using (FileStream streamToRead = getFileStream(device))
@@ -86,7 +86,7 @@ namespace PowerForensics
             }
         }
 
-        internal static byte[] readSector(string device, ulong sectorOffset, ulong sectorCount)
+        internal static byte[] readSector(string device, long sectorOffset, long sectorCount)
         {
             // Create a FileStream to read from hDrive
             using (FileStream streamToRead = getFileStream(device))
@@ -95,7 +95,7 @@ namespace PowerForensics
             }
         }
 
-        internal static byte[] readDrive(FileStream streamToRead, ulong offset, ulong sizeToRead)
+        internal static byte[] readDrive(FileStream streamToRead, long offset, long sizeToRead)
         {
             // Bytes must be read by sector
             //if ((sizeToRead < 1)) throw new System.ArgumentException("Size parameter cannot be null or 0 or less than 0!");
@@ -103,7 +103,7 @@ namespace PowerForensics
             if (((offset % 512) != 0)) throw new System.ArgumentException("Offset parameter must be divisible by 512");
 
             // Set offset to begin reading from the drive
-            streamToRead.Position = (long)offset;
+            streamToRead.Position = offset;
 
             // Create a byte array to read into
             byte[] buf = new byte[sizeToRead];

@@ -42,12 +42,12 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         [Parameter(Mandatory = true, ParameterSetName = "ByVolume")]
         [Parameter(Mandatory = true, ParameterSetName = "ByPath")]
-        public ulong Cluster
+        public long Cluster
         {
             get { return cluster; }
             set { cluster = value; }
         }
-        private ulong cluster;
+        private long cluster;
 
         #endregion Parameters
 

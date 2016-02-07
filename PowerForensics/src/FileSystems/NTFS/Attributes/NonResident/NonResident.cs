@@ -69,21 +69,21 @@ namespace PowerForensics.Ntfs
                     }
                     else
                     {
-                        ulong startOffset = (ulong)VBR.BytesPerCluster * (ulong)dr.StartCluster;
-                        ulong count = (ulong)VBR.BytesPerCluster * (ulong)dr.ClusterLength;
+                        long startOffset = VBR.BytesPerCluster * dr.StartCluster;
+                        long count = VBR.BytesPerCluster * dr.ClusterLength;
                         byte[] dataRunBytes = Helper.readDrive(streamToRead, startOffset, count);
 
-                        if (((ulong)offset + count) <= (ulong)fileBytes.Length)
+                        if ((offset + count) <= fileBytes.Length)
                         {
                             // Save dataRunBytes to fileBytes
-                            Array.Copy(dataRunBytes, 0, fileBytes, offset, dataRunBytes.Length);
+                            Array.Copy(dataRunBytes, 0x00, fileBytes, offset, dataRunBytes.Length);
 
                             // Increment Offset Value
                             offset += dataRunBytes.Length;
                         }
                         else
                         {
-                            Array.Copy(dataRunBytes, 0, fileBytes, offset, (fileBytes.Length - offset));
+                            Array.Copy(dataRunBytes, 0x00, fileBytes, offset, (fileBytes.Length - offset));
                             break;
                         }
                     }
@@ -102,13 +102,13 @@ namespace PowerForensics.Ntfs
                 {
                     VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
                     ulong slackSize = this.AllocatedSize - this.RealSize;
-                    if ((slackSize > 0) && (slackSize <= VBR.BytesPerCluster))
+                    if ((slackSize > 0) && (slackSize <= (ulong)VBR.BytesPerCluster))
                     {
                         DataRun dr = this.DataRun[this.DataRun.Length - 1];
-                        ulong lastCluster = (ulong)dr.StartCluster + (ulong)dr.ClusterLength - 1;
+                        long lastCluster = dr.StartCluster + dr.ClusterLength - 1;
                         byte[] dataRunBytes = Helper.readDrive(streamToRead, VBR.BytesPerCluster * lastCluster, VBR.BytesPerCluster);
                         byte[] slackBytes = new byte[slackSize];
-                        Array.Copy(dataRunBytes, (int)VBR.BytesPerCluster - ((int)this.AllocatedSize - (int)this.RealSize), slackBytes, 0x00, slackBytes.Length);
+                        Array.Copy(dataRunBytes, VBR.BytesPerCluster - ((int)this.AllocatedSize - (int)this.RealSize), slackBytes, 0x00, slackBytes.Length);
                         return slackBytes;
                     }
                     else
@@ -141,11 +141,11 @@ namespace PowerForensics.Ntfs
                     }
                     else
                     {
-                        ulong startOffset = (ulong)VBR.BytesPerCluster * (ulong)dr.StartCluster;
-                        ulong count = (ulong)VBR.BytesPerCluster * (ulong)dr.ClusterLength;
+                        long startOffset = VBR.BytesPerCluster * dr.StartCluster;
+                        long count = VBR.BytesPerCluster * dr.ClusterLength;
                         byte[] dataRunBytes = Helper.readDrive(streamToRead, startOffset, count);
 
-                        if (((ulong)offset + count) <= (ulong)fileBytes.Length)
+                        if ((offset + count) <= fileBytes.Length)
                         {
                             // Save dataRunBytes to fileBytes
                             Array.Copy(dataRunBytes, 0, fileBytes, offset, dataRunBytes.Length);

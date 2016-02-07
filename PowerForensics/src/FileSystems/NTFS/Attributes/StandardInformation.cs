@@ -41,7 +41,7 @@ namespace PowerForensics.Ntfs
         public readonly uint OwnerId;
         public readonly uint SecurityId;
         public readonly ulong QuotaCharged;
-        public readonly ulong UpdateSequenceNumber;
+        public readonly long UpdateSequenceNumber;
 
         #endregion Properties
 
@@ -69,7 +69,7 @@ namespace PowerForensics.Ntfs
                 OwnerId = BitConverter.ToUInt32(bytes, 0x30 + offset);
                 SecurityId = BitConverter.ToUInt32(bytes, 0x34 + offset);
                 QuotaCharged = BitConverter.ToUInt64(bytes, 0x38 + offset);
-                UpdateSequenceNumber = BitConverter.ToUInt64(bytes, 0x40 + offset);
+                UpdateSequenceNumber = BitConverter.ToInt64(bytes, 0x40 + offset);
             }
         }
 

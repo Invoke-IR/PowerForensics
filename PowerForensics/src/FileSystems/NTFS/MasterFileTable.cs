@@ -18,10 +18,10 @@ namespace PowerForensics.Ntfs
             VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
 
             // Calculate byte offset to the Master File Table (MFT)
-            ulong mftOffset = ((ulong)VBR.BytesPerCluster * VBR.MFTStartIndex);
+            long mftOffset = (VBR.BytesPerCluster * VBR.MftStartIndex);
 
             // Read bytes belonging to specified MFT Record
-            byte[] recordBytes = Helper.readDrive(streamToRead, mftOffset, (ulong)VBR.BytesPerFileRecord);
+            byte[] recordBytes = Helper.readDrive(streamToRead, mftOffset, VBR.BytesPerFileRecord);
 
             // Instantiate a FileRecord object for the $MFT file
             return FileRecord.Get(recordBytes, volume, (int)VBR.BytesPerFileRecord, true);
