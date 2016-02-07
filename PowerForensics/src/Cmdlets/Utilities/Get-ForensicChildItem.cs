@@ -36,7 +36,7 @@ namespace PowerForensics.Ntfs
         {
             if (!(this.MyInvocation.BoundParameters.ContainsKey("Path")))
             {
-                path = this.SessionState.PSVariable.GetValue("pwd").ToString();
+                path = this.SessionState.Path.CurrentFileSystemLocation.Path;
             }
         }
 

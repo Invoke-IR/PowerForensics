@@ -10,7 +10,7 @@ namespace PowerForensics.Ntfs
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum ATTR_DEF_ENTRY
         {
             INDEX = 0x02,

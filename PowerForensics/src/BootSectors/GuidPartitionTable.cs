@@ -259,7 +259,7 @@ namespace PowerForensics
             LEGACY_MBR = "024DEE41-33E7-11D3-9D69-0008C781F39F"
         }*/
 
-        [FlagsAttribute]
+        [Flags]
         public enum PARTITION_ATTRIBUTE
         {
             RequirePartition = 0x01,

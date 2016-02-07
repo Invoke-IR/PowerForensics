@@ -49,6 +49,7 @@ namespace PowerForensics.Ntfs
         public string NameString;
         internal bool NonResident;
         public ushort AttributeId;
+        internal int AttributeSize;
 
         #endregion Properties
 
@@ -82,119 +83,6 @@ namespace PowerForensics.Ntfs
 
             return AttributeList.ToArray();
         }
-
-        /*internal static FileRecordAttribute Get(byte[] bytes, string volume)
-        {
-            #region CommonHeader
-
-            if (bytes.Length == 0)
-            {
-                return null;
-            }
-
-            // Instantiate a Common Header Object
-            CommonHeader commonHeader = new CommonHeader(bytes);
-            
-            // Decode Name byte[] into Unicode String
-            string attributeName = Encoding.Unicode.GetString(bytes, commonHeader.NameOffset, commonHeader.NameLength);
-
-            #endregion CommonHeader
-
-            #region NonResidentAttribute
-
-            // If Attribute is NonResident
-            if (commonHeader.NonResident)
-            {
-                #region NonResidentHeader
-
-                // Instantiate a Resident Header Object
-                NonResidentHeader nonresidentHeader = new NonResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE, NONRESIDENTHEADERSIZE), commonHeader);
-
-                #endregion NonResidentHeader
-
-                #region DataRun
-
-                int headerSize = 0x00;
-
-                if (commonHeader.NameOffset != 0x00)
-                {
-                    headerSize = commonHeader.NameOffset + commonHeader.NameLength + (commonHeader.NameLength % 8);
-                }
-                else
-                {
-                    headerSize = COMMONHEADERSIZE + NONRESIDENTHEADERSIZE;
-                }
-
-                return new NonResident(nonresidentHeader, Helper.GetSubArray(bytes, headerSize, (int)commonHeader.TotalSize - headerSize), attributeName);
-
-                #endregion DataRun
-            }
-
-            #endregion NonResidentAttribute
-
-            #region ResidentAttribute
-            // Else Attribute is Resident
-            else
-            {
-                #region ResidentHeader
-
-                // Instantiate a Resident Header Object
-                ResidentHeader residentHeader = new ResidentHeader(Helper.GetSubArray(bytes, COMMONHEADERSIZE, RESIDENTHEADERSIZE), commonHeader);
-
-                #endregion ResidentHeader
-
-                #region AttributeBytes
-
-                // Create a byte[] representing the attribute itself
-                int headerSize = COMMONHEADERSIZE + RESIDENTHEADERSIZE + commonHeader.NameLength;
-                byte[] attributeBytes = Helper.GetSubArray(bytes, headerSize, (int)commonHeader.TotalSize - headerSize);
-
-                #endregion AttributeBytes
-
-                #region ATTRSwitch
-
-                switch (residentHeader.commonHeader.ATTRType)
-                {
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.STANDARD_INFORMATION:
-                        return new StandardInformation(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST:
-                        return new AttributeList(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.FILE_NAME:
-                        return new FileName(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.OBJECT_ID:
-                        return new ObjectId(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.VOLUME_NAME:
-                        return new VolumeName(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.VOLUME_INFORMATION:
-                        return new VolumeInformation(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.DATA:
-                        return new Data(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.INDEX_ROOT:
-                        return new IndexRoot(residentHeader, attributeBytes, attributeName);
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.EA:
-                        //Console.WriteLine("EA");
-                        return null;
-
-                    case (Int32)FileRecordAttribute.ATTR_TYPE.EA_INFORMATION:
-                        //Console.WriteLine("EA_INFORMATION");
-                        return null;
-
-                    default:
-                        return null;
-                }
-
-                #endregion ATTRSwitch
-            }
-            #endregion ResidentAttribute
-        }*/
 
         internal static FileRecordAttribute Get(byte[] bytes, int offset, string volume)
         {

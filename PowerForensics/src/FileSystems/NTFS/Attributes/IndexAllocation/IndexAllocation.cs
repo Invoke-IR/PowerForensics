@@ -23,6 +23,7 @@ namespace PowerForensics.Ntfs
             NameString = header.NameString;
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
+            AttributeSize = header.commonHeader.TotalSize;
 
             // Get IndexAllocation Bytes
             byte[] bytes = header.GetBytes(volume);

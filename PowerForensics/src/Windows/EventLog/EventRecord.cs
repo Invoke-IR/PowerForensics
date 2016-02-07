@@ -9,7 +9,7 @@ namespace PowerForensics.EventLog
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum FILEFLAGS
         {
             IsDirty = 0x00,

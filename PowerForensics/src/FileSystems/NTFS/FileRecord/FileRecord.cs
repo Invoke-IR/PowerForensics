@@ -9,7 +9,7 @@ namespace PowerForensics.Ntfs
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum FILE_RECORD_FLAG
         {
             INUSE = 0x01,	// File record is in use

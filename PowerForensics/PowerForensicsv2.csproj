@@ -79,7 +79,8 @@
     <Compile Include="src\FileSystems\Fat\FileAllocationTable.cs" />
     <Compile Include="src\FileSystems\Fat\FsInformationSector.cs" />
     <Compile Include="src\FileSystems\Fat\VolumeBootRecord.cs" />
-    <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList\AttrRef.cs" />
+    <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList\AttributeList.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\EA.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\EAInformation.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\Headers\NonResidentHeader.cs" />
@@ -133,7 +134,8 @@
     <Compile Include="src\Cmdlets\FileSystems\Get-ForensicVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\LogFile.cs" />
     <Compile Include="src\Cmdlets\BootSector\Get-MasterBootRecord.cs" />
-    <Compile Include="src\BootSectors\MasterBootRecord.cs" />
+    <Compile Include="src\BootSectors\MasterBootRecord\MasterBootRecord.cs" />
+    <Compile Include="src\BootSectors\MasterBootRecord\PartitionEntry.cs" />
     <Compile Include="src\Cmdlets\Utilities\Copy-ForensicFile.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />

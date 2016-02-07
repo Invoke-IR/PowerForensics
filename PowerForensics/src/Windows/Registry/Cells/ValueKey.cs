@@ -29,7 +29,7 @@ namespace PowerForensics.Registry
             REG_QWORD = 0x0000000B
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum VALUE_KEY_FLAGS
         {
             NameIsUnicode = 0x0000,

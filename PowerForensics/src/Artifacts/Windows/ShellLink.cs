@@ -9,7 +9,7 @@ namespace PowerForensics.Artifacts
     {
         #region Enums
         
-        [FlagsAttribute]
+        [Flags]
         public enum LINK_FLAGS
         {
             HasLinkTargetIdList = 0x00000001,
@@ -41,7 +41,7 @@ namespace PowerForensics.Artifacts
             KeepLocalIdListForUncTarget = 0x04000000
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum FILEATTRIBUTE_FLAGS
         {
             FILE_ATTRIBUTE_READONLY = 0x0001,
@@ -68,7 +68,7 @@ namespace PowerForensics.Artifacts
             SW_SHOWMINNOACTIVE = 0x00000007
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum HOTKEY_FLAGS
         {
             HOTKEYF_SHIFT = 0x01,
@@ -138,7 +138,7 @@ namespace PowerForensics.Artifacts
             VK_SCROLL = 0x91
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum LINKINFO_FLAGS
         {
             VolumeIDAndLocalBasePath = 0x01,
@@ -549,7 +549,7 @@ namespace PowerForensics.Artifacts
     {
         #region Enums
         
-        [FlagsAttribute]
+        [Flags]
         private enum COMMON_NETWORK_RELATIVE_LINK_FLAGS
         {
             ValidDevice = 0x01,

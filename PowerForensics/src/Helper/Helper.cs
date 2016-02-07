@@ -86,6 +86,15 @@ namespace PowerForensics
             }
         }
 
+        internal static byte[] readSector(string device, ulong sectorOffset, ulong sectorCount)
+        {
+            // Create a FileStream to read from hDrive
+            using (FileStream streamToRead = getFileStream(device))
+            {
+                return readDrive(streamToRead, sectorOffset * NativeMethods.BYTES_PER_SECTOR, sectorCount * NativeMethods.BYTES_PER_SECTOR);
+            }
+        }
+
         internal static byte[] readDrive(FileStream streamToRead, ulong offset, ulong sizeToRead)
         {
             // Bytes must be read by sector

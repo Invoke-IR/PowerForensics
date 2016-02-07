@@ -23,11 +23,8 @@ namespace PowerForensics.Ntfs
 
         internal VolumeBootRecord(byte[] bytes)
         {
-            // Get VolumeBootRecord Signature to determine File System Type
-            Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08);
-
             // Check if NTFS Partition
-            if (Signature == "NTFS    ")
+            if (Encoding.ASCII.GetString(bytes, 0x03, 0x08) == "NTFS    ")
             {
                 BytesPerSector = BitConverter.ToUInt16(bytes, 0x0B);
                 BytesPerCluster = (uint)(bytes[0x0D] * BytesPerSector);

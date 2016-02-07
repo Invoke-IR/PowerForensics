@@ -23,6 +23,7 @@ namespace PowerForensics.Ntfs
             NameString = attrName;
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
+            AttributeSize = header.commonHeader.TotalSize;
 
             ObjectIdGuid = new Guid(Helper.GetSubArray(bytes, 0x00 + offset, 0x10));
 

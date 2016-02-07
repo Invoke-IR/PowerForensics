@@ -11,7 +11,7 @@ namespace PowerForensics.Ntfs
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum USN_REASON : uint
         {
             DATA_OVERWRITE = 0x00000001,
@@ -37,7 +37,7 @@ namespace PowerForensics.Ntfs
             CLOSE = 0x80000000
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum USN_SOURCE : uint
         {
             DATA_MANAGEMENT = 0x00000001,

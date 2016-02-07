@@ -14,7 +14,7 @@ namespace PowerForensics.Ntfs
 
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum INDEX_ROOT_FLAGS
         {
             INDEX_ROOT_ONLY = 0x00,
@@ -54,6 +54,7 @@ namespace PowerForensics.Ntfs
             NameString = attrName;
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
+            AttributeSize = header.commonHeader.TotalSize;
 
             #endregion ResidentHeader
 

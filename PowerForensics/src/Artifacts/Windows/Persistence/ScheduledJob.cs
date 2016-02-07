@@ -23,7 +23,7 @@ namespace PowerForensics.Artifacts
             Windows8_1 = 0x0603
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum PRIORITY_CLASS
         {
             NORMAL = 0x4000000,
@@ -39,7 +39,7 @@ namespace PowerForensics.Artifacts
             SCHED_S_TASK_NOT_SCHEDULED = 0x00041305
         }
 
-        [FlagsAttribute]
+        [Flags]
         public enum TASK_FLAG : uint
         {
             INTERACTIVE = 0x80000000,

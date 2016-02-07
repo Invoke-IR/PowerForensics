@@ -8,7 +8,7 @@ namespace PowerForensics.Ntfs
     {
         #region Enums
         
-        [FlagsAttribute]
+        [Flags]
         public enum ATTR_STDINFO_PERMISSION : uint
         {
             READONLY = 0x00000001,
@@ -53,6 +53,7 @@ namespace PowerForensics.Ntfs
             NameString = attrName;
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
+            AttributeSize = header.commonHeader.TotalSize;
 
             BornTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(bytes, 0x00 + offset));
             ModifiedTime = DateTime.FromFileTimeUtc(BitConverter.ToInt64(bytes, 0x08 + offset));

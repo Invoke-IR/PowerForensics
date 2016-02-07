@@ -53,7 +53,7 @@ namespace PowerForensics.Cmdlets
             }
             else
             {
-                WriteObject(new MasterBootRecord(MasterBootRecord.GetBytes(drivePath)));
+                WriteObject(MasterBootRecord.Get(drivePath));
             }
         }
 

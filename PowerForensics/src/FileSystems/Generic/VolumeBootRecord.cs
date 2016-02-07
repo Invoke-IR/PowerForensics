@@ -19,7 +19,6 @@ namespace PowerForensics.Generic
 
         #region Properties
 
-        public string Signature;
         public MEDIA_DESCRIPTOR MediaDescriptor;
         public ushort BytesPerSector;
         public byte SectorsPerCluster;
@@ -52,7 +51,7 @@ namespace PowerForensics.Generic
             }
         }
 
-        internal void checkFooter(byte[] bytes)
+        internal static void checkFooter(byte[] bytes)
         {
             if (BitConverter.ToUInt16(bytes, 0x1FE) != 0xAA55)
             {
@@ -79,13 +78,14 @@ namespace PowerForensics.Generic
 
         private static VolumeBootRecord Get(byte[] bytes)
         {
-            string signature = getFileSystem(bytes);
-            switch (signature)
+            checkFooter(bytes);
+
+            switch (getFileSystem(bytes))
             {
                 case "Ntfs":
                     return new Ntfs.VolumeBootRecord(bytes);
                 case "ExFat":
-                    return new ExFat.VolumeBootRecord(bytes, signature);
+                    return new ExFat.VolumeBootRecord(bytes);
                 default:
                     return new Fat.VolumeBootRecord(bytes);
             }

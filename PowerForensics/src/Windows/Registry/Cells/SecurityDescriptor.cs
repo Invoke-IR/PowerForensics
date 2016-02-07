@@ -8,7 +8,7 @@ namespace PowerForensics.Registry
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum SECURITY_KEY_CONTROLS
         {
             SeOwnerDefaulted = 0x0001,

@@ -90,6 +90,7 @@ namespace PowerForensics.Ntfs
             NameString = attrName;
             NonResident = header.commonHeader.NonResident;
             AttributeId = header.commonHeader.Id;
+            AttributeSize = header.commonHeader.TotalSize;
 
             // FILE_NAME Attribute
             ParentRecordNumber = (BitConverter.ToUInt64(bytes, 0x00 + offset) & 0x0000FFFFFFFFFFFF);

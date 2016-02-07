@@ -8,7 +8,7 @@ namespace PowerForensics.Fat
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum ATTR_FLAGS
         {
             ATTR_READ_ONLY = 0x01,

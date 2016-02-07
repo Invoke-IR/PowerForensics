@@ -34,7 +34,7 @@ namespace PowerForensics.Fat
 
         internal VolumeBootRecord(byte[] bytes)
         {
-            Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08);
+            string Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08);
             BytesPerSector = BitConverter.ToUInt16(bytes, 0x0B);
             SectorsPerCluster = bytes[0x0D];
             BytesPerCluster = (uint)BytesPerSector * (uint)SectorsPerCluster;
@@ -74,8 +74,6 @@ namespace PowerForensics.Fat
                 FileSystemType = Encoding.ASCII.GetString(bytes, 0x36, 0x08);
                 CodeSection = Helper.GetSubArray(bytes, 0x3E, 0x200 - 0x40);
             }
-
-            checkFooter(bytes);
         }
 
         #endregion Constructors

@@ -15,7 +15,7 @@ namespace PowerForensics.Formats
     {
         #region Enums
 
-        [FlagsAttribute]
+        [Flags]
         public enum ACTIVITY_TYPE
         {
             m = 0x1,
