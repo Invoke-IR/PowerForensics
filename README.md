@@ -24,6 +24,8 @@
 PowerForensics is a PowerShell digital forensics framework. It currently
 supports NTFS and is in the process of adding support for the ext4 file system.
 
+Detailed instructions for installing PowerForensics can be found <a href="http://www.invoke-ir.com/2016/02/installing-powerforensics.html">here</a>.
+
 ## Cmdlets
 ### Boot Sector:
 ```
@@ -106,64 +108,6 @@ Get-ForensicChildItem - returns a directory's contents by parsing the MFT struct
 Get-ForensicContent - gets the content of a file from its raw bytes on disk
 Invoke-ForensicDD - provides a bit for bit copy of a specified device
 ```
-
-## [Module Installation](https://msdn.microsoft.com/en-us/library/dd878350(v=vs.85).aspx)
-The easiest way to install PowerForensics is through the  ```Install-Module``` cmdlet. This is available by default in Windows 10, but can also be installed via the Windows Management Framework or the standalone MSI installer:
-
-```powershell
-Install-Module PowerForensics
-```
-
-For more information about installing modules from the PowerShell Gallery, see http://www.powershellgallery.com/.
-
-If you wish to install directly from this repository, Jakub Jareš wrote an [excellent introduction](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) to module installation, so we've adapted those instructions here for PowerForensics. 
-
-To begin open an internet browser and navigate to the main PowerForensics github [page](https://github.com/Invoke-IR/PowerForensics/releases). Once on this page you will need to find the latest release, download PowerForensics.zip, and extract the module into your modules directory.
-
-<p align="center">
-  <img src="https://1.bp.blogspot.com/-9iysGot_Irw/VlI8VYZef7I/AAAAAAAAA9Y/ud-z17k6I0s/s1600/Screenshot%2B2015-11-22%2B17.04.13.png">
-</p>
-
-If you used Internet Explorer to download the archive, you need to unblock the archive before extraction, otherwise PowerShell will complain when you import the module. If you are using PowerShell 3.0 or newer you can use the Unblock-File cmdlet to do that:
-```powershell
-Unblock-File -Path "$env:UserProfile\Downloads\PowerForensics-master.zip"
-```
-
-If you are using an older version of PowerShell you will have to unblock the file manually. Go to your Downloads folder and right-click PowerForensics.zip and select "Properties". On the general tab click Unblock and then click OK to close the dialog.
-
-<p align="center">
-  <img src="https://3.bp.blogspot.com/-9l3ETdnI_YE/VlI-grV7etI/AAAAAAAAA9s/IQjL_Zvfw64/s400/Screenshot%2B2015-11-22%2B17.15.00.png">
-</p>
-
-Open your Modules directory and create a new folder called PowerForensics. You can use this script to open the correct folder effortlessly:
-```powershell
-function Get-UserModulePath {
-    $Path = $env:PSModulePath -split ";" -match $env:USERNAME
- 
-    if (-not (Test-Path -Path $Path))
-    {
-        New-Item -Path $Path -ItemType Container | Out-Null
-    }
-    $Path
-}
-
-Invoke-Item (Get-UserModulePath)
-```
-
-Extract the archive to the PowerForensics folder. When you are done you should have all these files in your PowerForensics directory:
-
-<p align="center">
-  <img src="https://4.bp.blogspot.com/-kP8N4QXDO2A/VlI-mvXCY8I/AAAAAAAAA9w/V2-MFg1Tg90/s1600/Screenshot%2B2015-11-22%2B17.13.19.png">
-</p>
-
-Start a new PowerShell session and import the PowerForensics module using the commands below:
-```powershell
-Get-Module -ListAvailable -Name PowerForensics
-Import-Module PowerForensics
-Get-Command -Module PowerForensics
-```
-
-You are now ready to use the PowerForensics PowerShell module!
 
 <p align="center">
   <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
