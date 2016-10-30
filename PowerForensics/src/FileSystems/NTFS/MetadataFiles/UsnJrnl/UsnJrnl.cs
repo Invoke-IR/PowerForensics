@@ -64,6 +64,7 @@ namespace PowerForensics.Ntfs
         public readonly uint SecurityId;
         public readonly StandardInformation.ATTR_STDINFO_PERMISSION FileAttributes;
         public readonly string FileName;
+        public readonly string FullName;
 
         #endregion Properties
 
@@ -88,6 +89,7 @@ namespace PowerForensics.Ntfs
             ushort fileNameOffset = BitConverter.ToUInt16(bytes, (0x3A + offset));
             FileName = Encoding.Unicode.GetString(bytes, 0x3C + offset, fileNameLength); 
             offset += RecordLength;
+            //FullName = this.GetFileRecord().FullName;
         }
 
         #endregion Constructors
@@ -96,12 +98,24 @@ namespace PowerForensics.Ntfs
 
         #region GetMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="usn"></param>
+        /// <returns></returns>
         public static UsnJrnl Get(string volume, long usn)
         {
             Helper.getVolumeName(ref volume);
             return GetByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl", usn);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="usn"></param>
+        /// <returns></returns>
         public static UsnJrnl GetByPath(string path, long usn)
         {
             string volume = Helper.GetVolumeFromPath(path);
@@ -109,6 +123,13 @@ namespace PowerForensics.Ntfs
             return Get(volume, (int)entry.RecordNumber, usn);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="recordnumber"></param>
+        /// <param name="usn"></param>
+        /// <returns></returns>
         private static UsnJrnl Get(string volume, int recordnumber, long usn)
         {
             // Check for valid Volume name
@@ -188,6 +209,11 @@ namespace PowerForensics.Ntfs
 
         #region GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static UsnJrnl[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -195,6 +221,11 @@ namespace PowerForensics.Ntfs
             return GetInstances(volume, (int)entry.RecordNumber);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static UsnJrnl[] GetInstancesByPath(string path)
         {
             string volume = Helper.GetVolumeFromPath(path);
@@ -202,12 +233,19 @@ namespace PowerForensics.Ntfs
             return GetInstances(volume, (int)entry.RecordNumber);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static UsnJrnl[] GetTestInstances(string path)
         {
             byte[] bytes = FileRecord.GetContentBytes(path, "$J");
+
             string volume = Helper.GetVolumeFromPath(path);
 
             VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
+
             List<UsnJrnl> usnList = new List<UsnJrnl>();
 
             for(int i = 0;  i < bytes.Length; i += VBR.BytesPerCluster)
@@ -241,19 +279,24 @@ namespace PowerForensics.Ntfs
             return usnList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="recordnumber"></param>
+        /// <returns></returns>
         private static UsnJrnl[] GetInstances(string volume, int recordnumber)
         {
-            // Set up FileStream to read volume
-            FileStream streamToRead = Helper.getFileStream(volume);
-
             // Get VolumeBootRecord object for logical addressing
-            VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+            VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
 
+            // Get FileRecord for C:\$Extend\$UsnJrnl
             FileRecord record = FileRecord.Get(volume, recordnumber, true);
 
-            // Get the $J Data attribute (contains UsnJrnl details
+            // Get the $J Data attribute (contains UsnJrnl records)
             NonResident J = UsnJrnl.GetJStream(record);
 
+            // Instatiate a List of UsnJrnl entries
             List<UsnJrnl> usnList = new List<UsnJrnl>();
 
             for (int i = 0; i < J.DataRun.Length; i++)
@@ -262,7 +305,7 @@ namespace PowerForensics.Ntfs
                 {
                     long clusterCount = J.DataRun[i].ClusterLength;
 
-                    byte[] fragmentBytes = Helper.readDrive(streamToRead, (J.DataRun[i].StartCluster * VBR.BytesPerCluster), (clusterCount * VBR.BytesPerCluster));
+                    byte[] fragmentBytes = Helper.readDrive(volume, (J.DataRun[i].StartCluster * VBR.BytesPerCluster), (clusterCount * VBR.BytesPerCluster));
 
                     byte[] clusterBytes = new byte[VBR.BytesPerCluster];
 
@@ -297,11 +340,18 @@ namespace PowerForensics.Ntfs
                     }
                 }
             }
+
+            // Return usnList as a UsnJrnl[]
             return usnList.ToArray();
         }
 
         #endregion GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileRecord"></param>
+        /// <returns></returns>
         internal static NonResident GetJStream(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)
@@ -331,6 +381,10 @@ namespace PowerForensics.Ntfs
 
         #region InstanceMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public FileRecord GetFileRecord()
         {
             FileRecord record = FileRecord.Get(this.VolumePath, (int)this.RecordNumber, false);
@@ -345,6 +399,10 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public FileRecord GetParentFileRecord()
         {
             FileRecord record = FileRecord.Get(this.VolumePath, (int)this.ParentFileRecordNumber, false);
@@ -359,81 +417,17 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        #region ToStringOverride
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("UsnJrnl for {0} ({1}) Reason: {2}", this.FileName, this.RecordNumber, this.Reason); ;
         }
 
-        #endregion ToStringOverride
-
         #endregion InstanceMethods
     }
 
     #endregion USNJrnlClass
-
-    #region UsnJrnlDetailClass
-
-    public class UsnJrnlDetail
-    {
-        #region Properties
-
-        public ulong MaxSize;
-        public ulong AllocationDelta;
-        public ulong UsnId;
-        public ulong LowestUsn;
-
-        #endregion Properties
-
-        #region Constructors
-
-        private UsnJrnlDetail(byte[] maxBytes)
-        {
-            MaxSize = BitConverter.ToUInt64(maxBytes, 0x00);
-            AllocationDelta = BitConverter.ToUInt64(maxBytes, 0x08);
-            UsnId = BitConverter.ToUInt64(maxBytes, 0x10);
-            LowestUsn = BitConverter.ToUInt64(maxBytes, 0x18);
-        }
-
-        #endregion Constructors
-
-        #region StaticMethods
-
-        #region GetMethod
-
-        public static UsnJrnlDetail Get(string volume)
-        {
-            Helper.getVolumeName(ref volume);
-            return GetByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl");
-        }
-        
-        public static UsnJrnlDetail GetByPath(string path)
-        {
-            FileRecord record = FileRecord.Get(path, true);
-            return new UsnJrnlDetail(record.GetContent(@"$Max"));
-        }
-
-        #endregion GetMethod
-
-        #region GetBytesMethod
-
-        public static byte[] GetBytes(string volume)
-        {
-            Helper.getVolumeName(ref volume);
-            return GetBytesByPath(Helper.GetVolumeLetter(volume) + @"\$Extend\$UsnJrnl");
-        }
-
-        public static byte[] GetBytesByPath(string path)
-        {
-            FileRecord record = FileRecord.Get(path, true);
-            return record.GetContent(@"$Max");
-        }
-
-        #endregion GetBytesMethod
-
-        #endregion StaticMethods
-    }
-
-    #endregion UsnJrnlDetailClass
 }

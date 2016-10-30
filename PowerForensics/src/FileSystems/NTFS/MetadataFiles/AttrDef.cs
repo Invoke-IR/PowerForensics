@@ -79,6 +79,11 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static AttrDef[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -86,12 +91,22 @@ namespace PowerForensics.Ntfs
             return AttrDef.GetInstances(record.GetContent());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static AttrDef[] GetInstancesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
             return AttrDef.GetInstances(record.GetContent());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static AttrDef[] GetInstances(byte[] bytes)
         {
             // Instantiate a List of AttrDef objects for output

@@ -9,6 +9,11 @@ namespace PowerForensics
     {
         #region Helper Functions
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static string getVolumeName(ref string volume)
         {
             if (volume == null)
@@ -24,16 +29,31 @@ namespace PowerForensics
             return volume;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         internal static string GetVolumeFromPath(string path)
         {
             return "\\\\.\\" + path.Split('\\')[0];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static string GetVolumeLetter(string volume)
         {
             return volume.Split('\\')[3];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static string GetSecurityIdentifier(byte[] bytes)
         {
             IntPtr ptrSid;
@@ -48,6 +68,11 @@ namespace PowerForensics
             return Marshal.PtrToStringAnsi(ptrSid);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         internal static FileStream getFileStream(string fileName)
         {
             if (!(fileName.Contains(@"\\.\PHYSICALDRIVE")))
@@ -77,6 +102,13 @@ namespace PowerForensics
             return new FileStream(hDevice, FileAccess.Read);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="offset"></param>
+        /// <param name="sizeToRead"></param>
+        /// <returns></returns>
         internal static byte[] readDrive(string device, long offset, long sizeToRead)
         {
             // Create a FileStream to read from hDrive
@@ -86,6 +118,13 @@ namespace PowerForensics
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="sectorOffset"></param>
+        /// <param name="sectorCount"></param>
+        /// <returns></returns>
         internal static byte[] readSector(string device, long sectorOffset, long sectorCount)
         {
             // Create a FileStream to read from hDrive
@@ -95,6 +134,13 @@ namespace PowerForensics
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamToRead"></param>
+        /// <param name="offset"></param>
+        /// <param name="sizeToRead"></param>
+        /// <returns></returns>
         internal static byte[] readDrive(FileStream streamToRead, long offset, long sizeToRead)
         {
             // Bytes must be read by sector
@@ -154,12 +200,35 @@ namespace PowerForensics
             return buf;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unixTime"></param>
+        /// <returns></returns>
         internal static DateTime FromUnixTime(uint unixTime)
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        internal static long ToUnixTime(DateTime dateTime)
+        {
+            DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return (long)(dateTime - sTime).TotalSeconds;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="InputBytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         internal static byte[] GetSubArray(byte[] InputBytes, long offset, long length)
         {
             byte[] outputBytes = new byte[length];
@@ -167,6 +236,13 @@ namespace PowerForensics
             return outputBytes;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="InputBytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
         internal static byte[] GetSubArray(byte[] InputBytes, int offset, int length)
         {
             byte[] outputBytes = new byte[length];
@@ -174,6 +250,11 @@ namespace PowerForensics
             return outputBytes;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
         internal static void ApplyFixup(ref byte[] bytes, int offset)
         {
             // Take UpdateSequence into account
@@ -204,6 +285,11 @@ namespace PowerForensics
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         internal static string FromRot13(string value)
         {
             char[] array = value.ToCharArray();

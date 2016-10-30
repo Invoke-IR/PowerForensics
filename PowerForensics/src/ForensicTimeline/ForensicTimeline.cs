@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Management.Automation;
 using System.Collections.Generic;
 using PowerForensics.Artifacts;
 using PowerForensics.Ntfs;
@@ -97,11 +96,21 @@ namespace PowerForensics.Formats
             }
         }*/
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(Amcache input)
         {
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(Amcache[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -112,6 +121,11 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] Get(Prefetch input)
         {
             List<ForensicTimeline> mactimeList = new List<ForensicTimeline>();
@@ -124,6 +138,11 @@ namespace PowerForensics.Formats
             return mactimeList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(Prefetch[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -137,11 +156,21 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(ScheduledJob input)
         {
             return new ForensicTimeline(input.StartTime, "MACB", "SCHEDULEDJOB", input.Author, input.ApplicationName, input.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(ScheduledJob[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -152,6 +181,11 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] Get(ShellLink input)
         {
             List<ForensicTimeline> macs = new List<ForensicTimeline>();
@@ -194,6 +228,11 @@ namespace PowerForensics.Formats
             return macs.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(ShellLink[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -207,11 +246,21 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(UserAssist input)
         {
             return new ForensicTimeline(input.LastExecutionTimeUtc, "MACB", "USERASSIST", "", input.ImagePath, input.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(UserAssist[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -222,11 +271,21 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(EventRecord input)
         {
             return new ForensicTimeline(input.WriteTime, "MACB", "EVENTLOG", "", input.LogPath, input.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(EventRecord[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -237,6 +296,11 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] Get(FileRecord input)
         {
             List<ForensicTimeline> macs = new List<ForensicTimeline>();
@@ -296,6 +360,11 @@ namespace PowerForensics.Formats
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(FileRecord[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -309,11 +378,21 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(UsnJrnl input)
         {
-            return new ForensicTimeline(input.TimeStamp, "MACB", "USNJRNL", "", input.FileName, input.ToString());
+            return new ForensicTimeline(input.TimeStamp, "MACB", "USNJRNL", "", input.FullName, input.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(UsnJrnl[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -324,11 +403,21 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline Get(NamedKey input)
         {
             return new ForensicTimeline(input.WriteTime, "MACB", "REGISTRY", "", input.FullName, input.ToString());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(NamedKey[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -339,6 +428,11 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string ToFriendlyString(ACTIVITY_TYPE type)
         {
             StringBuilder sb = new StringBuilder();

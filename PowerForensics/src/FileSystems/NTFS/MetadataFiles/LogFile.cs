@@ -39,7 +39,7 @@ namespace PowerForensics.Ntfs
 
                 NonResident data = GetDataAttr(logFileRecord);
 
-                return data.GetBytes(volume);
+                return data.GetBytes();
             }
         }
 

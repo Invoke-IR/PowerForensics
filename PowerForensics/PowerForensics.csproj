@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Artifacts\Windows\ApacheAccessLog.cs" />
     <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\RecentFileCache.cs" />
     <Compile Include="src\Artifacts\Windows\JavaCache.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\MicrosoftOffice\FileMRU.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="src\Artifacts\Windows\SoftwareHive\WindowsVersion.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Shimcache.cs" />
+    <Compile Include="src\BootSectors\GuidPartitionTable.cs" />
     <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicShimcache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicRecentFileCache.cs" />
     <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeOutlookCatalog.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="src\Cmdlets\BinShred\BinShredLexer.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShredListener.cs" />
     <Compile Include="src\Cmdlets\BinShred\BinShredParser.cs" />
+    <Compile Include="src\Cmdlets\ForensicTimeline\ConvertTo-Gource.cs" />
     <Compile Include="src\Cmdlets\ForensicTimeline\ConvertTo-ForensicTimeline.cs" />
     <Compile Include="src\Cmdlets\ForensicTimeline\Get-ForensicTimeline.cs" />
     <Compile Include="src\Cmdlets\Windows\Get-ForensicEventLog.cs" />
@@ -95,11 +98,12 @@
     <Compile Include="src\Artifacts\Windows\SamHive\UserDetails.cs" />
     <Compile Include="src\Artifacts\Windows\Persistence\ScheduledJob.cs" />
     <Compile Include="src\Artifacts\Windows\Persistence\ScheduledTask.cs" />
-    <Compile Include="src\Artifacts\Windows\ShellLink.cs" />
+    <Compile Include="src\Artifacts\Windows\ShellLink\ShellLink.cs" />
     <Compile Include="src\Artifacts\Windows\SystemHive\Timezone.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedUrls.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\UserAssist.cs" />
     <Compile Include="src\FileSystems\ExFat\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Ext\Superblock.cs" />
     <Compile Include="src\FileSystems\Fat\DirectoryEntry.cs" />
     <Compile Include="src\FileSystems\Fat\FileAllocationTable.cs" />
     <Compile Include="src\FileSystems\Fat\FsInformationSector.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\Bitmap.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\BadClus.cs" />
     <Compile Include="src\FileSystems\Generic\VolumeBootRecord.cs" />
+    <Compile Include="src\ForensicTimeline\Gource.cs" />
     <Compile Include="src\Helper\Helper.cs" />
     <Compile Include="src\Windows\EventLog\BinaryXml.cs" />
     <Compile Include="src\Windows\EventLog\EventRecord.cs" />
@@ -155,16 +160,15 @@
     <Compile Include="src\Utilities\DD.cs" />
     <Compile Include="src\ForensicTimeline\ForensicTimeline.cs" />
     <Compile Include="src\Cmdlets\BootSector\Get-GuidPartitionTable.cs" />
-    <Compile Include="src\BootSectors\GuidPartitionTable.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\AttrDef.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicAttrDef.cs" />
     <Compile Include="src\Cmdlets\FileSystems\Get-ForensicVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\LogFile.cs" />
     <Compile Include="src\Cmdlets\BootSector\Get-MasterBootRecord.cs" />
-    <Compile Include="src\BootSectors\MasterBootRecord\MasterBootRecord.cs" />
-    <Compile Include="src\BootSectors\MasterBootRecord\PartitionEntry.cs" />
+    <Compile Include="src\BootSectors\MasterBootRecord.cs" />
     <Compile Include="src\Cmdlets\Utilities\Copy-ForensicFile.cs" />
-    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl\UsnJrnl.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl\UsnJrnlInformation.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\Data.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileName.cs" />

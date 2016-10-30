@@ -10,6 +10,7 @@ namespace PowerForensics.Ntfs
     {
         #region Properties
 
+        private string Volume;
         internal CommonHeader commonHeader;	            // Common Header Object
         internal ulong StartVCN;		                // Starting VCN
         internal ulong LastVCN;		                    // Last VCN
@@ -24,8 +25,10 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
-        internal NonResident(NonResidentHeader header, byte[] bytes, int offset, string attrName)
+        internal NonResident(NonResidentHeader header, byte[] bytes, int offset, string attrName, string volume)
         {
+            Volume = volume;
+
             // Attr Object
             Name = (ATTR_TYPE)header.commonHeader.ATTRType;
             NameString = attrName;
@@ -42,22 +45,29 @@ namespace PowerForensics.Ntfs
             AllocatedSize = header.AllocatedSize;
             RealSize = header.RealSize;
             InitializedSize = header.InitializedSize;
-            DataRun = Ntfs.DataRun.GetInstances(bytes, offset);
+            DataRun = Ntfs.DataRun.GetInstances(bytes, offset, volume);
         }
 
         #endregion Constructors
 
         #region InstanceMethods
 
-        public byte[] GetBytes(string volume)
+        #region GetBytes
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
+        public byte[] GetBytes()
         {
             byte[] fileBytes = new byte[this.RealSize];
 
             int offset = 0;
 
-            Helper.getVolumeName(ref volume);
-            
-            using (FileStream streamToRead = Helper.getFileStream(volume))
+            Helper.getVolumeName(ref this.Volume);
+
+            using (FileStream streamToRead = Helper.getFileStream(this.Volume))
             {
                 VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
 
@@ -92,46 +102,50 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        public byte[] GetSlack(string volume)
+        public byte[] GetBytesTest()
         {
-            Helper.getVolumeName(ref volume);
+            Helper.getVolumeName(ref this.Volume);
 
-            using(FileStream streamToRead = Helper.getFileStream(volume))
+            List<byte> byteList = new List<byte>();
+            
+            using (FileStream streamToRead = Helper.getFileStream(this.Volume))
             {
-                if (this.DataRun.Length != 0)
+                VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+
+                foreach (DataRun dr in this.DataRun)
                 {
-                    VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
-                    ulong slackSize = this.AllocatedSize - this.RealSize;
-                    if ((slackSize > 0) && (slackSize <= (ulong)VBR.BytesPerCluster))
+                    if (dr.Sparse)
                     {
-                        DataRun dr = this.DataRun[this.DataRun.Length - 1];
-                        long lastCluster = dr.StartCluster + dr.ClusterLength - 1;
-                        byte[] dataRunBytes = Helper.readDrive(streamToRead, VBR.BytesPerCluster * lastCluster, VBR.BytesPerCluster);
-                        byte[] slackBytes = new byte[slackSize];
-                        Array.Copy(dataRunBytes, VBR.BytesPerCluster - ((int)this.AllocatedSize - (int)this.RealSize), slackBytes, 0x00, slackBytes.Length);
-                        return slackBytes;
+                        // Figure out how to add Sparse Bytes
                     }
                     else
                     {
-                        return null;
+                        long startOffset = VBR.BytesPerCluster * dr.StartCluster;
+                        Console.WriteLine(this.Volume);
+                        long count = VBR.BytesPerCluster * dr.ClusterLength;
+                        byteList.AddRange(Helper.readDrive(streamToRead, startOffset, count));
                     }
                 }
-                else
-                {
-                    return null;
-                }
+
+                return Helper.GetSubArray(byteList.ToArray(), 0, (long)this.RealSize);
             }
         }
 
-        internal byte[] GetBytes(string volume, VolumeBootRecord VBR)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="VBR"></param>
+        /// <returns></returns>
+        internal byte[] GetBytes(VolumeBootRecord VBR)
         {
             byte[] fileBytes = new byte[this.RealSize];
 
             int offset = 0;
 
-            Helper.getVolumeName(ref volume);
+            Helper.getVolumeName(ref this.Volume);
 
-            using (FileStream streamToRead = Helper.getFileStream(volume))
+            using (FileStream streamToRead = Helper.getFileStream(this.Volume))
             {
                 foreach (DataRun dr in this.DataRun)
                 {
@@ -163,6 +177,48 @@ namespace PowerForensics.Ntfs
                 return fileBytes;
             }
         }
+
+        #endregion GetBytes
+
+        #region GetSlack
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
+        public byte[] GetSlack()
+        {
+            Helper.getVolumeName(ref this.Volume);
+
+            using(FileStream streamToRead = Helper.getFileStream(this.Volume))
+            {
+                if (this.DataRun.Length != 0)
+                {
+                    VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+                    ulong slackSize = this.AllocatedSize - this.RealSize;
+                    if ((slackSize > 0) && (slackSize <= (ulong)VBR.BytesPerCluster))
+                    {
+                        DataRun dr = this.DataRun[this.DataRun.Length - 1];
+                        long lastCluster = dr.StartCluster + dr.ClusterLength - 1;
+                        byte[] dataRunBytes = Helper.readDrive(streamToRead, VBR.BytesPerCluster * lastCluster, VBR.BytesPerCluster);
+                        byte[] slackBytes = new byte[slackSize];
+                        Array.Copy(dataRunBytes, VBR.BytesPerCluster - ((int)this.AllocatedSize - (int)this.RealSize), slackBytes, 0x00, slackBytes.Length);
+                        return slackBytes;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        #endregion GetSlack
 
         #endregion InstanceMethods
     }

@@ -28,12 +28,24 @@ namespace PowerForensics.Ntfs
 
         #region GetMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="cluster"></param>
+        /// <returns></returns>
         public static Bitmap Get(string volume, long cluster)
         {
             Helper.getVolumeName(ref volume);
             return Get(volume, MftIndex.BITMAP_INDEX, cluster);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="cluster"></param>
+        /// <returns></returns>
         public static Bitmap GetByPath(string path, long cluster)
         {
             string volume = Helper.GetVolumeFromPath(path);
@@ -41,6 +53,13 @@ namespace PowerForensics.Ntfs
             return Get(volume, (int)entry.RecordNumber, cluster);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="recordNumber"></param>
+        /// <param name="cluster"></param>
+        /// <returns></returns>
         private static Bitmap Get(string volume, int recordNumber, long cluster)
         {
             long sectorOffset = cluster / 4096;
@@ -69,6 +88,12 @@ namespace PowerForensics.Ntfs
             return Get(bytes, cluster);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="cluster"></param>
+        /// <returns></returns>
         private static Bitmap Get(byte[] bytes, long cluster)
         {
             long byteOffset = (cluster % 4096) / 8;
@@ -111,6 +136,11 @@ namespace PowerForensics.Ntfs
 
         #region GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static Bitmap[] GetInstancesByPath(string path)
         {
             // Get Volume string from specified path
@@ -123,18 +153,28 @@ namespace PowerForensics.Ntfs
             NonResident dataStream = Bitmap.GetDataStream(FileRecord.Get(volume, MftIndex.BITMAP_INDEX, true));
 
             // Call GetInstances to return all associated Bitmap Values
-            return GetInstances(dataStream.GetBytes(volume));
+            return GetInstances(dataStream.GetBytes());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static Bitmap[] GetInstances(string volume)
         {
             // Get the proper data stream from the FileRecord
             NonResident dataStream = Bitmap.GetDataStream(FileRecord.Get(volume, MftIndex.BITMAP_INDEX, true));
 
             // Call GetInstances to return all associated Bitmap Values
-            return GetInstances(dataStream.GetBytes(volume));
+            return GetInstances(dataStream.GetBytes());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static Bitmap[] GetInstances(byte[] bytes)
         {
             Bitmap[] bitmapArray = new Bitmap[bytes.Length * 8];
@@ -182,6 +222,11 @@ namespace PowerForensics.Ntfs
 
         #endregion GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileRecord"></param>
+        /// <returns></returns>
         internal static NonResident GetDataStream(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)

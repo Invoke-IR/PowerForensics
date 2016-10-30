@@ -19,7 +19,7 @@ namespace PowerForensics.Cmdlets
         /// returned.
         /// </summary> 
         [Alias("FullName")]
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true)]
         public string Path
         {
             get { return path; }

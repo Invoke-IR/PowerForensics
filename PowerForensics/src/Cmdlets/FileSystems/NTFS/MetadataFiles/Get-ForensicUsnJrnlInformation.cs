@@ -62,21 +62,21 @@ namespace PowerForensics.Cmdlets
                 case "ByVolume":
                     if (asBytes)
                     {
-                        WriteObject(UsnJrnlDetail.GetBytes(volume), true);
+                        WriteObject(UsnJrnlInformation.GetBytes(volume), true);
                     }
                     else
                     {
-                        WriteObject(UsnJrnlDetail.Get(volume), true);
+                        WriteObject(UsnJrnlInformation.Get(volume), true);
                     }
                     break;
                 case "ByPath":
                     if (asBytes)
                     {
-                        WriteObject(UsnJrnlDetail.GetBytesByPath(path));
+                        WriteObject(UsnJrnlInformation.GetBytesByPath(path));
                     }
                     else
                     {
-                        WriteObject(UsnJrnlDetail.GetByPath(path));
+                        WriteObject(UsnJrnlInformation.GetByPath(path));
                     }
                     break;
             }

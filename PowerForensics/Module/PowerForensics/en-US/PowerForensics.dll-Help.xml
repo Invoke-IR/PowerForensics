@@ -2128,6 +2128,8 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 						<maml:para>The path of the file to return the Master File Table record index for.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -2143,7 +2145,8 @@ Except as noted, the cmdlets in the PowerForensics module require the permission
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>

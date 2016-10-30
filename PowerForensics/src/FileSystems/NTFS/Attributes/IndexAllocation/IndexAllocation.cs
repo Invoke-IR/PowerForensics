@@ -26,7 +26,7 @@ namespace PowerForensics.Ntfs
             AttributeSize = header.commonHeader.TotalSize;
 
             // Get IndexAllocation Bytes
-            byte[] bytes = header.GetBytes(volume);
+            byte[] bytes = header.GetBytes();
 
             // Instantiate empty IndexEntry List
             List<IndexEntry> indexEntryList = new List<IndexEntry>();

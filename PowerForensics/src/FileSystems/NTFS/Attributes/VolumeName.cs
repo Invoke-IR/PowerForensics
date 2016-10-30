@@ -30,17 +30,32 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static VolumeName Get(string volume)
         {
             Helper.getVolumeName(ref volume);
             return Get(FileRecord.Get(volume, MftIndex.VOLUME_INDEX, true));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static VolumeName GetByPath(string path)
         {
             return Get(FileRecord.Get(path, true));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileRecord"></param>
+        /// <returns></returns>
         private static VolumeName Get(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)

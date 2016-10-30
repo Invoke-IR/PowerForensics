@@ -100,6 +100,11 @@ namespace PowerForensics.Artifacts
 
         #region GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static Amcache[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -115,6 +120,11 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static Amcache[] GetInstancesByPath(string hivePath)
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("Amcache.hve"))

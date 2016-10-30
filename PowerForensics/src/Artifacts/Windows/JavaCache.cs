@@ -85,18 +85,34 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static JavaCache[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static JavaCache Get(string path)
         {
             byte[] bytes = FileRecord.Get(path, true).GetContent();
             return new JavaCache(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         private static string[] GetHttpHeaders(byte[] bytes, int offset)
         {
             return null;
@@ -163,6 +179,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static JavaCacheHeader Get(byte[] bytes)
         {
             return new JavaCacheHeader(bytes);

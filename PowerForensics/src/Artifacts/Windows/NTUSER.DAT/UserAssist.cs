@@ -147,6 +147,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static UserAssist[] Get(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
@@ -180,6 +185,11 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static UserAssist[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -205,6 +215,10 @@ namespace PowerForensics.Artifacts
 
         #region OverrideMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("[PROGRAM EXECUTION] {0} run {1} times", this.ImagePath, this.RunCount);

@@ -391,12 +391,22 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static ShellLink Get(string filePath)
         {
             FileRecord record = FileRecord.Get(filePath, true);
             return new ShellLink(record.GetContent(), record);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static ShellLink[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -427,6 +437,10 @@ namespace PowerForensics.Artifacts
 
         #region OverrideMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("[{0}] {1} {2}", FileSize, LocalBasePath, CommandLineArguments);
@@ -675,45 +689,17 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-    
+
     #endregion LINK_INFO Classes
 
-    // More research needed
-    #region EXTRA_DATA Classes
-    public class ExtraData
-    {
-        #region Enums
 
-        public enum EXTRA_DATA_TYPE : uint
-        {
-            EnvironmentVariableDataBlock = 0xA0000001,
-            ConsoleDataBlock = 0xA0000002,
-            TrackerDataBlock = 0xA0000003,
-            ConsoleFeDataBlock = 0xA0000004,
-            SpecialFolderDataBlock = 0xA0000005,
-            DarwinDataBlock = 0xA0000006,
-            IconEnvironmentDataBlock = 0xA0000007,
-            ShimDataBlock = 0xA0000008,
-            PropertyStoreDataBlock = 0xA0000009,
-            KnownFolderDataBlock = 0xA000000B,
-            VistaAndAboveIDListDataBlock = 0xA000000C
-        }
-
-        #endregion Enums
-        
-        #region Properties
-
-        internal uint BlockSize;
-        public EXTRA_DATA_TYPE Name;
-
-        #endregion Properties
-    }
+    #region ExtraData Classes
 
     // More research needed
     public class ConsoleDataBlock : ExtraData
     {
         #region Enums
-        
+
         public enum FILL
         {
             FOREGROUND_BLUE = 0x0001,
@@ -739,7 +725,7 @@ namespace PowerForensics.Artifacts
         #endregion Enums
 
         #region Properties
-        
+
         public readonly FILL FillAttribute;
         public readonly FILL PopupFillAttribute;
         public readonly short ScreenBufferSizeX;
@@ -817,7 +803,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-        
+
     public class DarwinDataBlock : ExtraData
     {
         #region Properties
@@ -861,7 +847,36 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-    
+
+    public class ExtraData
+    {
+        #region Enums
+
+        public enum EXTRA_DATA_TYPE : uint
+        {
+            EnvironmentVariableDataBlock = 0xA0000001,
+            ConsoleDataBlock = 0xA0000002,
+            TrackerDataBlock = 0xA0000003,
+            ConsoleFeDataBlock = 0xA0000004,
+            SpecialFolderDataBlock = 0xA0000005,
+            DarwinDataBlock = 0xA0000006,
+            IconEnvironmentDataBlock = 0xA0000007,
+            ShimDataBlock = 0xA0000008,
+            PropertyStoreDataBlock = 0xA0000009,
+            KnownFolderDataBlock = 0xA000000B,
+            VistaAndAboveIDListDataBlock = 0xA000000C
+        }
+
+        #endregion Enums
+
+        #region Properties
+
+        internal uint BlockSize;
+        public EXTRA_DATA_TYPE Name;
+
+        #endregion Properties
+    }
+
     public class IconEnvironmentDataBlock : ExtraData
     {
         #region Properties
@@ -883,14 +898,14 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-    
+
     public class KnownFolderDataBlock : ExtraData
     {
         #region Properties
 
         public readonly Guid KnownFolderId;
         public readonly uint Offset;
-        
+
         #endregion Properties
 
         #region Constructors
@@ -926,7 +941,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-        
+
     public class ShimDataBlock : ExtraData
     {
         #region Properties
@@ -946,7 +961,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-        
+
     public class SpecialFolderDataBlock : ExtraData
     {
         #region Properties
@@ -961,18 +976,18 @@ namespace PowerForensics.Artifacts
         internal SpecialFolderDataBlock(byte[] bytes, int offset)
         {
             BlockSize = BitConverter.ToUInt32(bytes, offset);
-            Name = (EXTRA_DATA_TYPE)BitConverter.ToUInt32(bytes, offset + 0x04); 
+            Name = (EXTRA_DATA_TYPE)BitConverter.ToUInt32(bytes, offset + 0x04);
             SpecialFolderId = BitConverter.ToUInt32(bytes, offset + 0x08);
             Offset = BitConverter.ToUInt32(bytes, offset + 0x0C);
         }
 
         #endregion Constructors
     }
-        
+
     public class TrackerDataBlock : ExtraData
     {
         #region Properties
-        
+
         private readonly uint Length;
         public readonly uint Version;
         public readonly string MachineId;
@@ -1005,7 +1020,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-    
+
     public class VistaAndAboveIDListDataBlock : ExtraData
     {
         #region Properties
@@ -1025,6 +1040,6 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
     }
-    
-    #endregion EXTRA_DATA Classes
+
+    #endregion ExtraData Classes
 }

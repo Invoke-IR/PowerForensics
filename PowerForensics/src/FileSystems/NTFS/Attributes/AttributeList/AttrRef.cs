@@ -29,9 +29,12 @@ namespace PowerForensics.Ntfs
             AttributeNameLength = bytes[0x06 + offset];
             AttributeNameOffset = bytes[0x07 + offset];
             LowestVCN = BitConverter.ToUInt64(bytes, 0x08 + offset);
-            RecordNumber = BitConverter.ToUInt64(bytes, 0x10 + offset) & 0x0000FFFFFFFFFFFF;
-            SequenceNumber = BitConverter.ToUInt16(bytes, 0x16 + offset);
-            NameString = Encoding.Unicode.GetString(bytes, AttributeNameOffset + offset, AttributeNameLength * 2);
+            if(LowestVCN == 0)
+            {
+                RecordNumber = BitConverter.ToUInt64(bytes, 0x10 + offset) & 0x0000FFFFFFFFFFFF;
+                SequenceNumber = BitConverter.ToUInt16(bytes, 0x16 + offset);
+                NameString = Encoding.Unicode.GetString(bytes, AttributeNameOffset + offset, AttributeNameLength * 2);
+            }
         }
 
         #endregion Constructors

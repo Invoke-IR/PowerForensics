@@ -29,7 +29,7 @@ namespace PowerForensics.Ntfs
             foreach (DataRun dr in header.DataRun)
             {
                 // Get IndexAllocation Bytes
-                byte[] bytes = dr.GetBytes(volume);
+                byte[] bytes = dr.GetBytes();
                 // Detemine size of Update Sequence
                 ushort usOffset = BitConverter.ToUInt16(bytes, + 0x04);
                 ushort usSize = BitConverter.ToUInt16(bytes, + 0x06);

@@ -65,6 +65,11 @@ namespace PowerForensics.Registry
 
         #region StaticMethods
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetBytes(string path)
         {
             FileRecord record = FileRecord.Get(path, true); 
@@ -74,6 +79,11 @@ namespace PowerForensics.Registry
             return Helper.GetSubArray(bytes, 0x00, 0x200);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static RegistryHeader Get(string path)
         {
             return new RegistryHeader(RegistryHeader.GetBytes(path));

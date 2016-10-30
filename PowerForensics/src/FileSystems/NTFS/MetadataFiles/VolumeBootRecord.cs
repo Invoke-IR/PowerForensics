@@ -54,17 +54,32 @@ namespace PowerForensics.Ntfs
 
         #region Get
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static VolumeBootRecord Get(string volume)
         {
             Helper.getVolumeName(ref volume);
             return new VolumeBootRecord(GetBytes(volume));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static VolumeBootRecord GetByPath(string path)
         {
             return new VolumeBootRecord(GetBytesByPath(path));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamToRead"></param>
+        /// <returns></returns>
         internal static VolumeBootRecord Get(FileStream streamToRead)
         {
             return new VolumeBootRecord(GetBytes(streamToRead));
@@ -74,17 +89,32 @@ namespace PowerForensics.Ntfs
 
         #region GetBytes
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static byte[] GetBytes(string volume)
         {
             Helper.getVolumeName(ref volume);
             return Helper.readDrive(volume, 0x00, 0x200);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamToRead"></param>
+        /// <returns></returns>
         private static byte[] GetBytes(FileStream streamToRead)
         {
             return Helper.readDrive(streamToRead, 0x00, 0x200);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetBytesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
@@ -97,6 +127,12 @@ namespace PowerForensics.Ntfs
 
         #region PrivateMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="bytesPerCluster"></param>
+        /// <returns></returns>
         private static long getBytesPerFileRecord(byte[] bytes, int bytesPerCluster)
         {
             sbyte clustersPerFileRecord = (sbyte)bytes[0x40];
@@ -110,6 +146,12 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="bytesPerCluster"></param>
+        /// <returns></returns>
         private static long getBytesPerIndexBlock(byte[] bytes, int bytesPerCluster)
         {
             sbyte clustersPerIndexBlock = (sbyte)bytes[0x44];
@@ -123,6 +165,11 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static string getVolumeSerialNumber(byte[] bytes)
         {
             byte[] serialNumberBytes = Helper.GetSubArray(bytes, 0x48, 0x04);

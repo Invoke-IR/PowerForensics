@@ -147,6 +147,11 @@ namespace PowerForensics.EventLog
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static EventRecord[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -175,6 +180,11 @@ namespace PowerForensics.EventLog
             return recordList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static EventRecord[] Get(string path)
         {
             List<EventRecord> recordList = new List<EventRecord>();
@@ -219,6 +229,10 @@ namespace PowerForensics.EventLog
 
         #region OverrideMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("({0}) Record Number: {1} Log: {2}", this.EventData.EventId, this.EventRecordId, this.LogPath);

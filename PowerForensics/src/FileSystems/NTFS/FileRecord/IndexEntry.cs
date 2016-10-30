@@ -68,7 +68,12 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
-        internal static IndexEntry Get(string path)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static IndexEntry Get(string path)
         {
             string[] paths = path.TrimEnd('\\').Split('\\');
 
@@ -146,6 +151,11 @@ namespace PowerForensics.Ntfs
             throw new Exception("The IndexEntry object for the specified path could not be found.");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static IndexEntry[] GetInstances(string path)
         {
             string[] paths = path.TrimEnd('\\').Split('\\');

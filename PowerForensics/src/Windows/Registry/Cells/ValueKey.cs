@@ -42,13 +42,14 @@ namespace PowerForensics.Registry
 
         public readonly string HivePath;
         public readonly string Key;
-        public readonly ushort NameLength;
-        public readonly uint DataLength;
-        public readonly bool ResidentData;
-        public readonly uint DataOffset;
+        internal readonly ushort NameLength;
+        internal readonly uint DataLength;
+        internal readonly bool ResidentData;
+        internal readonly uint DataOffset;
         public readonly VALUE_KEY_DATA_TYPES DataType;
-        public readonly VALUE_KEY_FLAGS Flags;
+        internal readonly VALUE_KEY_FLAGS Flags;
         public readonly string Name;
+        public readonly object Data;
 
         #endregion Properties
 
@@ -115,6 +116,8 @@ namespace PowerForensics.Registry
                 }
 
                 #endregion ValueName
+
+                Data = this.GetData();
             }
             else
             {
@@ -126,6 +129,13 @@ namespace PowerForensics.Registry
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public static ValueKey Get(string path, string key, string val)
         {
             byte[] bytes = RegistryHelper.GetHiveBytes(path);
@@ -165,6 +175,14 @@ namespace PowerForensics.Registry
             throw new Exception(string.Format("Cannot find value '{0}' as a value of '{1}' in the '{2}' hive because it does not exist.", val, key, path));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="path"></param>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         internal static ValueKey Get(byte[] bytes, string path, string key, string val)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
@@ -198,6 +216,12 @@ namespace PowerForensics.Registry
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static ValueKey[] GetInstances(string path, string key)
         {
             byte[] bytes = RegistryHelper.GetHiveBytes(path);
@@ -223,6 +247,13 @@ namespace PowerForensics.Registry
             return nk.GetValues(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="path"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         internal static ValueKey[] GetInstances(byte[] bytes, string path, string key)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);

@@ -12,6 +12,12 @@ namespace PowerForensics.Ntfs
 
         #region GetRecordMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamToRead"></param>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static FileRecord GetRecord(FileStream streamToRead, string volume)
         {
             // Instantiate VolumeBootRecord object
@@ -31,6 +37,11 @@ namespace PowerForensics.Ntfs
 
         #region GetBytesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static byte[] GetBytes(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -41,24 +52,27 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamToRead"></param>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static byte[] GetBytes(FileStream streamToRead, string volume)
         {
             FileRecord mftRecord = GetRecord(streamToRead, volume);
-
-            foreach (FileRecordAttribute attr in mftRecord.Attribute)
-            {
-                if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
-                {
-                    return (attr as NonResident).GetBytes(volume);
-                }
-            }
-            throw new Exception("Error reading MFT bytes.");
+            return mftRecord.GetContent();
         }
 
         #endregion GetBytesMethods
 
         #region GetSlackMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static byte[] GetSlack(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -66,6 +80,11 @@ namespace PowerForensics.Ntfs
             return GetSlack(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetSlackByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
@@ -73,6 +92,11 @@ namespace PowerForensics.Ntfs
             return GetSlack(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static byte[] GetSlack(byte[] bytes)
         {
             List<byte> slackBytes = new List<byte>();

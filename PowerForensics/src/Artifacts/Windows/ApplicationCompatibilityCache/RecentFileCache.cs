@@ -10,6 +10,11 @@ namespace PowerForensics.Artifacts
     {
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static string[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -25,6 +30,11 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string[] GetInstancesByPath(string path)
         {
             byte[] bytes = FileRecord.GetContentBytes(path);

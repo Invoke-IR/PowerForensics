@@ -160,6 +160,11 @@ namespace PowerForensics.Artifacts
 
         #region GetMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static Prefetch Get(string filePath)
         {
             if (File.Exists(filePath))
@@ -176,6 +181,12 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         public static Prefetch Get(string filePath, bool fast)
         {
             if (File.Exists(filePath))
@@ -221,6 +232,11 @@ namespace PowerForensics.Artifacts
 
         #region GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static Prefetch[] GetInstances(string volume)
         {
             // Get current volume
@@ -262,6 +278,12 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         public static Prefetch[] GetInstances(string volume, bool fast)
         {
             // Get current volume
@@ -329,6 +351,11 @@ namespace PowerForensics.Artifacts
 
         #endregion GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static PREFETCH_ENABLED CheckStatus(string path)
         {
             byte[] bytes = Registry.RegistryHelper.GetHiveBytes(path);
@@ -340,6 +367,10 @@ namespace PowerForensics.Artifacts
 
         #region InstanceMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("[PROGRAM EXECUTION] Prefetch {0} was executed - run count {1} - path {2}", this.Name, this.RunCount, this.Path);

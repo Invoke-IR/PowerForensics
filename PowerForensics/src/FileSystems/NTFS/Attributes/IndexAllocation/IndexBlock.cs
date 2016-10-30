@@ -49,6 +49,11 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
         internal static void ApplyFixup(ref byte[] bytes, int offset)
         {
             // Take UpdateSequence into account

@@ -28,6 +28,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static AlternateDataStream[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -44,12 +49,22 @@ namespace PowerForensics.Artifacts
             return adsList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static AlternateDataStream[] GetInstancesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, false);
             return GetInstances(record);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         private static AlternateDataStream[] GetInstances(FileRecord record)
         {
             List<AlternateDataStream> adsList = new List<AlternateDataStream>();

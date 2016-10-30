@@ -24,6 +24,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static Timezone Get(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -31,6 +36,11 @@ namespace PowerForensics.Artifacts
             return Timezone.GetByPath(volLetter + @"\Windows\system32\config\SYSTEM");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static Timezone GetByPath(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "SYSTEM"))

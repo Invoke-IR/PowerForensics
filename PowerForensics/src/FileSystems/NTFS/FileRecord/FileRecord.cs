@@ -62,6 +62,7 @@ namespace PowerForensics.Ntfs
 
         #region Constructors
 
+        // Get Constructor
         private FileRecord(byte[] recordBytes, string volume, int bytesPerFileRecord, bool fast)
         {
             if (Encoding.ASCII.GetString(recordBytes, 0x00, 0x04) == "FILE")
@@ -85,9 +86,6 @@ namespace PowerForensics.Ntfs
 
                 #region AttributeProperties
 
-                //bool hasAttributeList = false;
-                //List<FileRecordAttribute> ListOfAttributes = new List<FileRecordAttribute>();
-
                 foreach (FileRecordAttribute attr in Attribute)
                 {
                     if (attr.Name == FileRecordAttribute.ATTR_TYPE.STANDARD_INFORMATION)
@@ -99,34 +97,36 @@ namespace PowerForensics.Ntfs
                         BornTime = stdInfo.BornTime;
                         Permission = stdInfo.Permission;
                     }
-                    /*else if (attr.Name == FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST)
+                    else if (attr.Name == FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST)
                     {
-                        if (!(attr.NonResident))
+                        if (!(Deleted))
                         {
-                            AttributeList attributeList = attr as AttributeList;
-                            hasAttributeList = true;
+                            AttributeList attrList = null;
+                            List<FileRecordAttribute> list = new List<FileRecordAttribute>();
+                            list.AddRange(Attribute);
 
-                            List<ulong> numList = new List<ulong>();
-
-                            foreach (AttrRef attrRef in attributeList.AttributeReference)
+                            if (attr.NonResident)
                             {
-                                if (!(numList.Contains(attrRef.RecordNumber)))
+                                attrList = new AttributeList(attr as NonResident);
+                            }
+                            else
+                            {
+                                attrList = attr as AttributeList;
+                            }
+
+                            foreach (AttrRef attribute in attrList.AttributeReference)
+                            {
+                                if (attribute.RecordNumber != RecordNumber)
                                 {
-                                    numList.Add(attrRef.RecordNumber);
+                                    FileRecord record = FileRecord.Get(volume, (int)attribute.RecordNumber);
+                                    list.AddRange(record.Attribute);
+                                    list.Remove(attr);
                                 }
                             }
 
-                            foreach (ulong i in numList)
-                            {
-                                if (recordArray[i] == null)
-                                {
-                                    recordArray[i] = new FileRecordTest(ref recordArray, bytes, bytesPerFileRecord * (int)i, bytesPerFileRecord, volume, false);
-                                }
-
-                                ListOfAttributes.AddRange(recordArray[i].Attribute);
-                            }
+                            Attribute = list.ToArray();
                         }
-                    }*/
+                    }
                     else if (attr.Name == FileRecordAttribute.ATTR_TYPE.FILE_NAME)
                     {
                         FileName fN = attr as FileName;
@@ -195,6 +195,7 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        // GetInstances Constructor
         private FileRecord(ref FileRecord[] recordArray, byte[] bytes, int offset, int bytesPerFileRecord, string volume, bool fast)
         {
             if (Encoding.ASCII.GetString(bytes, 0x00 + offset, 0x04) == "FILE")
@@ -214,12 +215,8 @@ namespace PowerForensics.Ntfs
                 NextAttrId = BitConverter.ToUInt16(bytes, 0x28 + offset);
                 RecordNumber = BitConverter.ToUInt32(bytes, 0x2C + offset);
                 Attribute = FileRecordAttribute.GetInstances(bytes, OffsetOfAttribute + offset, bytesPerFileRecord, volume);
-                //FileRecordAttribute[] attributeArray = FileRecordAttribute.GetInstances(bytes, OffsetOfAttribute + offset, bytesPerFileRecord, volume);
 
                 #region AttributeProperties
-
-                //bool hasAttributeList = false;
-                //List<FileRecordAttribute> ListOfAttributes = new List<FileRecordAttribute>();
 
                 foreach (FileRecordAttribute attr in Attribute)
                 {
@@ -232,34 +229,50 @@ namespace PowerForensics.Ntfs
                         BornTime = stdInfo.BornTime;
                         Permission = stdInfo.Permission;
                     }
-                    /*else if (attr.Name == FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST)
+                    else if (attr.Name == FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST)
                     {
-                        if (!(attr.NonResident))
+                        if (!(Deleted))
                         {
-                            AttributeList attributeList = attr as AttributeList;
-                            hasAttributeList = true;
+                            AttributeList attrList = null;
+                            List<FileRecordAttribute> list = new List<FileRecordAttribute>();
+                            list.AddRange(Attribute);
 
-                            List<ulong> numList = new List<ulong>();
-
-                            foreach (AttrRef attrRef in attributeList.AttributeReference)
+                            if (attr.NonResident)
                             {
-                                if (!(numList.Contains(attrRef.RecordNumber)))
+                                attrList = new AttributeList(attr as NonResident);
+                            }
+                            else
+                            {
+                                attrList = attr as AttributeList;
+                            }
+
+                            foreach (AttrRef attribute in attrList.AttributeReference)
+                            {
+                                if (attribute.RecordNumber != RecordNumber)
                                 {
-                                    numList.Add(attrRef.RecordNumber);
+                                    FileRecord record = null;
+
+                                    // Test if we have already parse the record
+                                    if (recordArray[attribute.RecordNumber] != null)
+                                    {
+                                        record = recordArray[attribute.RecordNumber];
+                                    }
+                                    else
+                                    {
+                                        // If not parse it and add it to the array
+                                        record = new FileRecord(ref recordArray, bytes, bytesPerFileRecord * (int)attribute.RecordNumber, bytesPerFileRecord, volume, fast);
+                                        recordArray[attribute.RecordNumber] = record;
+                                    }
+
+                                    // Add the attributes to the attribute array
+                                    list.AddRange(record.Attribute);
+                                    list.Remove(attr);
                                 }
                             }
 
-                            foreach (ulong i in numList)
-                            {
-                                if (recordArray[i] == null)
-                                {
-                                    recordArray[i] = new FileRecordTest(ref recordArray, bytes, bytesPerFileRecord * (int)i, bytesPerFileRecord, volume, false);
-                                }
-
-                                ListOfAttributes.AddRange(recordArray[i].Attribute);
-                            }
+                            Attribute = list.ToArray();
                         }
-                    }*/
+                    }
                     else if (attr.Name == FileRecordAttribute.ATTR_TYPE.FILE_NAME)
                     {
                         FileName fN = attr as FileName;
@@ -345,11 +358,21 @@ namespace PowerForensics.Ntfs
 
         #region GetInstances
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static FileRecord[] GetInstances(string volume)
         {
             return GetInstances(volume, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static FileRecord[] GetInstancesByPath(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
@@ -357,6 +380,12 @@ namespace PowerForensics.Ntfs
             return GetInstances(mftBytes, Helper.GetVolumeFromPath(path), false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         internal static FileRecord[] GetInstances(string volume, bool fast)
         {
             FileRecord record = FileRecord.Get(volume, MftIndex.MFT_INDEX, true);
@@ -364,6 +393,13 @@ namespace PowerForensics.Ntfs
             return GetInstances(mftBytes, volume, fast);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="volume"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         private static FileRecord[] GetInstances(byte[] bytes, string volume, bool fast)
         {
             VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
@@ -398,11 +434,22 @@ namespace PowerForensics.Ntfs
 
         #region Get
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static FileRecord Get(string path)
         {
             return Get(path, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         internal static FileRecord Get(string path, bool fast)
         {
             string volume = Helper.GetVolumeFromPath(path);
@@ -410,11 +457,24 @@ namespace PowerForensics.Ntfs
             return Get(volume, (int)entry.RecordNumber, fast);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static FileRecord Get(string volume, int index)
         {
             return Get(volume, index, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="index"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         internal static FileRecord Get(string volume, int index, bool fast)
         {
             VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
@@ -422,6 +482,14 @@ namespace PowerForensics.Ntfs
             return Get(bytes, volume, (int)vbr.BytesPerFileRecord, fast);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="volume"></param>
+        /// <param name="bytesPerFileRecord"></param>
+        /// <param name="fast"></param>
+        /// <returns></returns>
         internal static FileRecord Get(byte[] bytes, string volume, int bytesPerFileRecord, bool fast)
         {
             return new FileRecord(bytes, volume, bytesPerFileRecord, fast);
@@ -431,6 +499,11 @@ namespace PowerForensics.Ntfs
 
         #region GetRecordBytesMethod
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetRecordBytes(string path)
         {
             string volume = Helper.GetVolumeFromPath(path);
@@ -438,11 +511,23 @@ namespace PowerForensics.Ntfs
             return GetRecordBytesPrivate(volume, (int)entry.RecordNumber);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static byte[] GetRecordBytes(string volume, int index)
         {
             return GetRecordBytesPrivate(volume, index);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private static byte[] GetRecordBytesPrivate(string volume, int index)
         {
             // Get filestream based on hVolume
@@ -465,6 +550,7 @@ namespace PowerForensics.Ntfs
                     if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
                     {
                         data = attr as NonResident;
+                        break;
                     }
                 }
 
@@ -498,15 +584,26 @@ namespace PowerForensics.Ntfs
 
         #region GetContentBytesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetContentBytes(string path)
         {
             return GetContentBytes(path, "");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="streamName"></param>
+        /// <returns></returns>
         public static byte[] GetContentBytes(string path, string streamName)
         {
             FileRecord record = Get(path, true);
-            return record.GetTestContent(streamName);
+            return record.GetContent(streamName);
         }
 
         #endregion GetContentBytesMethods
@@ -519,6 +616,10 @@ namespace PowerForensics.Ntfs
         // TODO: Add DataStream parameter
         #region GetContentMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetContent()
         {
             foreach (FileRecordAttribute attr in this.Attribute)
@@ -527,37 +628,18 @@ namespace PowerForensics.Ntfs
                 {
                     if (attr.NameString == "")
                     {
-                        if (attr.NonResident)
-                        {
-                            return (attr as NonResident).GetBytes(this.VolumePath);
-                        }
-                        else
-                        {
-                            return (attr as Data).RawData;
-                        }
-                    }
-                }
-                else if (attr.Name == FileRecordAttribute.ATTR_TYPE.ATTRIBUTE_LIST)
-                {
-                    VolumeBootRecord vbr = VolumeBootRecord.Get(this.VolumePath);
-
-                    AttributeList attrlist = attr as AttributeList;
-                    foreach (AttrRef ar in attrlist.AttributeReference)
-                    {
-                        if (ar.Name == "DATA")
-                        {
-                            if (ar.NameString == "")
-                            {
-                                FileRecord record = new FileRecord(FileRecord.GetRecordBytes(this.VolumePath, (int)ar.RecordNumber), this.VolumePath, (int)vbr.BytesPerFileRecord, true);
-                                return record.GetContent();
-                            }
-                        }
+                        return GetContent(attr);
                     }
                 }
             }
             throw new Exception("Could not locate file contents");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="StreamName"></param>
+        /// <returns></returns>
         public byte[] GetContent(string StreamName)
         {
             foreach (FileRecordAttribute attr in this.Attribute)
@@ -566,35 +648,37 @@ namespace PowerForensics.Ntfs
                 {
                     if (attr.NameString == StreamName)
                     {
-                        if (attr.NonResident)
-                        {
-                            return (attr as NonResident).GetBytes(this.VolumePath);
-                        }
-                        else
-                        {
-                            return (attr as Data).RawData;
-                        }
+                        return GetContent(attr);
                     }
                 }
-                /*else if (attr.Name == Attr.ATTR_TYPE.ATTRIBUTE_LIST)
-                {
-                    AttributeList attrlist = attr as AttributeList;
-                    foreach (AttrRef ar in attrlist.AttributeReference)
-                    {
-                        if (ar.Name == "DATA")
-                        {
-                            if (attr.NameString == StreamName)
-                            {
-                                FileRecord record = new FileRecord(FileRecord.GetRecordBytes(this.VolumePath, (int)ar.RecordNumber), this.VolumePath, true);
-                                return record.GetContent(StreamName);
-                            }
-                        }
-                    }
-                }*/
             }
             throw new Exception("Could not locate desired stream");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns></returns>
+        private byte[] GetContent(FileRecordAttribute attribute)
+        {
+            if (attribute.NonResident)
+            {
+                return (attribute as NonResident).GetBytes();
+            }
+            else
+            {
+                return (attribute as Data).RawData;
+            }
+
+            throw new Exception("Could not locate file contents");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="VBR"></param>
+        /// <returns></returns>
         internal byte[] GetContent(VolumeBootRecord VBR)
         {
             foreach (FileRecordAttribute attr in this.Attribute)
@@ -603,7 +687,7 @@ namespace PowerForensics.Ntfs
                 {
                     if (attr.NonResident)
                     {
-                        return (attr as NonResident).GetBytes(this.VolumePath, VBR);
+                        return (attr as NonResident).GetBytes(VBR);
                     }
                     else
                     {
@@ -628,59 +712,22 @@ namespace PowerForensics.Ntfs
 
         #endregion GetContentMethods
 
-        #region GetTestContentMethods
-
-        public byte[] GetTestContent()
-        {
-            return GetTestContent("");
-        }
-
-        public byte[] GetTestContent(string streamName)
-        {
-            foreach (FileRecordAttribute attr in this.Attribute)
-            {
-                if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
-                {
-                    if (attr.NameString.ToUpper() == streamName.ToUpper())
-                    {
-                        if (attr.NonResident)
-                        {
-                            return (attr as NonResident).GetBytes(this.VolumePath);
-                        }
-                        else
-                        {
-                            return (attr as Data).RawData;
-                        }
-                    }
-                }
-
-                AttributeList attrList = attr as AttributeList;
-                if (attrList != null)
-                {
-                    VolumeBootRecord vbr = VolumeBootRecord.Get(this.VolumePath);
-
-                    foreach (AttrRef ar in attrList.AttributeReference)
-                    {
-                        if (ar.Name == "DATA")
-                        {
-                            FileRecord record = new FileRecord(FileRecord.GetRecordBytes(this.VolumePath, (int)ar.RecordNumber), this.VolumePath, (int)vbr.BytesPerFileRecord, true);
-                            return record.GetTestContent(streamName);
-                        }
-                    }
-                }
-            }
-            throw new Exception("Could not locate desired stream");
-        }
-
-        #endregion GetTestContentMethods
-
         #region CopyFileMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Destination"></param>
         public void CopyFile(string Destination)
         {
             this.CopyFile(Destination, "");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Destination"></param>
+        /// <param name="StreamName"></param>
         public void CopyFile(string Destination, string StreamName)
         {
             byte[] fileBytes = this.GetContent(StreamName);
@@ -699,6 +746,10 @@ namespace PowerForensics.Ntfs
 
         #region GetChildMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IndexEntry[] GetChild()
         {
             return IndexEntry.GetInstances(this.FullName);
@@ -708,6 +759,10 @@ namespace PowerForensics.Ntfs
 
         #region GetParentMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public FileRecord GetParent()
         {
             return FileRecord.Get(this.VolumePath, (int)this.ParentRecordNumber, false);
@@ -717,6 +772,10 @@ namespace PowerForensics.Ntfs
 
         #region GetUsnJrnlMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public UsnJrnl GetUsnJrnl()
         {
             foreach (FileRecordAttribute attr in this.Attribute)
@@ -735,6 +794,10 @@ namespace PowerForensics.Ntfs
 
         #region GetSlackMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetSlack()
         {
             if (!(this.Directory))
@@ -747,25 +810,13 @@ namespace PowerForensics.Ntfs
                         {
                             if (attr.NonResident)
                             {
-                                return (attr as NonResident).GetSlack(this.VolumePath);
+                                return (attr as NonResident).GetSlack();
                             }
                             else
                             {
                                 return null;
                             }
                         }
-                        /*else if (attr.Name == Attr.ATTR_TYPE.ATTRIBUTE_LIST)
-                        {
-                            AttributeList attrlist = attr as AttributeList;
-                            foreach (AttrRef ar in attrlist.AttributeReference)
-                            {
-                                if (ar.Name == "DATA")
-                                {
-                                    FileRecord record = new FileRecord(FileRecord.GetRecordBytes(this.VolumePath, (int)ar.RecordNumber), this.VolumePath, true);
-                                    return record.GetSlack();
-                                }
-                            }
-                        }*/
                     }
                 }
             }
@@ -776,6 +827,10 @@ namespace PowerForensics.Ntfs
 
         #region GetMftSlackMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetMftSlack()
         {
             byte[] bytes = FileRecord.GetRecordBytes(this.VolumePath, (int)this.RecordNumber);
@@ -786,6 +841,10 @@ namespace PowerForensics.Ntfs
 
         #region ToStringOverride
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             if (this.Directory)
@@ -840,6 +899,11 @@ namespace PowerForensics.Ntfs
 
         #region PrivateMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="BytesPerFileRecord"></param>
         private static void ApplyFixup(ref byte[] bytes, int BytesPerFileRecord)
         {
             int offset = 0x00;
@@ -864,6 +928,11 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flags"></param>
+        /// <returns></returns>
         private static bool isDeleted(FILE_RECORD_FLAG flags)
         {
             if ((flags & FILE_RECORD_FLAG.INUSE) == FILE_RECORD_FLAG.INUSE)
@@ -876,6 +945,11 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="flags"></param>
+        /// <returns></returns>
         private static bool isDirectory(FILE_RECORD_FLAG flags)
         {
             if ((flags & FILE_RECORD_FLAG.DIR) == FILE_RECORD_FLAG.DIR)

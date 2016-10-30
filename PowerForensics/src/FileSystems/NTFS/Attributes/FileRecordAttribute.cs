@@ -55,13 +55,22 @@ namespace PowerForensics.Ntfs
 
         #region StaticMethods
 
-        public static FileRecordAttribute[] GetInstances(byte[] bytes, int offset, int bytesPerFileRecord, string volume)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="bytesPerFileRecord"></param>
+        /// <param name="volume"></param>
+        /// <returns></returns>
+        internal static FileRecordAttribute[] GetInstances(byte[] bytes, int offset, int bytesPerFileRecord, string volume)
         {
             List<FileRecordAttribute> AttributeList = new List<FileRecordAttribute>();
 
             int i = offset;
 
-            while (i < offset + bytesPerFileRecord)
+            //while (i < offset + bytesPerFileRecord)
+            while (i < offset + (bytesPerFileRecord - (offset % bytesPerFileRecord)))
             {
                 // Get attribute size
                 int attrSize = BitConverter.ToInt32(bytes, i + 0x04);
@@ -84,6 +93,13 @@ namespace PowerForensics.Ntfs
             return AttributeList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static FileRecordAttribute Get(byte[] bytes, int offset, string volume)
         {
             #region CommonHeader
@@ -123,7 +139,7 @@ namespace PowerForensics.Ntfs
 
                 int attributeoffset = headerSize + offset;
 
-                return new NonResident(nonresidentHeader, bytes, attributeoffset, attributeName);
+                return new NonResident(nonresidentHeader, bytes, attributeoffset, attributeName, volume);
 
                 #endregion DataRun
             }
@@ -173,11 +189,9 @@ namespace PowerForensics.Ntfs
                         return new IndexRoot(residentHeader, bytes, attributeoffset, attributeName);
 
                     case (Int32)FileRecordAttribute.ATTR_TYPE.EA:
-                        //Console.WriteLine("EA");
                         return null;
 
                     case (Int32)FileRecordAttribute.ATTR_TYPE.EA_INFORMATION:
-                        //Console.WriteLine("EA_INFORMATION");
                         return null;
 
                     default:

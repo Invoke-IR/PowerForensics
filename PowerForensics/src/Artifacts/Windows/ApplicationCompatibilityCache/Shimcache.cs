@@ -43,12 +43,22 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static Shimcache[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
             return Shimcache.GetInstancesByPath(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SYSTEM");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static Shimcache[] GetInstancesByPath(string hivePath)
         {
             if (RegistryHeader.Get(hivePath).HivePath.Contains("SYSTEM"))
@@ -105,6 +115,11 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static Shimcache[] GetDEADBEEF(byte[] bytes)
         {
             int offset = 0x190;
@@ -126,6 +141,12 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="arch"></param>
+        /// <returns></returns>
         // Server 2003 has a size property, but I haven't figured out how to differentiate Server 2003 from Vista/2k8
         // Need an example of 2003/Vista/2k8 to test on
         private static Shimcache[] GetBADC0FFE(byte[] bytes, string arch)
@@ -161,6 +182,12 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="arch"></param>
+        /// <returns></returns>
         private static Shimcache[] GetBADC0FEE(byte[] bytes, string arch)
         {
             int offset = 0x80;
@@ -195,6 +222,11 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static Shimcache[] Get00000080(byte[] bytes)
         {
             int offset = BitConverter.ToInt32(bytes, 0x00);
@@ -222,6 +254,11 @@ namespace PowerForensics.Artifacts
             return shimList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static Shimcache[] Get00000030(byte[] bytes)
         {
             int offset = BitConverter.ToInt32(bytes, 0x00);

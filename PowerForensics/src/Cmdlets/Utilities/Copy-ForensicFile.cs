@@ -84,17 +84,26 @@ namespace PowerForensics.Cmdlets
         /// </summary> 
         protected override void ProcessRecord()
         {
+            FileRecord record = null;
+
             switch (ParameterSetName)
             {
                 case "ByPath":
-                    FileRecord record = FileRecord.Get(path, true);
-                    record.CopyFile(destination);
+                    record = FileRecord.Get(path, true);
                     break;
                 case "ByVolume":
-                    FileRecord rec = FileRecord.Get(volume, index, true);
-                    rec.CopyFile(destination);
+                    record = FileRecord.Get(volume, index, true);
                     break;
             }
+
+            // If user specifies the name of a stream then copy just that stream
+
+            // Else check for multiple DATA attributes
+
+            // If multiple DATA attributes, then copy them all
+
+            // Else copy just the main DATA attribute
+            record.CopyFile(destination);
         }
 
         #endregion Cmdlet Overrides

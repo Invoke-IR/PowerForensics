@@ -25,6 +25,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static LastVisitedMRU[] Get(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))

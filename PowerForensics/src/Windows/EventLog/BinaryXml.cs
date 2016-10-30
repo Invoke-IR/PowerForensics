@@ -132,6 +132,10 @@ namespace PowerForensics.EventLog
 
         #endregion Constructors
  
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("EventId: {0}", EventId);
@@ -526,6 +530,10 @@ namespace PowerForensics.EventLog
 
         #endregion Constructors
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;
@@ -598,6 +606,12 @@ namespace PowerForensics.EventLog
 
     internal class Systemtime
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         internal static DateTime Get(byte[] bytes, int offset)
         {
             ushort Year = BitConverter.ToUInt16(bytes, offset);

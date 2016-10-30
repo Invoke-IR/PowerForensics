@@ -26,6 +26,11 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static OutlookCatalog[] Get(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
@@ -65,6 +70,11 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static OutlookCatalog[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);

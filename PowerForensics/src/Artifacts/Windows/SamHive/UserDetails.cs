@@ -35,6 +35,10 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static UserDetail Get()
         {
             return null;

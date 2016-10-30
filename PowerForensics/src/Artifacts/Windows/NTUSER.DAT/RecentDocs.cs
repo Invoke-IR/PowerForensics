@@ -34,6 +34,11 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static RecentDocs[] Get(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
@@ -67,6 +72,11 @@ namespace PowerForensics.Artifacts
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static RecentDocs[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);

@@ -27,6 +27,11 @@ namespace PowerForensics.Artifacts.Persistence
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static RunKey[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -57,6 +62,11 @@ namespace PowerForensics.Artifacts.Persistence
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static RunKey[] Get(string hivePath)
         {
             List<string> Keys = new List<string>();

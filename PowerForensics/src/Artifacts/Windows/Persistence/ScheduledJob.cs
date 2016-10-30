@@ -179,12 +179,23 @@ namespace PowerForensics.Artifacts
 
         #region GetMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static ScheduledJob Get(string path)
         {
             FileRecord record = FileRecord.Get(path, true);
             return new ScheduledJob(record.GetContent());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="recordNumber"></param>
+        /// <returns></returns>
         internal static ScheduledJob Get(string volume, int recordNumber)
         {
             Helper.getVolumeName(ref volume);
@@ -196,6 +207,11 @@ namespace PowerForensics.Artifacts
 
         #region GetInstancesMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static ScheduledJob[] GetInstances(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -203,6 +219,12 @@ namespace PowerForensics.Artifacts
             return GetInstances(volume, path);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static ScheduledJob[] GetInstances(string volume, string path)
         {
             List<ScheduledJob> jobList = new List<ScheduledJob>();
@@ -222,6 +244,10 @@ namespace PowerForensics.Artifacts
 
         #endregion StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return String.Format("[PROGRAM EXECUTION] {0} executed at {1} via Scheduled Job", this.ApplicationName, this.StartTime);

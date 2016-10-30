@@ -8,6 +8,14 @@ namespace PowerForensics.Utilities
 
     public class DD
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inFile"></param>
+        /// <param name="outFile"></param>
+        /// <param name="offset"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="count"></param>
         public static void Get(string inFile, string outFile, long offset, uint blockSize, uint count)
         {   
             // Get FileStream for reading from the hVolume handle
@@ -31,6 +39,14 @@ namespace PowerForensics.Utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inFile"></param>
+        /// <param name="offset"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static byte[] Get(string inFile, long offset, uint blockSize, uint count)
         {
             List<byte> byteList = new List<byte>();

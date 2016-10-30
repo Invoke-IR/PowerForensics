@@ -9,6 +9,7 @@ namespace PowerForensics.Ntfs
     {
         #region Properties
 
+        private readonly string Volume;
         public readonly long StartCluster;
         public readonly long ClusterLength;
         public readonly bool Sparse;
@@ -22,8 +23,10 @@ namespace PowerForensics.Ntfs
 
         }
 
-        private DataRun(byte[] bytes, int offset, int lengthByteCount, int offsetByteCount, DataRun previousDR)
+        private DataRun(byte[] bytes, int offset, int lengthByteCount, int offsetByteCount, DataRun previousDR, string volume)
         {
+            Volume = volume;
+
             if (offsetByteCount == 0)
             {
                 Sparse = true;
@@ -45,9 +48,14 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region InstanceMethods
+        #region StaticMethods
 
-        public static DataRun[] GetInstances(byte[] bytes)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        internal static DataRun[] GetInstances(byte[] bytes, string volume)
         {
             List<DataRun> datarunList = new List<DataRun>();
             int i = 0;
@@ -67,7 +75,7 @@ namespace PowerForensics.Ntfs
                     break;
                 }
 
-                dr = Get(bytes, i, DataRunLengthByteCount, DataRunOffsetByteCount, dr);
+                dr = Get(bytes, i, DataRunLengthByteCount, DataRunOffsetByteCount, dr, volume);
                 datarunList.Add(dr);
                 i += (1 + DataRunLengthByteCount + DataRunOffsetByteCount);
             }
@@ -75,7 +83,13 @@ namespace PowerForensics.Ntfs
             return datarunList.ToArray();
         }
 
-        public static DataRun[] GetInstances(byte[] bytes, int offset)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        internal static DataRun[] GetInstances(byte[] bytes, int offset, string volume)
         {
             List<DataRun> datarunList = new List<DataRun>();
 
@@ -96,7 +110,7 @@ namespace PowerForensics.Ntfs
                     break;
                 }
 
-                dr = Get(bytes, i, DataRunLengthByteCount, DataRunOffsetByteCount, dr);
+                dr = Get(bytes, i, DataRunLengthByteCount, DataRunOffsetByteCount, dr, volume);
                 datarunList.Add(dr);
                 i += (1 + DataRunLengthByteCount + DataRunOffsetByteCount);
             }
@@ -104,15 +118,33 @@ namespace PowerForensics.Ntfs
             return datarunList.ToArray();
         }
 
-        public static DataRun Get(byte[] bytes, int offset, int lengthByteCount, int offsetByteCount, DataRun previousDR)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="lengthByteCount"></param>
+        /// <param name="offsetByteCount"></param>
+        /// <param name="previousDR"></param>
+        /// <returns></returns>
+        private static DataRun Get(byte[] bytes, int offset, int lengthByteCount, int offsetByteCount, DataRun previousDR, string volume)
         {
-            return new DataRun(bytes, offset, lengthByteCount, offsetByteCount, previousDR);
+            return new DataRun(bytes, offset, lengthByteCount, offsetByteCount, previousDR, volume);
         }
 
-        public byte[] GetBytes(string volume)
+        #endregion StaticMethods
+
+        #region InstanceMethods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
+        public byte[] GetBytes()
         {
-            VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
-            return Helper.readDrive(volume, this.StartCluster * vbr.BytesPerCluster, this.ClusterLength * vbr.BytesPerCluster);
+            VolumeBootRecord vbr = VolumeBootRecord.Get(this.Volume);
+            return Helper.readDrive(this.Volume, this.StartCluster * vbr.BytesPerCluster, this.ClusterLength * vbr.BytesPerCluster);
         }
 
         #endregion InstanceMethods

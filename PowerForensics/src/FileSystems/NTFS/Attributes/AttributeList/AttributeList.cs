@@ -38,6 +38,33 @@ namespace PowerForensics.Ntfs
             #endregion AttributeReference
         }
 
+        internal AttributeList(NonResident nonRes)
+        {
+            Name = (FileRecordAttribute.ATTR_TYPE)nonRes.Name;
+            NameString = nonRes.NameString;
+            NonResident = nonRes.NonResident;
+            AttributeId = nonRes.AttributeId;
+            AttributeSize = nonRes.AttributeSize;
+
+            #region AttributeReference
+
+            List<AttrRef> refList = new List<AttrRef>();
+
+            byte[] bytes = nonRes.GetBytes();
+
+            int i = 0;
+
+            while (i < bytes.Length)
+            {
+                AttrRef attrRef = new AttrRef(bytes, i);
+                refList.Add(attrRef);
+                i += attrRef.RecordLength;
+            }
+            AttributeReference = refList.ToArray();
+
+            #endregion AttributeReference
+        }
+
         #endregion Constructors
     }
 

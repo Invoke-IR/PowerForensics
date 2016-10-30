@@ -9,6 +9,11 @@ namespace PowerForensics.Utilities
     {
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="algorithm"></param>
+        /// <returns></returns>
         private static HashAlgorithm GetAlgorithm(string algorithm)
         {
             switch (algorithm)
@@ -22,6 +27,12 @@ namespace PowerForensics.Utilities
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="algorithm"></param>
+        /// <returns></returns>
         internal static string Get(byte[] bytes, string algorithm)
         {
             // Create a hash algorithm for specified algorithm
@@ -31,6 +42,13 @@ namespace PowerForensics.Utilities
             return BitConverter.ToString(hashAlgorithm.ComputeHash(bytes)).Replace("-", "");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="count"></param>
+        /// <param name="algorithm"></param>
+        /// <returns></returns>
         internal static string Get(byte[] bytes, int count, string algorithm)
         {
             // Create a hash algorithm for specified algorithm

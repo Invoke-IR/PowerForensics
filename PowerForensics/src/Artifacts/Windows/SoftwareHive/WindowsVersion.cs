@@ -61,12 +61,22 @@ namespace PowerForensics.Artifacts
 
         #region StaticMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static WindowsVersion Get(string volume)
         {
             Helper.getVolumeName(ref volume);
             return WindowsVersion.GetByPath(Helper.GetVolumeLetter(volume) + @"\Windows\system32\config\SOFTWARE");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
         public static WindowsVersion GetByPath(string hivePath)
         {
             if (RegistryHelper.isCorrectHive(hivePath, "SOFTWARE"))
