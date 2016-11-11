@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using PowerForensics.Generic;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
@@ -411,7 +412,7 @@ namespace PowerForensics.Artifacts
         {
             Helper.getVolumeName(ref volume);
 
-            VolumeBootRecord VBR = VolumeBootRecord.Get(volume);
+            NtfsVolumeBootRecord VBR = VolumeBootRecord.Get(volume) as NtfsVolumeBootRecord;
 
             List<ShellLink> slList = new List<ShellLink>();
 

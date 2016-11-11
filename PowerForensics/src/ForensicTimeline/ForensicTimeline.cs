@@ -2,6 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using PowerForensics.Artifacts;
+using PowerForensics.Fat;
 using PowerForensics.Ntfs;
 using PowerForensics.EventLog;
 using PowerForensics.Registry;
@@ -52,6 +53,47 @@ namespace PowerForensics.Formats
         #endregion Constructors
 
         #region StaticMethods
+
+        public static ForensicTimeline[] GetInstances(string volume)
+        {
+            List<ForensicTimeline> list = new List<ForensicTimeline>();
+
+            string volLetter = Helper.GetVolumeLetter(volume);
+
+            // File System
+            list.AddRange(ForensicTimeline.GetInstances(FileRecord.GetInstances(volume)));
+
+            // Amcache
+            list.AddRange(ForensicTimeline.GetInstances(Amcache.GetInstances(volume)));
+
+            // Prefetch
+            list.AddRange(ForensicTimeline.GetInstances(Prefetch.GetInstances(volume)));
+
+            // ScheduledJob
+            list.AddRange(ForensicTimeline.GetInstances(ScheduledJob.GetInstances(volume)));
+
+            // UserAssist
+            list.AddRange(ForensicTimeline.GetInstances(UserAssist.GetInstances(volume)));
+
+            // ShellLink
+            list.AddRange(ForensicTimeline.GetInstances(ShellLink.GetInstances(volume)));
+
+            // UsnJnrl
+            list.AddRange(ForensicTimeline.GetInstances(UsnJrnl.GetInstances(volume)));
+
+            // EventLog
+            list.AddRange(ForensicTimeline.GetInstances(EventRecord.GetInstances(volume)));
+
+            // Registry
+
+            list.AddRange(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\DRIVERS")));
+            list.AddRange(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\SAM")));
+            list.AddRange(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\SECURITY")));
+            list.AddRange(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\SOFTWARE")));
+            list.AddRange(ForensicTimeline.GetInstances(NamedKey.GetInstancesRecurse(volLetter + "\\Windows\\system32\\config\\SYSTEM")));
+
+            return list.ToArray();
+        }
 
         /*public static ForensicTimeline Get(PSObject input)
         {
@@ -117,6 +159,61 @@ namespace PowerForensics.Formats
             foreach (Amcache a in input)
             {
                 list.Add(Get(a));
+            }
+            return list.ToArray();
+        }
+
+        public static ForensicTimeline[] Get(DirectoryEntry input)
+        {
+            List<ForensicTimeline> macs = new List<ForensicTimeline>();
+
+            #region DetermineTime
+
+            Dictionary<DateTime, ACTIVITY_TYPE> dictionary = new Dictionary<DateTime, ACTIVITY_TYPE>();
+
+            // Create Time
+            dictionary[input.CreationTime] = ACTIVITY_TYPE.b;
+
+            // Access Time
+            if (dictionary.ContainsKey(input.AccessTime))
+            {
+                dictionary[input.AccessTime] = dictionary[input.AccessTime] | ACTIVITY_TYPE.a;
+            }
+            else
+            {
+                dictionary.Add(input.AccessTime, ACTIVITY_TYPE.a);
+            }
+
+            // Write Time
+            if (dictionary.ContainsKey(input.WriteTime))
+            {
+                dictionary[input.WriteTime] = dictionary[input.WriteTime] | ACTIVITY_TYPE.m;
+            }
+            else
+            {
+                dictionary.Add(input.WriteTime, ACTIVITY_TYPE.m);
+            }
+
+            #endregion DetermineTime
+
+            foreach (var time in dictionary)
+            {
+                string activity = ToFriendlyString(time.Value);
+                macs.Add(new ForensicTimeline(time.Key, activity, "FAT", "", input.FullName, input.ToString()));
+            }
+
+            return macs.ToArray();
+        }
+
+        public static ForensicTimeline[] GetInstances(DirectoryEntry[] input)
+        {
+            List<ForensicTimeline> list = new List<ForensicTimeline>();
+            foreach (DirectoryEntry e in input)
+            {
+                foreach (ForensicTimeline t in Get(e))
+                {
+                    list.Add(t);
+                }
             }
             return list.ToArray();
         }

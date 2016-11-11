@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
@@ -21,7 +22,7 @@ namespace PowerForensics.Ntfs
         internal static FileRecord GetRecord(FileStream streamToRead, string volume)
         {
             // Instantiate VolumeBootRecord object
-            VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+            NtfsVolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead) as NtfsVolumeBootRecord;
 
             // Calculate byte offset to the Master File Table (MFT)
             long mftOffset = (VBR.BytesPerCluster * VBR.MftStartIndex);

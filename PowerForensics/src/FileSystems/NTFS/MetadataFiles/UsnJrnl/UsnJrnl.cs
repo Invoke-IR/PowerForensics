@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {

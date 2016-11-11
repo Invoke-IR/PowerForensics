@@ -84,6 +84,51 @@
 
 <!-- End Master Boot Record -->
 
+<!-- FAT File System -->
+
+        <!-- PowerForensics.Fat.DirectoryEntry -->
+        <View> 
+            <Name>PowerForensics.Fat.DirectoryEntry</Name> 
+            <ViewSelectedBy> 
+                <TypeName>PowerForensics.Fat.DirectoryEntry</TypeName> 
+            </ViewSelectedBy> 
+            <TableControl> 
+                <TableHeaders> 
+                    <TableColumnHeader> 
+                        <Width>9</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>22</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>10</Width> 
+                    </TableColumnHeader> 
+                    <TableColumnHeader> 
+                        <Width>40</Width> 
+                    </TableColumnHeader> 
+                </TableHeaders> 
+                <TableRowEntries> 
+                    <TableRowEntry> 
+                        <TableColumnItems> 
+                            <TableColumnItem> 
+                                <PropertyName>Directory</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>WriteTime</PropertyName> 
+                            </TableColumnItem> 
+                            <TableColumnItem> 
+                                <PropertyName>FileSize</PropertyName> 
+                            </TableColumnItem>  
+                            <TableColumnItem> 
+                                <PropertyName>FullName</PropertyName> 
+                            </TableColumnItem>   
+                        </TableColumnItems> 
+                    </TableRowEntry> 
+                </TableRowEntries> 
+            </TableControl> 
+        </View>
+
+<!-- End FAT File System -->
 
 <!-- NTFS System Files -->
 

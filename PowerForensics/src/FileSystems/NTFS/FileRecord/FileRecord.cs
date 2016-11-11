@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
@@ -402,7 +403,7 @@ namespace PowerForensics.Ntfs
         /// <returns></returns>
         private static FileRecord[] GetInstances(byte[] bytes, string volume, bool fast)
         {
-            VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
+            NtfsVolumeBootRecord vbr = VolumeBootRecord.Get(volume) as NtfsVolumeBootRecord;
 
             // Determine the size of an MFT File Record
             int bytesPerFileRecord = (int)vbr.BytesPerFileRecord;
@@ -477,7 +478,7 @@ namespace PowerForensics.Ntfs
         /// <returns></returns>
         internal static FileRecord Get(string volume, int index, bool fast)
         {
-            VolumeBootRecord vbr = VolumeBootRecord.Get(volume);
+            NtfsVolumeBootRecord vbr = VolumeBootRecord.Get(volume) as NtfsVolumeBootRecord;
             byte[] bytes = GetRecordBytes(volume, index);
             return Get(bytes, volume, (int)vbr.BytesPerFileRecord, fast);
         }
@@ -534,7 +535,7 @@ namespace PowerForensics.Ntfs
             using (FileStream streamToRead = Helper.getFileStream(volume))
             {
                 // Get Volume Boot Record
-                VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+                NtfsVolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead) as NtfsVolumeBootRecord;
 
                 // Determine start of MFT
                 long mftStartOffset = VBR.MftStartIndex * VBR.BytesPerCluster;
@@ -679,7 +680,7 @@ namespace PowerForensics.Ntfs
         /// </summary>
         /// <param name="VBR"></param>
         /// <returns></returns>
-        internal byte[] GetContent(VolumeBootRecord VBR)
+        internal byte[] GetContent(NtfsVolumeBootRecord VBR)
         {
             foreach (FileRecordAttribute attr in this.Attribute)
             {

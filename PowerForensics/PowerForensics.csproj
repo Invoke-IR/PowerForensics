@@ -40,9 +40,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr4.Runtime">
-      <HintPath>Dependencies\Antlr4.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,31 +63,6 @@
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\WordWheelQuery.cs" />
     <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Shimcache.cs" />
     <Compile Include="src\BootSectors\GuidPartitionTable.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicShimcache.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicRecentFileCache.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeOutlookCatalog.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicRunKey.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicScheduledJob.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Get-ForensicShellLink.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicTypedUrl.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicRunMru.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicWindowsSearchHistory .cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicExplorerTypedPath.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeFileMru.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficePlaceMru.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\MicrosoftOffice\Get-ForensicOfficeTrustRecord.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShred.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShredBaseListener.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShredCommand.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShredLexer.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShredListener.cs" />
-    <Compile Include="src\Cmdlets\BinShred\BinShredParser.cs" />
-    <Compile Include="src\Cmdlets\ForensicTimeline\ConvertTo-Gource.cs" />
-    <Compile Include="src\Cmdlets\ForensicTimeline\ConvertTo-ForensicTimeline.cs" />
-    <Compile Include="src\Cmdlets\ForensicTimeline\Get-ForensicTimeline.cs" />
-    <Compile Include="src\Cmdlets\Windows\Get-ForensicEventLog.cs" />
-    <Compile Include="src\Cmdlets\Windows\Get-ForensicRegistryKey.cs" />
-    <Compile Include="src\Cmdlets\Windows\Get-ForensicRegistryValue.cs" />
     <Compile Include="src\Artifacts\Windows\Persistence\AlternateDataStream.cs" />
     <Compile Include="src\Artifacts\Windows\ApplicationCompatibilityCache\Amcache.cs" />
     <Compile Include="src\Artifacts\Windows\SoftwareHive\NetworkList.cs" />
@@ -102,12 +74,15 @@
     <Compile Include="src\Artifacts\Windows\SystemHive\Timezone.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\TypedUrls.cs" />
     <Compile Include="src\Artifacts\Windows\NTUSER.DAT\UserAssist.cs" />
-    <Compile Include="src\FileSystems\ExFat\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\ExFat\ExFatVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Ext\Superblock.cs" />
     <Compile Include="src\FileSystems\Fat\DirectoryEntry.cs" />
+    <Compile Include="src\FileSystems\Fat\FatVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Fat\FileAllocationTable.cs" />
-    <Compile Include="src\FileSystems\Fat\FsInformationSector.cs" />
-    <Compile Include="src\FileSystems\Fat\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Fat\FileAllocationTableEntry.cs" />
+    <Compile Include="src\FileSystems\Fat\FileSystemInformation.cs" />
+    <Compile Include="src\FileSystems\Fat\LongDirectoryEntry.cs" />
+    <Compile Include="src\FileSystems\Fat\RefFileAllocationTable.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList\AttrRef.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\AttributeList\AttributeList.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\EA.cs" />
@@ -138,35 +113,14 @@
     <Compile Include="src\Windows\Registry\List\ReferenceItem.cs" />
     <Compile Include="src\Windows\Registry\List\ValuesList.cs" />
     <Compile Include="src\Utilities\Hash.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Persistence\Get-ForensicAlternateDataStream.cs" />
-    <Compile Include="src\Cmdlets\Analytics\Get-ForensicUnallocatedSpace.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\ApplicationCompatibilityCache\Get-ForensicAmcache.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\SoftwareHive\Get-ForensicNetworkList.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\NTUSER.DAT\Get-ForensicUserAssist.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\SamHive\Get-ForensicSid.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileSlack.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicMftSlack.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicBitmap.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnlInformation.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicUsnJrnl.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeInformation.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicVolumeName.cs" />
     <Compile Include="src\Windows\Registry\Cells\NamedKey.cs" />
     <Compile Include="src\Windows\Registry\RegistryHeader.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\Get-ForensicPrefetch.cs" />
     <Compile Include="src\Artifacts\Windows\Prefetch.cs" />
-    <Compile Include="src\Cmdlets\Artifacts\SystemHive\Get-ForensicTimezone.cs" />
-    <Compile Include="src\Cmdlets\BootSector\Get-BootSector.cs" />
     <Compile Include="src\Utilities\DD.cs" />
     <Compile Include="src\ForensicTimeline\ForensicTimeline.cs" />
-    <Compile Include="src\Cmdlets\BootSector\Get-GuidPartitionTable.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\AttrDef.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\MetadataFiles\Get-ForensicAttrDef.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Get-ForensicVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\LogFile.cs" />
-    <Compile Include="src\Cmdlets\BootSector\Get-MasterBootRecord.cs" />
     <Compile Include="src\BootSectors\MasterBootRecord.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Copy-ForensicFile.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl\UsnJrnl.cs" />
     <Compile Include="src\FileSystems\Ntfs\MetadataFiles\UsnJrnl\UsnJrnlInformation.cs" />
     <Compile Include="src\FileSystems\Ntfs\Attributes\FileRecordAttribute.cs" />
@@ -181,14 +135,8 @@
     <Compile Include="src\FileSystems\Ntfs\Attributes\VolumeName.cs" />
     <Compile Include="src\FileSystems\Ntfs\FileRecord\FileRecord.cs" />
     <Compile Include="src\FileSystems\Ntfs\FileRecord\IndexEntry.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Get-ForensicChildItem.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileRecordIndex.cs" />
-    <Compile Include="src\Cmdlets\FileSystems\Ntfs\Get-ForensicFileRecord.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Invoke-ForensicDD.cs" />
-    <Compile Include="src\Cmdlets\BootSector\Get-PartitionTable.cs" />
-    <Compile Include="src\Cmdlets\Utilities\Get-ForensicContent.cs" />
     <Compile Include="src\FileSystems\Ntfs\MasterFileTable.cs" />
-    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\VolumeBootRecord.cs" />
+    <Compile Include="src\FileSystems\Ntfs\MetadataFiles\NtfsVolumeBootRecord.cs" />
     <Compile Include="src\FileSystems\Ntfs\MftIndex.cs" />
     <Compile Include="src\Helper\NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\Artifacts\Windows\MountedDevices\" />
-    <Folder Include="src\Cmdlets\FileSystems\Fat\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

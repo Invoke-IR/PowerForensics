@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {

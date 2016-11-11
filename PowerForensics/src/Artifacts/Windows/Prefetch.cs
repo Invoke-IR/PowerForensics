@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using PowerForensics;
+using PowerForensics.Generic;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
@@ -244,7 +245,7 @@ namespace PowerForensics.Artifacts
 
             using (FileStream streamToRead = Helper.getFileStream(volume))
             {
-                VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+                NtfsVolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead) as NtfsVolumeBootRecord;
 
                 // Get a byte array representing the Master File Table
                 byte[] MFT = MasterFileTable.GetBytes(streamToRead, volume);

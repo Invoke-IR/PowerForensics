@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using PowerForensics.ExFat;
+using PowerForensics.Fat;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Generic
@@ -33,24 +35,6 @@ namespace PowerForensics.Generic
 
         #region StaticMethods
 
-        private static string getFileSystem(byte[] bytes)
-        {
-            string Signature = Encoding.ASCII.GetString(bytes, 0x03, 0x08).TrimEnd('\0');
-
-            if (Signature == "NTFS")
-            {
-                return "Ntfs";
-            }
-            else if(Signature == "EXFAT")
-            {
-                return "ExFat";
-            }
-            else
-            {
-                return "Fat";
-            }
-        }
-
         internal static void checkFooter(byte[] bytes)
         {
             if (BitConverter.ToUInt16(bytes, 0x1FE) != 0xAA55)
@@ -80,14 +64,17 @@ namespace PowerForensics.Generic
         {
             checkFooter(bytes);
 
-            switch (getFileSystem(bytes))
+            switch (Helper.GetFileSystemType(bytes))
             {
-                case "Ntfs":
-                    return new Ntfs.VolumeBootRecord(bytes);
-                case "ExFat":
-                    return new ExFat.VolumeBootRecord(bytes);
+                case Helper.FILE_SYSTEM_TYPE.EXFAT:
+                    //return new ExFatVolumeBootRecord(bytes);
+                    return null;
+                case Helper.FILE_SYSTEM_TYPE.FAT:
+                    return new FatVolumeBootRecord(bytes);
+                case Helper.FILE_SYSTEM_TYPE.NTFS:
+                    return new NtfsVolumeBootRecord(bytes);
                 default:
-                    return new Fat.VolumeBootRecord(bytes);
+                    return null;
             }
         }
 

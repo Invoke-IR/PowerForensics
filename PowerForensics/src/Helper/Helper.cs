@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
@@ -7,7 +8,40 @@ namespace PowerForensics
 {
     public static class Helper
     {
+        #region Enum
+
+        public enum FILE_SYSTEM_TYPE
+        {
+            EXFAT = 0x00,
+            FAT = 0x01,
+            NTFS = 0x02,
+            SOMETHING_ELSE = 0x03
+        }
+
+        #endregion Enum
+
         #region Helper Functions
+
+        public static FILE_SYSTEM_TYPE GetFileSystemType(string volume)
+        {
+            byte[] bytes = Utilities.DD.Get(volume, 0x00, 0x200, 0x01);
+            return GetFileSystemType(bytes);
+        }
+
+        internal static FILE_SYSTEM_TYPE GetFileSystemType(byte[] bytes)
+        {
+            switch (Encoding.ASCII.GetString(bytes, 0x03, 0x08))
+            {
+                case "EXFAT   ":
+                    return FILE_SYSTEM_TYPE.EXFAT;
+                case "MSDOS5.0":
+                    return FILE_SYSTEM_TYPE.FAT;
+                case "NTFS    ":
+                    return FILE_SYSTEM_TYPE.NTFS;
+                default:
+                    return FILE_SYSTEM_TYPE.SOMETHING_ELSE;
+            }
+        }
 
         /// <summary>
         /// 
@@ -34,7 +68,7 @@ namespace PowerForensics
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        internal static string GetVolumeFromPath(string path)
+        public static string GetVolumeFromPath(string path)
         {
             return "\\\\.\\" + path.Split('\\')[0];
         }
@@ -220,6 +254,48 @@ namespace PowerForensics
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return (long)(dateTime - sTime).TotalSeconds;
+        }
+
+        internal static DateTime GetFATTime(ushort date)
+        {
+            return GetFATTime(date, 0, 0);
+        }
+
+        internal static DateTime GetFATTime(ushort date, ushort time)
+        {
+            return GetFATTime(date, time, 0);
+        }
+
+        internal static DateTime GetFATTime(ushort date, ushort time, byte tenth)
+        {
+            if (date == 0)
+            {
+                return new DateTime(1980, 1, 1);
+            }
+            else
+            {
+                //Date Format. A FAT directory entry date stamp is a 16 - bit field that is basically a date relative to the MS-DOS epoch of 01 / 01 / 1980.Here is the format(bit 0 is the LSB of the 16 - bit word, bit 15 is the MSB of the 16 - bit word):  
+                //Bits 0–4: Day of month, valid value range 1 - 31 inclusive.
+                int day = date & 0x1F;
+                //Bits 5–8: Month of year, 1 = January, valid value range 1–12 inclusive.
+                int month = (date & 0x1E0) >> 5;
+                //Bits 9–15: Count of years from 1980, valid value range 0–127 inclusive(1980–2107).
+                int year = ((date & 0xFE00) >> 9) + 1980;
+
+                //Time Format.A FAT directory entry time stamp is a 16 - bit field that has a granularity of 2 seconds.Here is the format(bit 0 is the LSB of the 16 - bit word, bit 15 is the MSB of the 16 - bit word).
+                //Bits 0–4: 2 - second count, valid value range 0–29 inclusive(0 – 58 seconds).
+                int second = (time & 0x1F) * 2;
+                //Bits 5–10: Minutes, valid value range 0–59 inclusive.
+                int minute = (time & 0x7E0) >> 5;
+                //Bits 11–15: Hours, valid value range 0–23 inclusive.
+                int hour = (time & 0xF800) >> 11;
+
+                // Millisecond stamp at file creation time. This field actually contains a count of tenths of a second. The granularity of the seconds part of DIR_CrtTime is 2 seconds so this field is a count of tenths of a second and its valid value range is 0-199 inclusive. 
+                //Console.WriteLine(tenth);
+                int millisecond = tenth;
+
+                return new DateTime(year, month, day, hour, minute, second, 0);
+            }
         }
 
         /// <summary>
