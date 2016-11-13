@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="500" height="500">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="400" height="400">
 </p>
 
 <h1 align="center">PowerForensics - PowerShell Digital Forensics</h1>
@@ -21,8 +21,8 @@
 </p>
 
 ## Overview
-PowerForensics is a PowerShell digital forensics framework. It currently
-supports NTFS and is in the process of adding support for the ext4 file system.
+The purpose of PowerForensics is to provide an all inclusive framework for hard drive forensic analysis.
+PowerForensics currently supports NTFS and FAT file systems, and work has begun on Extended File System and HFS+ support.
 
 Detailed instructions for installing PowerForensics can be found <a href="http://www.invoke-ir.com/2016/02/installing-powerforensics.html">here</a>.
 
@@ -33,6 +33,13 @@ Get-ForensicMasterBootRecord - gets the MasterBootRecord from the first sector o
 Get-ForensicGuidPartitionTable - gets the GuidPartitionTable from the first sector of the hard drive
 Get-ForensicBootSector - gets the appropriate boot sector (MBR or GPT) from the specified drive
 Get-ForensicPartitionTable - gets the partition table for the specified drive
+```
+
+### Extended File System 4 (ext4):
+```
+Get-ForensicSuperblock - returns the ext4 SuperBlock object
+Get-ForensicBlockGroupDescriptor - returns the Block Group Descriptor Table entries
+Get-ForensicInode - returns the Inode Table entries
 ```
 
 ### New Technology File System (NTFS):
@@ -93,13 +100,6 @@ ConvertTo-ForensicTimeline - converts an object to a ForensicTimeline object
 Get-ForensicTimeline - creates a forensic timeline
 ```
 
-### Extended File System 4 (ext4):
-```
-Get-ForensicSuperblock - returns the ext4 SuperBlock object
-Get-ForensicBlockGroupDescriptor - returns the Block Group Descriptor Table entries
-Get-ForensicInode - returns the Inode Table entries
-```
-
 ### Utilities
 ```
 ConvertFrom-BinaryData - implements PowerForensics' BinShred API to parse binary data into an object
@@ -109,6 +109,11 @@ Get-ForensicContent - gets the content of a file from its raw bytes on disk
 Invoke-ForensicDD - provides a bit for bit copy of a specified device
 ```
 
+## Public API
+PowerForensics is built on a C# Class Library (Assembly) that provides an public forensic API.
+All of this module's cmdlets are built on this public API and tasks can easily be expanded upon to create new cmdlets.
+API documentation can be found [here].
+
 <p align="center">
-  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="500" height="500">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="400" height="400">
 </p>
