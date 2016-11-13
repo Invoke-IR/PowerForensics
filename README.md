@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true">
 </p>
 
 <h1 align="center">PowerForensics - PowerShell Digital Forensics</h1>
@@ -110,5 +110,5 @@ Invoke-ForensicDD - provides a bit for bit copy of a specified device
 ```
 
 <p align="center">
-  <img src="https://2.bp.blogspot.com/-1LLYVd_quJU/VZVojHdUc-I/AAAAAAAAAy4/OOfTAKgq458/s1600/New_PowerForensics_Blue_xsmall_nontransparent.png">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true">
 </p>
