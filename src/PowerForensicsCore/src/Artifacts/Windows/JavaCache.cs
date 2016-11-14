@@ -30,9 +30,9 @@ namespace PowerForensics.Artifacts
         {
             JavaCacheHeader header = JavaCacheHeader.Get(bytes);
 
-            LastModified = header.LastModified;
-            ExpirationDate = header.ExpirationDate;
-            ValidationTime = header.ValidationTime;
+            //LastModified = header.LastModified;
+            //ExpirationDate = header.ExpirationDate;
+            //ValidationTime = header.ValidationTime;
             Signed = header.Signed;
 
             int offset = 0;
@@ -130,9 +130,9 @@ namespace PowerForensics.Artifacts
         internal readonly uint Version;
         internal readonly bool IsShortcutImage;
         internal readonly uint ContentLength;
-        internal readonly DateTime LastModified;
-        internal readonly DateTime ExpirationDate;
-        internal readonly DateTime ValidationTime;
+        //internal readonly DateTime LastModified;
+        //internal readonly DateTime ExpirationDate;
+        //internal readonly DateTime ValidationTime;
         internal readonly bool Signed;
         internal readonly uint Section2Length;
 

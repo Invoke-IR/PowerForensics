@@ -111,7 +111,10 @@ namespace PowerForensics
         {
             SafeFileHandle hDevice = null;
 
+
 #if CORECLR
+            Console.WriteLine("PowerShell");
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 // Get Handle to specified Volume/File/Directory
@@ -134,6 +137,8 @@ namespace PowerForensics
                 );
             }
 #else
+            Console.WriteLine("Windows PowerShell");
+
             // Get Handle to specified Volume/File/Directory
             hDevice = NativeMethods.CreateFile(
                 fileName,

@@ -7,9 +7,10 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>31148511-f774-4140-9a91-239f1187bdfc</ProjectGuid>
-    <RootNamespace>PowerForensicsCore</RootNamespace>
+    <RootNamespace>PowerForensics</RootNamespace>
+    <AssemblyName>PowerForensics</AssemblyName>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">..\..\Modules\PowerForensicsCore</OutputPath>
+    <OutputPath>..\..\Modules\PowerForensics\coreclr\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>

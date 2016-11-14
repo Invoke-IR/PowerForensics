@@ -103,7 +103,6 @@ namespace PowerForensics.Registry
                 }
 
                 StringBuilder sb = new StringBuilder();
-                bool i = false;
 
                 FullName = fullname;
 

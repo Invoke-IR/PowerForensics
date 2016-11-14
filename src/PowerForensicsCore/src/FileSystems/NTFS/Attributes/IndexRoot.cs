@@ -81,7 +81,7 @@ namespace PowerForensics.Ntfs
             #region IndexEntryArray
 
             // IndexEntry[]
-            byte[] EntryBytes = Helper.GetSubArray(bytes, StartOffset, TotalSize);
+            EntryBytes = Helper.GetSubArray(bytes, StartOffset, TotalSize);
 
             // Iterate through IndexEntry object
             int indexEntryOffset = 0;

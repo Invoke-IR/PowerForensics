@@ -22,7 +22,7 @@ namespace PowerForensics
         internal readonly string Signature;
         public readonly Version Revision;
         public readonly uint HeaderSize;
-        internal readonly uint HeaderCRC32;
+        //internal readonly uint HeaderCRC32;
         public readonly ulong MyLBA;
         public readonly ulong AlternateLBA;
         public readonly ulong FirstUsableLBA;
@@ -31,7 +31,7 @@ namespace PowerForensics
         public readonly ulong PartitionEntryLBA;
         public readonly uint NumberOfPartitionEntries;
         public readonly uint SizeOfPartitionEntry;
-        internal readonly byte[] PartitionEntryArrayCRC32;
+        //internal readonly byte[] PartitionEntryArrayCRC32;
         public readonly GuidPartitionTableEntry[] PartitionTable;
 
         #endregion Properties
