@@ -109,27 +109,49 @@ namespace PowerForensics
         /// <returns></returns>
         internal static FileStream getFileStream(string fileName)
         {
-            if (!(fileName.Contains(@"\\.\PHYSICALDRIVE")))
-            {
-                getVolumeName(ref fileName);
-            }
+            SafeFileHandle hDevice = null;
 
+#if CORECLR
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Get Handle to specified Volume/File/Directory
+                hDevice = NativeMethods.CreateFile(
+                    fileName,
+                    FileAccess.Read,
+                    FileShare.Write | FileShare.Read | FileShare.Delete,
+                    IntPtr.Zero,
+                    FileMode.Open,
+                    NativeMethods.FILE_FLAG_BACKUP_SEMANTICS,
+                    IntPtr.Zero
+                );
+            }
+            else
+            {
+                hDevice = NativeMethods.Open(
+                    fileName,
+                    NativeMethods.OpenFlags.O_RDONLY,
+                    3
+                );
+            }
+#else
             // Get Handle to specified Volume/File/Directory
-            SafeFileHandle hDevice = NativeMethods.CreateFile(
-                fileName: fileName,
-                fileAccess: FileAccess.Read,
-                fileShare: FileShare.Write | FileShare.Read | FileShare.Delete,
-                securityAttributes: IntPtr.Zero,
-                creationDisposition: FileMode.Open,
-                flags: NativeMethods.FILE_FLAG_BACKUP_SEMANTICS,
-                template: IntPtr.Zero);
+            hDevice = NativeMethods.CreateFile(
+                fileName,
+                FileAccess.Read,
+                FileShare.Write | FileShare.Read | FileShare.Delete,
+                IntPtr.Zero,
+                FileMode.Open,
+                NativeMethods.FILE_FLAG_BACKUP_SEMANTICS,
+                IntPtr.Zero
+            );
+#endif
+
 
             // Check if handle is valid
             if (hDevice.IsInvalid)
             {
                 int HRESULT = Marshal.GetHRForLastWin32Error();
                 Marshal.ThrowExceptionForHR(HRESULT);
-                //throw new Exception(@"Invalid handle to Volume/Drive returned. PowerShell must be run as Administrator to get a device handle.");
             }
 
             // Return a FileStream to read from the specified handle
@@ -517,7 +539,7 @@ namespace PowerForensics
             return new string(array);
         }
 
-        #endregion Helper Functions
+#endregion Helper Functions
     }
 }
 

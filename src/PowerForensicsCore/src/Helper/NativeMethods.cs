@@ -23,6 +23,23 @@ namespace PowerForensics
 
         #endregion Constants
 
+        #region Enums
+
+        [Flags]
+        internal enum OpenFlags
+        {
+            O_RDONLY = 0x000,
+            O_WRONLY = 0x001,
+            O_RDWR = 0x002,
+            O_CLOEXEC = 0x010,
+            O_CREAT = 0x020,
+            O_EXCL = 0x040,
+            O_TRUNC = 0x080,
+            O_SYNC = 0x100
+        }
+
+        #endregion Enums
+
         #region PInvoke
 
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
@@ -35,6 +52,14 @@ namespace PowerForensics
                 [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
                 int flags,
                 IntPtr template
+            );
+
+        [DllImport("System.Native", EntryPoint = "SystemNative_Open", SetLastError = true)]
+        internal static extern SafeFileHandle Open
+            (
+                string filename,
+                OpenFlags flags,
+                int mode
             );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
