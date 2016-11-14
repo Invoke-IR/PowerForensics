@@ -8,7 +8,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>31148511-f774-4140-9a91-239f1187bdfc</ProjectGuid>
     <RootNamespace>PowerForensics</RootNamespace>
-    <AssemblyName>PowerForensics</AssemblyName>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath>..\..\Modules\PowerForensics\coreclr\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>

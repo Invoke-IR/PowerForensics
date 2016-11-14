@@ -1,6 +1,10 @@
 ﻿{
   "version": "1.0.0-*",
 
+  "scripts": {
+    "postcompile": "build-PF.cmd"
+  },
+
   "dependencies": {
     "NETStandard.Library": "1.6.0"
   },
@@ -9,7 +13,8 @@
     "netstandard1.6": {
       "imports": "dnxcore50",
       "buildOptions": {
-        "define": [ "CORECLR" ]
+        "define": [ "CORECLR" ],
+        "outputName": "PowerForensics"
       }
     }
   }
