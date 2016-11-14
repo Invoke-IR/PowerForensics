@@ -7,6 +7,11 @@
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
 <p align="center">
+  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
+    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
+  </a>
+</p>
+<p align="center">
   <a href="https://gitter.im/Invoke-IR/PowerForensics">
     <img src="https://badges.gitter.im/Join%20Chat.svg">
   </a>
