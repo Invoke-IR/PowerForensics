@@ -113,8 +113,6 @@ namespace PowerForensics
 
 
 #if CORECLR
-            Console.WriteLine("PowerShell");
-
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 // Get Handle to specified Volume/File/Directory
@@ -137,8 +135,6 @@ namespace PowerForensics
                 );
             }
 #else
-            Console.WriteLine("Windows PowerShell");
-
             // Get Handle to specified Volume/File/Directory
             hDevice = NativeMethods.CreateFile(
                 fileName,
@@ -544,7 +540,7 @@ namespace PowerForensics
             return new string(array);
         }
 
-#endregion Helper Functions
+        #endregion Helper Functions
     }
 }
 

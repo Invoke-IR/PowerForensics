@@ -42,6 +42,13 @@ namespace PowerForensics
 
         #region PInvoke
 
+        [DllImport("advapi32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+        internal static extern bool ConvertSidToStringSid
+            (
+                [MarshalAs(UnmanagedType.LPArray)] byte[] pSID,
+                out IntPtr ptrSid
+            );
+
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
         internal static extern SafeFileHandle CreateFile
             (
@@ -60,13 +67,6 @@ namespace PowerForensics
                 string filename,
                 OpenFlags flags,
                 int mode
-            );
-
-        [DllImport("advapi32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
-        internal static extern bool ConvertSidToStringSid
-            (
-                [MarshalAs(UnmanagedType.LPArray)] byte[] pSID,
-                out IntPtr ptrSid
             );
 
         #endregion PInvoke

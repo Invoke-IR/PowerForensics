@@ -1,4 +1,12 @@
-﻿install:
+﻿#Publish to PowerShell Gallery with this key
+environment:
+  NuGetApiKey:
+    secure: oqMFzG8F65K5l572V7VzlZIWU7xnSYDLtSXECJAAURrXe8M2+BAp9vHLT+1h1lR0
+
+# Allow WMF5 (i.e. PowerShellGallery functionality)
+os: WMF 5
+
+install:
   - cinst pester
 
 build: false

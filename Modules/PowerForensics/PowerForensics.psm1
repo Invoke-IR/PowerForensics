@@ -11,11 +11,11 @@ $binaryModuleRoot = $PSModuleRoot
 
 
 if (($PSVersionTable.Keys -contains "PSEdition") -and ($PSVersionTable.PSEdition -ne 'Desktop')) {
-    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'coreclr'
+    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'lib\coreclr'
 }
 else
 {
-    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'PSv2'
+    $binaryModuleRoot = Join-Path -Path $PSModuleRoot -ChildPath 'lib\PSv2'
 }
 
 $binaryModulePath = Join-Path -Path $binaryModuleRoot -ChildPath 'PowerForensics.dll'
