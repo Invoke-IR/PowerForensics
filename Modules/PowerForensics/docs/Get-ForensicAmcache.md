@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicAmcache.md
 schema: 2.0.0
 ---
 
 # Get-ForensicAmcache
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets previously run commands from the Amcache.hve registry hive.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicAmcache -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-Amcache cmdlet parses the Amcache.hve registry hive to derive applications that were recently used. If you don&apos;t specify a hive path (-HivePath), the cmdlet parses the C:\Windows\AppCompat\Programs\Amcache.hve.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-Amcache
 ```
 
-{{ Add example description here }}
+This example shows Get-Amcache being run against the default Amcache.hve (C:\Windows\AppCompat\Programs\Amcache.hve)
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-Amcache -HivePath C:\Windows\AppCompat\Programs\Amcache.hve
+```
+
+This is an example of Get-Amcache taking a Amcache.hve as an argument.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.Amcache
 
 ## NOTES
 

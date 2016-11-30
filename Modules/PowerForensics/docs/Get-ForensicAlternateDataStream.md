@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicAlternateDataStream.md
 schema: 2.0.0
 ---
 
 # Get-ForensicAlternateDataStream
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the NTFS Alternate Data Streams on the specified volume.
 
 ## SYNTAX
 
@@ -22,21 +22,25 @@ Get-ForensicAlternateDataStream -Path <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicAlternateDataStream cmdlet parses the Master File Table and returns AlternateDataStream objects for files that contain more than one $DATA attribute.
+
+NTFS stores file contents in $DATA attributes. The file system allows a single file to maintain multiple $DATA
+attributes. When a file has more than one $DATA attribute the additional attributes are referred to as "Alternate Data
+Streams".
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicAlternateDataStream
 ```
 
-{{ Add example description here }}
+This example shows Get-ForensicAlternateDataStream getting all ADS on the C:\ logical volume.
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+The path of a file that should be checked for alternate data streams.
 
 ```yaml
 Type: String
@@ -51,7 +55,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +78,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.AlternateDataStream
 
 ## NOTES
 
