@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicEventLog.md
 schema: 2.0.0
 ---
 
 # Get-ForensicEventLog
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the events in an event log or in all event logs.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicEventLog -Path <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicEventLog cmdlet parses the specified event Log file and returns an array of EventRecord objects. If you don't specify an event log, Get-ForensicEventLog parses all event logs in the C:\Windows\system32\winevt\Logs directory.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicEventLog
 ```
 
-{{ Add example description here }}
+This command runs Get-ForensicEventLog to parse all event logs in the C:\windows\system32\winevt\logs\ directory.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-EventLog -Path C:\evidence\Application.evtx
+```
+
+This command uses Get-EventLog to parse an exported Application event log
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+Specifies the path of the file to be parsed.
 
 ```yaml
 Type: String
@@ -51,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition (Ex. \\.\C:, \\.\HARDDISKVOLUME1, or C).
 
 ```yaml
 Type: String
@@ -72,7 +81,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.EventLog.EventRecord
 
 ## NOTES
 

@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicFileRecordIndex.md
 schema: 2.0.0
 ---
 
 # Get-ForensicFileRecordIndex
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the MFT Record Index for the specified file.
 
 ## SYNTAX
 
@@ -16,21 +16,23 @@ Get-ForensicFileRecordIndex [-Path] <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicFileRecordIndex cmdlet returns the Master File Table Record Index Number for the specified file.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicFileRecordIndex C:\Windows\Notepad.exe
 ```
 
-{{ Add example description here }}
+This command uses Get-ForensicFileRecordIndex to get the Master File Table Record Index for C:\Windows\Notepad.exe.
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+The path of the file to return the Master File Table record index for.
 
 ```yaml
 Type: String
@@ -51,7 +53,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### System.UInt64
 
 ## NOTES
 
