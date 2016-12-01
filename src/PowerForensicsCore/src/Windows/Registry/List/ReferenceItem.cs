@@ -3,8 +3,9 @@ using System.Text;
 
 namespace PowerForensics.Registry
 {
-    #region ReferenceItem
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class ReferenceItem : List
     {
         #region Constructors
@@ -55,6 +56,4 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
     }
-    
-    #endregion ReferenceItem
 }

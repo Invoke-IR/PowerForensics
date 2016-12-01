@@ -4,12 +4,21 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts.MicrosoftOffice
 {
-    #region OutlookCatalogClass
+    /// <summary>
+    /// 
+    /// </summary>
     public class OutlookCatalog
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
 
         #endregion Properties
@@ -24,7 +33,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #endregion Construtors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -96,7 +105,6 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-    #endregion OutlookCatalogClass
 }

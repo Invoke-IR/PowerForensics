@@ -17,6 +17,11 @@
   </a>
 </p>
 <p align="center">
+  <a href="https://http://powerforensics.readthedocs.io/en/latest/">
+    <img src="https://readthedocs.org/projects/powerforensics/badge/?version=latest">
+  </a>
+</p>
+<p align="center">
   <a href="https://waffle.io/Invoke-IR/PowerForensics">
     <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
   </a>

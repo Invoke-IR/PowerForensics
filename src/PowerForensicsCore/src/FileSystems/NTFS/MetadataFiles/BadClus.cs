@@ -2,13 +2,21 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region BadClusClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class BadClus
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long Cluster;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Bad;
 
         #endregion Properties
@@ -23,7 +31,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
         
         /// <summary>
         /// 
@@ -53,8 +61,6 @@ namespace PowerForensics.Ntfs
             throw new Exception("No $Bad attribute found.");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion BadClusClass
 }

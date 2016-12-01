@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Utilities
 {
-    #region DDClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class DD
     {
+        #region Static Methods
+
         /// <summary>
         /// 
         /// </summary>
@@ -62,7 +65,7 @@ namespace PowerForensics.Utilities
             
             return byteList.ToArray();
         }
-    }  
 
-    #endregion DDClass
+        #endregion Static Methods
+    }
 }

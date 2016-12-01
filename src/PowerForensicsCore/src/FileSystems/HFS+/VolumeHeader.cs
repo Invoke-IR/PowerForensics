@@ -3,13 +3,26 @@ using System.Text;
 
 namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class VolumeHeader
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum HFS_VERSION
         {
+            /// <summary>
+            /// 
+            /// </summary>
             HFSPLUS = 4,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HFSX = 5
         }
 
@@ -17,45 +30,176 @@ namespace PowerForensics.HFSPlus
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly HFS_VERSION Version;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Attributes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string LastMountedVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint JournalInfoBlock;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CreateData;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifyDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BackupDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CheckedDate;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FileCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FolderCount;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BlockSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TotalBlocks;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FreeBlocks;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NextAllocation;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RsrcClumpSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint DataClumpSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] NextCatalogId;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint WriteCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong EncodingBitmap;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray0;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray1;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray2;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray3;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray4;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray5;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray6;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] FinderInfoArray7;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData AllocationFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData ExtentsOverflowFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData CatalogFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData AttributesFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData StartupFile;
 
         #endregion Properties
@@ -101,7 +245,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -114,9 +258,9 @@ namespace PowerForensics.HFSPlus
             return new VolumeHeader(bytes, volumeName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -163,6 +307,6 @@ namespace PowerForensics.HFSPlus
             return StartupFile.GetContent();
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 }

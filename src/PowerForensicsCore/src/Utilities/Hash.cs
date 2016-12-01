@@ -3,11 +3,9 @@ using System.Security.Cryptography;
 
 namespace PowerForensics.Utilities
 {
-    #region HashClass
-
     class Hash
     {
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -58,8 +56,6 @@ namespace PowerForensics.Utilities
             return BitConverter.ToString(hashAlgorithm.ComputeHash(Helper.GetSubArray(bytes, 0x00, count))).Replace("-", "");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion HashClass
 }

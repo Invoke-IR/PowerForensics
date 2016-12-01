@@ -4,18 +4,37 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts.Persistence
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RunKey
     {
         #region Properties
        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string AutoRunLocation;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ImagePath;
 
         #endregion Properties
         
         #region Constructors
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="vk"></param>
         private RunKey(string location, ValueKey vk)
         {
             AutoRunLocation = location;
@@ -25,7 +44,7 @@ namespace PowerForensics.Artifacts.Persistence
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -113,6 +132,6 @@ namespace PowerForensics.Artifacts.Persistence
             return runList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

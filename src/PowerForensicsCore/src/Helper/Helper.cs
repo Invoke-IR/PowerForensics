@@ -7,15 +7,36 @@ using Microsoft.Win32.SafeHandles;
 
 namespace PowerForensics
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Helper
     {
         #region Enum
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FILE_SYSTEM_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             EXFAT = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FAT = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NTFS = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SOMETHING_ELSE = 0x03
         }
 
@@ -23,12 +44,22 @@ namespace PowerForensics
 
         #region Helper Functions
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static FILE_SYSTEM_TYPE GetFileSystemType(string volume)
         {
             byte[] bytes = Utilities.DD.Get(volume, 0x00, 0x200, 0x01);
             return GetFileSystemType(bytes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static FILE_SYSTEM_TYPE GetFileSystemType(byte[] bytes)
         {
             switch (Encoding.ASCII.GetString(bytes, 0x03, 0x08))

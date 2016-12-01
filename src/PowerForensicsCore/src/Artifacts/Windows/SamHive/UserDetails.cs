@@ -3,19 +3,61 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserDetail
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastLogon;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime PasswordLastSet;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccountExpires;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastIncorrectPassword;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RelativeIdentifier;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool AccountActive;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool PasswordRequired;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string CountryCode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint InvalidPasswordCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint LogonCount;
 
         #endregion Properties
@@ -33,7 +75,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -44,6 +86,6 @@ namespace PowerForensics.Artifacts
             return null;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

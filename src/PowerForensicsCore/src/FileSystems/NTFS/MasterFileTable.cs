@@ -5,13 +5,12 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region MasterFileTableClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class MasterFileTable
     {
-        #region StaticMethods
-
-        #region GetRecordMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -33,10 +32,6 @@ namespace PowerForensics.Ntfs
             // Instantiate a FileRecord object for the $MFT file
             return FileRecord.Get(recordBytes, volume, (int)VBR.BytesPerFileRecord, true);
         }
-
-        #endregion GetRecordMethods
-
-        #region GetBytesMethods
 
         /// <summary>
         /// 
@@ -64,10 +59,6 @@ namespace PowerForensics.Ntfs
             FileRecord mftRecord = GetRecord(streamToRead, volume);
             return mftRecord.GetContent();
         }
-
-        #endregion GetBytesMethods
-
-        #region GetSlackMethods
 
         /// <summary>
         /// 
@@ -113,10 +104,6 @@ namespace PowerForensics.Ntfs
             return slackBytes.ToArray();
         }
 
-        #endregion GetSlackMethods
-
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion MasterFileTableClass
 }

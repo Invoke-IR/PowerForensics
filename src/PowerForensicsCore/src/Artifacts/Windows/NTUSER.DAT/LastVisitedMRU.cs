@@ -4,11 +4,21 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class LastVisitedMRU
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ImagePath;
 
         #endregion Properties
@@ -23,7 +33,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -77,6 +87,6 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

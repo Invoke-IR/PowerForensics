@@ -2,15 +2,32 @@
 
 namespace PowerForensics.Ext
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BlockGroupDescriptor
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             EXT4_BG_INODE_UNINIT = 0x1,
+            
+            /// <summary>
+            /// 
+            /// </summary>
             EXT4_BG_BLOCK_UNINIT = 0x2,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EXT4_BG_INODE_ZEROED = 0x4
         }
 
@@ -18,17 +35,64 @@ namespace PowerForensics.Ext
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong BlockBitmap;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong InodeBitmap;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong InodeTable;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FreeBlockCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FreeInodeCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint DirectoryCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong SnapshotExclusionBitmap;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BlockBitmapChecksum;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint InodeBitmapChecksum;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint UnusedInodeCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FLAGS Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort Checksum;
 
         #endregion Properties
@@ -70,19 +134,35 @@ namespace PowerForensics.Ext
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public static BlockGroupDescriptor Get(byte[] bytes)
         {
             return new BlockGroupDescriptor(bytes, false);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volumeName"></param>
+        /// <param name="blockGroup"></param>
+        /// <returns></returns>
         public static BlockGroupDescriptor Get(string volumeName, uint blockGroup)
         {
             Superblock superblock = Superblock.Get(volumeName);
             return new BlockGroupDescriptor(Utilities.DD.Get(volumeName, (superblock.FirstDataBlock + (blockGroup * superblock.BlocksPerGroup)) * superblock.BlockSize, superblock.BlockSize, 1), true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volumeName"></param>
+        /// <returns></returns>
         public static BlockGroupDescriptor GetInstances(string volumeName)
         {
             Superblock superblock = Superblock.Get(volumeName);
@@ -90,6 +170,6 @@ namespace PowerForensics.Ext
             return null;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

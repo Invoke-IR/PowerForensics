@@ -5,56 +5,176 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
 {
-    #region ScheduledJobClass
-
-    // https://msdn.microsoft.com/en-us/library/cc248285.aspx
+    /// <summary>
+    /// https://msdn.microsoft.com/en-us/library/cc248285.aspx
+    /// </summary>
     public class ScheduledJob
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PRODUCT_VERSION
         {
+            /// <summary>
+            /// 
+            /// </summary>
             WindowsNT4 = 0x0400,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Windows2000 = 0x0500,
+
+            /// <summary>
+            /// 
+            /// </summary>
             WindowsXP = 0x0501,
+
+            /// <summary>
+            /// 
+            /// </summary>
             WindowsVista = 0x0600,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Windows7 = 0x0601,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Windows8 = 0x0602,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Windows8_1 = 0x0603
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum PRIORITY_CLASS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             NORMAL = 0x4000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             IDLE = 0x2000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HIGH = 0x1000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REALTIME = 0x800000
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum STATUS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SCHED_S_TASK_READY = 0x00041300,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SCHED_S_TASK_RUNNING = 0x00041301,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SCHED_S_TASK_NOT_SCHEDULED = 0x00041305
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum TASK_FLAG : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             INTERACTIVE = 0x80000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DELETE_WHEN_DONE = 0x40000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DISABLED = 0x20000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             START_ONLY_IF_IDLE = 0x8000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             KILL_ON_IDLE_END = 0x4000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DONT_START_IF_ON_BATTERIES = 0x2000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             KILL_IF_GOING_ON_BATTERIES = 0x1000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RUN_ONLY_IF_DOCKED = 0x800000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HIDDEN = 0x400000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RUN_IF_CONNECTED_TO_INTERNET = 0x200000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RESTART_ON_IDLE_RESUME = 0x100000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SYSTEM_REQUIRED = 0x80000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RUN_ONLY_IF_LOGGED_ON = 0x40000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             APPLICATION_NAME = 0x80,
         }
 
@@ -63,34 +183,117 @@ namespace PowerForensics.Artifacts
         #region Properties
 
         // FIXDLEN_DATA
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly PRODUCT_VERSION ProductVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort FileVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid Uuid;
+
         private readonly ushort ApplicationNameOffset;
+
         private readonly ushort TriggerOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ErrorRetryCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ErrorRetryInterval;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort IdleDeadline;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort IdleWait;
+        
         //public readonly string Priority;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint MaximumRuntime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ExitCode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly STATUS Status;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly TASK_FLAG Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime RunTime;
 
         // Variable-Length Data Section
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort RunningInstanceCount;
+
         private readonly ushort ApplicationNameLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ApplicationName;
+
         private readonly ushort ParameterLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Parameters;
+
         private readonly ushort WorkingDirectoryLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string WorkingDirectory;
+
         private readonly ushort AuthorLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Author;
+
         private readonly ushort CommentLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Comment;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime StartTime;
 
         #endregion Properties
@@ -175,9 +378,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -190,22 +391,12 @@ namespace PowerForensics.Artifacts
             return new ScheduledJob(record.GetContent());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <param name="recordNumber"></param>
-        /// <returns></returns>
         internal static ScheduledJob Get(string volume, int recordNumber)
         {
             Helper.getVolumeName(ref volume);
             FileRecord record = FileRecord.Get(volume, recordNumber, true);
             return new ScheduledJob(record.GetContent());
         }
-
-        #endregion GetMethods
-
-        #region GetInstancesMethods
 
         /// <summary>
         /// 
@@ -219,12 +410,6 @@ namespace PowerForensics.Artifacts
             return GetInstances(volume, path);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
         private static ScheduledJob[] GetInstances(string volume, string path)
         {
             List<ScheduledJob> jobList = new List<ScheduledJob>();
@@ -240,9 +425,9 @@ namespace PowerForensics.Artifacts
             return jobList.ToArray();
         }
 
-        #endregion GetInstancesMethods
+        #endregion Static Methods
 
-        #endregion StaticMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -252,7 +437,7 @@ namespace PowerForensics.Artifacts
         {
             return String.Format("[PROGRAM EXECUTION] {0} executed at {1} via Scheduled Job", this.ApplicationName, this.StartTime);
         }
-    }
 
-    #endregion ScheduledJobClass
+        #endregion Override Methods
+    }
 }

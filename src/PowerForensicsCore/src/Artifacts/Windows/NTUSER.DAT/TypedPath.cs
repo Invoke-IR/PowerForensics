@@ -4,14 +4,23 @@ using System.Collections.Generic;
 using PowerForensics.Registry;
 
 // TODO: Add TypedURLtimes for Win8
-
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TypedPaths
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ImagePath;
 
         #endregion Properties
@@ -26,7 +35,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -96,6 +105,6 @@ namespace PowerForensics.Artifacts
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

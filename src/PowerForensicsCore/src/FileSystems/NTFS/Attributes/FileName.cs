@@ -3,8 +3,9 @@ using System.Text;
 
 namespace PowerForensics.Ntfs
 {
-    #region FileNameClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileName : FileRecordAttribute
     {
         #region Constants
@@ -17,41 +18,154 @@ namespace PowerForensics.Ntfs
 
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         enum ATTR_FILENAME_FLAG
         {
+            /// <summary>
+            /// 
+            /// </summary>
             READONLY = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HIDDEN = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SYSTEM = 0x00000004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ARCHIVE = 0x00000020,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DEVICE = 0x00000040,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NORMAL = 0x00000080,
+
+            /// <summary>
+            /// 
+            /// </summary>
             TEMP = 0x00000100,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SPARSE = 0x00000200,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REPARSE = 0x00000400,
+
+            /// <summary>
+            /// 
+            /// </summary>
             COMPRESSED = 0x00000800,
+
+            /// <summary>
+            /// 
+            /// </summary>
             OFFLINE = 0x00001000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NCI = 0x00002000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ENCRYPTED = 0x00004000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DIRECTORY = 0x10000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEXVIEW = 0x20000000
         }
 
         #endregion Enums
-           
+
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Filename;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ParentSequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong ParentRecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int Namespace;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong AllocatedSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong RealSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ER;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly byte NameLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifiedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ChangedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BornTime;
 
         #endregion Properties
@@ -112,6 +226,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion FileNameClass
 }

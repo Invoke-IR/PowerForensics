@@ -3,16 +3,36 @@ using System.Text;
 
 namespace PowerForensics.Registry
 {
-    #region ListClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class List
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Size;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Allocated;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ushort Count;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public uint[] Offset;
 
         #endregion Properties
@@ -81,6 +101,4 @@ namespace PowerForensics.Registry
 
         #endregion Factory
     }
-
-    #endregion ListClass
 }

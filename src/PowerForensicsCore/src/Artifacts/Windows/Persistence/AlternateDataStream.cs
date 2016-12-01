@@ -3,14 +3,26 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Artifacts
 {
-    #region AlternateDataStreamClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class AlternateDataStream
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FullName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string StreamName;
 
         #endregion Properties
@@ -26,7 +38,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -60,11 +72,6 @@ namespace PowerForensics.Artifacts
             return GetInstances(record);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <returns></returns>
         private static AlternateDataStream[] GetInstances(FileRecord record)
         {
             List<AlternateDataStream> adsList = new List<AlternateDataStream>();
@@ -86,8 +93,6 @@ namespace PowerForensics.Artifacts
             return adsList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion AlternateDataStreamClass
 }

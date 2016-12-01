@@ -6,19 +6,52 @@ using PowerForensics.Utilities;
 
 namespace PowerForensics.Fat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DirectoryEntry
     {
         #region Enums
 
-        [FlagsAttribute]
+        /// <summary>
+        /// 
+        /// </summary>
+        [Flags]
         public enum FILE_ATTR
         {
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_READ_ONLY = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_HIDDEN = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_SYSTEM = 0x04,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_VOLUME_ID = 0x08,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_DIRECTORY = 0x10,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_ARCHIVE = 0x20,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_LONG_NAME = ATTR_READ_ONLY | ATTR_HIDDEN | ATTR_SYSTEM | ATTR_VOLUME_ID
         }
 
@@ -26,31 +59,118 @@ namespace PowerForensics.Fat
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string Volume;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FullName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Deleted;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly FILE_ATTR DIR_Attribute;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Directory;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Hidden;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly byte DIR_CreationTimeTenth;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_CreationTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_CreationDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CreationTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_LastAccessDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_FirstClusterHI;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_WriteTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_WriteDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime WriteTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort DIR_FirstClusterLO;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FirstCluster;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FileSize;
 
         #endregion Properties
 
         #region Constructors
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="index"></param>
+        /// <param name="volume"></param>
+        /// <param name="longNameList"></param>
+        /// <param name="directoryName"></param>
         public DirectoryEntry(byte[] bytes, int index, string volume, List<LongDirectoryEntry> longNameList, string directoryName)
         {
             Volume = volume;
@@ -77,8 +197,13 @@ namespace PowerForensics.Fat
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static DirectoryEntry Get(string path)
         {
             path = path.TrimEnd('\\');
@@ -115,11 +240,25 @@ namespace PowerForensics.Fat
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="index"></param>
+        /// <param name="volume"></param>
+        /// <param name="list"></param>
+        /// <param name="directoryName"></param>
+        /// <returns></returns>
         internal static DirectoryEntry Get(byte[] bytes, int index, string volume, List<LongDirectoryEntry> list, string directoryName)
         {
             return new DirectoryEntry(bytes, index, volume, list, directoryName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static DirectoryEntry[] GetInstances(string volume)
         {
             List<DirectoryEntry> entryList = new List<DirectoryEntry>();
@@ -139,6 +278,13 @@ namespace PowerForensics.Fat
             return entryList.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="volume"></param>
+        /// <param name="directoryName"></param>
+        /// <returns></returns>
         private static DirectoryEntry[] GetInstances(byte[] bytes, string volume, string directoryName)
         {
             List<DirectoryEntry> list = new List<DirectoryEntry>();
@@ -172,6 +318,11 @@ namespace PowerForensics.Fat
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static DirectoryEntry[] GetChildItem(string path)
         {
             if (path.TrimEnd('\\').Split('\\').Length == 1)
@@ -185,6 +336,11 @@ namespace PowerForensics.Fat
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         private static DirectoryEntry[] GetRootDirectory(string volume)
         {
             string volLetter = Helper.GetVolumeLetter(volume);
@@ -198,6 +354,12 @@ namespace PowerForensics.Fat
             return GetInstances(bytes, volume, volLetter);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private static string GetShortName(byte[] bytes, int index)
         {
             string name = Encoding.ASCII.GetString(bytes, 0 + index, 8).TrimEnd();
@@ -215,6 +377,13 @@ namespace PowerForensics.Fat
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="FileName"></param>
+        /// <param name="list"></param>
+        /// <param name="directoryName"></param>
+        /// <returns></returns>
         private static string GetLongName(string FileName, List<LongDirectoryEntry> list, string directoryName)
         {
             // Check if there are actually Long Name Entires
@@ -236,6 +405,12 @@ namespace PowerForensics.Fat
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private static bool TestIfFree(byte[] bytes, int index)
         {
             if (bytes[0 + index] == 0xE5)
@@ -257,10 +432,14 @@ namespace PowerForensics.Fat
             //The following characters are not legal in any bytes of DIR_Name:  • Values less than 0x20 except for the special case of 0x05 in DIR_Name[0] described above. • 0x22, 0x2A, 0x2B, 0x2C, 0x2E, 0x2F, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x5B, 0x5C, 0x5D, and 0x7C.
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public DirectoryEntry[] GetChildItem()
         {
             if (this.Directory)
@@ -276,6 +455,11 @@ namespace PowerForensics.Fat
             }
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="recurse"></param>
+        /// <returns></returns>
         public DirectoryEntry[] GetChildItem(bool recurse)
         {
             if (recurse)
@@ -302,6 +486,10 @@ namespace PowerForensics.Fat
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetContent()
         {
             FatVolumeBootRecord vbr = VolumeBootRecord.Get(this.Volume) as FatVolumeBootRecord;
@@ -343,6 +531,6 @@ namespace PowerForensics.Fat
             }
         }        
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 }

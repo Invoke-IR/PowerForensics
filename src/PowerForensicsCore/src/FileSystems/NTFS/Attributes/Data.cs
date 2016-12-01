@@ -4,10 +4,16 @@ namespace PowerForensics.Ntfs
 {
     #region DataClass
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Data : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] RawData;
 
         #endregion Properties

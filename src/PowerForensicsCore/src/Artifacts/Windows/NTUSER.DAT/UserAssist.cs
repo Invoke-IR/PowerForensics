@@ -4,11 +4,126 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    #region UserAssistClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserAssist
     {
-        #region Enums
+        #region Properties
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly string ImagePath;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly uint RunCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly uint FocusTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly DateTime LastExecutionTimeUtc;
+
+        #endregion Properties
+
+        #region Constructors
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="vk"></param>
+        /// <param name="bytes"></param>
+        private UserAssist(string user, ValueKey vk, byte[] bytes)
+        {
+            User = user;
+            ImagePath = Decode(vk.Name);
+
+            byte[] data = (byte[])vk.GetData(bytes);
+            RunCount = BitConverter.ToUInt32(data, 0x04);
+            FocusTime = BitConverter.ToUInt32(data, 0x0C);            
+            LastExecutionTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(data, 0x03C));
+        }
+
+        #endregion Constructors
+
+        #region Static Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hivePath"></param>
+        /// <returns></returns>
+        public static UserAssist[] Get(string hivePath)
+        {
+            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
+            {
+                List<UserAssist> uaList = new List<UserAssist>();
+
+                string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist";
+
+                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
+
+                NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
+
+                foreach (NamedKey key in FileSubKey)
+                {
+                    foreach (NamedKey nk in key.GetSubKeys(bytes))
+                    {
+                        if (nk.NumberOfValues != 0)
+                        {
+                            foreach (ValueKey vk in nk.GetValues(bytes))
+                            {
+                                uaList.Add(new UserAssist(RegistryHelper.GetUserHiveOwner(hivePath), vk, bytes));
+                            }
+                        }
+                    }
+                }
+                return uaList.ToArray();
+            }
+            else
+            {
+                throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
+        public static UserAssist[] GetInstances(string volume)
+        {
+            Helper.getVolumeName(ref volume);
+
+            List<UserAssist> list = new List<UserAssist>();
+
+            foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
+            {
+                try
+                {
+                    list.AddRange(Get(hivePath));
+                }
+                catch
+                {
+
+                }
+            }
+
+            return list.ToArray();
+        }
 
         private static string Decode(string Path)
         {
@@ -118,102 +233,9 @@ namespace PowerForensics.Artifacts
             return Path;
         }
 
-        #endregion Enums
+        #endregion Static Methods
 
-        #region Properties
-
-        public readonly string User;
-        public readonly string ImagePath;
-        public readonly uint RunCount;
-        public readonly uint FocusTime;
-        public readonly DateTime LastExecutionTimeUtc;
-
-        #endregion Properties
-
-        #region Constructors
-
-        private UserAssist(string user, ValueKey vk, byte[] bytes)
-        {
-            User = user;
-            ImagePath = Decode(vk.Name);
-
-            byte[] data = (byte[])vk.GetData(bytes);
-            RunCount = BitConverter.ToUInt32(data, 0x04);
-            FocusTime = BitConverter.ToUInt32(data, 0x0C);            
-            LastExecutionTimeUtc = DateTime.FromFileTimeUtc(BitConverter.ToInt64(data, 0x03C));
-        }
-
-        #endregion Constructors
-
-        #region StaticMethods
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hivePath"></param>
-        /// <returns></returns>
-        public static UserAssist[] Get(string hivePath)
-        {
-            if (RegistryHelper.isCorrectHive(hivePath, "NTUSER.DAT"))
-            {
-                List<UserAssist> uaList = new List<UserAssist>();
-
-                string Key = @"Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist";
-
-                byte[] bytes = Registry.RegistryHelper.GetHiveBytes(hivePath);
-
-                NamedKey[] FileSubKey = NamedKey.GetInstances(bytes, hivePath, Key);
-
-                foreach (NamedKey key in FileSubKey)
-                {
-                    foreach (NamedKey nk in key.GetSubKeys(bytes))
-                    {
-                        if (nk.NumberOfValues != 0)
-                        {
-                            foreach (ValueKey vk in nk.GetValues(bytes))
-                            {
-                                uaList.Add(new UserAssist(RegistryHelper.GetUserHiveOwner(hivePath), vk, bytes));
-                            }
-                        }
-                    }
-                }
-                return uaList.ToArray();
-            }
-            else
-            {
-                throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <returns></returns>
-        public static UserAssist[] GetInstances(string volume)
-        {
-            Helper.getVolumeName(ref volume);
-
-            List<UserAssist> list = new List<UserAssist>();
-
-            foreach (string hivePath in RegistryHelper.GetUserHiveInstances(volume))
-            {
-                try
-                {
-                    list.AddRange(Get(hivePath));
-                }
-                catch
-                {
-
-                }
-            }
-
-            return list.ToArray();
-        }
-
-        #endregion StaticMethods
-
-        #region OverrideMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -224,8 +246,7 @@ namespace PowerForensics.Artifacts
             return String.Format("[PROGRAM EXECUTION] {0} run {1} times", this.ImagePath, this.RunCount);
         }
 
-        #endregion OverrideMethods
+        #endregion Override Methods
     }
 
-    #endregion UserAssistClass
 }

@@ -5,24 +5,71 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    #region AmcacheClass
-
-    // https://msdn.microsoft.com/en-us/library/cc248285.aspx
+    /// <summary>
+    /// https://msdn.microsoft.com/en-us/library/cc248285.aspx
+    /// </summary>
     public class Amcache
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort SequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong RecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ProductName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string CompanyName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FileSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Description;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CompileTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifiedTimeUtc;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BornTimeUtc;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifiedTime2Utc;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Hash;
 
         #endregion Properties
@@ -96,9 +143,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetInstancesMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -156,10 +201,6 @@ namespace PowerForensics.Artifacts
 
         }
 
-        #endregion GetInstancesMethods
-
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion AmcacheClass
 }

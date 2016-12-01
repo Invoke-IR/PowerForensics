@@ -4,12 +4,16 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region IndexAllocationClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class IndexAllocation : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly IndexEntry[] Entries;
 
         #endregion Properties
@@ -80,6 +84,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion IndexAllocationClass
 }

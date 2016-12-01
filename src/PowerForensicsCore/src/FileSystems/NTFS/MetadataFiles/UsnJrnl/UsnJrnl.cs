@@ -6,43 +6,147 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region UsnJrnlClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class UsnJrnl
     {
         #region Enums
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum USN_REASON : uint
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
             DATA_OVERWRITE = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DATA_EXTEND = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DATA_TRUNCATION = 0x00000004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NAMED_DATA_OVERWRITE = 0x00000010,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NAMED_DATA_EXTEND = 0x00000020,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NAMED_DATA_TRUNCATION = 0x00000040,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FILE_CREATE = 0x00000100,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FILE_DELETE = 0x00000200,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EA_CHANGE = 0x00000400,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SECURITY_CHANGE = 0x00000800,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RENAME_OLD_NAME = 0x00001000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RENAME_NEW_NAME = 0x00002000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEXABLE_CHANGE = 0x00004000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BASIC_INFO_CHANGE = 0x00008000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HARD_LINK_CHANGE = 0x00010000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             COMPRESSION_CHANGE = 0x00020000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ENCRYPTION_CHANGE = 0x00040000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             OBJECT_ID_CHANGE = 0x00080000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REPARSE_POINT_CHANGE = 0x00100000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             STREAM_CHANGE = 0x00200000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             CLOSE = 0x80000000
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum USN_SOURCE : uint
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
             DATA_MANAGEMENT = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             AUXILIARY_DATA = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REPLICATION_MANAGEMENT = 0x00000004
         }
 
@@ -50,21 +154,79 @@ namespace PowerForensics.Ntfs
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly static Version USN40Version = new Version(4, 0);
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string VolumePath;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Version Version;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong RecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort FileSequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong ParentFileRecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ParentFileSequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long Usn;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime TimeStamp;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly USN_REASON Reason;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly USN_SOURCE SourceInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint SecurityId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly StandardInformation.ATTR_STDINFO_PERMISSION FileAttributes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FullName;
 
         #endregion Properties
@@ -95,9 +257,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -205,10 +365,6 @@ namespace PowerForensics.Ntfs
                 throw new Exception("UsnJrnl entry has has been overwritten");
             }
         }
-
-        #endregion GetMethods
-
-        #region GetInstancesMethods
 
         /// <summary>
         /// 
@@ -346,8 +502,6 @@ namespace PowerForensics.Ntfs
             return usnList.ToArray();
         }
 
-        #endregion GetInstancesMethods
-
         /// <summary>
         /// 
         /// </summary>
@@ -378,9 +532,9 @@ namespace PowerForensics.Ntfs
             throw new Exception("No $J attribute found.");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -427,8 +581,6 @@ namespace PowerForensics.Ntfs
             return String.Format("UsnJrnl for {0} ({1}) Reason: {2}", this.FileName, this.RecordNumber, this.Reason); ;
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
-
-    #endregion USNJrnlClass
 }

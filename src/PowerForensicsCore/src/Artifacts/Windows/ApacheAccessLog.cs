@@ -4,19 +4,61 @@ using System.Text;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ApacheAccessLog
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string RemoteHostname;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string RemoteLogname;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string RemoteUsername;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Timestamp;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string HttpMethod;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Request;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Status;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ResponseSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Referer;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string UserAgent;
 
         #endregion Properties
@@ -105,7 +147,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructor
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -134,6 +176,6 @@ namespace PowerForensics.Artifacts
             return logList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

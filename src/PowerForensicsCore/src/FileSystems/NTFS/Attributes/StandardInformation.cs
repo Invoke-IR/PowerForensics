@@ -2,27 +2,82 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region StandardInformationClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class StandardInformation : FileRecordAttribute
     {
         #region Enums
         
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ATTR_STDINFO_PERMISSION : uint
         {
+            /// <summary>
+            /// 
+            /// </summary>
             READONLY = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HIDDEN = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SYSTEM = 0x00000004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ARCHIVE = 0x00000020,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DEVICE = 0x00000040,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NORMAL = 0x00000080,
+
+            /// <summary>
+            /// 
+            /// </summary>
             TEMP = 0x00000100,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SPARSE = 0x00000200,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REPARSE = 0x00000400,
+
+            /// <summary>
+            /// 
+            /// </summary>
             COMPRESSED = 0x00000800,
+
+            /// <summary>
+            /// 
+            /// </summary>
             OFFLINE = 0x00001000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NCI = 0x00002000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ENCRYPTED = 0x00004000
         }
 
@@ -30,17 +85,64 @@ namespace PowerForensics.Ntfs
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BornTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifiedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ChangedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ATTR_STDINFO_PERMISSION Permission;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint MaxVersionNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint VersionNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClassId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint OwnerId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint SecurityId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong QuotaCharged;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long UpdateSequenceNumber;
 
         #endregion Properties
@@ -75,6 +177,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion StandardInformationClass
 }

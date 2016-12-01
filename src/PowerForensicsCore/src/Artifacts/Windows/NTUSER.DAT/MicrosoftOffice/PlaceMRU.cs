@@ -5,12 +5,26 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts.MicrosoftOffice
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PlaceMRU
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastAccessedTime;
 
         #endregion Properties
@@ -26,7 +40,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -96,6 +110,6 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

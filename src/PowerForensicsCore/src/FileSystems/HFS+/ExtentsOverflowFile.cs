@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using PowerForensics.HFSPlus.BTree;
 
 namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExtentsOverflowFile
     {
+        #region Static Methods
+
         /// <summary>
         /// Returns the contents of the HFS+ Extents Overflow File.
         /// </summary>
@@ -47,15 +51,30 @@ namespace PowerForensics.HFSPlus
         {
             return Node.GetBytes(volumeName, "ExtentsOverflow", nodeNumber);
         }
+
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExtentsOverflowRecord : Record
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum FORK_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Data = 0x00,
+            
+            /// <summary>
+            /// 
+            /// </summary>
             Resource = 0xFF
         }
 
@@ -67,10 +86,26 @@ namespace PowerForensics.HFSPlus
         private readonly string FileName;
         private readonly ushort KeyLength;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FORK_TYPE ForkType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CatalogNodeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RelativeStartBlock;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ExtentDescriptor[] Extents;
 
         #endregion Properties
@@ -91,7 +126,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructor
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -106,6 +141,6 @@ namespace PowerForensics.HFSPlus
             return new ExtentsOverflowRecord(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

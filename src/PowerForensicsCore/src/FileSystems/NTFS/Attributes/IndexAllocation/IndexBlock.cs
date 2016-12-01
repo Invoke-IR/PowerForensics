@@ -3,8 +3,6 @@ using System.Text;
 
 namespace PowerForensics.Ntfs
 {
-    #region IndexBlockClass
-
     internal class IndexBlock
     {
         #region Properties
@@ -86,6 +84,4 @@ namespace PowerForensics.Ntfs
 
         #endregion StaticMethods
     }
-
-    #endregion IndexBlockClass
 }

@@ -3,16 +3,26 @@ using System.Text;
 
 namespace PowerForensics.Registry
 {
-    #region SecurityKeyClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class SecurityKey : Cell
     {
         #region Properties
 
         internal readonly uint Flink;
         internal readonly uint Blink;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ReferenceCount;
+
         internal readonly uint DescriptorLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly SecurityDescriptor Descriptor;
 
         #endregion Properties
@@ -53,6 +63,4 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
     }
-    
-    #endregion SecurityKeyClass
 }

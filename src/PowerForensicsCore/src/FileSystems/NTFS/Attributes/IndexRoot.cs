@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region IndexRootClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class IndexRoot : FileRecordAttribute
     {
         // ATTR_HEADER_RESIDENT
@@ -14,10 +15,21 @@ namespace PowerForensics.Ntfs
 
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum INDEX_ROOT_FLAGS
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEX_ROOT_ONLY = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEX_ALLOCATION = 0x01
         }
 
@@ -26,19 +38,56 @@ namespace PowerForensics.Ntfs
         #region Properties
 
         // Index Root
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ATTR_TYPE AttributeType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CollationSortingRule;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint IndexSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte ClustersPerIndexRecord;
 
         // IndexHeader
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly int StartOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly int TotalSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly int AllocatedSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly INDEX_ROOT_FLAGS Flags;
-        
+
         // IndexEntry[]
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly byte[] EntryBytes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly IndexEntry[] Entries;
 
         #endregion Properties
@@ -117,6 +166,4 @@ namespace PowerForensics.Ntfs
         #endregion Constuctors
 
     }
-
-    #endregion IndexRootClass
 }

@@ -2,8 +2,6 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region CommonHeaderClass
-
     class CommonHeader
     {
         #region Constants
@@ -51,6 +49,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion CommonHeaderClass
 }

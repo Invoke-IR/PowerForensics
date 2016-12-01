@@ -6,57 +6,188 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileRecord
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum FILE_RECORD_FLAG
         {
-            INUSE = 0x01,	// File record is in use
-            DIR = 0x02	    // File record is a directory
+            /// <summary>
+            /// File record is in use
+            /// </summary>
+            INUSE = 0x01,
+
+            /// <summary>
+            /// File record is a directory
+            /// </summary>
+            DIR = 0x02
         }
 
         #endregion Enums
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string VolumePath;              // Path to Volume
 
+
         // File Record Header
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort OffsetOfUS;             // Offset of Update Sequence
-        private readonly ushort SizeOfUS;		        // Size in words of Update Sequence Number & Array
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly ushort SizeOfUS;               // Size in words of Update Sequence Number & Array
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LogFileSequenceNumber;    // $LogFile Sequence Number
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort SequenceNumber;          // Sequence number
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort Hardlinks;               // Hard link count
+
+        /// <summary>
+        /// 
+        /// </summary>
         private ushort OffsetOfAttribute;               // Offset of the first Attribute
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FILE_RECORD_FLAG Flags;                  // Flags
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Deleted;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Directory;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int RealSize;                  // Real size of the FILE record
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int AllocatedSize;             // Allocated size of the FILE record
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong ReferenceToBase;          // File reference to the base FILE record
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort NextAttrId;             // Next Attribute Id
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RecordNumber;              // Index number of this MFT Record
 
+
         // Attribute Array
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FileRecordAttribute[] Attribute;
 
+
         // $STANDARD_INFORMATION
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModifiedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ChangedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BornTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly StandardInformation.ATTR_STDINFO_PERMISSION Permission;
 
+
         // $FILE_NAME
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FullName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ParentSequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong ParentRecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime FNModifiedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime FNAccessedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime FNChangedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime FNBornTime;
 
         #endregion Properties
@@ -355,7 +486,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         #region GetInstances
 
@@ -609,9 +740,9 @@ namespace PowerForensics.Ntfs
 
         #endregion GetContentBytesMethods
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         // TODO: Add Encoding parameter
         // TODO: Add DataStream parameter
@@ -896,9 +1027,9 @@ namespace PowerForensics.Ntfs
 
         #endregion ToStringOverride
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
 
-        #region PrivateMethods
+        #region Private Methods
 
         /// <summary>
         /// 
@@ -963,6 +1094,6 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        #endregion PrivateMethods
+        #endregion Private Methods
     }
 }

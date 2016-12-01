@@ -1,18 +1,22 @@
-﻿using System;
-
-namespace PowerForensics.Registry
+﻿namespace PowerForensics.Registry
 {
-    #region OffsetRecord
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class OffsetRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RelativeOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Hash;
 
         #endregion Properties
     }
-
-    #endregion OffsetRecord
 }

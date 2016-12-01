@@ -5,21 +5,61 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {   
-    #region NonResidentClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class NonResident : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string Volume;
-        internal CommonHeader commonHeader;	            // Common Header Object
-        internal ulong StartVCN;		                // Starting VCN
-        internal ulong LastVCN;		                    // Last VCN
-        internal ushort DataRunOffset;	                // Offset to the Data Runs
-        internal ushort CompUnitSize;	                // Compression unit size
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal CommonHeader commonHeader;             // Common Header Object
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal ulong StartVCN;                        // Starting VCN
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal ulong LastVCN;                         // Last VCN
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal ushort DataRunOffset;                  // Offset to the Data Runs
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal ushort CompUnitSize;                   // Compression unit size
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong AllocatedSize;            // Allocated size of the attribute
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong RealSize;                 // Real size of the attribute
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong InitializedSize;          // Initialized data size of the stream 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DataRun[] DataRun;
 
         #endregion Properties
@@ -53,12 +93,9 @@ namespace PowerForensics.Ntfs
 
         #region InstanceMethods
 
-        #region GetBytes
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="volume"></param>
         /// <returns></returns>
         public byte[] GetBytes()
         {
@@ -103,6 +140,10 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetBytesTest()
         {
             Helper.getVolumeName(ref this.Volume);
@@ -135,7 +176,6 @@ namespace PowerForensics.Ntfs
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="volume"></param>
         /// <param name="VBR"></param>
         /// <returns></returns>
         internal byte[] GetBytes(VolumeBootRecord VBR)
@@ -179,14 +219,9 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        #endregion GetBytes
-
-        #region GetSlack
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="volume"></param>
         /// <returns></returns>
         public byte[] GetSlack()
         {
@@ -219,10 +254,6 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        #endregion GetSlack
-
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
-
-    #endregion NonResidentClass
 }

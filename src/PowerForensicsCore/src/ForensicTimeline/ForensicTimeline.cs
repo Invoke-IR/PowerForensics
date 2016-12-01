@@ -9,18 +9,37 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Formats
 {
-    #region ForensicTimelineClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class ForensicTimeline
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ACTIVITY_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             m = 0x1,
+
+            /// <summary>
+            /// 
+            /// </summary>
             a = 0x2,
+
+            /// <summary>
+            /// 
+            /// </summary>
             c = 0x4,
+
+            /// <summary>
+            /// 
+            /// </summary>
             b = 0x8
         }
 
@@ -28,12 +47,39 @@ namespace PowerForensics.Formats
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime Date;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ActivityType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Source;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string SourceType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Description;
 
         #endregion Properties
@@ -52,8 +98,13 @@ namespace PowerForensics.Formats
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(string volume)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -163,6 +214,11 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] Get(DirectoryEntry input)
         {
             List<ForensicTimeline> macs = new List<ForensicTimeline>();
@@ -205,6 +261,11 @@ namespace PowerForensics.Formats
             return macs.ToArray();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static ForensicTimeline[] GetInstances(DirectoryEntry[] input)
         {
             List<ForensicTimeline> list = new List<ForensicTimeline>();
@@ -569,8 +630,6 @@ namespace PowerForensics.Formats
             return sb.ToString();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion ForensicTimelineClass
 }

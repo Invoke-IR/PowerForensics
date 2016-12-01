@@ -2,12 +2,16 @@
 
 namespace PowerForensics.Registry
 {
-    #region ValuesListClass
-    
+    /// <summary>
+    /// 
+    /// </summary>
     public class ValuesList : Cell
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint[] Offset;
 
         #endregion Properties
@@ -44,6 +48,4 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
     }
-
-    #endregion ValuesListClass
 }

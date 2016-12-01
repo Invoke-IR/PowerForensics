@@ -2,8 +2,6 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region NonResidentHeaderClass
-
     class NonResidentHeader
     {
         #region Properties
@@ -47,6 +45,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion NonResidentHeaderClass
 }

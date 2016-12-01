@@ -2,29 +2,67 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region VolumeInformationClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class VolumeInformation : FileRecordAttribute
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ATTR_VOLINFO
         {
-            FLAG_DIRTY = 0x0001,	// Dirty
-            FLAG_RLF = 0x0002,	    // Resize logfile
-            FLAG_UOM = 0x0004,	    // Upgrade on mount
-            FLAG_MONT = 0x0008,	    // Mounted on NT4
-            FLAG_DUSN = 0x0010,	    // Delete USN underway
-            FLAG_ROI = 0x0020,	    // Repair object Ids
-            FLAG_MBC = 0x8000	    // Modified by chkdsk
+            /// <summary>
+            /// Dirty
+            /// </summary>
+            FLAG_DIRTY = 0x0001,
+
+            /// <summary>
+            /// Resize logfile
+            /// </summary>
+            FLAG_RLF = 0x0002,
+
+            /// <summary>
+            /// Upgrade on mount
+            /// </summary>
+            FLAG_UOM = 0x0004,
+
+            /// <summary>
+            /// Mounted on NT4
+            /// </summary>
+            FLAG_MONT = 0x0008,
+
+            /// <summary>
+            /// Delete USN underway
+            /// </summary>
+            FLAG_DUSN = 0x0010,
+
+            /// <summary>
+            /// Repair object Ids
+            /// </summary>
+            FLAG_ROI = 0x0020,
+
+            /// <summary>
+            /// Modified by chkdsk
+            /// </summary>
+            FLAG_MBC = 0x8000 
         }
 
         #endregion Enums
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Version Version;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ATTR_VOLINFO Flags;
 
         #endregion Properties
@@ -45,7 +83,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -86,8 +124,6 @@ namespace PowerForensics.Ntfs
             throw new Exception("No VOLUME_INFORMATION attribute found.");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion VolumeInformationClass
 }

@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using PowerForensics.HFSPlus.BTree;
+﻿using PowerForensics.HFSPlus.BTree;
 
 namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AttributesFile
     {
+        #region Static Methods
+
         /// <summary>
         /// Returns the content of the HFS+ Attributes File.
         /// </summary>
@@ -47,5 +50,7 @@ namespace PowerForensics.HFSPlus
         {
             return Node.GetBytes(volumeName, "Attributes", nodeNumber);
         }
+
+        #endregion Static Methods
     }
 }

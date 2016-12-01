@@ -4,11 +4,21 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Fat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileAllocationTableEntry
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static int StartSector;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static int EndSector;
 
         #endregion Properties
@@ -23,8 +33,14 @@ namespace PowerForensics.Fat
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="sector"></param>
+        /// <returns></returns>
         public static FileAllocationTableEntry Get(string volume, int sector)
         {
             FatVolumeBootRecord vbr = VolumeBootRecord.Get(volume) as FatVolumeBootRecord;
@@ -48,17 +64,35 @@ namespace PowerForensics.Fat
             return new FileAllocationTableEntry(sector, endSector);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="sector"></param>
+        /// <returns></returns>
         private static int parseFat12(byte[] bytes, int sector)
         {
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="sector"></param>
+        /// <returns></returns>
         private static int parseFat16(byte[] bytes, int sector)
         {
 
             return 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="sector"></param>
+        /// <returns></returns>
         private static int parseFat32(byte[] bytes, int sector)
         {
             List<int> list = new List<int>();
@@ -71,6 +105,6 @@ namespace PowerForensics.Fat
             return 0;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

@@ -108,16 +108,36 @@ namespace PowerForensics.EventLog
         #endregion Constructors
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class EventRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string LogPath;
+
         internal readonly uint Signature;
         internal readonly uint Size;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong EventRecordId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime WriteTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BinaryXml EventData;
+
         internal readonly uint CopyOfSize;
 
         #endregion Properties
@@ -145,7 +165,7 @@ namespace PowerForensics.EventLog
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -225,9 +245,9 @@ namespace PowerForensics.EventLog
             return recordList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region OverrideMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -238,6 +258,6 @@ namespace PowerForensics.EventLog
             return String.Format("({0}) Record Number: {1} Log: {2}", this.EventData.EventId, this.EventRecordId, this.LogPath);
         }
 
-        #endregion OverrideMethods
+        #endregion Override Methods
     }
 }

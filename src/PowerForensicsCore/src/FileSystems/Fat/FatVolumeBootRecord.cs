@@ -1,33 +1,111 @@
 ﻿using System;
 using System.Text;
 using PowerForensics.Generic;
-using PowerForensics.Utilities;
 
 namespace PowerForensics.Fat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FatVolumeBootRecord : VolumeBootRecord
     {
         #region Properties
 
         //private readonly string Volume;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FatType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string BS_OEMName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte BPB_NumberOfFATs;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_RootEntryCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_TotalSector16;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly MEDIA_DESCRIPTOR BPB_Media;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_FatSize16;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BPB_TotalSector32;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BPB_FatSize32;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_ExtFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_FileSystemVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BPB_RootCluster;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_FileSytemInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort BPB_BackupBootSector;
-        public readonly byte BS_DriveNumber;     
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly byte BS_DriveNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte BS_BootSignature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BS_VolumeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string BS_VolumeLabel;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string BS_FileSystemType;
 
         #endregion Properties
@@ -87,8 +165,13 @@ namespace PowerForensics.Fat
 
         #endregion Constructors
 
-        #region HelperMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         private static string GetFatType(byte[] bytes)
         {
             ushort BPB_BytesPerSector = BitConverter.ToUInt16(bytes, 11);
@@ -143,6 +226,6 @@ namespace PowerForensics.Fat
 
         }
 
-        #endregion HelperMethods
+        #endregion Static Methods
     }
 }

@@ -4,21 +4,57 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region IndexEntryClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class IndexEntry
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ulong RecordNumber;       // Low 6B: MFT record index, High 2B: MFT record sequence number
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Directory;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal ushort Size;            // Length of the index entry
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal ushort StreamSize;      // Length of the stream
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal byte Flags;             // Flags
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal byte[] Stream;          // Stream
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal FileName Entry;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Filename;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName;
         
         #endregion Properties
@@ -66,7 +102,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -256,8 +292,6 @@ namespace PowerForensics.Ntfs
             return indexEntryList.ToArray();
         }
         
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion IndexEntryClass
 }

@@ -3,12 +3,16 @@ using System.Text;
 
 namespace PowerForensics.Registry
 {
-    #region HashedLeafClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class HashedLeaf : List
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint[] HashValue;
 
         #endregion Properties
@@ -58,6 +62,4 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
     }
-
-    #endregion HashedLeafClass
 }

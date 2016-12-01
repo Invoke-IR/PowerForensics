@@ -3,12 +3,16 @@ using System.Text;
 
 namespace PowerForensics.Ntfs
 {
-    #region VolumeNameClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class VolumeName : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string VolumeNameString;
 
         #endregion Properties
@@ -28,7 +32,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -69,8 +73,6 @@ namespace PowerForensics.Ntfs
             throw new Exception("No VOLUME_NAME attribute found.");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-    
-    #endregion VolumeNameClass
 }

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using PowerForensics.Artifacts;
-using PowerForensics.Ntfs;
-using PowerForensics.EventLog;
-using PowerForensics.Registry;
 
 namespace PowerForensics.Formats
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Gource
     {
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -47,6 +46,6 @@ namespace PowerForensics.Formats
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

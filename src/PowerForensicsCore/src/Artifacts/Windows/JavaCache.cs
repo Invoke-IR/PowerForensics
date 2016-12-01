@@ -4,22 +4,64 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class JavaCache
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastModified;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ExpirationDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ValidationTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Signed;
+
         private readonly ushort VersionLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Version;
+
         private readonly ushort UrlLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Url;
+
         private readonly ushort NamespaceLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Namespace;
+
         private readonly ushort CodebaseIpLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string CodebaseIp;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string[] HttpHeaders;
 
         #endregion Properties
@@ -83,7 +125,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -107,18 +149,12 @@ namespace PowerForensics.Artifacts
             return new JavaCache(bytes);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         private static string[] GetHttpHeaders(byte[] bytes, int offset)
         {
             return null;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
     internal class JavaCacheHeader
@@ -177,7 +213,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -189,6 +225,6 @@ namespace PowerForensics.Artifacts
             return new JavaCacheHeader(bytes);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

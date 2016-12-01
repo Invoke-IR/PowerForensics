@@ -3,9 +3,12 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Sid
     {
-        #region StaticMethods
+        #region Static Methods
         
         /// <summary>
         /// 
@@ -37,6 +40,6 @@ namespace PowerForensics.Artifacts
             }
         }
         
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

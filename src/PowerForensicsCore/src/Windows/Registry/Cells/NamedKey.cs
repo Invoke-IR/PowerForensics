@@ -4,20 +4,52 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Registry
 {
-    #region NamedKeyClass
+    /// <summary>
+    /// 
+    /// </summary>
     public class NamedKey : Cell
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum NAMED_KEY_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             VolatileKey = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MountPoint = 0x0002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             RootKey = 0x0004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Immutable = 0x0008,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SymbolicLink = 0x0010,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NameIsASCII = 0x0020,
+
+            /// <summary>
+            /// 
+            /// </summary>
             PredefinedHandle = 0x0040
         }
 
@@ -25,25 +57,104 @@ namespace PowerForensics.Registry
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string HivePath;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly NAMED_KEY_FLAGS Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime WriteTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly uint ParentKeyOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NumberOfSubKeys;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NumberOfVolatileSubKeys;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly int SubKeysListOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly int VolatileSubKeysListOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NumberOfValues;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly int ValuesListOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly int SecurityKeyOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly int ClassNameOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly uint LargestSubKeyNameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly uint LargestSubKeyClassNameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly uint LargestValueNameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly uint LargestValueDataSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly ushort KeyNameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly ushort ClassNameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FullName;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
 
         #endregion Properties
@@ -116,7 +227,7 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -292,9 +403,9 @@ namespace PowerForensics.Registry
             }
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -404,9 +515,9 @@ namespace PowerForensics.Registry
             return (new SecurityKey(Helper.GetSubArray(bytes, SecurityKeyOffset, Math.Abs(BitConverter.ToInt32(bytes, SecurityKeyOffset))))).Descriptor;
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
 
-        #region OverrideMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -417,8 +528,6 @@ namespace PowerForensics.Registry
             return string.Format("Registry key {0} last written to at {1} [{2}]", FullName, WriteTime, NumberOfValues);
         }
 
-        #endregion OverrideMethods
+        #endregion Override Methods
     }
-
-    #endregion NamedKeyClass
 }

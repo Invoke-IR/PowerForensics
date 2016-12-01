@@ -4,56 +4,217 @@ using PowerForensics.HFSPlus.BTree;
 
 namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CatalogFile
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum TEXT_ENCODING
         {
+            /// <summary>
+            /// 
+            /// </summary>
             MacRoman = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacJapanese = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacChineseTrad = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacKorean = 0x03,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacArabic = 0x04,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacHebrew = 0x05,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacGreek = 0x06,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacCyrillic = 0x07,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacDevanagari = 0x09,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacGurmukhi = 0x0A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacGujarati = 0x0B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacOriya = 0x0C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacBengali = 0x0D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacTamil = 0x0E,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacTelugu = 0x0F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacKannada = 0x10,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacMalayalam = 0x11,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacSinhales = 0x12,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacBurmese = 0x13,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacKhmer = 0x14,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacThai = 0x15,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacLaotian = 0x16,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacGeorgian = 0x17,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacArmenian = 0x18,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacChineseSimp = 0x19,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacTibetan = 0x1A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacMongolian = 0x1B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacEthiopic = 0x1C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacCentralEurRoman = 0x1D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacVietnamese = 0x1E,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacExtArabic = 0x1F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacSymbol = 0x21,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacDingbats = 0x22,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacTurkish = 0x23,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacCroatian = 0x24,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacIcelandic = 0x25,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacRomanian = 0x26,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacUkrainian = 0x30,
+
+            /// <summary>
+            /// 
+            /// </summary>
             MacFarsi = 0x31
         }
 
         #endregion Enums
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// Returns the contents of the HFS+ Catalog File.
@@ -133,25 +294,79 @@ namespace PowerForensics.HFSPlus
             return i;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class CatalogFolderRecord : DataRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ushort Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Valence;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CatalogNodeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CreateDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ContentModDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AttributeModDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BackupDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BSDInfo Permissions;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FolderInfo UserInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ExtendedFolderInfo FinderInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly CatalogFile.TEXT_ENCODING TextEncoding;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FolderCount;
 
         #endregion Properties
@@ -186,7 +401,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -201,19 +416,40 @@ namespace PowerForensics.HFSPlus
             return new CatalogFolderRecord(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class CatalogFileRecord : DataRecord
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum FILE_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSFileLockedBit = 0x0000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSFileLockedMask = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSThreadExistsBit = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSThreadExistsMask = 0x0002
         }
 
@@ -221,18 +457,69 @@ namespace PowerForensics.HFSPlus
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FILE_FLAGS Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CatalogNodeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime CreateDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ContentModDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AttributeModDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime AccessDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime BackupDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BSDInfo Permissions;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FileInfo UserInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ExtendedFileInfo FinderInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly CatalogFile.TEXT_ENCODING TextEncoding;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData DataFork;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ForkData ResourceFork;
 
         #endregion Properties
@@ -270,7 +557,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -285,9 +572,9 @@ namespace PowerForensics.HFSPlus
             return new CatalogFileRecord(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -307,14 +594,24 @@ namespace PowerForensics.HFSPlus
             return ResourceFork.GetContent();
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class CatalogThread : DataRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ParentId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string NodeName;
 
         #endregion Properties
@@ -338,7 +635,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -353,59 +650,188 @@ namespace PowerForensics.HFSPlus
             return new CatalogThread(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class BSDInfo
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ADMIN_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SF_ARCHIVED = 0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SF_IMMUTABLE = 1,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SF_APPEND = 2
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum OWNER_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             UF_NODUMP = 0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UF_IMMUTABLE = 1,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UF_APPEND = 2,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UF_OPAQUE = 3
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum FILE_MODE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             S_ISTXT = 0x200,       // sticky bit 512
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_ISGID = 0x400,       // set group id on execution 1024
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_ISUID = 0x800,       // set user id on execution 2048
 
+            /// <summary>
+            /// 
+            /// </summary>
             S_IXUSR = 0x40,        // X for owner 64
-            S_IWUSR = 0x80,        // W for owner 128
-            S_IRUSR = 0x100,       // R for owner 256
-            S_IRWXU = 0x1C0,       // RWX mask for owner 448
 
+            /// <summary>
+            /// 
+            /// </summary>
+            S_IWUSR = 0x80,        // W for owner 128
+
+            /// <summary>
+            /// 
+            /// </summary>
+            S_IRUSR = 0x100,       // R for owner 256
+
+            /// <summary>
+            /// 
+            /// </summary>
+            S_IRWXU = 0x1C0,       // RWX mask for owner 448
+            
+            /// <summary>
+            /// 
+            /// </summary>
             S_IXGRP = 0x008,       // X for group 8
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IWGRP = 0x010,       // W for group 16
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IRGRP = 0x020,       // R for group 32
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IRWXG = 0x038,       // RWX mask for group 56
 
+            /// <summary>
+            /// 
+            /// </summary>
             S_IXOTH = 0x001,       // X for other 1
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IWOTH = 0x002,       // W for other 2
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IROTH = 0x004,       // R for other 4
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IRWXO = 0x007,       // RWX mask for other 7
 
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFIFO = 0x1000,      // named pipe (fifo) 4096
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFCHR = 0x2000,      // character special 8192
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFDIR = 0x4000,      // directory 16384
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFBLK = 0x6000,      // block special 24576
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFREG = 0x8000,      // regular 32768
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFLNK = 0xA0000,     // symbolic link 40960
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFSOCK = 0xC000,     // socket 49152
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFWHT = 0xE000,      // whiteout 57344
+
+            /// <summary>
+            /// 
+            /// </summary>
             S_IFMT = 0xF000,       // type of file mask 61440
         }
 
@@ -413,11 +839,34 @@ namespace PowerForensics.HFSPlus
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint OwnerID;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint GroupID;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ADMIN_FLAGS AdminFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly OWNER_FLAGS OwnerFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly FILE_MODE FileMode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Special;
 
         #endregion Properties
@@ -436,7 +885,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -449,9 +898,9 @@ namespace PowerForensics.HFSPlus
             return new BSDInfo(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region OverrideMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -462,14 +911,25 @@ namespace PowerForensics.HFSPlus
             return base.ToString();
         }
 
-        #endregion OverrideMethods
+        #endregion Override Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Point
     {
         #region Properties
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Vertical;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Horizontal;
 
         #endregion Properties
@@ -484,7 +944,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -497,16 +957,34 @@ namespace PowerForensics.HFSPlus
             return new Point(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Rect
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Top;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Left;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Bottom;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short Right;
 
         #endregion Properties
@@ -523,7 +1001,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -536,17 +1014,39 @@ namespace PowerForensics.HFSPlus
             return new Rect(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileInfo
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FileType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FileCreator;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort FinderFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Point Location;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ReservedField;
 
         #endregion Properties
@@ -564,7 +1064,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -577,14 +1077,24 @@ namespace PowerForensics.HFSPlus
             return new FileInfo(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExtendedFileInfo
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ExtendedFinderFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int PutAwayFolderID;
 
         #endregion Properties
@@ -599,7 +1109,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -612,15 +1122,29 @@ namespace PowerForensics.HFSPlus
             return new ExtendedFileInfo(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class FolderInfo
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Rect WindowBounds;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort FinderFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Point Location;
 
         #endregion Properties
@@ -636,7 +1160,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -649,15 +1173,29 @@ namespace PowerForensics.HFSPlus
             return new FolderInfo(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExtendedFolderInfo
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Point ScrollPosition;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort ExtendedFinderFlags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int PutAwayFolderID;
 
         #endregion Properties
@@ -673,7 +1211,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -686,6 +1224,6 @@ namespace PowerForensics.HFSPlus
             return new ExtendedFolderInfo(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

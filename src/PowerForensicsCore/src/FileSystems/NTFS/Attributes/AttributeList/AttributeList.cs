@@ -2,12 +2,16 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region AttributeListClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class AttributeList : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly AttrRef[] AttributeReference;
 
         #endregion Properties
@@ -67,6 +71,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion AttributeListClass
 }

@@ -4,14 +4,36 @@ using PowerForensics.Utilities;
 
 namespace PowerForensics.Fat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileSystemInformation
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly uint FSI_LeadSig;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly uint FSI_StrucSig;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FSI_Free_Count;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FSI_Nxt_Free;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly uint FSI_TrailSig;
 
         #endregion Properties
@@ -33,14 +55,19 @@ namespace PowerForensics.Fat
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static FileSystemInformation Get(string volume)
         {
             FatVolumeBootRecord vbr = VolumeBootRecord.Get(volume) as FatVolumeBootRecord;
             return new FileSystemInformation(DD.Get(volume, (vbr.BytesPerSector * vbr.BPB_FileSytemInfo), vbr.BytesPerSector, 1));
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

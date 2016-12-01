@@ -5,8 +5,9 @@ using PowerForensics.Utilities;
 
 namespace PowerForensics
 {
-    #region MasterBootRecordClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class MasterBootRecord
     {
         #region MbrSignatures
@@ -31,9 +32,24 @@ namespace PowerForensics
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string DiskSignature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] CodeSection;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string MbrSignature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly PartitionEntry[] PartitionTable;
 
         #endregion Properties
@@ -50,7 +66,7 @@ namespace PowerForensics
 
         #endregion Constructor
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -73,15 +89,10 @@ namespace PowerForensics
             return new MasterBootRecord(MasterBootRecord.GetBytes(drivePath), drivePath);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region PrivateMethods
+        #region Private Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static string GetMbrSignature(byte[] bytes)
         {
             /*switch (Hash.Get(bytes, bytes.Length, "MD5"))
@@ -159,9 +170,9 @@ namespace PowerForensics
             return pList.ToArray();
         }
 
-        #endregion PrivateMethods
+        #endregion Private Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -172,15 +183,21 @@ namespace PowerForensics
             return this.PartitionTable;
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
-    #endregion MasterBootRecordClass
-
-    #region PartitionEntryClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class PartitionEntry
     {
+        #region Constants
+
+        private const byte BOOTABLE = 0x80;
+        private const byte NON_BOOTABLE = 0x00;
+
+        #endregion Constants
+
         #region Enums
 
         enum PARTITION_TYPE
@@ -226,28 +243,38 @@ namespace PowerForensics
 
         #endregion Enums
 
-        #region Constants
-
-        private const byte BOOTABLE = 0x80;
-        private const byte NON_BOOTABLE = 0x00;
-
-        #endregion Constants
-
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Bootable;
+
         internal readonly byte startingHeadNumber;
         internal readonly byte startingSectorNumber;
         internal readonly byte startingCylinderHigh2;
         internal readonly byte startingCylinderLow8;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string SystemId;
+
         internal readonly byte endingHeadNumber;
         internal readonly byte endingSectorNumber;
         internal readonly byte endingCylinderHigh2;
         internal readonly byte endingCylinderHigh8;
         internal readonly uint RelativeSector;
         internal readonly uint TotalSectors;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint StartSector;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint EndSector;
 
         #endregion Properties
@@ -274,6 +301,4 @@ namespace PowerForensics
 
         #endregion Constructors
     }
-
-    #endregion PartitionEntryClass
 }

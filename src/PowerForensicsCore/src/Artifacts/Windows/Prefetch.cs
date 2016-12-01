@@ -2,14 +2,14 @@
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using PowerForensics;
 using PowerForensics.Generic;
 using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
 {
-    #region PrefetchClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Prefetch
     {
         #region Constants
@@ -20,18 +20,50 @@ namespace PowerForensics.Artifacts
 
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PREFETCH_ENABLED
         {
+            /// <summary>
+            /// 
+            /// </summary>
             DISABLED = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             APPLICATION = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BOOT = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             APPLICATION_BOOT = 0x03
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum PREFETCH_VERSION
         {
+            /// <summary>
+            /// 
+            /// </summary>
             WINDOWS_8 = 0x1A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             WINDOWS_7 = 0x17,
+
+            /// <summary>
+            /// 
+            /// </summary>
             WINDOWS_XP = 0x11
         }
 
@@ -39,18 +71,54 @@ namespace PowerForensics.Artifacts
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly PREFETCH_VERSION Version;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
     //        public string MD5
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string PathHash;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int DependencyCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime[] PrefetchAccessTime;
-    //        public readonly DateTime PrefetchBornTime;
-    //        public readonly string ProgramBornTime;
-    //        public readonly string ProgramChangeTime;
+        
+        //        public readonly DateTime PrefetchBornTime;
+        //        public readonly string ProgramBornTime;
+        //        public readonly string ProgramChangeTime;
+    
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int DeviceCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int RunCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string[] DependencyFiles;
 
         #endregion Properties
@@ -157,9 +225,7 @@ namespace PowerForensics.Artifacts
         
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -228,10 +294,6 @@ namespace PowerForensics.Artifacts
                 throw new FileNotFoundException((filePath + " does not exist.  Please enter a valid file path."));
             }
         }
-
-        #endregion GetMethods
-
-        #region GetInstancesMethods
 
         /// <summary>
         /// 
@@ -350,10 +412,8 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        #endregion GetInstancesMethods
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -364,9 +424,9 @@ namespace PowerForensics.Artifacts
             return (PREFETCH_ENABLED)BitConverter.ToInt32((byte[])vk.GetData(bytes), 0x00);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Override Methods
 
         /// <summary>
         /// 
@@ -377,8 +437,6 @@ namespace PowerForensics.Artifacts
             return String.Format("[PROGRAM EXECUTION] Prefetch {0} was executed - run count {1} - path {2}", this.Name, this.RunCount, this.Path);
         }
 
-        #endregion InstanceMethods
+        #endregion Override Methods
     }
-
-    #endregion PrefetchClass
 }

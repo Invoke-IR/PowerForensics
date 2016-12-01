@@ -2,15 +2,31 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region UsnJrnlInformationClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class UsnJrnlInformation
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ulong MaxSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ulong AllocationDelta;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ulong UsnId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ulong LowestUsn;
 
         #endregion Properties
@@ -27,9 +43,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetMethod
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -53,10 +67,6 @@ namespace PowerForensics.Ntfs
             return new UsnJrnlInformation(record.GetContent(@"$Max"));
         }
 
-        #endregion GetMethod
-
-        #region GetBytesMethod
-
         /// <summary>
         /// 
         /// </summary>
@@ -79,10 +89,6 @@ namespace PowerForensics.Ntfs
             return record.GetContent(@"$Max");
         }
 
-        #endregion GetBytesMethod
-
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion UsnJrnlInformationClass
 }

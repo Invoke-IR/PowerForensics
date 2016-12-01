@@ -4,13 +4,21 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region BitmapClass
-    
+    /// <summary>
+    /// 
+    /// </summary>
     public class Bitmap
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public long Cluster;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool InUse;
         
         #endregion Properties
@@ -25,9 +33,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -133,10 +139,6 @@ namespace PowerForensics.Ntfs
             return new Bitmap(cluster, inUse);
         }
 
-        #endregion GetMethods
-
-        #region GetInstancesMethods
-
         /// <summary>
         /// 
         /// </summary>
@@ -221,8 +223,6 @@ namespace PowerForensics.Ntfs
             return bitmapArray;
         }
 
-        #endregion GetInstancesMethods
-
         /// <summary>
         /// 
         /// </summary>
@@ -240,8 +240,6 @@ namespace PowerForensics.Ntfs
             throw new Exception("No DATA attribute found.");
         }
         
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion BitmapClass
 }

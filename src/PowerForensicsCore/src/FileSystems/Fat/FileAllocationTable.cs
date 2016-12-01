@@ -4,15 +4,29 @@ using PowerForensics.Utilities;
 
 namespace PowerForensics.Fat
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileAllocationTable
     {
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static byte[] GetBytes(string volume)
         {
             return GetBytes(volume, VolumeBootRecord.Get(volume) as FatVolumeBootRecord);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <param name="vbr"></param>
+        /// <returns></returns>
         internal static byte[] GetBytes(string volume, FatVolumeBootRecord vbr)
         {
             long DirectoryEntryOffset = vbr.ReservedSectors * vbr.BytesPerSector;
@@ -20,6 +34,6 @@ namespace PowerForensics.Fat
             return null;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

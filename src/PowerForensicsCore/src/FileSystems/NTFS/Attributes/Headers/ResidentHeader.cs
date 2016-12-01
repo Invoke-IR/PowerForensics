@@ -2,15 +2,28 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region ResidentHeaderClass
-
     class ResidentHeader
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal CommonHeader commonHeader;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal uint AttrSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal ushort AttrOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal byte IndexedFlag;
 
         #endregion Properties
@@ -35,6 +48,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion ResidentHeaderClass
 }

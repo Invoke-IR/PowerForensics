@@ -4,15 +4,36 @@ using System.Collections.Generic;
 
 namespace PowerForensics.HFSPlus.BTree
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Node
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly uint NodeNumber;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public NodeDescriptor NodeDescriptor;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Record[] Records;
 
         #endregion Properties
@@ -84,7 +105,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -228,9 +249,9 @@ namespace PowerForensics.HFSPlus.BTree
             return null;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /*public byte[] GetSlack()
         {
@@ -251,18 +272,39 @@ namespace PowerForensics.HFSPlus.BTree
             return Helper.GetSubArray(bytes, freespaceOffset, freespaceLength);
         }*/
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class NodeDescriptor
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum NODE_KIND
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kBTLeafNode = -1,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kBTIndexNode = 0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kBTHeaderNode = 1,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kBTMapNode = 2
         }
 
@@ -270,13 +312,39 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string FileName;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint fLink;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint bLink;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly NODE_KIND Kind;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte Height;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort NumRecords;
 
         #endregion Properties
@@ -297,7 +365,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -312,9 +380,9 @@ namespace PowerForensics.HFSPlus.BTree
             return new NodeDescriptor(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -348,36 +416,80 @@ namespace PowerForensics.HFSPlus.BTree
             }
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Record
     {
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class HeaderRecord : Record
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum BTREE_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSBTreeType = 0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kUserBTreeType = 128,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kReservedBTreeType = 255
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum BTREE_KEYCOMPARE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSBinaryCompare = 0xBC, //Case Sensitive
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSCaseFolding = 0xCF //Case-Insensitive
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum BTREE_ATTRIBUTE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kBTBadCloseMask = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kBTBigKeysMask = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kBTVariableIndexKeysMask = 0x00000004
         }
 
@@ -385,20 +497,79 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort TreeDepth;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RootNode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint LeafRecords;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FirstLeafNode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint LastLeafNode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort NodeSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort MaxKeyLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TotalNodes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint FreeNodes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClumpSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BTREE_TYPE BTreeType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BTREE_KEYCOMPARE KeyCompareType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BTREE_ATTRIBUTE Attributes;
 
         #endregion Properties
@@ -426,7 +597,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -441,9 +612,9 @@ namespace PowerForensics.HFSPlus.BTree
             return new HeaderRecord(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -472,13 +643,19 @@ namespace PowerForensics.HFSPlus.BTree
             return Node.Get(VolumeName, FileName, LastLeafNode);
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserDataRecord : Record
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] UserData;
 
         #endregion Properties
@@ -492,7 +669,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -505,27 +682,52 @@ namespace PowerForensics.HFSPlus.BTree
             return new UserDataRecord(bytes, offset);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class MapRecord : Record
     {
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class KeyedRecord : Record
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal string FileName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal ushort KeyLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public uint ParentCatalogNodeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name;
 
         #endregion Properties
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -539,13 +741,19 @@ namespace PowerForensics.HFSPlus.BTree
             return Encoding.BigEndianUnicode.GetString(bytes, offset + 0x02, length * 2);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class PointerRecord : KeyedRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NodeNumber;
 
         #endregion Properties
@@ -564,7 +772,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -579,9 +787,9 @@ namespace PowerForensics.HFSPlus.BTree
             return new PointerRecord(bytes, offset, volumeName, fileName);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -592,27 +800,66 @@ namespace PowerForensics.HFSPlus.BTree
             return Node.Get(VolumeName, FileName, NodeNumber);
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class DataRecord : KeyedRecord
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum RECORD_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSPlusFolderRecord = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSPlusFileRecord = 0x0002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSPlusFolderThreadRecord = 0x0003,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSPlusFileThreadRecord = 0x0004
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum RECORD_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSFileLockedBit = 0x0000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSFileLockedMask = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSThreadExistsBit = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             kHFSThreadExistsMask = 0x0002
         }
 
@@ -620,6 +867,9 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public RECORD_TYPE RecordType;
 
         #endregion Properties
@@ -638,7 +888,7 @@ namespace PowerForensics.HFSPlus.BTree
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /*internal static DataRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
@@ -657,6 +907,6 @@ namespace PowerForensics.HFSPlus.BTree
             return (RECORD_TYPE)Helper.SwapEndianness(BitConverter.ToUInt16(bytes, offset + keyLength + 0x02));
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

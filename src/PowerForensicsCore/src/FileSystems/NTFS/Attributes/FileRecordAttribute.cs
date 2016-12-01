@@ -4,8 +4,9 @@ using System.Text;
 
 namespace PowerForensics.Ntfs
 {
-    #region AttrClass
-    
+    /// <summary>
+    /// 
+    /// </summary>
     public class FileRecordAttribute
     {
         #region Constants
@@ -18,26 +19,101 @@ namespace PowerForensics.Ntfs
 
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum ATTR_TYPE
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
             STANDARD_INFORMATION = 0x10,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTRIBUTE_LIST = 0x20,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FILE_NAME = 0x30,
+
+            /// <summary>
+            /// 
+            /// </summary>
             OBJECT_ID = 0x40,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SECURITY_DESCRIPTOR = 0x50,
+
+            /// <summary>
+            /// 
+            /// </summary>
             VOLUME_NAME = 0x60,
+
+            /// <summary>
+            /// 
+            /// </summary>
             VOLUME_INFORMATION = 0x70,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DATA = 0x80,
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEX_ROOT = 0x90,
+
+            /// <summary>
+            /// 
+            /// </summary>
             INDEX_ALLOCATION = 0xA0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BITMAP = 0xB0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REPARSE_POINT = 0xC0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EA_INFORMATION = 0xD0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EA = 0xE0,
+
+            /// <summary>
+            /// 
+            /// </summary>
             LOGGED_UTILITY_STREAM = 0x100,
 
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_FLAG_COMPRESSED = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_FLAG_ENCRYPTED = 0x4000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ATTR_FLAG_SPARSE = 0x8000
         }
 
@@ -45,15 +121,34 @@ namespace PowerForensics.Ntfs
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ATTR_TYPE Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string NameString;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal bool NonResident;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ushort AttributeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal int AttributeSize;
 
         #endregion Properties
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -203,8 +298,6 @@ namespace PowerForensics.Ntfs
             #endregion ResidentAttribute
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion AttrClass
 }

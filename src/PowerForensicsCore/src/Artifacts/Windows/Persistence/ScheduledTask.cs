@@ -3,15 +3,31 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
 {
-    #region ScheduledTask
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class ScheduledTask
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Path;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Author;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Description;
 
         #endregion Properties
@@ -37,11 +53,6 @@ namespace PowerForensics.Artifacts
             return Get(FileRecord.Get(path, true).GetContent());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static ScheduledTask Get(byte[] bytes)
         {
             return new ScheduledTask(Encoding.Unicode.GetString(bytes));
@@ -60,6 +71,4 @@ namespace PowerForensics.Artifacts
 
         #endregion StaticMethods
     }
-
-    #endregion ScheduledTask
 }

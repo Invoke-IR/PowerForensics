@@ -3,85 +3,348 @@ using System.Text;
 
 namespace PowerForensics.EventLog
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BinaryXml
     {
         #region Enums
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public enum TOKEN_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenEOF = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenOpenStartElementTag = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenCloseStartElementTag = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenCloseEmptyElementTag = 0x03,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenEndElementTag = 0x04,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenValue = 0x05,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenAttribute = 0x06,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenCDATASection = 0x07,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenCharRef = 0x08,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenEntityRef = 0x09,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenPITarget = 0x0A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenPIData = 0x0B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenTemplateInstance = 0x0C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenNormalSubstitution = 0x0D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenOptionalSubstitution = 0x0E,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlFragmentHeaderToken = 0x0F,
 
             // Need to differentiate these
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenOpenStartElementTag_AttributeList = 0x41,
             //BinXmlTokenValue = 0x45,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlTokenAttribute_Additional = 0x46,
             //BinXmlTokenCDATASection = 0x47,
             //BinXmlTokenCharRef = 0x48,
             //BinXmlTokenEntityRef = 0x49
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum VALUE_TYPE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             NullType = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             StringType = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             AnsiStringType = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int8Type = 0x03,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt8Type = 0x04,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int16Type = 0x05,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt16Type = 0x06,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int32Type = 0x07,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt32Type = 0x08,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int64Type = 0x09,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt64Type = 0x0A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Real32Type = 0x0B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Real64Type = 0x0C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BoolType = 0x0D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinaryType = 0x0E,
+
+            /// <summary>
+            /// 
+            /// </summary>
             GuidType = 0x0F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SizeTType = 0x10,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FileTimeType = 0x11,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SysTimeType = 0x12,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SidType = 0x13,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HexInt32Type = 0x14,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HexInt64Type = 0x15,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EvtHandle = 0x20,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinXmlType = 0x21,
+
+            /// <summary>
+            /// 
+            /// </summary>
             EvtXml = 0x23,
+
+            /// <summary>
+            /// 
+            /// </summary>
             StringType_Array = 0x81,
+
+            /// <summary>
+            /// 
+            /// </summary>
             AnsiStringType_Array = 0x82,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int8Type_Array = 0x83,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt8Type_Array = 0x84,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int16Type_Array = 0x85,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt16Type_Array = 0x86,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int32Type_Array = 0x87,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt32Type_Array = 0x88,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Int64Type_Array = 0x89,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UInt64Type_Array = 0x8A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Real32Type_Array = 0x8B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             Real64Type_Array = 0x8C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BoolType_Array = 0x8D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             BinaryType_Array = 0x8E,
+
+            /// <summary>
+            /// 
+            /// </summary>
             GuidType_Array = 0x8F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SizeTType_Array = 0x90,
+
+            /// <summary>
+            /// 
+            /// </summary>
             FileTimeType_Array = 0x91,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SysTimeType_Array = 0x92,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SidType_Array = 0x93,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HexInt32Type_Array = 0x94,
+
+            /// <summary>
+            /// 
+            /// </summary>
             HexInt64Type_Array = 0x95
         }
 
@@ -89,21 +352,84 @@ namespace PowerForensics.EventLog
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly BinXmlTemplateInstance TemplateInstance;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object ProviderName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Guid;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object EventId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Verson;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Level;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Task;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Opcode;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Keywords;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object TimeCreated;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object EventRecordId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object ActivityId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object ProcessId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object ThreadId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Channel;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object UserId;
 
         #endregion Properties
@@ -131,7 +457,9 @@ namespace PowerForensics.EventLog
         }
 
         #endregion Constructors
- 
+
+        #region Override Methods
+
         /// <summary>
         /// 
         /// </summary>
@@ -140,6 +468,8 @@ namespace PowerForensics.EventLog
         {
             return String.Format("EventId: {0}", EventId);
         }
+
+        #endregion Override Methods
     }
 
     class BinXmlTemplateInstance
@@ -455,6 +785,9 @@ namespace PowerForensics.EventLog
     }
 
     // Not Done
+    /// <summary>
+    /// 
+    /// </summary>
     public class BinXmlAttributeList
     {
         #region Properties
@@ -487,12 +820,26 @@ namespace PowerForensics.EventLog
     }
 
     // Not Done
+    /// <summary>
+    /// 
+    /// </summary>
     public class BinXmlAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BinaryXml.TOKEN_TYPE Token;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly int AttributeNameOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BinXmlName Name;
 
         #endregion Properties
@@ -509,13 +856,27 @@ namespace PowerForensics.EventLog
         #endregion Constructors
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class BinXmlName
     {
+        #region Constants
+
         internal const int HeaderSize = 0x08;
+
+        #endregion Constants
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly short NameSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
         
         #endregion Properties
@@ -530,6 +891,8 @@ namespace PowerForensics.EventLog
 
         #endregion Constructors
 
+        #region Override Methods
+
         /// <summary>
         /// 
         /// </summary>
@@ -538,14 +901,30 @@ namespace PowerForensics.EventLog
         {
             return Name;
         }
+
+        #endregion Override Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class BinXmlValueText
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BinaryXml.TOKEN_TYPE ValueToken;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly BinaryXml.VALUE_TYPE ValueType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ValueData;
 
         #endregion Properties

@@ -4,11 +4,12 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Registry
 {
-    #region HelperClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class RegistryHelper
     {
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -37,12 +38,6 @@ namespace PowerForensics.Registry
             return new NamedKey(Helper.GetSubArray(bytes, offset, size), path, "");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
         internal static NamedKey GetRootKey(byte[] bytes, string path)
         {
             #region RegistryHeader
@@ -57,12 +52,6 @@ namespace PowerForensics.Registry
             return new NamedKey(Helper.GetSubArray(bytes, offset, size), path, "");
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hivePath"></param>
-        /// <param name="hivetype"></param>
-        /// <returns></returns>
         internal static bool isCorrectHive(string hivePath, string hivetype)
         {
             if (RegistryHeader.Get(hivePath).HivePath.ToUpper().Contains(hivetype))
@@ -75,21 +64,11 @@ namespace PowerForensics.Registry
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hivePath"></param>
-        /// <returns></returns>
         internal static string GetUserHiveOwner(string hivePath)
         {
             return hivePath.Split('\\')[2];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static string[] GetUserHiveInstances(string volume)
         {
             List<string> userHiveList = new List<string>();
@@ -127,12 +106,6 @@ namespace PowerForensics.Registry
             return userHiveList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="hivePath"></param>
-        /// <returns></returns>
         internal static string GetOfficeVersion(byte[] bytes, string hivePath)
         {
             NamedKey OfficeKey = null;
@@ -160,12 +133,6 @@ namespace PowerForensics.Registry
             throw new Exception("Could not locate the Microsoft Office registry key");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
         internal static NamedKey GetOfficeKey(byte[] bytes, string path)
         {
             string key = @"Software\Microsoft\Office";
@@ -195,8 +162,6 @@ namespace PowerForensics.Registry
             throw new Exception("Could not locate the Microsoft Office registry key");
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion HelperClass
 }

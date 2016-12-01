@@ -2,6 +2,9 @@
 
 namespace PowerForensics.Ntfs
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class EA : FileRecordAttribute
     {
         #region Properties

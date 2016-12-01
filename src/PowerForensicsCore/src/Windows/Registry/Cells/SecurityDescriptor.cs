@@ -2,28 +2,87 @@
 
 namespace PowerForensics.Registry
 {
-    #region SecurityDescriptorClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class SecurityDescriptor
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum SECURITY_KEY_CONTROLS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             SeOwnerDefaulted = 0x0001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeGroupDefaulted = 0x0002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeDaclPresent = 0x0004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeDaclDefaulted = 0x0008,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSaclPresent = 0x0010,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSaclDefaulted = 0x0020,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeDaclAutoInheritReq = 0x0100,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSaclAutoInheritReq = 0x0200,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeDaclAutoInherited = 0x0400,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSaclAutoInherited = 0x0800,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeDaclProtected = 0x1000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSaclProtected = 0x2000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeRmControlValid = 0x4000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SeSelfRelative = 0x8000,
         }
 
@@ -31,14 +90,34 @@ namespace PowerForensics.Registry
         
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly SECURITY_KEY_CONTROLS Control;
+
         internal readonly uint OwnerOffset;
         internal readonly uint GroupOffset;
         internal readonly uint SACLOffset;
         internal readonly uint DACLOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] Owner;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] Group;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] SACL;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] DACL;
 
         #endregion Properties
@@ -60,6 +139,4 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
     }
-    
-    #endregion SecurityDescriptorClass
 }

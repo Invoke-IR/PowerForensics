@@ -1,0 +1,60 @@
+site_name: PowerForensics
+repo_url: https://github.com/Invoke-IR/PowerForensics
+site_favicon: favicon.ico
+pages:
+- Home: '/README.md'
+- PowerShell Module:
+    - Installation: moduleinstall.md
+    - Cmdlets:
+        - Copy-ForensicFile: '/Modules/PowerForensics/docs/Copy-ForensicFile.md'
+        - Get-ForensicAlternateDataStream: '/Modules/PowerForensics/docs/Get-ForensicAlternateDataStream.md'
+        - Get-ForensicAmcache: '/Modules/PowerForensics/docs/Get-ForensicAmcache.md'
+        - Get-ForensicAttrDef: '/Modules/PowerForensics/docs/Get-ForensicAttrDef.md'
+        - Get-ForensicBitmap: '/Modules/PowerForensics/docs/Get-ForensicBitmap.md'
+        - Get-ForensicBootSector: '/Modules/PowerForensics/docs/Get-ForensicBootSector.md'
+        - Get-ForensicChildItem: '/Modules/PowerForensics/docs/Get-ForensicChildItem.md'
+        - Get-ForensicContent: '/Modules/PowerForensics/docs/Get-ForensicContent.md'
+        - Get-ForensicEventLog: '/Modules/PowerForensics/docs/Get-ForensicEventLog.md'
+        - Get-ForensicExplorerTypedPath: '/Modules/PowerForensics/docs/Get-ForensicExplorerTypedPath.md'
+        - Get-ForensicFileRecord: '/Modules/PowerForensics/docs/Get-ForensicFileRecord.md'
+        - Get-ForensicFileRecordIndex: '/Modules/PowerForensics/docs/Get-ForensicFileRecordIndex.md'
+        - Get-ForensicFileSlack: '/Modules/PowerForensics/docs/Get-ForensicFileSlack.md'
+        - Get-ForensicGuidPartitionTable: '/Modules/PowerForensics/docs/Get-ForensicGuidPartitionTable.md'
+        - Get-ForensicMasterBootRecord: '/Modules/PowerForensics/docs/Get-ForensicMasterBootRecord.md'
+        - Get-ForensicMftSlack: '/Modules/PowerForensics/docs/Get-ForensicMftSlack.md'
+        - Get-ForensicNetworkList: '/Modules/PowerForensics/docs/Get-ForensicNetworkList.md'
+        - Get-ForensicOfficeFileMru: '/Modules/PowerForensics/docs/Get-ForensicOfficeFileMru.md'
+        - Get-ForensicOfficeOutlookCatalog: '/Modules/PowerForensics/docs/Get-ForensicOfficeOutlookCatalog.md'
+        - Get-ForensicOfficeTrustRecord: '/Modules/PowerForensics/docs/Get-ForensicOfficeTrustRecord.md'
+        - Get-ForensicPartitionTable: '/Modules/PowerForensics/docs/Get-ForensicPartitionTable.md'
+        - Get-ForensicPrefetch: '/Modules/PowerForensics/docs/Get-ForensicPrefetch.md'
+        - Get-ForensicRecentFileCache: '/Modules/PowerForensics/docs/Get-ForensicRecentFileCache.md'
+        - Get-ForensicRegistryKey: '/Modules/PowerForensics/docs/Get-ForensicRegistryKey.md'
+        - Get-ForensicRegistryValue: '/Modules/PowerForensics/docs/Get-ForensicRegistryValue.md'
+        - Get-ForensicRunKey: '/Modules/PowerForensics/docs/Get-ForensicRunKey.md'
+        - Get-ForensicRunMru: '/Modules/PowerForensics/docs/Get-ForensicRunMru.md'
+        - Get-ForensicScheduledJob: '/Modules/PowerForensics/docs/Get-ForensicScheduledJob.md'
+        - Get-ForensicShellLink: '/Modules/PowerForensics/docs/Get-ForensicShellLink.md'
+        - Get-ForensicShimcache: '/Modules/PowerForensics/docs/Get-ForensicShimcache.md'
+        - Get-ForensicSid: '/Modules/PowerForensics/docs/Get-ForensicSid.md'
+        - Get-ForensicTimeline: '/Modules/PowerForensics/docs/Get-ForensicTimeline.md'
+        - Get-ForensicTimezone: '/Modules/PowerForensics/docs/Get-ForensicTimezone.md'
+        - Get-ForensicTypedUrl: '/Modules/PowerForensics/docs/Get-ForensicTypedUrl.md'
+        - Get-ForensicUnallocatedSpace: '/Modules/PowerForensics/docs/Get-ForensicUnallocatedSpace.md'
+        - Get-ForensicUserAssist: '/Modules/PowerForensics/docs/Get-ForensicUserAssist.md'
+        - Get-ForensicUsnJnrl: '/Modules/PowerForensics/docs/Get-ForensicUsnJnrl.md'
+        - Get-ForensicUsnJnrlInformation: '/Modules/PowerForensics/docs/Get-ForensicUsnJnrlInformation.md'
+        - Get-ForensicVolumeBootRecord: '/Modules/PowerForensics/docs/Get-ForensicVolumeBootRecord.md'
+        - Get-ForensicVolumeInformation: '/Modules/PowerForensics/docs/Get-ForensicVolumeInformation.md'
+        - Get-ForensicVolumeName: '/Modules/PowerForensics/docs/Get-ForensicVolumeName.md'
+        - Get-ForensicWindowsSearchHistory: '/Modules/PowerForensics/docs/Get-ForensicWindowsSearchHistory.md'
+        - Invoke-ForensicDD: '/Modules/PowerForensics/docs/Invoke-ForensicDD.md'
+- Development:
+    - .NET Library: library.md
+    - C# Source Code:
+        - PowerForensics:
+        - PowerForensicsCore:
+- About:
+    - Release Notes:
+    - Contributing: 
+    - License: '/LICENSE.md'

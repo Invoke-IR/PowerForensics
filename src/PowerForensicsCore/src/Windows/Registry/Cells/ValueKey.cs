@@ -7,32 +7,93 @@ namespace PowerForensics.Registry
     //TODO: Determine if Data is Resident or NonResident
     //TODO: Get Data Buffer
     //TODO: Interpret Data based on Data Type
-    #region ValueKeyClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class ValueKey : Cell
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum VALUE_KEY_DATA_TYPES
         {
+            /// <summary>
+            /// 
+            /// </summary>
             REG_NONE = 0x00000000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_SZ = 0x00000001,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_EXPAND_SZ = 0x00000002,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_BINARY = 0x00000003,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_DWORD = 0x00000004,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_DWORD_BIG_ENDIAN = 0x00000005,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_LINK = 0x00000006,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_MULTI_SZ = 0x00000007,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_RESOURCE_LIST = 0x00000008,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_FULL_RESOURCE_DESCRIPTOR = 0x00000009,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_RESOURCE_REQUIREMENTS_LIST = 0x0000000A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             REG_QWORD = 0x0000000B
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum VALUE_KEY_FLAGS
         {
+            /// <summary>
+            /// 
+            /// </summary>
             NameIsUnicode = 0x0000,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NameIsAscii = 0x0001,
         }
 
@@ -40,15 +101,36 @@ namespace PowerForensics.Registry
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string HivePath;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Key;
+
         internal readonly ushort NameLength;
         internal readonly uint DataLength;
         internal readonly bool ResidentData;
         internal readonly uint DataOffset;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly VALUE_KEY_DATA_TYPES DataType;
+
         internal readonly VALUE_KEY_FLAGS Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly object Data;
 
         #endregion Properties
@@ -127,7 +209,7 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -277,15 +359,24 @@ namespace PowerForensics.Registry
             return nk.GetValues(bytes);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public object GetData()
         {
             return this.GetData(RegistryHelper.GetHiveBytes(this.HivePath));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal object GetData(byte[] bytes)
         {
             if (this.ResidentData)
@@ -331,15 +422,22 @@ namespace PowerForensics.Registry
             }
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
-    #endregion ValueKeyClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     class BigData
     {
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="vk"></param>
+        /// <returns></returns>
         internal static byte[] Get(byte[] bytes, ValueKey vk)
         {
             List<byte> contents = new List<byte>();
@@ -361,6 +459,6 @@ namespace PowerForensics.Registry
             return Helper.GetSubArray(b, 0x00, b.Length);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

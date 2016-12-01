@@ -5,17 +5,28 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region LogFileClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class LogFile
     {
-        #region StaticMethods
-
+        #region Static Methods
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         internal static FileRecord GetFileRecord(string volume)
         {
             return FileRecord.Get(volume, MftIndex.LOGFILE_INDEX, true);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileRecord"></param>
+        /// <returns></returns>
         internal static NonResident GetDataAttr(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)
@@ -28,7 +39,11 @@ namespace PowerForensics.Ntfs
             throw new Exception("No DATA attribute found.");
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static byte[] getBytes(string volume)
         {   
             // Get filestream based on hVolume
@@ -44,6 +59,11 @@ namespace PowerForensics.Ntfs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static OperationRecord Get(string volume)
         {
             Helper.getVolumeName(ref volume);
@@ -63,30 +83,84 @@ namespace PowerForensics.Ntfs
             }*/
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion LogFileClass
-
-    #region RestartAreaHeaderClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class RestartAreaHeader
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort USOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort USCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong CheckDiskLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint SystemPageSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint LogPageSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort RestartOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort MinorVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort MajorVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] USArray;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong CurrentLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint LogClient;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClientList;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong Flags;
 
         #endregion Properties
@@ -117,13 +191,23 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static RestartAreaHeader[] Get(string volume)
         {
             return RestartAreaHeader.Get(LogFile.getBytes(volume));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static RestartAreaHeader[] Get(byte[] bytes)
         {
             RestartAreaHeader[] headerArray = new RestartAreaHeader[0x02];
@@ -132,23 +216,29 @@ namespace PowerForensics.Ntfs
             return headerArray;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion RestartAreaHeaderClass
-
-    #region RestartClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Restart
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public RestartAreaHeader[] RestartHeader;
 
         #endregion Properties
 
         #region Constructors
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
         public Restart(byte[] bytes)
         {
             RestartHeader = RestartAreaHeader.Get(bytes);
@@ -156,8 +246,13 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public static Restart[] Get(byte[] bytes)
         {
             Restart[] restartArray = new Restart[2];
@@ -168,27 +263,69 @@ namespace PowerForensics.Ntfs
             return restartArray;
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion RestartClass
-
-    #region PageHeaderClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class PageHeader
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort USOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort USCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LastLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort PageCount;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort PagePosition;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort NextRecordOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LastEndLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort USN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] USArray;
 
         #endregion Properties
@@ -216,52 +353,166 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static PageHeader Get(string volume)
         {
             return new PageHeader(LogFile.getBytes(volume));
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion PageHeaderClass
-
-    #region OperationRecordClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class OperationRecord
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         public enum OPERATION_CODE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             Noop = 0x00,
+
+            /// <summary>
+            /// 
+            /// </summary>
             CompensationlogRecord = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             InitializeFileRecordSegment = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DeallocateFileRecordSegment = 0x03,
+
+            /// <summary>
+            /// 
+            /// </summary>
             WriteEndofFileRecordSegement = 0x04,
+
+            /// <summary>
+            /// 
+            /// </summary>
             CreateAttribute = 0x05,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DeleteAttribute = 0x06,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdateResidentValue = 0x07,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdataeNonResidentValue = 0x08,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdateMappingPairs = 0x09,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DeleteDirtyClusters = 0x0A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SetNewAttributeSizes = 0x0B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             AddindexEntryRoot = 0x0C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DeleteindexEntryRoot = 0x0D,
+
+            /// <summary>
+            /// 
+            /// </summary>
             AddIndexEntryAllocation = 0x0F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SetIndexEntryVenAllocation = 0x12,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdateFileNameRoot = 0x13,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdateFileNameAllocation = 0x14,
+
+            /// <summary>
+            /// 
+            /// </summary>
             SetBitsInNonresidentBitMap = 0x15,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ClearBitsInNonresidentBitMap = 0x16,
+
+            /// <summary>
+            /// 
+            /// </summary>
             PrepareTransaction = 0x19,
+
+            /// <summary>
+            /// 
+            /// </summary>
             CommitTransaction = 0x1A,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ForgetTransaction = 0x1B,
+
+            /// <summary>
+            /// 
+            /// </summary>
             OpenNonresidentAttribute = 0x1C,
+
+            /// <summary>
+            /// 
+            /// </summary>
             DirtyPageTableDump = 0x1F,
+
+            /// <summary>
+            /// 
+            /// </summary>
             TransactionTableDump = 0x20,
+
+            /// <summary>
+            /// 
+            /// </summary>
             UpdateRecordDataRoot = 0x21
         }
 
@@ -269,26 +520,109 @@ namespace PowerForensics.Ntfs
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong PreviousLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong ClientUndoLSN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClientDataLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClientID;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RecordType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TransactionID;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly OPERATION_CODE RedoOP;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly OPERATION_CODE UndoOP;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort RedoOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort RedoLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort UndoOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort UndoLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort TargetAttribute;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort LCNtoFollow;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort RecordOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort AttrOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort MFTClusterIndex;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TargetVCN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TargetLCN;
 
         #endregion Properties
@@ -322,20 +656,29 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public static OperationRecord[] GetInstances(string volume)
         {
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         internal static OperationRecord Get(byte[] bytes)
         {
             return new OperationRecord(bytes);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion OperationRecordClass
 }

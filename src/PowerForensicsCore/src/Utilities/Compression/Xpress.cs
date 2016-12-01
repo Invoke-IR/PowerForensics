@@ -2,13 +2,32 @@ using System;
 
 namespace PowerForensics.Utilities.Compression
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Xpress
     {
+        #region Static Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputBuffer"></param>
+        /// <param name="outputSize"></param>
+        /// <param name="inputConsumed"></param>
+        /// <returns></returns>
         public static byte[] DecompressBuffer(byte[] inputBuffer, uint outputSize, uint inputConsumed)
         {
             return DecompressBufferLZ77(inputBuffer, outputSize, inputConsumed);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputBuffer"></param>
+        /// <param name="outputSize"></param>
+        /// <param name="inputConsumed"></param>
+        /// <returns></returns>
         private static byte[] DecompressBufferLZ77(byte[] inputBuffer, uint outputSize, uint inputConsumed)
         {
             byte[] OutputBuffer = new byte[outputSize];
@@ -92,5 +111,7 @@ namespace PowerForensics.Utilities.Compression
             }
             return OutputBuffer;
         }
+
+        #endregion Static Methods
     }
 }

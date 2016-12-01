@@ -4,17 +4,46 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    #region WindowsVersion
+    /// <summary>
+    /// 
+    /// </summary>
     public class WindowsVersion
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ProductName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CurrentMajorVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint CurrentMinorVersion;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Version CurrentVersion;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime InstallTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string RegisteredOwner;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string SystemRoot;
 
         #endregion Properties
@@ -59,7 +88,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -91,7 +120,6 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-    #endregion WindowsVersion
 }

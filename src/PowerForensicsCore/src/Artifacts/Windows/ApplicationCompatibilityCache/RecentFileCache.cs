@@ -6,9 +6,12 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RecentFileCache
     {
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -60,6 +63,6 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

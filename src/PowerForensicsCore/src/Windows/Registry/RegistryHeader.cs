@@ -4,8 +4,9 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.Registry
 {
-    #region RegistryHeader
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class RegistryHeader
     {
         #region Constants
@@ -26,15 +27,54 @@ namespace PowerForensics.Registry
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint PrimarySequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint SecondarySequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime ModificationTime;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Version Version;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FileType;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint RootKeyOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint HiveBinsDataSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string HivePath;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Checksum;
 
         #endregion Properties
@@ -63,7 +103,7 @@ namespace PowerForensics.Registry
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
         
         /// <summary>
         /// 
@@ -89,8 +129,6 @@ namespace PowerForensics.Registry
             return new RegistryHeader(RegistryHeader.GetBytes(path));
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion RegistryHeader
 }

@@ -4,15 +4,31 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region DataRunClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class DataRun
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string Volume;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long StartCluster;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long ClusterLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly bool Sparse;
 
         #endregion Properties
@@ -49,12 +65,13 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="bytes"></param>
+        /// <param name="volume"></param>
         /// <returns></returns>
         internal static DataRun[] GetInstances(byte[] bytes, string volume)
         {
@@ -89,6 +106,7 @@ namespace PowerForensics.Ntfs
         /// </summary>
         /// <param name="bytes"></param>
         /// <param name="offset"></param>
+        /// <param name="volume"></param>
         /// <returns></returns>
         internal static DataRun[] GetInstances(byte[] bytes, int offset, string volume)
         {
@@ -127,20 +145,20 @@ namespace PowerForensics.Ntfs
         /// <param name="lengthByteCount"></param>
         /// <param name="offsetByteCount"></param>
         /// <param name="previousDR"></param>
+        /// <param name="volume"></param>
         /// <returns></returns>
         private static DataRun Get(byte[] bytes, int offset, int lengthByteCount, int offsetByteCount, DataRun previousDR, string volume)
         {
             return new DataRun(bytes, offset, lengthByteCount, offsetByteCount, previousDR, volume);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="volume"></param>
         /// <returns></returns>
         public byte[] GetBytes()
         {
@@ -148,8 +166,6 @@ namespace PowerForensics.Ntfs
             return Helper.readDrive(this.Volume, this.StartCluster * vbr.BytesPerCluster, this.ClusterLength * vbr.BytesPerCluster);
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
-
-    #endregion DataRunClass
 }

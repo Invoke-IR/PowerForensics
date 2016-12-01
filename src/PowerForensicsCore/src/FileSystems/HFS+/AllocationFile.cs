@@ -1,7 +1,12 @@
 ﻿namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AllocationFile
     {
+        #region Static Methods
+
         /// <summary>
         /// Returns the Contents of the HFS+ Allocation File.
         /// </summary>
@@ -53,5 +58,7 @@
             // Need to come back and ensure this is correct (it appears to be opposite of what i'd expect)
             return (byteToCheck & (1 >> (position))) != 0;
         }
+
+        #endregion Static Methods
     }
 }

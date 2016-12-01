@@ -5,8 +5,9 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    #region ShimcacheClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class Shimcache
     {
         #region Constants
@@ -22,9 +23,24 @@ namespace PowerForensics.Artifacts
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastModifiedTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong FileSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastUpdateTime;
 
         #endregion Properties
@@ -41,7 +57,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -115,11 +131,6 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static Shimcache[] GetDEADBEEF(byte[] bytes)
         {
             int offset = 0x190;
@@ -141,12 +152,6 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="arch"></param>
-        /// <returns></returns>
         // Server 2003 has a size property, but I haven't figured out how to differentiate Server 2003 from Vista/2k8
         // Need an example of 2003/Vista/2k8 to test on
         private static Shimcache[] GetBADC0FFE(byte[] bytes, string arch)
@@ -182,12 +187,6 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="arch"></param>
-        /// <returns></returns>
         private static Shimcache[] GetBADC0FEE(byte[] bytes, string arch)
         {
             int offset = 0x80;
@@ -222,11 +221,6 @@ namespace PowerForensics.Artifacts
             return shimcacheArray;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static Shimcache[] Get00000080(byte[] bytes)
         {
             int offset = BitConverter.ToInt32(bytes, 0x00);
@@ -254,11 +248,6 @@ namespace PowerForensics.Artifacts
             return shimList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static Shimcache[] Get00000030(byte[] bytes)
         {
             int offset = BitConverter.ToInt32(bytes, 0x00);
@@ -286,8 +275,6 @@ namespace PowerForensics.Artifacts
             return shimList.ToArray();
         }
         
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion ShimcacheClass
 }

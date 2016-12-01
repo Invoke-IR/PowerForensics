@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace PowerForensics
 {
-    #region GuidPartitionTableClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class GuidPartitionTable
     {
         #region Constants
@@ -20,18 +21,64 @@ namespace PowerForensics
         #region Properties
 
         internal readonly string Signature;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Version Revision;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint HeaderSize;
+
         //internal readonly uint HeaderCRC32;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong MyLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong AlternateLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong FirstUsableLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LastUsableLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid DiskGuid;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong PartitionEntryLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint NumberOfPartitionEntries;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint SizeOfPartitionEntry;
+
         //internal readonly byte[] PartitionEntryArrayCRC32;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly GuidPartitionTableEntry[] PartitionTable;
 
         #endregion Properties
@@ -78,7 +125,7 @@ namespace PowerForensics
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -132,9 +179,9 @@ namespace PowerForensics
             }
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -145,22 +192,35 @@ namespace PowerForensics
             return this.PartitionTable;
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
-    #endregion GuidPartitionTableClass
-
-    #region GuidPartitionTableEntryClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class GuidPartitionTableEntry
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum PARTITION_ATTRIBUTE
         {
+            /// <summary>
+            /// 
+            /// </summary>
             RequirePartition = 0x01,
+
+            /// <summary>
+            /// 
+            /// </summary>
             NoBlockIOProtocol = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             LegacyBIOSBootable = 0x04
         }
 
@@ -168,11 +228,34 @@ namespace PowerForensics
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string PartitionType;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid UniquePartitionGuid;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong StartingLBA;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong EndingLBA;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly PARTITION_ATTRIBUTE Attributes;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string PartitionName;
 
         #endregion Properties
@@ -306,26 +389,13 @@ namespace PowerForensics
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="i"></param>
-        /// <returns></returns>
         internal static GuidPartitionTableEntry Get(byte[] bytes, int i)
         {
             return new GuidPartitionTableEntry(bytes, i);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="partitionCount"></param>
-        /// <param name="partitionSize"></param>
-        /// <returns></returns>
         internal static GuidPartitionTableEntry[] GetInstances(byte[] bytes, uint partitionCount, uint partitionSize)
         {
             // Get PartitionTable
@@ -349,8 +419,6 @@ namespace PowerForensics
             return partitionList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion GuidPartitionTableEntryClass
 }

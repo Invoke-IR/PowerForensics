@@ -5,18 +5,46 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
-    #region NetworkListClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class NetworkList
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime WriteTimeUtc;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string ProfileGuid;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Description;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Source;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string DnsSuffix;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string FirstNetwork;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly byte[] DefaultGatewayMac;
 
         #endregion Properties
@@ -57,9 +85,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetInstancesMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -115,10 +141,7 @@ namespace PowerForensics.Artifacts
             }
         }
 
-        #endregion GetInstancesMethods
-
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 
-    #endregion NetworkListClass
 }

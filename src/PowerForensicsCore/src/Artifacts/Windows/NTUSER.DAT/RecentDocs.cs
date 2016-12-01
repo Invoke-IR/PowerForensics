@@ -5,12 +5,26 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RecentDocs
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime LastWriteTime;
 
         #endregion Properties
@@ -32,7 +46,7 @@ namespace PowerForensics.Artifacts
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -98,6 +112,6 @@ namespace PowerForensics.Artifacts
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
 }

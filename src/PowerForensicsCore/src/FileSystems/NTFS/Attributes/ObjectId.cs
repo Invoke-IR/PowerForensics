@@ -2,15 +2,31 @@
 
 namespace PowerForensics.Ntfs
 {
-    #region ObjectIdClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class ObjectId : FileRecordAttribute
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid ObjectIdGuid;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid BirthVolumeId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid BirthObjectId;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly Guid BirthDomainId;
 
         #endregion Properties
@@ -45,6 +61,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion ObjectIdClass
 }

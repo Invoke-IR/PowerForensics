@@ -5,13 +5,26 @@ using PowerForensics.Registry;
 
 namespace PowerForensics.Artifacts.MicrosoftOffice
 {
-    #region TrustRecordClass
+    /// <summary>
+    /// 
+    /// </summary>
     public class TrustRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string User;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Path;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly DateTime TrustTime;
 
         #endregion Properties
@@ -27,7 +40,7 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -98,7 +111,6 @@ namespace PowerForensics.Artifacts.MicrosoftOffice
             return list.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-    #endregion TrustRecordClass
 }

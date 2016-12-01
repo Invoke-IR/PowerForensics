@@ -3,14 +3,33 @@ using System.Collections.Generic;
 
 namespace PowerForensics.HFSPlus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ForkData
     {
         #region Properties
 
         private readonly string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong LogicalSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint ClumpSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint TotalBlocks;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ExtentDescriptor[] Extents;
 
         #endregion Properties
@@ -28,7 +47,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -43,9 +62,9 @@ namespace PowerForensics.HFSPlus
             return new ForkData(bytes, offset, volumeName, blockSize);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -103,16 +122,34 @@ namespace PowerForensics.HFSPlus
             }
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExtentDescriptor
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly string VolumeName;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly uint BlockSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint StartBlock;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint BlockCount;
 
         #endregion Properties
@@ -129,7 +166,7 @@ namespace PowerForensics.HFSPlus
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -169,9 +206,9 @@ namespace PowerForensics.HFSPlus
             return new ExtentDescriptor(bytes, offset, volumeName, blockSize);
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
 
-        #region InstanceMethods
+        #region Instance Methods
 
         /// <summary>
         /// 
@@ -184,6 +221,6 @@ namespace PowerForensics.HFSPlus
             return Helper.readDrive(VolumeName, (long)StartBlock * BlockSize, BlockCount * BlockSize);
         }
 
-        #endregion InstanceMethods
+        #endregion Instance Methods
     }
 }

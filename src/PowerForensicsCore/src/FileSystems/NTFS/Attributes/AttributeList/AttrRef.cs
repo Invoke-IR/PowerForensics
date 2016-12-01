@@ -3,19 +3,51 @@ using System.Text;
 
 namespace PowerForensics.Ntfs
 {
-    #region AttrRefClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class AttrRef
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly ushort RecordLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly byte AttributeNameLength;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly byte AttributeNameOffset;
+
+        /// <summary>
+        /// 
+        /// </summary>
         internal readonly ulong LowestVCN;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong RecordNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ushort SequenceNumber;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string NameString;
 
         #endregion Properties
@@ -39,6 +71,4 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
     }
-
-    #endregion AttrRefClass
 }

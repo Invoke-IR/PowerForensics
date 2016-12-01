@@ -5,17 +5,41 @@ using PowerForensics.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region NtfsVolumeBootRecordClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class NtfsVolumeBootRecord : VolumeBootRecord
     {
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long BytesPerFileRecord;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long BytesPerIndexBlock;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long TotalSectors;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long MftStartIndex;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly long MftMirrStartIndex;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string VolumeSerialNumber;
 
         #endregion Properties
@@ -51,9 +75,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
-
-        #region GetBytes
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -64,12 +86,6 @@ namespace PowerForensics.Ntfs
         {
             return Helper.readDrive(streamToRead, 0x00, 0x200);
         }
-
-        #endregion GetBytes
-
-        #endregion StaticMethods
-
-        #region PrivateMethods
 
         /// <summary>
         /// 
@@ -121,8 +137,7 @@ namespace PowerForensics.Ntfs
             return BitConverter.ToString(serialNumberBytes).Remove(2, 1).Remove(7, 1);
         }
 
-        #endregion PrivateMethods
+        #endregion Static Methods
     }
 
-    #endregion NtfsVolumeBootRecordClass
 }

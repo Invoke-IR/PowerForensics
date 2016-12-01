@@ -4,30 +4,72 @@ using System.Collections.Generic;
 
 namespace PowerForensics.Ntfs
 {
-    #region AttrDefClass
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class AttrDef
     {
         #region Enums
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags]
         public enum ATTR_DEF_ENTRY
         {
+            /// <summary>
+            /// 
+            /// </summary>
             INDEX = 0x02,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ALWAYS_RESIDENT = 0x40,
+
+            /// <summary>
+            /// 
+            /// </summary>
             ALWAYS_NONRESIDENT = 0x80
         }
-        
+
         #endregion Enums
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string Name;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint Type;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly uint DisplayRule;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly string CollationRule;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ATTR_DEF_ENTRY Flags;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong MinSize;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly ulong MaxSize;
 
         #endregion Properties
@@ -77,7 +119,7 @@ namespace PowerForensics.Ntfs
 
         #endregion Constructors
 
-        #region StaticMethods
+        #region Static Methods
 
         /// <summary>
         /// 
@@ -121,8 +163,6 @@ namespace PowerForensics.Ntfs
             return adList.ToArray();
         }
 
-        #endregion StaticMethods
+        #endregion Static Methods
     }
-
-    #endregion AttrDefClass
 }
