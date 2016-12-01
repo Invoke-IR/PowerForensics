@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicPrefetch.md
 schema: 2.0.0
 ---
 
 # Get-ForensicPrefetch
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the Prefetch objects from the specified volume or file.
 
 ## SYNTAX
 
@@ -22,21 +22,41 @@ Get-ForensicPrefetch -Path <String> [-Fast]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicPrefetch cmdlet parses the binary structure in the specified Prefetch file. If a file is not specified, Get-Prefetch parses all .pf files in the C:\Windows\Prefetch directory.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicPrefetch
 ```
 
-{{ Add example description here }}
+This command gets an array of all Prefetch files in the C:\Windows\Prefetch directory.
+
+### Example 1
+```
+[ADMIN]: PS C:\> Get-ForensicPrefetch -Path C:\Windows\Prefetch\CMD.EXE-89305D47.pf
+
+
+Version            : WINDOWS_8
+Name               : CMD.EXE
+Path               : \DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\CMD.EXE
+PathHash           : 89305D47
+DependencyCount    : 25
+PrefetchAccessTime : {4/3/2015 4:29:25 AM, 4/3/2015 4:29:18 AM, 3/31/2015 12:33:17 PM, 3/31/2015 
+                     12:22:42 PM...}
+DeviceCount        : 1
+RunCount           : 40
+```
+
+This command parses the Prefetch file specified by the Path parameter.
 
 ## PARAMETERS
 
 ### -Fast
-{{Fill Fast Description}}
+Use the Windows API to list files within the C:\Windows\Prefetch directory. WARNING: Not forensically sound.
 
 ```yaml
 Type: SwitchParameter
@@ -51,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-{{Fill Path Description}}
+Path to file to be parsed.
 
 ```yaml
 Type: String
@@ -66,7 +86,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -87,7 +109,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.Prefetch
 
 ## NOTES
 

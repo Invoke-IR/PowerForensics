@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicTimezone.md
 schema: 2.0.0
 ---
 
 # Get-ForensicTimezone
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the system's timezone.
 
 ## SYNTAX
 
@@ -22,21 +22,38 @@ Get-ForensicTimezone -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicTimezone cmdlet parses the SYSTEM hive or a hive that you specify to derive the system's current timezone.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicTimezone
+
+RegistryTimezone              dotNetStandardTimezone        dotNetDaylightTimezone                 IsDaylightSavingTime
+----------------              ----------------------        ----------------------                 --------------------
+Eastern Standard Time         Eastern Standard Time         Eastern Daylight Time                                 False
 ```
 
-{{ Add example description here }}
+This command gets the time zones from the system hive.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-Timezone -HivePath C:\evidence\SYSTEM
+
+RegistryTimezone              dotNetStandardTimezone        dotNetDaylightTimezone                 IsDaylightSavingTime
+----------------              ----------------------        ----------------------                 --------------------
+Eastern Standard Time         Eastern Standard Time         Eastern Daylight Time                                 False
+```
+
+This command gets the time zones from an exported SYSTEM hive.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +68,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +91,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.Timezone
 
 ## NOTES
 

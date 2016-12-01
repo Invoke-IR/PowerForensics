@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Invoke-ForensicDD.md
 schema: 2.0.0
 ---
 
 # Invoke-ForensicDD
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets a byte-for-byte copy of a file, disk, or partition.
 
 ## SYNTAX
 
@@ -17,21 +17,43 @@ Invoke-ForensicDD [-InFile] <String> [[-OutFile] <String>] [[-Offset] <Int64>] [
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Invoke-DD cmdlet generates and returns an exact copy of a file, disk, or partition. 
+
+Use the Offset (starting point), BlockSize (bytes/operation), and Count (# blocks) parameters to determine the segment of the InFile that is copied.
+
+This cmdlet designed to work just like the popular dd Unix utility. For information about the dd utility, see "dd (Unix)" (https://en.wikipedia.org/wiki/Dd_%28Unix%29) in Wikipedia.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Invoke-ForensicDD Invoke-DD -InFile \\.\PHYSICALDRIVE0 -Offset 0 -Count 1
 ```
 
-{{ Add example description here }}
+This command copies the first sector of the Master Boot Record of the
+\\.\PHYSICALDRIVE0 disk to the console.
+
+The command uses the default values for OutFile (stdout; the Windows PowerShell console) and BlockSize (512; 1 sector).
+
+### Example 2
+```
+[ADMIN]: PS C:\> Invoke-ForensicDD Invoke-DD -InFile \\.\HARDDISKVOLUME1 -OutFile C:\Users\Public\Desktop\MBR -Offset 512 -BlockSize 1024 -Count 3
+```
+
+This command copies three 1024-size blocks of the specified volume to a file in the C:\Users\Public\Desktop\MBR directory. It begins copying at the second sector (after the 512-byte offset).
+
+It uses the Offset parameter to specify the starting point of the copy operation, the BlockSize parameter to specify the bytes per copy operation, and the Count parameter to specify the number of copy operations. 
+
+It also uses the OutFile parameter to specify a location for the output. The default is writing to the Windows PowerShell console (stdout).
 
 ## PARAMETERS
 
 ### -BlockSize
-{{Fill BlockSize Description}}
+Specifies the number of bytes to read/write in each operation. The default value is 512 (1 disc sector).
+
+When reading from a device, such as \\.\PHYSICALDRIVE0 or \\.\C:, the value of BlockSize must be divisible by 512.
 
 ```yaml
 Type: UInt32
@@ -46,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -Count
-{{Fill Count Description}}
+Specifies the number of blocks that Invoke-ForensicDD reads from the file, disk, or partition. This parameter is required.
 
 ```yaml
 Type: UInt32
@@ -61,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -InFile
-{{Fill InFile Description}}
+Specifies the file, disk or partition to be copied, for example \\.\PHYSICALDRIVE0, \\.\HARDDISKVOLUME1, or \\.\C:. This parameter is required.
 
 ```yaml
 Type: String
@@ -76,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Offset
-{{Fill Offset Description}}
+Specifies the starting point in the file for the copy operation as a byte offset. This parameter is required.
 
 ```yaml
 Type: Int64
@@ -91,7 +113,9 @@ Accept wildcard characters: False
 ```
 
 ### -OutFile
-{{Fill OutFile Description}}
+Writes the output to the specified file or directory. 
+
+This parameter is optional. But default, Invoke-ForensicDD writes the output to standard ouptut ("stdout"), which is the Windows PowerShell console, but you can use this parameter or redirect the output.
 
 ```yaml
 Type: String
@@ -112,7 +136,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### System.Byte[]
 
 ## NOTES
 

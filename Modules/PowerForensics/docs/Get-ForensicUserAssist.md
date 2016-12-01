@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicUserAssist.md
 schema: 2.0.0
 ---
 
 # Get-ForensicUserAssist
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the UserAssist entries from the specified volume.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicUserAssist -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicUserAssist cmdlet parses the NTUSER.DAT registry hive to derive applications that were recently used by a particular user.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicUserAssist -VolumeName \\.\C:
 ```
 
-{{ Add example description here }}
+This command gets applications that the Public user used from all user's NTUSER.DAT hives on the C: logical volume.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicUserAssist -HivePath C:\Users\Public\NTUSER.DAT
+```
+
+This command gets applications that the Public user used from the C:\Users\Public\NTUSER.DAT hive.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.UserAssist
 
 ## NOTES
 

@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicRunKey.md
 schema: 2.0.0
 ---
 
 # Get-ForensicRunKey
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets applications that will autostart due to their inclusion in a "Run" key.
 
 ## SYNTAX
 
@@ -22,13 +22,22 @@ Get-ForensicRunKey -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicRunKey cmdlet parses the SOFTWARE and NTUSER.DAT hives to produce a list of applications that have been added to a "Run" key.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicRunKey
+```
+
+{{ Add example description here }}
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicRunKey -HivePath C:\Windows\System32\config\SOFTWARE
 ```
 
 {{ Add example description here }}
@@ -36,7 +45,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.Persistence.RunKey
 
 ## NOTES
 

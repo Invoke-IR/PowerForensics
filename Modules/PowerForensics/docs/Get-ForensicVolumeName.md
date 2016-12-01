@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicVolumeName.md
 schema: 2.0.0
 ---
 
 # Get-ForensicVolumeName
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the name of the specified volume.
 
 ## SYNTAX
 
@@ -22,21 +22,40 @@ Get-ForensicVolumeName -Path <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicVolumeName cmdlet parses the $Volume file's $VOLUME_NAME attribute to return the name of the specified volume.
+
+By default, the cmdlet parses the $Volume file on the C:\ drive. To specify an alternate target drive, use the VolumeName parameter. To specify an exported $Volume file, use the Path parameter.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-VolumeName -VolumeName \\.\C:
+
+VolumeNameString
+----------------
+testdrive
 ```
 
-{{ Add example description here }}
+This command gets the name of the C:\ logical volume.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-VolumeName -Path 'C:\evidence\$Volume'
+
+VolumeNameString
+----------------
+testdrive
+```
+
+This command gets the name of the volume in C:\evidence\$Volume file, and exported $Volume file.
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+Path to file to be parsed.
 
 ```yaml
 Type: String
@@ -51,7 +70,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +93,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Ntfs.VolumeName
 
 ## NOTES
 

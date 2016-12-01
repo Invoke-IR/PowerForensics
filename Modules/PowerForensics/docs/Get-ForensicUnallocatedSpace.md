@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicUnallocatedSpace.md
 schema: 2.0.0
 ---
 
 # Get-ForensicUnallocatedSpace
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the unallocated space on the specified partition/volume.
 
 ## SYNTAX
 
@@ -16,21 +16,23 @@ Get-ForensicUnallocatedSpace [[-VolumeName] <String>] [-Path <UInt64>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicUnallocatedSpace cmdlet parses the $Bitmap file to find clusters that are marked as unallocated (not in use by the file system). Then, the cmdlet returns the unallocated clusters as a byte array.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicUnallocatedSpace -VolumeName \\.\Z:
 ```
 
-{{ Add example description here }}
+This command gets a byte array of unallocated clusters in the \\.\Z: volume.
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+Path to $Bitmap file.
 
 ```yaml
 Type: UInt64
@@ -45,7 +47,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -66,7 +70,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### System.Byte[]
 
 ## NOTES
 

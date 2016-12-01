@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicNetworkList.md
 schema: 2.0.0
 ---
 
 # Get-ForensicNetworkList
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets a list of networks that the system has previously been connected to.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicNetworkList -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicNetworkList cmdlet parses the SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList key to derive a list of previously connected networks.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicNetworkList
 ```
 
-{{ Add example description here }}
+This command uses Get-ForensicNetworkList to parse the SOFTWARE hive on the C:\ logical volume.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicNetworkList -HivePath C:\evidence\SOFTWARE
+```
+
+This command uses Get-ForensicNetworkList on an exported SOFTWARE hive.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.NetworkList
 
 ## NOTES
 

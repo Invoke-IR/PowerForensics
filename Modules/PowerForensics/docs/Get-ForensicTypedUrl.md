@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicTypedUrl.md
 schema: 2.0.0
 ---
 
 # Get-ForensicTypedUrl
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the Universal Resource Locators (URL) that have been typed in the Internet Explorer browser.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicTypedUrl -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicTypedUrl cmdlet parses a user's NTUSER.DAT file to derive the Universal Resource Locators (URL) that have been typed into the Internet Explorer browser.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.}
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicTypedUrl -VolumeName \\.\C:
 ```
 
-{{ Add example description here }}
+This command gets the URLs typed into Internet Explorer from all user's NTUSER.DAT hives on the C: logical volume.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicTypedUrl -HivePath C:\Users\Public\NTUSER.DAT
+```
+
+This command gets the URLs typed into Internet Explorer from the C:\Users\Public\NTUSER.DAT hive.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### System.String
 
 ## NOTES
 

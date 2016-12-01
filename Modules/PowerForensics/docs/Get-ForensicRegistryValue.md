@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicRegistryValue.md
 schema: 2.0.0
 ---
 
 # Get-ForensicRegistryValue
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the values of the specified registry key.
 
 ## SYNTAX
 
@@ -16,21 +16,37 @@ Get-ForensicRegistryValue [-HivePath] <String> [[-Key] <String>] [[-Value] <Stri
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicRegistryValue cmdlet parses a registry hive and returns the values of a specified key.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicRegistryValue -HivePath C:\Windows\system32\config\SOFTWARE -Key Microsoft\Windows\CurrentVersion\Run
 ```
 
-{{ Add example description here }}
+This command gets the values of the Run key.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-RegistryValue -HivePath C:\Windows\system32\config\SYSTEM -Key ControlSet001\Serivces\Enum -Value NextParentID.72bb93.8
+
+HivePath   : C:\Windows\system32\config\SYSTEM
+Key        : Enum
+DataLength : 4
+DataType   : REG_DWORD
+Name       : NextParentID.72bb93.8
+Allocated  : True
+```
+
+This command gets the NextParentID.72bb93.8 value of the HKLM:\SYSTEM\ControlSet001\Services\Enum key.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+The registry hive to parse.
 
 ```yaml
 Type: String
@@ -45,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-{{Fill Key Description}}
+The key to list values from.
 
 ```yaml
 Type: String
@@ -60,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Value
-{{Fill Value Description}}
+The specific value to return.
 
 ```yaml
 Type: String
@@ -81,7 +97,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Registry.ValueKey
 
 ## NOTES
 

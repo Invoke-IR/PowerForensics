@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicVolumeInformation.md
 schema: 2.0.0
 ---
 
 # Get-ForensicVolumeInformation
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets information about the specified volume.
 
 ## SYNTAX
 
@@ -22,21 +22,36 @@ Get-ForensicVolumeInformation -Path <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicVolumeInformation cmdlet parses the $Volume file&apos;s $VOLUME_INFORMATION attribute to return the metadata about the specified volume.
+
+By default, the cmdlet parses the $Volume file on the C:\ drive. To specify an alternate target drive, use the -VolumeName parameter. To specify an exported $Volume file, use the -Path parameter.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicVolumeInformation
+
+Name    : VOLUME_INFORMATION
+Version : 3.1
+Flags   : 0
 ```
 
-{{ Add example description here }}
+This command gets the metadata about the C:\ logical volume.
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicVolumeInformation -Path 'C:\evidence\$Volume'
+```
+
+This command gets metadata about an exported volume file, C:\evidence\$Volume.
 
 ## PARAMETERS
 
 ### -Path
-{{Fill Path Description}}
+Path to file to be parsed.
 
 ```yaml
 Type: String
@@ -51,7 +66,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +89,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Ntfs.VolumeInformation
 
 ## NOTES
 

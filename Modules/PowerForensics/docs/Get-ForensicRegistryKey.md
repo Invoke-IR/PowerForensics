@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicRegistryKey.md
 schema: 2.0.0
 ---
 
 # Get-ForensicRegistryKey
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets the keys of the specified registry hive.
 
 ## SYNTAX
 
@@ -22,21 +22,40 @@ Get-ForensicRegistryKey -HivePath <String> [-Recurse]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicRegistryKey cmdlet parses a registry hive and returns the subkeys of the specified key.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicRegistryKey -HivePath C:\Windows\system32\config\SOFTWARE -Key Tenable
+
+
+HivePath                : C:\Windows\system32\config\SOFTWARE
+WriteTime               : 8/14/2015 4:18:52 PM
+NumberOfSubKeys         : 0
+NumberOfVolatileSubKeys : 0
+NumberOfValues          : 1
+FullName                : Tenable\Nessus
+Name                    : Nessus
+Allocated               : True
 ```
 
-{{ Add example description here }}
+This command gets the subkeys of the HKLM:\SOFTWARE\Tenable key.
+
+### Example 1
+```
+[ADMIN]: PS C:\> $nk = Get-RegistryKey -HivePath C:\Windows\system32\config\SAM -Recurse
+```
+
+This gets all keys in the SAM hive.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+The registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-{{Fill Key Description}}
+The key to begin listing subkeys from.
 
 ```yaml
 Type: String
@@ -66,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recurse
-{{Fill Recurse Description}}
+Recursively list all keys in the specified hive.
 
 ```yaml
 Type: SwitchParameter
@@ -87,7 +106,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Registry.NamedKey
 
 ## NOTES
 

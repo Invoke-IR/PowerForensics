@@ -1,13 +1,13 @@
 ---
 external help file: PowerForensics-help.xml
-online version: 
+online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicShimcache.md
 schema: 2.0.0
 ---
 
 # Get-ForensicShimcache
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Gets previously run commands from the Shimcache forensic artifact.
 
 ## SYNTAX
 
@@ -22,21 +22,30 @@ Get-ForensicShimcache -HivePath <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+The Get-ForensicShimcache cmdlet parses the AppCompatCache (AppCompatibility on XP) registry value to derive applications that were recently used. If you don&apos;t specify a hive path (-HivePath), the cmdlet parses the local System hive.
+
+Except as noted, the cmdlets in the PowerForensics module require the permissions of a member of the Administrators group on the computer. To run them, start Windows PowerShell with the 'Run as administrator' option.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+[ADMIN]: PS C:\> Get-ForensicShimcache
 ```
 
-{{ Add example description here }}
+This example shows Get-ForensicShimcache being run against the default System Hive (C:\Windows\system32\config\SYSTEM)
+
+### Example 2
+```
+[ADMIN]: PS C:\> Get-ForensicShimcache -HivePath C:\evidence\system
+```
+
+This is an example of Get-ForensicShimcache taking an exported SYSTEM hive as an argument.
 
 ## PARAMETERS
 
 ### -HivePath
-{{Fill HivePath Description}}
+Registry hive to parse.
 
 ```yaml
 Type: String
@@ -51,7 +60,9 @@ Accept wildcard characters: False
 ```
 
 ### -VolumeName
-{{Fill VolumeName Description}}
+Specifies the name of the volume or logical partition.
+
+Enter the volume name in one of the following formats: \\.\C:, C:, or C.
 
 ```yaml
 Type: String
@@ -72,7 +83,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Object
+### PowerForensics.Artifacts.Shimcache
 
 ## NOTES
 
