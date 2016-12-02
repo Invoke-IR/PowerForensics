@@ -83,6 +83,7 @@ repo_url: https://github.com/Invoke-IR/PowerForensics
 site_favicon: favicon.ico
 pages:
 - Home: 'index.md'
+- Get Involved: 'getinvolved.md'
 - PowerShell Module:
     - Installation: 'moduleinstall.md'
     - Cmdlets:`n
