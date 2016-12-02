@@ -1,0 +1,4 @@
+﻿# PowerForensics
+
+
+## Ntfs.IndexRoot

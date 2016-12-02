@@ -1,0 +1,4 @@
+﻿# PowerForensics
+
+
+## Registry.SecurityDescriptor

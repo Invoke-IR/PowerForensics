@@ -37,7 +37,7 @@ PowerForensics currently supports NTFS and FAT file systems, and work has begun 
 Detailed instructions for installing PowerForensics can be found <a href="http://www.invoke-ir.com/2016/02/installing-powerforensics.html">here</a>.
 
 ## Cmdlets
-### Boot Sector:
+### Boot Sector
 ```
 Get-ForensicMasterBootRecord - gets the MasterBootRecord from the first sector of the hard drive
 Get-ForensicGuidPartitionTable - gets the GuidPartitionTable from the first sector of the hard drive
@@ -45,14 +45,14 @@ Get-ForensicBootSector - gets the appropriate boot sector (MBR or GPT) from the 
 Get-ForensicPartitionTable - gets the partition table for the specified drive
 ```
 
-### Extended File System 4 (ext4):
+### Extended File System 4 (ext4)
 ```
 Get-ForensicSuperblock - returns the ext4 SuperBlock object
 Get-ForensicBlockGroupDescriptor - returns the Block Group Descriptor Table entries
 Get-ForensicInode - returns the Inode Table entries
 ```
 
-### New Technology File System (NTFS):
+### New Technology File System (NTFS)
 ```
 Get-ForensicAttrDef - gets definitions of MFT Attributes (parses $AttrDef)
 Get-ForensicBitmap - determines if a cluster is marked as in use (parses $Bitmap)
