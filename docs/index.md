@@ -6,30 +6,6 @@
 
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
-<p align="center">
-  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
-    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
-  </a>
-</p>
-<p align="center">
-  <a href="https://gitter.im/Invoke-IR/PowerForensics">
-    <img src="https://badges.gitter.im/Join%20Chat.svg">
-  </a>
-</p>
-<p align="center">
-  <a href="https://http://powerforensics.readthedocs.io/en/latest/">
-    <img src="https://readthedocs.org/projects/powerforensics/badge/?version=latest">
-  </a>
-</p>
-<p align="center">
-  <a href="https://waffle.io/Invoke-IR/PowerForensics">
-    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
-  </a>
-  <a href="https://waffle.io/Invoke-IR/PowerForensics">
-    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=in%20progress&title=In%20Progress">
-  </a>
-</p>
-
 ## Overview
 The purpose of PowerForensics is to provide an all inclusive framework for hard drive forensic analysis.
 PowerForensics currently supports NTFS and FAT file systems, and work has begun on Extended File System and HFS+ support.
@@ -112,7 +88,6 @@ Get-ForensicTimeline - creates a forensic timeline
 
 ### Utilities
 ```
-ConvertFrom-BinaryData - implements PowerForensics' BinShred API to parse binary data into an object
 Copy-ForensicFile - creates a copy of a file from its raw bytes on disk 
 Get-ForensicChildItem - returns a directory's contents by parsing the MFT structures
 Get-ForensicContent - gets the content of a file from its raw bytes on disk

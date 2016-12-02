@@ -1,0 +1,8 @@
+﻿
+
+
+# Ntfs.IndexAllocation
+
+## Fields
+
+### Entries

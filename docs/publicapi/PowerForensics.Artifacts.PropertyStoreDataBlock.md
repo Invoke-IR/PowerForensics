@@ -1,0 +1,8 @@
+﻿
+
+
+# Artifacts.PropertyStoreDataBlock
+
+## Fields
+
+### PropertyStore

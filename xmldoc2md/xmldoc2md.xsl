@@ -35,8 +35,6 @@ URL: http://github.com/jaime-olivares/xmldoc2md
     
   <!-- Assembly template -->
   <xsl:template match="assembly">
-    <xsl:text># </xsl:text>
-    <xsl:value-of select="name"/>
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates select="//member[contains(@name,'T:')]"/>
   </xsl:template>
@@ -56,18 +54,18 @@ URL: http://github.com/jaime-olivares/xmldoc2md
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:text>&#10;&#10;## </xsl:text>
+    <xsl:text>&#10;&#10;# </xsl:text>
     <xsl:value-of select="$MemberName"/>
 
     <xsl:apply-templates />
     
     <!-- Fields -->
     <xsl:if test="//member[contains(@name,concat('F:',$FullMemberName))]">
-      <xsl:text>&#10;### Fields</xsl:text>
+      <xsl:text>&#10;## Fields</xsl:text>
       <xsl:text>&#10;</xsl:text>
 
       <xsl:for-each select="//member[contains(@name,concat('F:',$FullMemberName))]">
-        <xsl:text>&#10;#### </xsl:text>
+        <xsl:text>&#10;### </xsl:text>
         <xsl:value-of select="substring-after(@name, concat('F:',$FullMemberName,'.'))"/>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="normalize-space()" />
@@ -76,11 +74,11 @@ URL: http://github.com/jaime-olivares/xmldoc2md
 
     <!-- Properties -->
     <xsl:if test="//member[contains(@name,concat('P:',$FullMemberName))]">
-      <xsl:text>&#10;### Properties</xsl:text>
+      <xsl:text>&#10;## Properties</xsl:text>
       <xsl:text>&#10;</xsl:text>
 
       <xsl:for-each select="//member[contains(@name,concat('P:',$FullMemberName))]">
-        <xsl:text>&#10;#### </xsl:text>
+        <xsl:text>&#10;### </xsl:text>
         <xsl:value-of select="substring-after(@name, concat('P:',$FullMemberName,'.'))"/>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="normalize-space()" />
@@ -89,7 +87,7 @@ URL: http://github.com/jaime-olivares/xmldoc2md
 
     <!-- Methods -->
     <xsl:if test="//member[contains(@name,concat('M:',$FullMemberName))]">
-      <xsl:text>&#10;### Methods</xsl:text>
+      <xsl:text>&#10;## Methods</xsl:text>
       <xsl:text>&#10;</xsl:text>
 
       <xsl:for-each select="//member[contains(@name,concat('M:',$FullMemberName))]">
@@ -97,12 +95,12 @@ URL: http://github.com/jaime-olivares/xmldoc2md
         <!-- If this is a constructor, display the type name (instead of "#ctor"), or display the method name -->
         <xsl:choose>
           <xsl:when test="contains(@name, '#ctor')">
-            <xsl:text>&#10;&#10;#### Constructor</xsl:text>
+            <xsl:text>&#10;&#10;### Constructor</xsl:text>
             <!-- xsl:value-of select="$MemberName"/ -->
             <!-- xsl:value-of select="substring-after(@name, '#ctor')"/-->
           </xsl:when>
           <xsl:otherwise>
-            <xsl:text>&#10;&#10;#### </xsl:text>
+            <xsl:text>&#10;&#10;### </xsl:text>
             <xsl:value-of select="substring-after(@name, concat('M:',$FullMemberName,'.'))"/>
           </xsl:otherwise>
         </xsl:choose>
@@ -116,22 +114,22 @@ URL: http://github.com/jaime-olivares/xmldoc2md
         </xsl:if>
 
         <xsl:if test="count(param)!=0">
-          <xsl:text>&#10;&gt; ##### Parameters</xsl:text>
+          <xsl:text>&#10;&gt; #### Parameters</xsl:text>
           <xsl:apply-templates select="param"/>
         </xsl:if>
 
         <xsl:if test="count(returns)!=0">
-          <xsl:text>&#10;&gt; ##### Return value</xsl:text>
+          <xsl:text>&#10;&gt; #### Return value</xsl:text>
           <xsl:apply-templates select="returns"/>
         </xsl:if>
 
         <xsl:if test="count(exception)!=0">
-          <xsl:text>&#10;&gt; ##### Exceptions</xsl:text>
+          <xsl:text>&#10;&gt; #### Exceptions</xsl:text>
           <xsl:apply-templates select="exception"/>
         </xsl:if>
 
         <xsl:if test="count(example)!=0">
-          <xsl:text>&#10;&gt; ##### Example</xsl:text>
+          <xsl:text>&#10;&gt; #### Example</xsl:text>
           <xsl:text>&#10;&gt; </xsl:text><xsl:apply-templates select="example" />
         </xsl:if>
 

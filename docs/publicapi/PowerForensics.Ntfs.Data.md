@@ -1,0 +1,8 @@
+﻿
+
+
+# Ntfs.Data
+
+## Fields
+
+### RawData

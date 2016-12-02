@@ -1,0 +1,8 @@
+﻿
+
+
+# Artifacts.VistaAndAboveIDListDataBlock
+
+## Fields
+
+### IdList

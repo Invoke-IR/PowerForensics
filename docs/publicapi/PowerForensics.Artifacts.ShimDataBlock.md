@@ -1,0 +1,8 @@
+﻿
+
+
+# Artifacts.ShimDataBlock
+
+## Fields
+
+### LayerName

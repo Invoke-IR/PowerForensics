@@ -943,7 +943,7 @@ function Get-ForensicFileRecord
                     }
                     else
                     {
-                        Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index, $false));
+                        Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index));
                     }
                 }
                 else
@@ -960,7 +960,7 @@ function Get-ForensicFileRecord
                 }
                 else
                 {
-                    Write-Output ([PowerForensic.Ntfs.FileRecord]::Get($Path, $false));
+                    Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($Path, $false));
                 }
                 break;
             }

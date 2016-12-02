@@ -1,0 +1,8 @@
+﻿
+
+
+# Artifacts.ConsoleFeDataBlock
+
+## Fields
+
+### CodePage

@@ -22,28 +22,107 @@ SOFTWARE.
 #>
 
 param (
-    [string]$xml,
-    [string]$xsl,
-    [string]$docsdir,
-    [string]$helpdir
+    [string]$ProjectPath
 )
 
-# Convert VS XML Docs to Markdown
+$docsdir = "$($ProjectPath)\docs"
+$modulehelpdir = "$($ProjectPath)\Modules\PowerForensics\docs"
+$xmldir = "$($ProjectPath)\src\PowerForensicsCore\bin\Release\netstandard1.6"
+
+Remove-Item -Path "$($docsdir)\modulehelp\*" -Force
+Remove-Item -Path "$($docsdir)\publicapi\*" -Force
+
 # Create an individual xml file foreach type
-[xml]$xmldoc = Get-Content $xml
+[xml]$xmldoc = Get-Content "$($xmldir)\PowerForensics.xml"
+
+$sb = New-Object System.Text.StringBuilder
+$first = $true
+
+foreach($m in $xmldoc.doc.members.member)
+{
+    if($m.name.StartsWith('T:'))
+    {
+        if($first)
+        {
+            $first = $false
+        }
+        else
+        {
+            $null = $sb.Append('</members></doc>')
+            $sb.ToString() | Out-File -FilePath "$($xmldir)\$($typename).xml"     
+        }
+
+        $typename = $m.name.TrimStart('T:')
+        $null = $sb.Clear()
+        $null = $sb.Append('<?xml version="1.0"?><doc><assembly><name>PowerForensics</name></assembly><members>')
+    }
+    
+    $null = $sb.Append($m.OuterXml)
+}
 
 # Convert xml documents to Markdown files
 $xslt = New-Object -TypeName "System.Xml.Xsl.XslCompiledTransform"
 
+$xsl = "$($ProjectPath)\xmldoc2md\xmldoc2md.xsl"
+
 # xslt.Load(stylesheet);
 $xslt.Load($xsl)
 
-# xslt.Transform(sourceFile, null, sw);
-$xslt.Transform($xml, "$($docsdir)\publicapi.md")
-
-# Combine PowerShell Module Help Markdown files
-Remove-Item -Path "$($docsdir)\cmdlethelp.md" -Force
-foreach($file in (Get-ChildItem $helpdir))
+foreach($item in (Get-ChildItem "$($xmldir)\*.xml" -Exclude "PowerForensics.xml" -File))
 {
-    Get-Content -Encoding Ascii $file.FullName | Select-Object -Skip 5 | Out-File -Encoding Ascii -FilePath "$($docsdir)\cmdlethelp.md" -Append
+    $output = "$($docsdir)\publicapi\$($item.name.Replace('xml','md'))"
+    
+    # xslt.Transform(sourceFile, null, sw);
+    $xslt.Transform($item.FullName, $output)
 }
+
+# Build mkdocs.yml file based on documentation we have generated
+$sb = New-Object System.Text.StringBuilder
+
+$begin = @"
+site_name: PowerForensics
+repo_url: https://github.com/Invoke-IR/PowerForensics
+site_favicon: favicon.ico
+pages:
+- Home: 'index.md'
+- PowerShell Module:
+    - Installation: 'moduleinstall.md'
+    - Cmdlets:`n
+"@
+
+$null = $sb.Append($begin)
+
+# Copy Cmdlet Help from PS Module to docs directory
+Copy-Item "$($modulehelpdir)\*" "$($docsdir)\modulehelp"
+
+# iterate through cmdlets
+foreach($item in (Get-ChildItem "$($docsdir)\modulehelp"))
+{
+    $cmdlet = "        - $($item.Name.TrimEnd('.md')): 'modulehelp/$($item.Name)'"
+    $null = $sb.Append("$($cmdlet)`n")
+}
+
+$mid = @"
+- Development:
+    - Public API:`n
+"@
+
+$null = $sb.Append($mid)
+
+# iterate through types
+foreach($item in (Get-ChildItem "$($docsdir)\publicapi"))
+{
+    $type = "        - $($item.Name.TrimEnd('.md')): 'publicapi/$($item.Name)'"
+    $null = $sb.Append("$($type)`n")
+}
+
+$end = @"
+- About:
+    - License: 'LICENSE.md'
+"@
+
+$null = $sb.Append($end)
+
+$sb.ToString() | Out-File -FilePath "$($ProjectPath)\mkdocs.yml"
+
+Remove-Item -Path "$($xmldir)\*.xml" -Exclude PowerForensics.xml -Force

@@ -1,0 +1,8 @@
+﻿
+
+
+# Ntfs.IndexAllocationTest
+
+## Fields
+
+### Entries

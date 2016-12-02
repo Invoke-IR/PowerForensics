@@ -1,0 +1,8 @@
+﻿
+
+
+# Registry.Leaf
+
+## Fields
+
+### HashValue
