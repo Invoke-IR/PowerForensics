@@ -1,4 +1,0 @@
-﻿# PowerForensics
-
-
-## Artifacts.VolumeId

@@ -1,4 +1,0 @@
-﻿# PowerForensics
-
-
-## Formats.ForensicTimeline

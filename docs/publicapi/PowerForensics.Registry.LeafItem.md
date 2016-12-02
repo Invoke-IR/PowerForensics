@@ -1,4 +1,0 @@
-﻿# PowerForensics
-
-
-## Registry.LeafItem
