@@ -45,5 +45,5 @@ $xslt.Transform($xml, "$($docsdir)\publicapi.md")
 Remove-Item -Path "$($docsdir)\cmdlethelp.md" -Force
 foreach($file in (Get-ChildItem $helpdir))
 {
-    Get-Content $file.FullName | Select-Object -Skip 5 | Out-File -FilePath "$($docsdir)\cmdlethelp.md" -Append
+    Get-Content -Encoding Ascii $file.FullName | Select-Object -Skip 5 | Out-File -Encoding Ascii -FilePath "$($docsdir)\cmdlethelp.md" -Append
 }
