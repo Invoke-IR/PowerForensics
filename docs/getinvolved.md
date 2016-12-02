@@ -5,4 +5,4 @@ Whatever your interest, join the PowerForensics Slack channel and share your ide
 
 To join, request an invite through our heroku app by visiting <a href="https://powerforensicsslack.herokuapp.com/">https://powerforensicsslack.herokuapp.com/</a> and entering your email address.
 
-![Heroku App](img/herokuapp.png)
+![Heroku App](img/herokuapp.PNG)
