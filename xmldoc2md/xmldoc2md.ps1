@@ -28,7 +28,7 @@ param (
     [string]$docsdir
 )
 
-Remove-Item -Path "$docsdir\api\*" -Force
+Remove-Item -Path "$docsdir\publicapi\*" -Force
 
 # Create an individual xml file foreach type
 [xml]$xmldoc = Get-Content $xml
@@ -67,7 +67,7 @@ $xslt.Load($xsl)
 foreach($item in (Get-ChildItem "$($workingdir)\*.xml" -Exclude "PowerForensics.xml" -File))
 {
     $filename = $item.name.Replace('xml','md')
-    $output = "$($docsdir)\api\$($filename)"
+    $output = "$($docsdir)\publicapi\$($filename)"
     
     # xslt.Transform(sourceFile, null, sw);
     $xslt.Transform($item.FullName, $output)
@@ -83,7 +83,7 @@ site_favicon: favicon.ico
 pages:
 - Home: 'index.md'
 - PowerShell Module:
-    - Installation: moduleinstall.md
+    - Installation: 'moduleinstall.md'
     - Cmdlets:`n
 "@
 
@@ -93,7 +93,7 @@ $null = $sb.Append($begin)
 foreach($item in (Get-ChildItem "$($docsdir)\module"))
 {
     #- Copy-ForensicFile: Module/Copy-ForensicFile.md
-    $cmdlet = "- $($item.Name.TrimEnd('.md')): Module/$($item.Name)"
+    $cmdlet = "- $($item.Name.TrimEnd('.md')): 'Module/$($item.Name)'"
     $null = $sb.Append("`t`t$($cmdlet)`n")
 }
 
@@ -105,9 +105,9 @@ $mid = @"
 $null = $sb.Append($mid)
 
 # iterate through types
-foreach($item in (Get-ChildItem "$($docsdir)\api"))
+foreach($item in (Get-ChildItem "$($docsdir)\publicapi"))
 {
-    $type = "- $($item.Name.TrimEnd('.md')): api/$($item.Name)"
+    $type = "- $($item.Name.TrimEnd('.md')): 'publicapi/$($item.Name)'"
     $null = $sb.Append("`t`t$($type)`n")
 }
 
