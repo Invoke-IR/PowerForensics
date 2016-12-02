@@ -43,7 +43,7 @@ pages:
         - Get-ForensicUnallocatedSpace: '../Modules/PowerForensics/docs/Get-ForensicUnallocatedSpace.md'
         - Get-ForensicUserAssist: '../Modules/PowerForensics/docs/Get-ForensicUserAssist.md'
         - Get-ForensicUsnJnrl: '../Modules/PowerForensics/docs/Get-ForensicUsnJrnl.md'
-        - Get-ForensicUsnJnrlInformation: '../Modules/PowerForensics/docs/Get-ForensicUsnJnrlInformation.md'
+        - Get-ForensicUsnJnrlInformation: '../Modules/PowerForensics/docs/Get-ForensicUsnJrnlInformation.md'
         - Get-ForensicVolumeBootRecord: '../Modules/PowerForensics/docs/Get-ForensicVolumeBootRecord.md'
         - Get-ForensicVolumeInformation: '../Modules/PowerForensics/docs/Get-ForensicVolumeInformation.md'
         - Get-ForensicVolumeName: '../Modules/PowerForensics/docs/Get-ForensicVolumeName.md'
