@@ -2,7 +2,7 @@ site_name: PowerForensics
 repo_url: https://github.com/Invoke-IR/PowerForensics
 site_favicon: favicon.ico
 pages:
-- Home: '/README.md'
+- Home: '../README.md'
 - PowerShell Module:
     - Installation: moduleinstall.md
     - Cmdlets:
