@@ -25,11 +25,3 @@
 
 > #### Return value
 > 
-
-### Get(PowerForensics.Ntfs.FileRecord)
-
-> #### Parameters
-> **fileRecord:** 
-
-> #### Return value
-> 

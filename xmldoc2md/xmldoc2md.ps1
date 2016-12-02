@@ -63,10 +63,8 @@ foreach($m in $xmldoc.doc.members.member)
 # Convert xml documents to Markdown files
 $xslt = New-Object -TypeName "System.Xml.Xsl.XslCompiledTransform"
 
-$xsl = "$($ProjectPath)\xmldoc2md\xmldoc2md.xsl"
-
 # xslt.Load(stylesheet);
-$xslt.Load($xsl)
+$xslt.Load("$($ProjectPath)\xmldoc2md\xmldoc2md.xsl")
 
 foreach($item in (Get-ChildItem "$($xmldir)\*.xml" -Exclude "PowerForensics.xml" -File))
 {
@@ -98,7 +96,8 @@ Copy-Item "$($modulehelpdir)\*" "$($docsdir)\modulehelp"
 # iterate through cmdlets
 foreach($item in (Get-ChildItem "$($docsdir)\modulehelp"))
 {
-    $cmdlet = "        - $($item.Name.TrimEnd('.md')): 'modulehelp/$($item.Name)'"
+    $filename = $($item.Name.Replace('.md',''))
+    $cmdlet = "        - $($filename): 'modulehelp/$($item.Name)'"
     $null = $sb.Append("$($cmdlet)`n")
 }
 
@@ -112,7 +111,8 @@ $null = $sb.Append($mid)
 # iterate through types
 foreach($item in (Get-ChildItem "$($docsdir)\publicapi"))
 {
-    $type = "        - $($item.Name.TrimEnd('.md')): 'publicapi/$($item.Name)'"
+    $name = $($item.Name.Replace('.md',''))
+    $type = "        - $($name): 'publicapi/$($item.Name)'"
     $null = $sb.Append("$($type)`n")
 }
 

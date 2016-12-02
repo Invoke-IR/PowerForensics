@@ -5,18 +5,6 @@
 
 ## Fields
 
-### Volume
-
-### commonHeader
-
-### StartVCN
-
-### LastVCN
-
-### DataRunOffset
-
-### CompUnitSize
-
 ### AllocatedSize
 
 ### RealSize
@@ -34,14 +22,6 @@
 > 
 
 ### GetBytesTest
-
-> #### Return value
-> 
-
-### GetBytes(PowerForensics.Generic.VolumeBootRecord)
-
-> #### Parameters
-> **VBR:** 
 
 > #### Return value
 > 

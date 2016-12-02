@@ -32,28 +32,6 @@
 > #### Return value
 > 
 
-### Get(System.String,System.Int32,System.Int64)
-
-> #### Parameters
-> **volume:** 
-
-> **recordNumber:** 
-
-> **cluster:** 
-
-> #### Return value
-> 
-
-### Get(System.Byte[],System.Int64)
-
-> #### Parameters
-> **bytes:** 
-
-> **cluster:** 
-
-> #### Return value
-> 
-
 ### GetInstancesByPath(System.String)
 
 > #### Parameters
@@ -66,22 +44,6 @@
 
 > #### Parameters
 > **volume:** 
-
-> #### Return value
-> 
-
-### GetInstances(System.Byte[])
-
-> #### Parameters
-> **bytes:** 
-
-> #### Return value
-> 
-
-### GetDataStream(PowerForensics.Ntfs.FileRecord)
-
-> #### Parameters
-> **fileRecord:** 
 
 > #### Return value
 > 

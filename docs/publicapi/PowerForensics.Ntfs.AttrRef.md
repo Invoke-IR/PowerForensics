@@ -7,14 +7,6 @@
 
 ### Name
 
-### RecordLength
-
-### AttributeNameLength
-
-### AttributeNameOffset
-
-### LowestVCN
-
 ### RecordNumber
 
 ### SequenceNumber

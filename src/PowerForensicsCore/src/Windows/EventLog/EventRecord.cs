@@ -5,19 +5,25 @@ using PowerForensics.Ntfs;
 
 namespace PowerForensics.EventLog
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    [Flags]
+    public enum FILEFLAGS
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        IsDirty = 0x00,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IsFull = 0x01
+    }
+
     class EventLogHeader
     {
-        #region Enums
-
-        [Flags]
-        public enum FILEFLAGS
-        {
-            IsDirty = 0x00,
-            IsFull = 0x01
-        }
-
-        #endregion Enums
-
         #region Properties
 
         // File Header

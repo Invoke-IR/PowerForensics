@@ -33,22 +33,12 @@ namespace PowerForensics.Ntfs
 
         #region Static Methods
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static FileRecord GetFileRecord(string volume)
         {
             Helper.getVolumeName(ref volume);
             return FileRecord.Get(volume, MftIndex.BADCLUS_INDEX, true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileRecord"></param>
-        /// <returns></returns>
         internal static NonResident GetBadStream(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)

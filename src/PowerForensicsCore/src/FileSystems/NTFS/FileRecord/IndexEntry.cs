@@ -12,39 +12,23 @@ namespace PowerForensics.Ntfs
         #region Properties
 
         /// <summary>
-        /// 
+        /// Low 6B: MFT record index, High 2B: MFT record sequence number
         /// </summary>
-        public ulong RecordNumber;       // Low 6B: MFT record index, High 2B: MFT record sequence number
+        public ulong RecordNumber;
 
         /// <summary>
         /// 
         /// </summary>
         public bool Directory;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        internal ushort Size;            // Length of the index entry
+        internal ushort Size;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        internal ushort StreamSize;      // Length of the stream
+        internal ushort StreamSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        internal byte Flags;             // Flags
+        internal byte Flags;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        internal byte[] Stream;          // Stream
+        internal byte[] Stream;
 
-
-        /// <summary>
-        /// 
-        /// </summary>
         internal FileName Entry;
 
         /// <summary>

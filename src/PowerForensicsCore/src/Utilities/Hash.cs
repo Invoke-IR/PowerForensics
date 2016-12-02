@@ -31,7 +31,7 @@ namespace PowerForensics.Utilities
         /// <param name="bytes"></param>
         /// <param name="algorithm"></param>
         /// <returns></returns>
-        internal static string Get(byte[] bytes, string algorithm)
+        public static string Get(byte[] bytes, string algorithm)
         {
             // Create a hash algorithm for specified algorithm
             HashAlgorithm hashAlgorithm = GetAlgorithm(algorithm);
@@ -47,7 +47,7 @@ namespace PowerForensics.Utilities
         /// <param name="count"></param>
         /// <param name="algorithm"></param>
         /// <returns></returns>
-        internal static string Get(byte[] bytes, int count, string algorithm)
+        public static string Get(byte[] bytes, int count, string algorithm)
         {
             // Create a hash algorithm for specified algorithm
             HashAlgorithm hashAlgorithm = GetAlgorithm(algorithm);

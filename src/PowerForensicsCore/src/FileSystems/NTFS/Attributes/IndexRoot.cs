@@ -59,19 +59,10 @@ namespace PowerForensics.Ntfs
         public readonly byte ClustersPerIndexRecord;
 
         // IndexHeader
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly int StartOffset;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly int TotalSize;
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         private readonly int AllocatedSize;
 
         /// <summary>
@@ -80,9 +71,6 @@ namespace PowerForensics.Ntfs
         public readonly INDEX_ROOT_FLAGS Flags;
 
         // IndexEntry[]
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly byte[] EntryBytes;
 
         /// <summary>
@@ -96,8 +84,6 @@ namespace PowerForensics.Ntfs
 
         internal IndexRoot(ResidentHeader header, byte[] bytes, int offset, string attrName)
         {
-            #region ResidentHeader
-
             // Get ResidentHeader (includes Common Header)
             Name = (ATTR_TYPE)header.commonHeader.ATTRType;
             NameString = attrName;
@@ -105,29 +91,17 @@ namespace PowerForensics.Ntfs
             AttributeId = header.commonHeader.Id;
             AttributeSize = header.commonHeader.TotalSize;
 
-            #endregion ResidentHeader
-
-            #region IndexRoot
-
             // IndexRoot
             AttributeType = (ATTR_TYPE)BitConverter.ToUInt32(bytes, 0x00 + offset);
             CollationSortingRule = BitConverter.ToUInt32(bytes, 0x04 + offset);
             IndexSize = BitConverter.ToUInt32(bytes, 0x08 + offset);
             ClustersPerIndexRecord = bytes[0x0C + offset];
 
-            #endregion IndexRoot
-
-            #region IndexHeader
-
             // IndexHeader
             StartOffset = (BitConverter.ToInt32(bytes, 0x10 + offset) + 0x10 + offset);  // Add 0x10 bytes to start offset to account for its offset
             TotalSize = BitConverter.ToInt32(bytes, 0x14 + offset);
             AllocatedSize = BitConverter.ToInt32(bytes, 0x18 + offset);
             Flags = ((INDEX_ROOT_FLAGS)BitConverter.ToUInt32(bytes, 0x1C + offset));
-
-            #endregion IndexHeader
-
-            #region IndexEntryArray
 
             // IndexEntry[]
             EntryBytes = Helper.GetSubArray(bytes, StartOffset, TotalSize);
@@ -160,10 +134,8 @@ namespace PowerForensics.Ntfs
 
                 Entries = entryList.ToArray();
             }
-            #endregion IndexEntryArray
         }
 
-        #endregion Constuctors
-
+        #endregion Constructors
     }
 }

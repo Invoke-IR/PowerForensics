@@ -12,12 +12,6 @@ namespace PowerForensics.Ntfs
     {
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="streamToRead"></param>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static FileRecord GetRecord(FileStream streamToRead, string volume)
         {
             // Instantiate VolumeBootRecord object
@@ -48,12 +42,6 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="streamToRead"></param>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static byte[] GetBytes(FileStream streamToRead, string volume)
         {
             FileRecord mftRecord = GetRecord(streamToRead, volume);
@@ -84,11 +72,6 @@ namespace PowerForensics.Ntfs
             return GetSlack(bytes);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static byte[] GetSlack(byte[] bytes)
         {
             List<byte> slackBytes = new List<byte>();

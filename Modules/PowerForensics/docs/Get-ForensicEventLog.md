@@ -1,9 +1,3 @@
----
-external help file: PowerForensics-help.xml
-online version: https://github.com/Invoke-IR/PowerForensics/blob/master/Modules/PowerForensics/docs/Get-ForensicEventLog.md
-schema: 2.0.0
----
-
 # Get-ForensicEventLog
 
 ## SYNOPSIS

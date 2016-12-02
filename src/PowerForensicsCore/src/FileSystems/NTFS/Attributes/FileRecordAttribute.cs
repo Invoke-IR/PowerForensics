@@ -131,9 +131,6 @@ namespace PowerForensics.Ntfs
         /// </summary>
         public string NameString;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal bool NonResident;
 
         /// <summary>
@@ -141,23 +138,12 @@ namespace PowerForensics.Ntfs
         /// </summary>
         public ushort AttributeId;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal int AttributeSize;
 
         #endregion Properties
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="bytesPerFileRecord"></param>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static FileRecordAttribute[] GetInstances(byte[] bytes, int offset, int bytesPerFileRecord, string volume)
         {
             List<FileRecordAttribute> AttributeList = new List<FileRecordAttribute>();
@@ -188,13 +174,6 @@ namespace PowerForensics.Ntfs
             return AttributeList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         internal static FileRecordAttribute Get(byte[] bytes, int offset, string volume)
         {
             #region CommonHeader

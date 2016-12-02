@@ -144,11 +144,6 @@ namespace PowerForensics.Ntfs
             return AttrDef.GetInstances(record.GetContent());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static AttrDef[] GetInstances(byte[] bytes)
         {
             // Instantiate a List of AttrDef objects for output

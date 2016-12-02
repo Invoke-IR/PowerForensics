@@ -60,13 +60,6 @@ namespace PowerForensics.Ntfs
             return Get(volume, (int)entry.RecordNumber, cluster);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <param name="recordNumber"></param>
-        /// <param name="cluster"></param>
-        /// <returns></returns>
         private static Bitmap Get(string volume, int recordNumber, long cluster)
         {
             long sectorOffset = cluster / 4096;
@@ -95,12 +88,6 @@ namespace PowerForensics.Ntfs
             return Get(bytes, cluster);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="cluster"></param>
-        /// <returns></returns>
         private static Bitmap Get(byte[] bytes, long cluster)
         {
             long byteOffset = (cluster % 4096) / 8;
@@ -173,11 +160,6 @@ namespace PowerForensics.Ntfs
             return GetInstances(dataStream.GetBytes());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         internal static Bitmap[] GetInstances(byte[] bytes)
         {
             Bitmap[] bitmapArray = new Bitmap[bytes.Length * 8];
@@ -223,11 +205,6 @@ namespace PowerForensics.Ntfs
             return bitmapArray;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileRecord"></param>
-        /// <returns></returns>
         internal static NonResident GetDataStream(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)

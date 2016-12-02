@@ -143,9 +143,6 @@ namespace PowerForensics.Ntfs
         /// </summary>
         public readonly uint ER;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly byte NameLength;
 
         /// <summary>

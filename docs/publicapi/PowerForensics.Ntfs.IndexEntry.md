@@ -6,18 +6,8 @@
 ## Fields
 
 ### RecordNumber
-
+Low 6B: MFT record index, High 2B: MFT record sequence number
 ### Directory
-
-### Size
-
-### StreamSize
-
-### Flags
-
-### Stream
-
-### Entry
 
 ### Filename
 

@@ -30,11 +30,6 @@ namespace PowerForensics.Artifacts.Persistence
         
         #region Constructors
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="location"></param>
-        /// <param name="vk"></param>
         private RunKey(string location, ValueKey vk)
         {
             AutoRunLocation = location;

@@ -55,11 +55,6 @@ namespace PowerForensics.Ntfs
             return Get(FileRecord.Get(path, true));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fileRecord"></param>
-        /// <returns></returns>
         private static VolumeName Get(FileRecord fileRecord)
         {
             foreach (FileRecordAttribute attr in fileRecord.Attribute)

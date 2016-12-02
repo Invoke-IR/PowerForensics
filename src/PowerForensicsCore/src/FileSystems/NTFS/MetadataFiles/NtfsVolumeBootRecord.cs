@@ -77,22 +77,11 @@ namespace PowerForensics.Ntfs
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="streamToRead"></param>
-        /// <returns></returns>
         private static byte[] GetBytes(FileStream streamToRead)
         {
             return Helper.readDrive(streamToRead, 0x00, 0x200);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="bytesPerCluster"></param>
-        /// <returns></returns>
         private static long getBytesPerFileRecord(byte[] bytes, int bytesPerCluster)
         {
             sbyte clustersPerFileRecord = (sbyte)bytes[0x40];
@@ -106,12 +95,6 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="bytesPerCluster"></param>
-        /// <returns></returns>
         private static long getBytesPerIndexBlock(byte[] bytes, int bytesPerCluster)
         {
             sbyte clustersPerIndexBlock = (sbyte)bytes[0x44];
@@ -125,11 +108,6 @@ namespace PowerForensics.Ntfs
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static string getVolumeSerialNumber(byte[] bytes)
         {
             byte[] serialNumberBytes = Helper.GetSubArray(bytes, 0x48, 0x04);

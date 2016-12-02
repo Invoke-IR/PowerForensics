@@ -11,14 +11,8 @@ namespace PowerForensics.Fat
     {
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly uint FSI_LeadSig;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly uint FSI_StrucSig;
 
         /// <summary>
@@ -31,9 +25,6 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly uint FSI_Nxt_Free;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly uint FSI_TrailSig;
 
         #endregion Properties

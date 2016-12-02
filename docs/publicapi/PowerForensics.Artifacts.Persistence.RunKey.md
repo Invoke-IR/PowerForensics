@@ -14,14 +14,6 @@
 ## Methods
 
 
-### Constructor
-
-> #### Parameters
-> **location:** 
-
-> **vk:** 
-
-
 ### GetInstances(System.String)
 
 > #### Parameters
