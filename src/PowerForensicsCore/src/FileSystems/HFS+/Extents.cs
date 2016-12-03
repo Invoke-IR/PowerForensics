@@ -49,14 +49,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="blockSize"></param>
-        /// <returns></returns>
         internal static ForkData Get(byte[] bytes, int offset, string volumeName, uint blockSize)
         {
             return new ForkData(bytes, offset, volumeName, blockSize);
@@ -132,14 +124,8 @@ namespace PowerForensics.HFSPlus
     {
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string VolumeName;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly uint BlockSize;
 
         /// <summary>
@@ -168,14 +154,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="blockSize"></param>
-        /// <returns></returns>
         internal static ExtentDescriptor[] GetInstances(byte[] bytes, int offset, string volumeName, uint blockSize)
         {
             List<ExtentDescriptor> extentList = new List<ExtentDescriptor>();
@@ -193,14 +171,6 @@ namespace PowerForensics.HFSPlus
             return extentList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="blockSize"></param>
-        /// <returns></returns>
         private static ExtentDescriptor Get(byte[] bytes, int offset, string volumeName, uint blockSize)
         {
             return new ExtentDescriptor(bytes, offset, volumeName, blockSize);

@@ -83,10 +83,6 @@ namespace PowerForensics.Generic
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
         internal static void checkFooter(byte[] bytes)
         {
             if (BitConverter.ToUInt16(bytes, 0x1FE) != 0xAA55)
@@ -94,8 +90,6 @@ namespace PowerForensics.Generic
                 throw new Exception("Invalid VolumeBootRecord Footer.");
             }
         }
-
-        #region Get
 
         /// <summary>
         /// 
@@ -117,21 +111,11 @@ namespace PowerForensics.Generic
             return VolumeBootRecord.Get(GetBytesByPath(path));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="streamToRead"></param>
-        /// <returns></returns>
         internal static VolumeBootRecord Get(FileStream streamToRead)
         {
             return VolumeBootRecord.Get(GetBytes(streamToRead));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static VolumeBootRecord Get(byte[] bytes)
         {
             checkFooter(bytes);
@@ -150,10 +134,6 @@ namespace PowerForensics.Generic
             }
         }
 
-        #endregion Get
-
-        #region GetBytes
-
         /// <summary>
         /// 
         /// </summary>
@@ -164,11 +144,6 @@ namespace PowerForensics.Generic
             return Helper.readDrive(volume, 0x00, 0x200);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="streamToRead"></param>
-        /// <returns></returns>
         private static byte[] GetBytes(FileStream streamToRead)
         {
             return Helper.readDrive(streamToRead, 0x00, 0x200);
@@ -184,8 +159,6 @@ namespace PowerForensics.Generic
             FileRecord record = FileRecord.Get(path, true);
             return record.GetContent();
         }
-
-        #endregion GetBytes
 
         #endregion Static Methods
     }

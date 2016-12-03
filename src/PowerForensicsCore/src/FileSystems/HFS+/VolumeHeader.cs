@@ -55,7 +55,6 @@ namespace PowerForensics.HFSPlus
         /// </summary>
         public readonly uint JournalInfoBlock;
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -76,7 +75,6 @@ namespace PowerForensics.HFSPlus
         /// </summary>
         public readonly DateTime CheckedDate;
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -86,7 +84,6 @@ namespace PowerForensics.HFSPlus
         /// 
         /// </summary>
         public readonly uint FolderCount;
-
 
         /// <summary>
         /// 
@@ -102,7 +99,6 @@ namespace PowerForensics.HFSPlus
         /// 
         /// </summary>
         public readonly uint FreeBlocks;
-
 
         /// <summary>
         /// 
@@ -124,7 +120,6 @@ namespace PowerForensics.HFSPlus
         /// </summary>
         public readonly byte[] NextCatalogId;
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -134,7 +129,6 @@ namespace PowerForensics.HFSPlus
         /// 
         /// </summary>
         public readonly ulong EncodingBitmap;
-
 
         /// <summary>
         /// 
@@ -175,7 +169,6 @@ namespace PowerForensics.HFSPlus
         /// 
         /// </summary>
         public readonly byte[] FinderInfoArray7;
-
 
         /// <summary>
         /// 

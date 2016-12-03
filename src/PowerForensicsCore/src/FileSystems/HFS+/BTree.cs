@@ -312,14 +312,8 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string VolumeName;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string FileName;
 
         /// <summary>
@@ -367,14 +361,6 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static NodeDescriptor Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new NodeDescriptor(bytes, offset, volumeName, fileName);
@@ -497,14 +483,8 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string VolumeName;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string FileName;
 
         /// <summary>
@@ -599,14 +579,6 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static HeaderRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new HeaderRecord(bytes, offset, volumeName, fileName);
@@ -671,12 +643,6 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static UserDataRecord Get(byte[] bytes, int offset)
         {
             return new UserDataRecord(bytes, offset);
@@ -700,19 +666,10 @@ namespace PowerForensics.HFSPlus.BTree
     {
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal string VolumeName;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal string FileName;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal ushort KeyLength;
 
         /// <summary>
@@ -729,12 +686,6 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static string GetHfsString(byte[] bytes, int offset)
         {
             ushort length = Helper.SwapEndianness(BitConverter.ToUInt16(bytes, offset));
@@ -774,14 +725,6 @@ namespace PowerForensics.HFSPlus.BTree
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static PointerRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new PointerRecord(bytes, offset, volumeName, fileName);
@@ -895,12 +838,6 @@ namespace PowerForensics.HFSPlus.BTree
             return new DataRecord(bytes, offset, volumeName, fileName);
         }*/
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static RECORD_TYPE GetRecordType(byte[] bytes, int offset)
         {
             ushort keyLength = Helper.SwapEndianness(BitConverter.ToUInt16(bytes, offset));

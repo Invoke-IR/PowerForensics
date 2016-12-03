@@ -59,9 +59,6 @@ namespace PowerForensics.Fat
 
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly string Volume;
 
         /// <summary>
@@ -79,9 +76,6 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly bool Deleted;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly FILE_ATTR DIR_Attribute;
 
         /// <summary>
@@ -94,19 +88,10 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly bool Hidden;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly byte DIR_CreationTimeTenth;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_CreationTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_CreationDate;
 
         /// <summary>
@@ -114,9 +99,6 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly DateTime CreationTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_LastAccessDate;
 
         /// <summary>
@@ -124,19 +106,10 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly DateTime AccessTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_FirstClusterHI;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_WriteTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_WriteDate;
 
         /// <summary>
@@ -144,9 +117,6 @@ namespace PowerForensics.Fat
         /// </summary>
         public readonly DateTime WriteTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort DIR_FirstClusterLO;
 
         /// <summary>
@@ -240,15 +210,6 @@ namespace PowerForensics.Fat
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="index"></param>
-        /// <param name="volume"></param>
-        /// <param name="list"></param>
-        /// <param name="directoryName"></param>
-        /// <returns></returns>
         internal static DirectoryEntry Get(byte[] bytes, int index, string volume, List<LongDirectoryEntry> list, string directoryName)
         {
             return new DirectoryEntry(bytes, index, volume, list, directoryName);
@@ -278,13 +239,6 @@ namespace PowerForensics.Fat
             return entryList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="volume"></param>
-        /// <param name="directoryName"></param>
-        /// <returns></returns>
         private static DirectoryEntry[] GetInstances(byte[] bytes, string volume, string directoryName)
         {
             List<DirectoryEntry> list = new List<DirectoryEntry>();
@@ -336,11 +290,6 @@ namespace PowerForensics.Fat
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <returns></returns>
         private static DirectoryEntry[] GetRootDirectory(string volume)
         {
             string volLetter = Helper.GetVolumeLetter(volume);
@@ -354,12 +303,6 @@ namespace PowerForensics.Fat
             return GetInstances(bytes, volume, volLetter);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
         private static string GetShortName(byte[] bytes, int index)
         {
             string name = Encoding.ASCII.GetString(bytes, 0 + index, 8).TrimEnd();
@@ -377,13 +320,6 @@ namespace PowerForensics.Fat
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="FileName"></param>
-        /// <param name="list"></param>
-        /// <param name="directoryName"></param>
-        /// <returns></returns>
         private static string GetLongName(string FileName, List<LongDirectoryEntry> list, string directoryName)
         {
             // Check if there are actually Long Name Entires
@@ -405,12 +341,6 @@ namespace PowerForensics.Fat
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
         private static bool TestIfFree(byte[] bytes, int index)
         {
             if (bytes[0 + index] == 0xE5)

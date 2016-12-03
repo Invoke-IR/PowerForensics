@@ -304,9 +304,6 @@ namespace PowerForensics.HFSPlus
     {
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ushort Flags;
 
         /// <summary>
@@ -403,14 +400,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static CatalogFolderRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new CatalogFolderRecord(bytes, offset, volumeName, fileName);
@@ -559,14 +548,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static CatalogFileRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new CatalogFileRecord(bytes, offset, volumeName, fileName);
@@ -637,14 +618,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static CatalogThread Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new CatalogThread(bytes, offset, volumeName, fileName);
@@ -887,12 +860,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static BSDInfo Get(byte[] bytes, int offset)
         {
             return new BSDInfo(bytes, offset);
@@ -946,12 +913,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static Point Get(byte[] bytes, int offset)
         {
             return new Point(bytes, offset);
@@ -1003,12 +964,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static Rect Get(byte[] bytes, int offset)
         {
             return new Rect(bytes, offset);
@@ -1066,12 +1021,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static FileInfo Get(byte[] bytes, int offset)
         {
             return new FileInfo(bytes, offset);
@@ -1111,12 +1060,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static ExtendedFileInfo Get(byte[] bytes, int offset)
         {
             return new ExtendedFileInfo(bytes, offset);
@@ -1162,12 +1105,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static FolderInfo Get(byte[] bytes, int offset)
         {
             return new FolderInfo(bytes, offset);
@@ -1213,12 +1150,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
         internal static ExtendedFolderInfo Get(byte[] bytes, int offset)
         {
             return new ExtendedFolderInfo(bytes, offset);

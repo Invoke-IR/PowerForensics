@@ -96,8 +96,11 @@ namespace PowerForensics.Registry
         public readonly SECURITY_KEY_CONTROLS Control;
 
         internal readonly uint OwnerOffset;
+
         internal readonly uint GroupOffset;
+
         internal readonly uint SACLOffset;
+
         internal readonly uint DACLOffset;
 
         /// <summary>

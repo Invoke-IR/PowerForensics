@@ -64,35 +64,17 @@ namespace PowerForensics.Fat
             return new FileAllocationTableEntry(sector, endSector);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="sector"></param>
-        /// <returns></returns>
         private static int parseFat12(byte[] bytes, int sector)
         {
             return 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="sector"></param>
-        /// <returns></returns>
         private static int parseFat16(byte[] bytes, int sector)
         {
 
             return 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="sector"></param>
-        /// <returns></returns>
         private static int parseFat32(byte[] bytes, int sector)
         {
             List<int> list = new List<int>();

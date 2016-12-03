@@ -39,13 +39,6 @@ namespace PowerForensics.Registry
 
         #region Factory
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="subKeyListBytes"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
         internal static List Factory(byte[] bytes, byte[] subKeyListBytes, string type)
         {
             if (type == "lf")

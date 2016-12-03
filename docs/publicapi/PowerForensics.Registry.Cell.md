@@ -5,8 +5,4 @@
 
 ## Fields
 
-### Size
-
 ### Allocated
-
-### Signature

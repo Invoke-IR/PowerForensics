@@ -62,9 +62,6 @@ namespace PowerForensics.Registry
         /// </summary>
         public readonly string HivePath;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly NAMED_KEY_FLAGS Flags;
 
         /// <summary>
@@ -72,9 +69,6 @@ namespace PowerForensics.Registry
         /// </summary>
         public readonly DateTime WriteTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly uint ParentKeyOffset;
 
         /// <summary>
@@ -87,14 +81,8 @@ namespace PowerForensics.Registry
         /// </summary>
         public readonly uint NumberOfVolatileSubKeys;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly int SubKeysListOffset;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly int VolatileSubKeysListOffset;
 
         /// <summary>
@@ -102,49 +90,22 @@ namespace PowerForensics.Registry
         /// </summary>
         public readonly uint NumberOfValues;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly int ValuesListOffset;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly int SecurityKeyOffset;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly int ClassNameOffset;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly uint LargestSubKeyNameSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly uint LargestSubKeyClassNameSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly uint LargestValueNameSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly uint LargestValueDataSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly ushort KeyNameSize;
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly ushort ClassNameSize;
 
         /// <summary>
@@ -240,13 +201,6 @@ namespace PowerForensics.Registry
             return NamedKey.Get(RegistryHelper.GetHiveBytes(path), path, key.TrimEnd('\\'));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
         internal static NamedKey Get(byte[] bytes, string path, string key)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
@@ -297,25 +251,12 @@ namespace PowerForensics.Registry
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
         internal static NamedKey[] GetInstances(byte[] bytes, string path)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
             return hiveroot.GetSubKeys();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
         internal static NamedKey[] GetInstances(byte[] bytes, string path, string key)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
@@ -362,13 +303,6 @@ namespace PowerForensics.Registry
             return GetInstances(bytes, hiveroot, true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="nk"></param>
-        /// <param name="recurse"></param>
-        /// <returns></returns>
         private static NamedKey[] GetInstances(byte[] bytes, NamedKey nk, bool recurse)
         {
             List<NamedKey> keyList = new List<NamedKey>();
@@ -386,11 +320,6 @@ namespace PowerForensics.Registry
             return keyList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
         private static bool isAllocated(int size)
         {
             if (size >= 0)
@@ -423,11 +352,6 @@ namespace PowerForensics.Registry
             throw new Exception(string.Format("The key '{0}' has no associated values", this.FullName));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         internal ValueKey[] GetValues(byte[] bytes)
         {
             if (NumberOfValues > 0)
@@ -465,11 +389,6 @@ namespace PowerForensics.Registry
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         internal NamedKey[] GetSubKeys(byte[] bytes)
         {
             if (NumberOfSubKeys > 0)
@@ -505,11 +424,6 @@ namespace PowerForensics.Registry
             return GetSecurityKey(bytes);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         internal SecurityDescriptor GetSecurityKey(byte[] bytes)
         {
             return (new SecurityKey(Helper.GetSubArray(bytes, SecurityKeyOffset, Math.Abs(BitConverter.ToInt32(bytes, SecurityKeyOffset))))).Descriptor;

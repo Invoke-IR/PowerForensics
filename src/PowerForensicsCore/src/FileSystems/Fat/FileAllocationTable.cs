@@ -21,12 +21,6 @@ namespace PowerForensics.Fat
             return GetBytes(volume, VolumeBootRecord.Get(volume) as FatVolumeBootRecord);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="volume"></param>
-        /// <param name="vbr"></param>
-        /// <returns></returns>
         internal static byte[] GetBytes(string volume, FatVolumeBootRecord vbr)
         {
             long DirectoryEntryOffset = vbr.ReservedSectors * vbr.BytesPerSector;

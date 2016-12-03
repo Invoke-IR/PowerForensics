@@ -352,9 +352,6 @@ namespace PowerForensics.EventLog
 
         #region Properties
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal readonly BinXmlTemplateInstance TemplateInstance;
 
         /// <summary>

@@ -42,14 +42,3 @@
 ### BS_VolumeLabel
 
 ### BS_FileSystemType
-
-## Methods
-
-
-### GetFatType(System.Byte[])
-
-> #### Parameters
-> **bytes:** 
-
-> #### Return value
-> 

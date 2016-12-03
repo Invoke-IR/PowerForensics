@@ -83,9 +83,10 @@ namespace PowerForensics.HFSPlus
         #region Properties
 
         private readonly string VolumeName;
-        private readonly string FileName;
-        private readonly ushort KeyLength;
 
+        private readonly string FileName;
+
+        private readonly ushort KeyLength;
 
         /// <summary>
         /// 
@@ -128,14 +129,6 @@ namespace PowerForensics.HFSPlus
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="volumeName"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         internal static ExtentsOverflowRecord Get(byte[] bytes, int offset, string volumeName, string fileName)
         {
             return new ExtentsOverflowRecord(bytes, offset, volumeName, fileName);

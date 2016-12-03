@@ -167,11 +167,6 @@ namespace PowerForensics.Fat
 
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         private static string GetFatType(byte[] bytes)
         {
             ushort BPB_BytesPerSector = BitConverter.ToUInt16(bytes, 11);

@@ -112,8 +112,11 @@ namespace PowerForensics.Registry
         public readonly string Key;
 
         internal readonly ushort NameLength;
+
         internal readonly uint DataLength;
+
         internal readonly bool ResidentData;
+
         internal readonly uint DataOffset;
         
         /// <summary>
@@ -257,14 +260,6 @@ namespace PowerForensics.Registry
             throw new Exception(string.Format("Cannot find value '{0}' as a value of '{1}' in the '{2}' hive because it does not exist.", val, key, path));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        /// <returns></returns>
         internal static ValueKey Get(byte[] bytes, string path, string key, string val)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
@@ -329,13 +324,6 @@ namespace PowerForensics.Registry
             return nk.GetValues(bytes);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="path"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
         internal static ValueKey[] GetInstances(byte[] bytes, string path, string key)
         {
             NamedKey hiveroot = RegistryHelper.GetRootKey(bytes, path);
@@ -372,11 +360,6 @@ namespace PowerForensics.Registry
             return this.GetData(RegistryHelper.GetHiveBytes(this.HivePath));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns></returns>
         internal object GetData(byte[] bytes)
         {
             if (this.ResidentData)
@@ -425,19 +408,10 @@ namespace PowerForensics.Registry
         #endregion Instance Methods
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     class BigData
     {
         #region Static Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="vk"></param>
-        /// <returns></returns>
         internal static byte[] Get(byte[] bytes, ValueKey vk)
         {
             List<byte> contents = new List<byte>();
