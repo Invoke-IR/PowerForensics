@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="300" height="300">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue_lowres.png?raw=true" width="300" height="300">
 </p>
 
 <h1 align="center">PowerForensics - PowerShell Digital Forensics</h1>
@@ -40,5 +40,5 @@ All of this module's cmdlets are built on this public API and tasks can easily b
 API documentation can be found <a href="https://powerforensics.readthedocs.io/en/latest/publicapi/">here</a>.
 
 <p align="center">
-  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue.png?raw=true" width="300" height="300">
+  <img src="https://github.com/Invoke-IR/PowerForensics/blob/master/Images/powerforensic_square_blue_lowres.png?raw=true" width="300" height="300">
 </p>
