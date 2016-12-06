@@ -1,4 +1,0 @@
-﻿
-
-
-# Ext.BlockGroupDescriptor

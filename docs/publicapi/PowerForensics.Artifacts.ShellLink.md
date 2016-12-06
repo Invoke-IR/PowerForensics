@@ -1,4 +1,0 @@
-﻿
-
-
-# Artifacts.ShellLink

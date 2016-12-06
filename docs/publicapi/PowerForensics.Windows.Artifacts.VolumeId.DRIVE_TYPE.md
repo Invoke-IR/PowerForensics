@@ -1,0 +1,20 @@
+﻿
+
+
+# Windows.Artifacts.VolumeId.DRIVE_TYPE
+
+## Fields
+
+### DRIVE_UNKNOWN
+
+### DRIVE_NO_ROOT_DIR
+
+### DRIVE_REMOVABLE
+
+### DRIVE_FIXED
+
+### DRIVE_REMOTE
+
+### DRIVE_CDROM
+
+### DRIVE_RAMDISK

@@ -1,4 +1,0 @@
-﻿
-
-
-# EventLog.BinXmlAttributeList

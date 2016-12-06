@@ -1,8 +1,0 @@
-﻿
-
-
-# Registry.Cell
-
-## Fields
-
-### Allocated

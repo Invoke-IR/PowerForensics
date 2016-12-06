@@ -1,8 +1,0 @@
-﻿
-
-
-# Artifacts.ItemId
-
-## Fields
-
-### Data

@@ -1,4 +1,0 @@
-﻿
-
-
-# HFSPlus.BSDInfo

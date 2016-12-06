@@ -1,8 +1,0 @@
-﻿
-
-
-# Ntfs.IndexAllocation
-
-## Fields
-
-### Entries

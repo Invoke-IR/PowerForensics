@@ -1,8 +1,0 @@
-﻿
-
-
-# Artifacts.IdList
-
-## Fields
-
-### ItemIdList

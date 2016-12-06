@@ -1,0 +1,4 @@
+﻿
+
+
+# Windows.Registry.SecurityDescriptor

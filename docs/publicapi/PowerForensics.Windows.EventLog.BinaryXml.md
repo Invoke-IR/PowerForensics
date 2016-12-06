@@ -1,0 +1,4 @@
+﻿
+
+
+# Windows.EventLog.BinaryXml

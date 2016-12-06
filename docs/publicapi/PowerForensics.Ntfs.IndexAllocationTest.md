@@ -1,8 +1,0 @@
-﻿
-
-
-# Ntfs.IndexAllocationTest
-
-## Fields
-
-### Entries
