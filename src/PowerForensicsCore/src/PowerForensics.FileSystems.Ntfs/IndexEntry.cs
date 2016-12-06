@@ -21,16 +21,6 @@ namespace PowerForensics.FileSystems.Ntfs
         /// </summary>
         public bool Directory;
 
-        internal ushort Size;
-
-        internal ushort StreamSize;
-
-        internal byte Flags;
-
-        internal byte[] Stream;
-
-        internal FileName Entry;
-
         /// <summary>
         /// 
         /// </summary>
@@ -40,6 +30,16 @@ namespace PowerForensics.FileSystems.Ntfs
         /// 
         /// </summary>
         public string FullName;
+
+        internal ushort Size;
+
+        internal ushort StreamSize;
+
+        internal byte Flags;
+
+        internal byte[] Stream;
+
+        internal FileName Entry;
         
         #endregion Properties
 

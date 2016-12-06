@@ -1,7 +1,7 @@
 ﻿
 
 
-# FileSystems.Ntfs.FileRecord.FILE_RECORD_FLAG
+# FileSystems.Ntfs.FILE_RECORD_FLAG
 
 ## Fields
 

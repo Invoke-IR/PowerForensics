@@ -9,29 +9,25 @@ namespace PowerForensics.FileSystems.Ntfs
     /// <summary>
     /// 
     /// </summary>
-    public class FileRecord
+    [Flags]
+    public enum FILE_RECORD_FLAG
     {
-        #region Enums
+        /// <summary>
+        /// File record is in use
+        /// </summary>
+        INUSE = 0x01,
 
         /// <summary>
-        /// 
+        /// File record is a directory
         /// </summary>
-        [Flags]
-        public enum FILE_RECORD_FLAG
-        {
-            /// <summary>
-            /// File record is in use
-            /// </summary>
-            INUSE = 0x01,
+        DIR = 0x02
+    }
 
-            /// <summary>
-            /// File record is a directory
-            /// </summary>
-            DIR = 0x02
-        }
-
-        #endregion Enums
-
+    /// <summary>
+    /// 
+    /// </summary>
+    public class FileRecord
+    {
         #region Properties
 
         /// <summary>
@@ -39,8 +35,6 @@ namespace PowerForensics.FileSystems.Ntfs
         /// </summary>
         public readonly string VolumePath;
 
-
-        // File Record Header
         /// <summary>
         /// Offset of Update Sequence
         /// </summary>

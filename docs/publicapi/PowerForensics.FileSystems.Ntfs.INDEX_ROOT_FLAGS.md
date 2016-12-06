@@ -1,7 +1,7 @@
 ﻿
 
 
-# FileSystems.Ntfs.IndexRoot.INDEX_ROOT_FLAGS
+# FileSystems.Ntfs.INDEX_ROOT_FLAGS
 
 ## Fields
 

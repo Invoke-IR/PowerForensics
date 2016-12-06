@@ -28,7 +28,10 @@ $PSModule.OnRemove = {
 
 function Add-PowerForensicsType
 {
-
+    if (('PowerForensics.BootSector.MasterBootRecord' -as [Type]) -eq $null)
+    {
+        # Add the module in memory
+    }
 }
 
 if ($PSVersionTable.PSVersion.Major -gt 2)
@@ -313,10 +316,7 @@ if ($PSVersionTable.PSVersion.Major -gt 2)
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -398,10 +398,7 @@ function ConvertTo-Gource
     
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -435,7 +432,7 @@ function Copy-ForensicFile
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
+        if (('PowerForensics.BootSector.MasterBootRecord' -as [Type]) -eq $null)
         {
             Add-PowerForensicsType
         }
@@ -445,8 +442,8 @@ function Copy-ForensicFile
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByPath { $record = FileRecord.Get($Path, $true); break }
-            ByVolume { $record = FileRecord.Get($VolumeName, $Index, $true); break }
+            ByPath { $record = [PowerForensics.FileSystems.Ntfs.FileRecord]::Get($Path, $true); break }
+            ByVolume { $record = [PowerForensics.FileSystems.Ntfs.FileRecord]::Get($VolumeName, $Index, $true); break }
         }
 
         # If user specifies the name of a stream then copy just that stream
@@ -477,18 +474,15 @@ function Get-ForensicAlternateDataStream
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Ntfs.AlternateDataStream]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Ntfs.AlternateDataStream]::GetInstancesByPath($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.AlternateDataStream]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.AlternateDataStream]::GetInstancesByPath($Path)); break }
         }
     }
 }
@@ -510,18 +504,15 @@ function Get-ForensicAmcache
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.Amcache]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.Amcache]::GetInstancesByPath($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.Amcache]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.Amcache]::GetInstancesByPath($HivePath)); break }
         }
     }
 }
@@ -543,18 +534,15 @@ function Get-ForensicAttrDef
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByitVolume { Write-Output ([PowerForensics.Ntfs.AttrDef]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Ntfs.AttrDef]::GetInstancesByPath($Path)); break }
+            ByitVolume { Write-Output ([PowerForensics.FileSystems.Ntfs.AttrDef]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.FileSystems.Ntfs.AttrDef]::GetInstancesByPath($Path)); break }
         }
     }
 }
@@ -579,18 +567,15 @@ function Get-ForensicBitmap
     )
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Object ([PowerForensics.Ntfs.Bitmap]::Get($VolumeName, $Cluster)); break }
-            ByPath { Write-Object ([PowerForensics.Ntfs.Bitmap]::GetByPath($Path, $Cluster)); break }
+            ByVolume { Write-Object ([PowerForensics.FileSystems.Ntfs.Bitmap]::Get($VolumeName, $Cluster)); break }
+            ByPath { Write-Object ([PowerForensics.FileSystems.Ntfs.Bitmap]::GetByPath($Path, $Cluster)); break }
         }
     }
 }
@@ -612,32 +597,29 @@ function Get-ForensicBootSector
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
-        $mbr = [PowerForensics.MasterBootRecord]::Get($Path)
+        $mbr = [PowerForensics.BootSector.MasterBootRecord]::Get($Path)
 
         if ($mbr.PartitionTable[0].SystemId -eq 'EFI_GPT_DISK')
         {
             if ($AsBytes)
             {
-                Write-Output ([PowerForensics.GuidPartitionTable]::GetBytes($Path))
+                Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::GetBytes($Path))
             }
             else
             {
-                Write-Output ([PowerForensics.GuidPartitionTable]::Get($Path))
+                Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::Get($Path))
             }
         }
         else
         {
             if ($AsBytes)
             {
-                Write-Output ([PowerForensics.MasterBootRecord]::GetBytes($Path))
+                Write-Output ([PowerForensics.BootSector.MasterBootRecord]::GetBytes($Path))
             }
             else
             {
@@ -660,10 +642,7 @@ function Get-ForensicChildItem
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -682,11 +661,11 @@ function Get-ForensicChildItem
                 }
                 FAT
                 {
-                    [PowerForensics.Fat.DirectoryEntry]::GetChildItem($Path)
+                    [PowerForensics.FileSystems.Fat.DirectoryEntry]::GetChildItem($Path)
                 }
                 NTFS
                 {
-                    [PowerForensics.Ntfs.IndexEntry]::GetInstances($Path)
+                    [PowerForensics.FileSystems.Ntfs.IndexEntry]::GetInstances($Path)
                 }
             }
         }
@@ -732,10 +711,7 @@ function Get-ForensicContent
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -780,12 +756,12 @@ function Get-ForensicContent
 
         if ($PSBoundParameters.ContainsKey('Path'))
         {
-            $contentArray = [PowerForensics.Ntfs.FileRecord]::Get($filePath, $true).GetContent()
+            $contentArray = [PowerForensics.FileSystems.Ntfs.FileRecord]::Get($filePath, $true).GetContent()
         }
 
         elseif($PSBoundParameters.ContainsKey('Index'))
         {
-            $contentArray = [PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetContent()
+            $contentArray = [PowerForensics.FileSystems.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetContent()
         }
 
         if ($asBytes)
@@ -844,18 +820,15 @@ function Get-ForensicEventLog
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.EventLog.EventRecord]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.EventLog.EventRecord]::Get($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.EventLog.EventRecord]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.EventLog.EventRecord]::Get($Path)); break }
         }
     }
 }
@@ -877,18 +850,15 @@ function Get-ForensicExplorerTypedPath
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.TypedPaths]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.TypedPaths]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.TypedPaths]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.TypedPaths]::Get($HivePath)); break }
         }
     }
 }
@@ -923,10 +893,7 @@ function Get-ForensicFileRecord
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -939,16 +906,16 @@ function Get-ForensicFileRecord
                 {
                     if ($AsBytes)
                     {
-                        Write-Output ([PowerForensics.Ntfs.FileRecord]::GetRecordBytes($VolumeName, $Index));
+                        Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::GetRecordBytes($VolumeName, $Index));
                     }
                     else
                     {
-                        Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index));
+                        Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::Get($VolumeName, $Index));
                     }
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.FileRecord]::GetInstances($VolumeName));
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::GetInstances($VolumeName));
                 }
                 break;
             }
@@ -956,11 +923,11 @@ function Get-ForensicFileRecord
             {
                 if ($AsBytes)
                 {
-                    Write-Output ([PowerForensics.Ntfs.FileRecord]::GetRecordBytes($Path));
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::GetRecordBytes($Path));
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($Path, $false));
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::Get($Path, $false));
                 }
                 break;
             }
@@ -978,7 +945,7 @@ function Get-ForensicFileRecord
             }
             ByMftPath
             {
-                Write-Output ([PowerForensics.Ntfs.FileRecord]::GetInstancesByPath($MftPath));
+                Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::GetInstancesByPath($MftPath));
                 break;
             }
         }
@@ -998,15 +965,12 @@ function Get-ForensicFileRecordIndex
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
-        Write-Output ([PowerForensics.Ntfs.IndexEntry]::Get($Path).RecordNumber)
+        Write-Output ([PowerForensics.FileSystems.Ntfs.IndexEntry]::Get($Path).RecordNumber)
     }
 }
 
@@ -1031,10 +995,7 @@ function Get-ForensicFileSlack
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1045,11 +1006,11 @@ function Get-ForensicFileSlack
             {
                 if ($PSBoundParameters.ContainsKey('Index'))
                 {
-                    Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetSlack())
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetSlack())
                 }
                 else
                 {
-                    foreach ($record in ([PowerForensics.Ntfs.FileRecord]::GetInstances($VolumeName)))
+                    foreach ($record in ([PowerForensics.FileSystems.Ntfs.FileRecord]::GetInstances($VolumeName)))
                     {
                         Write-Output ($record.GetSlack())
                     }
@@ -1058,7 +1019,7 @@ function Get-ForensicFileSlack
             }
             ByPath
             {
-                Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($Path, $true).GetSlack())
+                Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::Get($Path, $true).GetSlack())
                 break
             }
         }
@@ -1082,21 +1043,18 @@ function Get-ForensicGuidPartitionTable
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         if ($AsBytes)
         {
-            Write-Output ([PowerForensics.GuidPartitionTable]::GetBytes($Path))
+            Write-Output ([PowerForensics.BootSectors.GuidPartitionTable]::GetBytes($Path))
         }
         else
         {
-            Write-Output ([PowerForensics.GuidPartitionTable]::Get($Path))
+            Write-Output ([PowerForensics.BootSectors.GuidPartitionTable]::Get($Path))
         }
     }
 }
@@ -1118,21 +1076,18 @@ function Get-ForensicMasterBootRecord
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         if ($AsBytes)
         {
-            Write-Output ([PowerForensics.MasterBootRecord]::GetBytes($Path))
+            Write-Output ([PowerForensics.BootSectors.MasterBootRecord]::GetBytes($Path))
         }
         else
         {
-            Write-Output ([PowerForensics.MasterBootRecord]::Get($Path))
+            Write-Output ([PowerForensics.BootSectors.MasterBootRecord]::Get($Path))
         }
     }
 }
@@ -1162,10 +1117,7 @@ function Get-ForensicMftSlack
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1176,11 +1128,11 @@ function Get-ForensicMftSlack
             {
                 if ($PSBoundParameters.ContainsKey('Index'))
                 {
-                    Write-Output ([PowerForensics.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetMftSlack())
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.FileRecord]::Get($VolumeName, $Index, $true).GetMftSlack())
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.MasterFileTable]::GetSlack($VolumeName))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.MasterFileTable]::GetSlack($VolumeName))
                 }
                 break
             }
@@ -1215,18 +1167,15 @@ function Get-ForensicNetworkList
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.NetworkList]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.NetworkList]::GetInstancesByPath($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.SoftwareHive.NetworkList]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.SoftwareHive.NetworkList]::GetInstancesByPath($HivePath)); break }
         }
     }
 }
@@ -1248,18 +1197,15 @@ function Get-ForensicOfficeFileMru
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.FileMRU]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.FileMRU]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.FileMRU]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.FileMRU]::Get($HivePath)); break }
         }
     }
 }
@@ -1281,18 +1227,15 @@ function Get-ForensicOfficeOutlookCatalog
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.OutlookCatalog]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.OutlookCatalog]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.OutlookCatalog]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.OutlookCatalog]::Get($HivePath)); break }
         }
     }
 }
@@ -1314,18 +1257,15 @@ function Get-ForensicsOfficePlaceMru
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.PlaceMRU]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.PlaceMRU]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.PlaceMRU]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.PlaceMRU]::Get($HivePath)); break }
         }
     }
 }
@@ -1347,18 +1287,15 @@ function Get-ForensicOfficeTrustRecord
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.TrustRecord]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.MicrosoftOffice.TrustRecord]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.TrustRecord]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.MicrosoftOffice.TrustRecord]::Get($HivePath)); break }
         }
     }
 }
@@ -1376,19 +1313,16 @@ function Get-ForensicPartitionTable
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
-        $mbr = [PowerForensics.MasterBootRecord]::Get($Path)
+        $mbr = [PowerForensics.BootSector.MasterBootRecord]::Get($Path)
 
         if ($mbr.PartitionTable[0].SystemId -eq 'EFI_GPT_DISK')
         {
-            Write-Output ([PowerForensics.GuidPartitionTable]::Get($Path).GetPartitionTable())
+            Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::Get($Path).GetPartitionTable())
         }
         else
         {
@@ -1418,10 +1352,7 @@ function Get-ForensicPrefetch
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1432,11 +1363,11 @@ function Get-ForensicPrefetch
             {
                 if ($Fast)
                 {
-                    Write-Output ([PowerForensics.Artifacts.Prefetch]::GetInstances($VolumeName, $Fast))
+                    Write-Output ([PowerForensics.Windows.Artifacts.Prefetch]::GetInstances($VolumeName, $Fast))
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Artifacts.Prefetch]::GetInstances($VolumeName))
+                    Write-Output ([PowerForensics.Windows.Artifacts.Prefetch]::GetInstances($VolumeName))
                 }
                 break
             }
@@ -1445,12 +1376,12 @@ function Get-ForensicPrefetch
                 if ($Fast)
                 {
                     # Output the Prefetch object for the corresponding file
-                    Write-Output ([PowerForensics.Artifacts.Prefetch]::Get($Path, $Fast))
+                    Write-Output ([PowerForensics.Windows.Artifacts.Prefetch]::Get($Path, $Fast))
                 }
                 else
                 {
                     # Output the Prefetch object for the corresponding file
-                    Write-Output ([PowerForensics.Artifacts.Prefetch]::Get($Path))
+                    Write-Output ([PowerForensics.Windows.Artifacts.Prefetch]::Get($Path))
                 }
                 break
             }
@@ -1475,18 +1406,15 @@ function Get-ForensicRecentFileCache
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.RecentFileCache]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.RecentFileCache]::GetInstancesByPath($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.RecentFileCache]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.RecentFileCache]::GetInstancesByPath($Path)); break }
         }
     }
 }
@@ -1512,17 +1440,14 @@ function Get-ForensicRegistryKey
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         if ($Recurse)
         {
-            Write-Output ([PowerForensics.Registry.NamedKey]::GetInstancesRecurse($HivePath))
+            Write-Output ([PowerForensics.Windows.Registry.NamedKey]::GetInstancesRecurse($HivePath))
         }
         else
         {
@@ -1531,7 +1456,7 @@ function Get-ForensicRegistryKey
                 $Key = $null
             }
 
-            Write-Output ([PowerForensics.Registry.NamedKey]::GetInstances($HivePath, $Key))
+            Write-Output ([PowerForensics.Windows.Registry.NamedKey]::GetInstances($HivePath, $Key))
         }
     }
 }
@@ -1557,10 +1482,7 @@ function Get-ForensicRegistryValue
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1572,11 +1494,11 @@ function Get-ForensicRegistryValue
 
         if ($PSBoundParameters.ContainsKey('Value'))
         {
-            Write-Output ([PowerForensics.Registry.ValueKey]::Get($HivePath, $Key, $Value))
+            Write-Output ([PowerForensics.Windows.Registry.ValueKey]::Get($HivePath, $Key, $Value))
         }
         else
         {
-            foreach ($vk in ([PowerForensics.Registry.ValueKey]::GetInstances($HivePath, $Key)))
+            foreach ($vk in ([PowerForensics.Windows.Registry.ValueKey]::GetInstances($HivePath, $Key)))
             {
                 Write-Output $vk
             }
@@ -1601,18 +1523,15 @@ function Get-ForensicRunMru
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.RunMRU]::GetInstances($VolumeName), $true); break }
-            ByPath {Write-Output ([PowerForensics.Artifacts.RunMRU]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.RunMRU]::GetInstances($VolumeName), $true); break }
+            ByPath {Write-Output ([PowerForensics.Windows.Artifacts.UserHive.RunMRU]::Get($HivePath)); break }
         }
     }
 }
@@ -1634,18 +1553,15 @@ function Get-ForensicRunKey
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.Persistence.RunKey]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.Persistence.RunKey]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.RunKey]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.RunKey]::Get($HivePath)); break }
         }
     }
 }
@@ -1666,18 +1582,15 @@ function Get-ForensicScheduledJob
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.ScheduledJob]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.ScheduledJob]::Get($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.ScheduledJob]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.ScheduledJob]::Get($Path)); break }
         }
     }
 }
@@ -1698,18 +1611,15 @@ function Get-ForensicShellLink
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.ShellLink]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.ShellLink]::Get($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.ShellLink]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.ShellLink]::Get($Path)); break }
         }
     }
 }
@@ -1728,20 +1638,18 @@ function Get-ForensicShimcache
         [string]
         $HivePath
     )
+
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output  ([PowerForensics.Artifacts.Shimcache]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.Shimcache]::GetInstancesByPath($HivePath)); break }
+            ByVolume { Write-Output  ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.Shimcache]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.ApplicationCompatibilityCache.Shimcache]::GetInstancesByPath($HivePath)); break }
         }
     }
 }
@@ -1763,18 +1671,15 @@ function Get-ForensicSid
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.Sid]::Get($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.Sid]::GetByPath($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.SamHive.Sid]::Get($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.SamHive.Sid]::GetByPath($HivePath)); break }
         }
     }
 }
@@ -1791,10 +1696,7 @@ function Get-ForensicTimeline
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1817,20 +1719,18 @@ function Get-ForensicTimezone
         [string]
         $HivePath
     )
+
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.Timezone]::Get($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.Timezone]::GetByPath($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.SystemHive.Timezone]::Get($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.SystemHive.Timezone]::GetByPath($HivePath)); break }
         }
     }
 }
@@ -1852,18 +1752,15 @@ function Get-ForensicTypedUrl
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.TypedUrls]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.TypedUrls]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.TypedUrls]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.TypedUrls]::Get($HivePath)); break }
         }
     }
 }
@@ -1885,15 +1782,12 @@ function Get-ForensicUnallocatedSpace
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
-        foreach ($b in [PowerForensics.Ntfs.Bitmap]::GetInstances($VolumeName))
+        foreach ($b in [PowerForensics.FileSystems.Ntfs.Bitmap]::GetInstances($VolumeName))
         {
             if (!($b.InUse))
             {
@@ -1920,18 +1814,15 @@ function Get-ForensicUserAssist
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.UserAssist]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.UserAssist]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.UserAssist]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.UserAssist]::Get($HivePath)); break }
         }
     }
 }
@@ -1957,10 +1848,7 @@ function Get-ForensicUsnJrnl
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -1971,11 +1859,11 @@ function Get-ForensicUsnJrnl
             {
                 if($PSBoundParameters.ContainsKey('Usn'))
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnl]::Get($VolumeName, $Usn))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnl]::Get($VolumeName, $Usn))
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnl]::GetInstances($VolumeName))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnl]::GetInstances($VolumeName))
                 }
                 break
             }
@@ -1983,11 +1871,11 @@ function Get-ForensicUsnJrnl
             {
                 if($PSBoundParameters.ContainsKey('Usn'))
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnl]::GetByPath($Path, $Usn))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnl]::GetByPath($Path, $Usn))
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnl]::GetInstancesByPath($Path))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnl]::GetInstancesByPath($Path))
                 }
                 break
             }
@@ -2016,10 +1904,7 @@ function Get-ForensicUsnJrnlInformation
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -2030,11 +1915,11 @@ function Get-ForensicUsnJrnlInformation
             {
                 if ($AsBytes)
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnlInformation]::GetBytes($VolumeName))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnlInformation]::GetBytes($VolumeName))
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnlInformation]::Get($VolumeName))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnlInformation]::Get($VolumeName))
                 }
                 break
             }
@@ -2042,11 +1927,11 @@ function Get-ForensicUsnJrnlInformation
             {
                 if ($AsBytes)
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnlInformation]::GetBytesByPath($Path))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnlInformation]::GetBytesByPath($Path))
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Ntfs.UsnJrnlInformation]::GetByPath($Path))
+                    Write-Output ([PowerForensics.FileSystems.Ntfs.UsnJrnlInformation]::GetByPath($Path))
                 }
                 break
             }
@@ -2075,10 +1960,7 @@ function Get-ForensicVolumeBootRecord
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
@@ -2089,11 +1971,11 @@ function Get-ForensicVolumeBootRecord
             {
                 if ($Asbytes)
                 {
-                    Write-Output ([PowerForensics.Generic.VolumeBootRecord]::GetBytes($VolumeName));
+                    Write-Output ([PowerForensics.FileSystems.VolumeBootRecord]::GetBytes($VolumeName));
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Generic.VolumeBootRecord]::Get($VolumeName));
+                    Write-Output ([PowerForensics.FileSystems.VolumeBootRecord]::Get($VolumeName));
                 }
                 break
             }
@@ -2101,11 +1983,11 @@ function Get-ForensicVolumeBootRecord
             {
                 if ($Asbytes)
                 {
-                    Write-Object ([PowerForensics.Generic.VolumeBootRecord]::GetBytesByPath($Path));
+                    Write-Object ([PowerForensics.FileSystems.VolumeBootRecord]::GetBytesByPath($Path));
                 }
                 else
                 {
-                    Write-Output ([PowerForensics.Generic.VolumeBootRecord]::GetByPath($Path));
+                    Write-Output ([PowerForensics.FileSystems.VolumeBootRecord]::GetByPath($Path));
                 }
                 break
             }
@@ -2130,18 +2012,15 @@ function Get-ForensicVolumeInformation
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Ntfs.VolumeInformation]::Get($VolumeName)); break }
-            ByPath { WriteOutput ([PowerForensics.Ntfs.VolumeInformation]::GetByPath($Path)); break }
+            ByVolume { Write-Output ([PowerForensics.FileSystems.Ntfs.VolumeInformation]::Get($VolumeName)); break }
+            ByPath { WriteOutput ([PowerForensics.FileSystems.Ntfs.VolumeInformation]::GetByPath($Path)); break }
         }
     }
 }
@@ -2164,18 +2043,15 @@ function Get-ForensicVolumeName
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Ntfs.VolumeName]::Get($VolumeName)) }
-            ByPath { Write-Output ([PowerForensics.Ntfs.VolumeName]::GetByPath($Path)); break}
+            ByVolume { Write-Output ([PowerForensics.FileSystems.Ntfs.VolumeName]::Get($VolumeName)) }
+            ByPath { Write-Output ([PowerForensics.FileSystems.Ntfs.VolumeName]::GetByPath($Path)); break}
         }
     }
 }
@@ -2197,18 +2073,15 @@ function Get-ForensicWindowsSearchHistory
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
         {
-            ByVolume { Write-Output ([PowerForensics.Artifacts.WordWheelQuery]::GetInstances($VolumeName)); break }
-            ByPath { Write-Output ([PowerForensics.Artifacts.WordWheelQuery]::Get($HivePath)); break }
+            ByVolume { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.WordWheelQuery]::GetInstances($VolumeName)); break }
+            ByPath { Write-Output ([PowerForensics.Windows.Artifacts.UserHive.WordWheelQuery]::Get($HivePath)); break }
         }
     }
 }
@@ -2241,10 +2114,7 @@ function Invoke-ForensicDD
 
     begin
     {
-        if (('PowerForensics.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
+        Add-PowerForensicsType
     }
 
     process 

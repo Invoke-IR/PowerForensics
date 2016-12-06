@@ -1,7 +1,7 @@
 ﻿
 
 
-# FileSystems.Ntfs.FileName.ATTR_FILENAME_FLAG
+# FileSystems.Ntfs.ATTR_FILENAME_FLAG
 
 ## Fields
 
