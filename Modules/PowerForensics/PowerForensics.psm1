@@ -31,7 +31,7 @@ function Add-PowerForensicsType
     if (('PowerForensics.BootSector.MasterBootRecord' -as [Type]) -eq $null)
     {
         # REPLACEMESTART
-        # Test
+
         # REPLACEMEEND
     }
 }

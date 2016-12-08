@@ -86,6 +86,7 @@ pages:
 - Get Involved: 'getinvolved.md'
 - PowerShell Module:
     - Installation: 'moduleinstall.md'
+    - Module Load Process: 'moduleload.md'
     - Cmdlets:`n
 "@
 

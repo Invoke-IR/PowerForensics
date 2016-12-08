@@ -3,15 +3,18 @@ environment:
   NuGetApiKey:
     secure: oqMFzG8F65K5l572V7VzlZIWU7xnSYDLtSXECJAAURrXe8M2+BAp9vHLT+1h1lR0
 
-# Allow WMF5 (i.e. PowerShellGallery functionality)
-os: WMF 5
-
 install:
   - cinst pester
 
 build: false
 
 test_script:
-  - ps: $res = Invoke-Pester -Path ".\Tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
+  - ps: $res = Invoke-Pester -Path ".Modules\PowerForensics\Tests" -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
   - ps: (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
   - ps: if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed."}
+
+notifications:
+  - provider: Slack
+    auth_token:
+      secure: GUAJLRNyO70bsW16NLdgHxrxq09/E1L/pgVtKcJh46ICmeAYK9rCYbKoYMc/aYAQAVcZChVDnTHBUDJAZBjy4o4iAwdkh7v4nudLoCtVIM8=
+    channel: '#github'
