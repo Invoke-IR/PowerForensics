@@ -30,7 +30,9 @@ function Add-PowerForensicsType
 {
     if (('PowerForensics.BootSector.MasterBootRecord' -as [Type]) -eq $null)
     {
-        # Add the module in memory
+        # REPLACEMESTART
+
+        # REPLACEMEEND
     }
 }
 
@@ -602,24 +604,24 @@ function Get-ForensicBootSector
 
     process 
     {
-        $mbr = [PowerForensics.BootSector.MasterBootRecord]::Get($Path)
+        $mbr = [PowerForensics.BootSectors.MasterBootRecord]::Get($Path)
 
         if ($mbr.PartitionTable[0].SystemId -eq 'EFI_GPT_DISK')
         {
             if ($AsBytes)
             {
-                Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::GetBytes($Path))
+                Write-Output ([PowerForensics.BootSectors.GuidPartitionTable]::GetBytes($Path))
             }
             else
             {
-                Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::Get($Path))
+                Write-Output ([PowerForensics.BootSectors.GuidPartitionTable]::Get($Path))
             }
         }
         else
         {
             if ($AsBytes)
             {
-                Write-Output ([PowerForensics.BootSector.MasterBootRecord]::GetBytes($Path))
+                Write-Output ([PowerForensics.BootSectors.MasterBootRecord]::GetBytes($Path))
             }
             else
             {
@@ -1318,11 +1320,11 @@ function Get-ForensicPartitionTable
 
     process 
     {
-        $mbr = [PowerForensics.BootSector.MasterBootRecord]::Get($Path)
+        $mbr = [PowerForensics.BootSectors.MasterBootRecord]::Get($Path)
 
         if ($mbr.PartitionTable[0].SystemId -eq 'EFI_GPT_DISK')
         {
-            Write-Output ([PowerForensics.BootSector.GuidPartitionTable]::Get($Path).GetPartitionTable())
+            Write-Output ([PowerForensics.BootSectors.GuidPartitionTable]::Get($Path).GetPartitionTable())
         }
         else
         {
