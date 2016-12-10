@@ -1,1 +1,1 @@
-![Module Load Flow Chart](img/PowerForensicsLoadFlowChart.PNG)
+![Module Load Flow Chart](img/PowerForensicsLoadFlowChart.png)
