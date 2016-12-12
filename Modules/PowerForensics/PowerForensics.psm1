@@ -49,7 +49,7 @@ function Add-PowerForensicsType
         $DeflatedStream = New-Object IO.Compression.DeflateStream([IO.MemoryStream][Convert]::FromBase64String($EncodedCompressedFile),[IO.Compression.CompressionMode]::Decompress)
         $UncompressedFileBytes = New-Object Byte[]($Length)
         $DeflatedStream.Read($UncompressedFileBytes, 0, $Length) | Out-Null
-        [Reflection.Assembly]::Load($UncompressedFileBytes)
+        [Reflection.Assembly]::Load($UncompressedFileBytes) | Out-Null
     }
 }
 
@@ -449,14 +449,6 @@ function Copy-ForensicFile
         $Destination
     )
 
-    begin
-    {
-        if (('PowerForensics.BootSector.MasterBootRecord' -as [Type]) -eq $null)
-        {
-            Add-PowerForensicsType
-        }
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -521,11 +513,6 @@ function Get-ForensicAmcache
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -550,11 +537,6 @@ function Get-ForensicAttrDef
         [string]
         $Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -584,10 +566,6 @@ function Get-ForensicBitmap
         [Int64]
         $Cluster
     )
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -613,11 +591,6 @@ function Get-ForensicBootSector
         [switch]
         $AsBytes
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -658,11 +631,6 @@ function Get-ForensicChildItem
         [string]
         $Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -727,11 +695,6 @@ function Get-ForensicContent
         [Int64]
         $Tail
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -837,11 +800,6 @@ function Get-ForensicEventLog
         $Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -866,11 +824,6 @@ function Get-ForensicExplorerTypedPath
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -909,11 +862,6 @@ function Get-ForensicFileRecord
         [switch]
         $AsBytes
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -982,11 +930,6 @@ function Get-ForensicFileRecordIndex
         $Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         Write-Output ([PowerForensics.FileSystems.Ntfs.IndexEntry]::Get($Path).RecordNumber)
@@ -1011,11 +954,6 @@ function Get-ForensicFileSlack
         [string]
         $Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1060,11 +998,6 @@ function Get-ForensicGuidPartitionTable
         $AsBytes
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         if ($AsBytes)
@@ -1092,11 +1025,6 @@ function Get-ForensicMasterBootRecord
         [switch]
         $AsBytes
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1133,11 +1061,6 @@ function Get-ForensicMftSlack
         [string]
         $MftPath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1184,11 +1107,6 @@ function Get-ForensicNetworkList
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1213,11 +1131,6 @@ function Get-ForensicOfficeFileMru
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1244,11 +1157,6 @@ function Get-ForensicOfficeOutlookCatalog
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1273,11 +1181,6 @@ function Get-ForensicsOfficePlaceMru
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1304,11 +1207,6 @@ function Get-ForensicOfficeTrustRecord
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1329,11 +1227,6 @@ function Get-ForensicPartitionTable
         [string]
         $Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1368,11 +1261,6 @@ function Get-ForensicPrefetch
         [switch]
         $Fast
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1423,11 +1311,6 @@ function Get-ForensicRecentFileCache
         $Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1456,11 +1339,6 @@ function Get-ForensicRegistryKey
         [switch]
         $Recurse
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1499,11 +1377,6 @@ function Get-ForensicRegistryValue
         $Value
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         if (!($PSBoundParameters.ContainsKey('Key')))
@@ -1540,11 +1413,6 @@ function Get-ForensicRunMru
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1570,11 +1438,6 @@ function Get-ForensicRunKey
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1599,11 +1462,6 @@ function Get-ForensicScheduledJob
         [string]$Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1627,11 +1485,6 @@ function Get-ForensicShellLink
         [Alias('FullName')]
         [string]$Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1658,11 +1511,6 @@ function Get-ForensicShimcache
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1688,11 +1536,6 @@ function Get-ForensicSid
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1712,11 +1555,6 @@ function Get-ForensicTimeline
         [string]
         $VolumeName = '\\.\C:'
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1738,11 +1576,6 @@ function Get-ForensicTimezone
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1769,11 +1602,6 @@ function Get-ForensicTypedUrl
         $HivePath
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1798,11 +1626,6 @@ function Get-ForensicUnallocatedSpace
         [UInt64]
         $Path
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1830,11 +1653,6 @@ function Get-ForensicUserAssist
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1864,11 +1682,6 @@ function Get-ForensicUsnJrnl
         [Int64]
         $Usn
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -1921,11 +1734,6 @@ function Get-ForensicUsnJrnlInformation
         $AsBytes
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -1977,11 +1785,6 @@ function Get-ForensicVolumeBootRecord
         $AsBytes
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -2029,11 +1832,6 @@ function Get-ForensicVolumeInformation
         $Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -2060,11 +1858,6 @@ function Get-ForensicVolumeName
         $Path
     )
 
-    begin
-    {
-        Add-PowerForensicsType
-    }
-
     process 
     {
         switch ($PSCmdlet.ParameterSetName)
@@ -2089,11 +1882,6 @@ function Get-ForensicWindowsSearchHistory
         [string]
         $HivePath
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
@@ -2130,11 +1918,6 @@ function Invoke-ForensicDD
         [UInt32]
         $Count
     )
-
-    begin
-    {
-        Add-PowerForensicsType
-    }
 
     process 
     {
