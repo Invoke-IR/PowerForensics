@@ -24,8 +24,16 @@ Describe 'Get-ForensicBitmap' {
 
 }
 
-Describe 'Get-ForensicBootSector' {
-
+Describe 'Get-ForensicBootSector' {  
+    It 'should work with explicit parameters' {
+        { Get-ForensicBootSector -Path \\.\PHYSICALDRIVE0 } | Should Not Throw
+    }
+    It 'should work with positional parameters' {
+        { Get-ForensicBootSector \\.\PHYSICALDRIVE0 } | Should Not Throw
+    }
+    It 'should work with the -AsBytes parameter' {
+        (Get-ForensicBootSector \\.\PHYSICALDRIVE0 -AsBytes).GetType().Name | Should Be 'Byte[]'
+    }
 }
 
 Describe 'Get-ForensicChildItem' {
