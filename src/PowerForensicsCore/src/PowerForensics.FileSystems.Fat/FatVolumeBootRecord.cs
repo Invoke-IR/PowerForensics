@@ -43,20 +43,19 @@ namespace PowerForensics.FileSystems.Fat
         /// </summary>
         public readonly MEDIA_DESCRIPTOR BPB_Media;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public readonly ushort BPB_FatSize16;
+        private readonly ushort BPB_FatSize16;
 
         /// <summary>
         /// 
         /// </summary>
         public readonly uint BPB_TotalSector32;
 
+        private readonly uint BPB_FatSize32;
+
         /// <summary>
         /// 
         /// </summary>
-        public readonly uint BPB_FatSize32;
+        public readonly uint BPB_FatSize;
 
         /// <summary>
         /// 
@@ -107,6 +106,11 @@ namespace PowerForensics.FileSystems.Fat
         /// 
         /// </summary>
         public readonly string BS_FileSystemType;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public readonly uint RootDirectorySector;
 
         #endregion Properties
 
@@ -161,6 +165,17 @@ namespace PowerForensics.FileSystems.Fat
                 BS_FileSystemType = Encoding.ASCII.GetString(bytes, 82, 8);
                 CodeSection = Helper.GetSubArray(bytes, 90, 422);
             }
+
+            if (BPB_FatSize16 != 0)
+            {
+                BPB_FatSize = BPB_FatSize16;
+            }
+            else
+            {
+                BPB_FatSize = BPB_FatSize32;
+            }
+
+            RootDirectorySector = ReservedSectors + (BPB_NumberOfFATs * BPB_FatSize);
         }
 
         #endregion Constructors

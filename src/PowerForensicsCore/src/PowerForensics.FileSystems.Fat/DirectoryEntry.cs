@@ -9,7 +9,7 @@ namespace PowerForensics.FileSystems.Fat
     /// <summary>
     /// 
     /// </summary>
-    public class DirectoryEntry
+    public class DirectoryEntry : FileSystemEntry
     {
         #region Enums
 
@@ -176,37 +176,51 @@ namespace PowerForensics.FileSystems.Fat
         /// <returns></returns>
         public static DirectoryEntry Get(string path)
         {
-            path = path.TrimEnd('\\');
+            string[] pathParts = path.ToLower().TrimEnd('\\').Split('\\');
+
             string volume = Helper.GetVolumeFromPath(path);
-            string[] pathParts = path.ToLower().Split('\\');
-
             DirectoryEntry[] entries = GetRootDirectory(volume);
-            DirectoryEntry currentEntry = null;
 
-            for (int i = 1; i < pathParts.Length; i++)
+            if (pathParts.Length == 1)
             {
-                if (i != 1)
-                {
-                    entries = currentEntry.GetChildItem();
-                }
-
                 foreach (DirectoryEntry entry in entries)
                 {
-                    if (entry.FileName.ToLower() == pathParts[i])
+                    if (entry.FileName == "FAT32")
                     {
-                        currentEntry = entry;
-                        break;
+                        return entry;
                     }
                 }
-            }
-
-            if(currentEntry.FullName.ToLower() == path.ToLower())
-            {
-                return currentEntry;
+                return null;
             }
             else
             {
-                throw new Exception("Unable to find specificed file path");
+                DirectoryEntry currentEntry = null;
+
+                for (int i = 1; i < pathParts.Length; i++)
+                {
+                    if (i != 1)
+                    {
+                        entries = currentEntry.GetChildItem();
+                    }
+
+                    foreach (DirectoryEntry entry in entries)
+                    {
+                        if (entry.FullName.Split('\\')[i].ToLower() == pathParts[i])
+                        {
+                            currentEntry = entry;
+                            break;
+                        }
+                    }
+                }
+
+                if (currentEntry.FullName.ToLower() == path.ToLower())
+                {
+                    return currentEntry;
+                }
+                else
+                {
+                    throw new Exception("Unable to find specificed file path");
+                }
             }
         }
 
@@ -258,7 +272,7 @@ namespace PowerForensics.FileSystems.Fat
                 // Else the entry is a valid entry
                 else
                 {
-                    DirectoryEntry entry = DirectoryEntry.Get(bytes, i, volume, longList, directoryName);
+                    DirectoryEntry entry = Get(bytes, i, volume, longList, directoryName);
 
                     if (entry.DIR_Attribute != 0 && entry.FileName != "." && entry.FileName != "..")
                     {
@@ -270,6 +284,16 @@ namespace PowerForensics.FileSystems.Fat
             }
 
             return list.ToArray();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static byte[] GetBytes(string path)
+        {
+            return null;
         }
 
         /// <summary>
@@ -295,10 +319,8 @@ namespace PowerForensics.FileSystems.Fat
             string volLetter = Helper.GetVolumeLetter(volume);
 
             FatVolumeBootRecord vbr = VolumeBootRecord.Get(volume) as FatVolumeBootRecord;
-            
-            uint FirstRootDirSecNum = vbr.ReservedSectors + (vbr.BPB_NumberOfFATs * vbr.BPB_FatSize32);
 
-            byte[] bytes = DD.Get(volume, vbr.BytesPerSector * FirstRootDirSecNum, vbr.BytesPerSector, 2);
+            byte[] bytes = DD.Get(volume, vbr.BytesPerSector * vbr.RootDirectorySector, vbr.BytesPerSector, 2);
 
             return GetInstances(bytes, volume, volLetter);
         }
@@ -309,6 +331,10 @@ namespace PowerForensics.FileSystems.Fat
             string extension = Encoding.ASCII.GetString(bytes, 8 + index, 3);
 
             if (((FILE_ATTR)bytes[11 + index] & FILE_ATTR.ATTR_DIRECTORY) == FILE_ATTR.ATTR_DIRECTORY)
+            {
+                return name;
+            }
+            else if (name == "FAT32")
             {
                 return name;
             }
@@ -323,7 +349,7 @@ namespace PowerForensics.FileSystems.Fat
         private static string GetLongName(string FileName, List<LongDirectoryEntry> list, string directoryName)
         {
             // Check if there are actually Long Name Entires
-            if(list.Count > 0)
+            if (list.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();
 
@@ -337,7 +363,14 @@ namespace PowerForensics.FileSystems.Fat
             // else set LongName to DIR_Name
             else
             {
-                return String.Format(@"{0}\{1}", directoryName, FileName);
+                if (FileName == "FAT32")
+                {
+                    return String.Format(@"{0}\", directoryName);
+                }
+                else
+                {
+                    return String.Format(@"{0}\{1}", directoryName, FileName);
+                }
             }
         }
 
@@ -426,18 +459,7 @@ namespace PowerForensics.FileSystems.Fat
 
             int RootDirSectors = ((vbr.BPB_RootEntryCount * 32) + (vbr.BytesPerSector - 1)) / vbr.BytesPerSector;
 
-            uint FatSize = 0;
-
-            if (vbr.BPB_FatSize16 != 0)
-            {
-                FatSize = vbr.BPB_FatSize16;
-            }
-            else
-            {
-                FatSize = vbr.BPB_FatSize32;
-            }
-
-            uint FirstDataSector = (uint)(vbr.ReservedSectors + (vbr.BPB_NumberOfFATs * FatSize) + RootDirSectors);
+            uint FirstDataSector = (uint)(vbr.ReservedSectors + (vbr.BPB_NumberOfFATs * vbr.BPB_FatSize) + RootDirSectors);
 
             uint FirstSectorofCluster = ((this.FirstCluster - 2) * vbr.SectorsPerCluster) + FirstDataSector;
 
@@ -455,12 +477,75 @@ namespace PowerForensics.FileSystems.Fat
                 }
                 else
                 {
-                    // Need to do more...
-                    return bytes;
+                    List<byte> byteList = new List<byte>();
+
+                    int[] clusters = FileAllocationTable.GetFatEntry(this.Volume, (int)this.FirstCluster);
+
+                    foreach (int cluster in clusters)
+                    {
+                        long targetCluster = ((cluster - 2) * vbr.SectorsPerCluster) + FirstDataSector;
+                        byteList.AddRange(DD.Get(this.Volume, targetCluster * vbr.BytesPerSector, vbr.BytesPerSector, 1));
+                    }
+
+                    return Helper.GetSubArray(byteList.ToArray(), 0, this.FileSize);
                 }
             }
         }        
 
         #endregion Instance Methods
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class LongDirectoryEntry
+    {
+        #region Properties
+
+        internal readonly byte LDIR_Ord;
+
+        private readonly string LDIR_Name1;
+
+        internal readonly DirectoryEntry.FILE_ATTR LDIR_Attr;
+
+        internal readonly byte LDIR_Type;
+
+        internal readonly byte LDIR_Chksum;
+
+        private readonly string LDIR_Name2;
+
+        internal readonly ushort LDIR_FstClusLO;
+
+        private readonly string LDIR_Name3;
+
+        internal readonly string LDIR_NamePart;
+
+        #endregion Properties
+
+        #region Constructors
+
+        private LongDirectoryEntry(byte[] bytes, int index)
+        {
+            LDIR_Ord = bytes[0 + index];
+            LDIR_Name1 = Encoding.Unicode.GetString(bytes, 1 + index, 10);
+            LDIR_Attr = (DirectoryEntry.FILE_ATTR)bytes[11 + index];
+            LDIR_Type = bytes[12 + index];
+            LDIR_Chksum = bytes[13 + index];
+            LDIR_Name2 = Encoding.Unicode.GetString(bytes, 14 + index, 12);
+            LDIR_FstClusLO = BitConverter.ToUInt16(bytes, 26 + index);
+            LDIR_Name3 = Encoding.Unicode.GetString(bytes, 28 + index, 4);
+            LDIR_NamePart = String.Format("{0}{1}{2}", LDIR_Name1, LDIR_Name2, LDIR_Name3);
+        }
+
+        #endregion Constructors
+
+        #region Static Methods
+
+        internal static LongDirectoryEntry Get(byte[] bytes, int index)
+        {
+            return new LongDirectoryEntry(bytes, index);
+        }
+
+        #endregion Static Methods
     }
 }

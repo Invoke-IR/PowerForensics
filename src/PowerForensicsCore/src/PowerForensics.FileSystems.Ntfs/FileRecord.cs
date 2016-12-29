@@ -26,7 +26,7 @@ namespace PowerForensics.FileSystems.Ntfs
     /// <summary>
     /// 
     /// </summary>
-    public class FileRecord
+    public class FileRecord : FileSystemEntry
     {
         #region Properties
 

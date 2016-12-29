@@ -17,11 +17,9 @@
 
 ### BPB_Media
 
-### BPB_FatSize16
-
 ### BPB_TotalSector32
 
-### BPB_FatSize32
+### BPB_FatSize
 
 ### BPB_ExtFlags
 
@@ -42,3 +40,5 @@
 ### BS_VolumeLabel
 
 ### BS_FileSystemType
+
+### RootDirectorySector
