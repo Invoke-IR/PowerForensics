@@ -20,6 +20,8 @@ namespace PowerForensics.Utilities
                     return MD5.Create();
                 case "SHA1":
                     return SHA1.Create();
+                case "SHA256":
+                    return SHA256.Create();
                 default:
                     throw new Exception("Invalid Hash Algorithm Provided");
             }
