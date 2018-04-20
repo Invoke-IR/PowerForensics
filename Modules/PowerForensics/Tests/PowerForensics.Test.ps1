@@ -32,7 +32,7 @@ Describe 'Get-ForensicBootSector' {
         { Get-ForensicBootSector \\.\PHYSICALDRIVE0 } | Should Not Throw
     }
     It 'should work with the -AsBytes parameter' {
-        (Get-ForensicBootSector \\.\PHYSICALDRIVE0 -AsBytes).GetType().Name | Should Be 'System.Object[]'
+        (Get-ForensicBootSector \\.\PHYSICALDRIVE0 -AsBytes).GetType().FullName | Should Be 'System.Object[]'
     }
 }
 
