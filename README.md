@@ -6,11 +6,8 @@
 
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
-<p align="center">
-  <a href="https://ci.appveyor.com/project/Invoke-IR/powerforensics">
-    <img src="https://ci.appveyor.com/api/projects/status/276f8iautyqlx3mk?svg=true">
-  </a>
-</p>
+[![Build status](https://ci.appveyor.com/api/projects/status/l8rmlql34xwyvwsc/branch/master?svg=true)](https://ci.appveyor.com/project/Invoke-IR/powerforensics/branch/master)
+
 <p align="center">
   <a href="https://powerforensics.readthedocs.io/en/latest/">
     <img src="https://readthedocs.org/projects/powerforensics/badge/?version=latest">
