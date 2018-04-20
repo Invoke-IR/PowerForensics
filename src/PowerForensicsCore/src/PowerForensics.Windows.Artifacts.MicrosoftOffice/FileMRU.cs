@@ -55,21 +55,69 @@ namespace PowerForensics.Windows.Artifacts.MicrosoftOffice
                 List<FileMRU> fileList = new List<FileMRU>();
 
                 byte[] bytes = RegistryHelper.GetHiveBytes(hivePath);
-                NamedKey OfficeKey = RegistryHelper.GetOfficeKey(bytes, hivePath);
+                string key = @"Software\Microsoft\Office";
 
-                foreach (NamedKey nk in OfficeKey.GetSubKeys(bytes))
+                NamedKey OfficeKey = null;
+
+                try
                 {
-                    if (nk.Name == "Word" || nk.Name == "Excel" || nk.Name == "PowerPoint")
+                    OfficeKey = NamedKey.Get(bytes, hivePath, key);
+                }
+                catch
+                {
+                    throw new Exception(String.Format("Microsoft Office is not installed on this system or has not been opened by this User"));
+                }
+
+                foreach (NamedKey ov in OfficeKey.GetSubKeys(bytes))
+                {
+                    if (ov.Name.Contains(@".0"))
                     {
-                        foreach (NamedKey k in nk.GetSubKeys(bytes))
+                        if (ov.Name != "8.0")
                         {
-                            if (k.Name == "File MRU")
+                            if(ov.GetSubKeys(bytes) != null)
                             {
-                                foreach (ValueKey vk in k.GetValues(bytes))
+                                foreach (NamedKey nk in ov.GetSubKeys(bytes))
                                 {
-                                    if (vk.Name != "Max Display")
+                                    if ((nk.Name == "Word" || nk.Name == "Excel" || nk.Name == "PowerPoint") && nk.Name != null)
                                     {
-                                        fileList.Add(new FileMRU(user, (string)vk.GetData(bytes)));
+                                        foreach (NamedKey k in nk.GetSubKeys(bytes))
+                                        {
+                                            if (k.Name == "File MRU")
+                                            {
+                                                foreach (ValueKey vk in k.GetValues(bytes))
+                                                {
+                                                    if(null == vk)
+                                                    {
+                                                        continue;
+                                                    }else
+                                                    {
+                                                        if (vk.Name.StartsWith("Item"))
+                                                        {
+                                                            fileList.Add(new FileMRU(user, (string)vk.GetData(bytes)));
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else if(k.Name == "User MRU")
+                                            {
+                                               foreach (NamedKey sk in k.GetSubKeys(bytes))
+                                               {
+                                                   foreach (NamedKey ssk in sk.GetSubKeys(bytes))
+                                                   {
+                                                       if (ssk.Name == "File MRU")
+                                                       {
+                                                            foreach (ValueKey vk in ssk.GetValues(bytes))
+                                                            {
+                                                                if (vk.Name.StartsWith("Item"))
+                                                                {
+                                                                    fileList.Add(new FileMRU(user, (string)vk.GetData(bytes)));
+                                                                }
+                                                            }
+                                                       } 
+                                                   }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -82,7 +130,7 @@ namespace PowerForensics.Windows.Artifacts.MicrosoftOffice
             {
                 throw new Exception("Invalid NTUSER.DAT hive provided to -HivePath parameter.");
             }
-}
+        }
 
         /// <summary>
         /// 
