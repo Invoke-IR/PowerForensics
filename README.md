@@ -6,21 +6,11 @@
 
 <h5 align="center">Developed by <a href="https://twitter.com/jaredcatkinson">@jaredcatkinson</a></h5>
 
-[![Build status](https://ci.appveyor.com/api/projects/status/l8rmlql34xwyvwsc/branch/master?svg=true)](https://ci.appveyor.com/project/Invoke-IR/powerforensics/branch/master)
 
-<p align="center">
-  <a href="https://powerforensics.readthedocs.io/en/latest/">
-    <img src="https://readthedocs.org/projects/powerforensics/badge/?version=latest">
-  </a>
-</p>
-<p align="center">
-  <a href="https://waffle.io/Invoke-IR/PowerForensics">
-    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready">
-  </a>
-  <a href="https://waffle.io/Invoke-IR/PowerForensics">
-    <img src="https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=in%20progress&title=In%20Progress">
-  </a>
-</p>
+[![Build status](https://ci.appveyor.com/api/projects/status/l8rmlql34xwyvwsc/branch/master?svg=true)](https://ci.appveyor.com/project/Invoke-IR/powerforensics/branch/master)
+[![docs status](https://readthedocs.org/projects/powerforensics/badge/?version=latest)](https://powerforensics.readthedocs.io/en/latest/)
+[![waffle ready](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=ready&title=Ready)](https://waffle.io/Invoke-IR/PowerForensics)
+[![waffle in progress](https://badge.waffle.io/Invoke-IR/PowerForensics.png?label=in%20progress&title=In%20Progress)](https://waffle.io/Invoke-IR/PowerForensics)
 
 ## Overview
 The purpose of PowerForensics is to provide an all inclusive framework for hard drive forensic analysis.
