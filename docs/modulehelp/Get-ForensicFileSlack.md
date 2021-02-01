@@ -1,7 +1,7 @@
 # Get-ForensicFileSlack
 
 ## SYNOPSIS
-Gets the specified volume's slack space.
+Gets the specified volume's slack space of a certain file.
 
 ## SYNTAX
 
@@ -16,7 +16,7 @@ Get-ForensicFileSlack [-Path] <String>
 ```
 
 ## DESCRIPTION
-The Get-ForensicFileSlack cmdlet gets the specified volume&apos;s slack space as a byte array.
+The Get-ForensicFileSlack cmdlet gets the specified volume&apos;s slack space as a byte array of a certain file.
 
 &quot;Slack space&quot; is the difference between the true size of a file&apos;s contents and the allocated size of a file on disk.
 
