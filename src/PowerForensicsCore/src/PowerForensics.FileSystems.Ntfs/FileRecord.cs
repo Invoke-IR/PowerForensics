@@ -670,8 +670,7 @@ namespace PowerForensics.FileSystems.Ntfs
         public static IEnumerable<byte[]> GetContentBytesBuffered(string path)
         {
             FileRecord record = Get(path, true);
-            foreach (var block in record.GetContentBuffered(""))
-                yield return block;
+            return record.GetContentBuffered("");
         }
         
         private static void ApplyFixup(ref byte[] bytes, int BytesPerFileRecord)
@@ -774,11 +773,7 @@ namespace PowerForensics.FileSystems.Ntfs
                 if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
                 {
                     if (attr.NameString == StreamName)
-                    {
-                        foreach (var block in GetContentBuffered(attr))
-                            yield return block;
-                        yield break;
-                    }
+                        return GetContentBuffered(attr);
                 }
             }
             throw new Exception("Could not locate desired stream");
@@ -833,10 +828,7 @@ namespace PowerForensics.FileSystems.Ntfs
         {
             if (attribute.NonResident)
             {
-                foreach (var block in (attribute as NonResident).GetBytesBuffered())
-                    yield return block;
-
-                yield break;
+                return (attribute as NonResident).GetBytesBuffered();
             }
             else
             {
