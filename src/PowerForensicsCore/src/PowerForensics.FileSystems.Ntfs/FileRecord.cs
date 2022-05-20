@@ -666,7 +666,14 @@ namespace PowerForensics.FileSystems.Ntfs
             FileRecord record = Get(path, true);
             return record.GetContent(streamName);
         }
-
+        
+        public static IEnumerable<byte[]> GetContentBytesBuffered(string path)
+        {
+            FileRecord record = Get(path, true);
+            foreach (var block in record.GetContentBuffered(""))
+                yield return block;
+        }
+        
         private static void ApplyFixup(ref byte[] bytes, int BytesPerFileRecord)
         {
             int offset = 0x00;
@@ -760,6 +767,23 @@ namespace PowerForensics.FileSystems.Ntfs
             throw new Exception("Could not locate desired stream");
         }
 
+        public IEnumerable<byte[]> GetContentBuffered(string StreamName)
+        {
+            foreach (FileRecordAttribute attr in this.Attribute)
+            {
+                if (attr.Name == FileRecordAttribute.ATTR_TYPE.DATA)
+                {
+                    if (attr.NameString == StreamName)
+                    {
+                        foreach (var block in GetContentBuffered(attr))
+                            yield return block;
+                        yield break;
+                    }
+                }
+            }
+            throw new Exception("Could not locate desired stream");
+        }
+
         internal byte[] GetContent(NtfsVolumeBootRecord VBR)
         {
             foreach (FileRecordAttribute attr in this.Attribute)
@@ -800,6 +824,23 @@ namespace PowerForensics.FileSystems.Ntfs
             else
             {
                 return (attribute as Data).RawData;
+            }
+
+            throw new Exception("Could not locate file contents");
+        }
+
+        private IEnumerable<byte[]> GetContentBuffered(FileRecordAttribute attribute)
+        {
+            if (attribute.NonResident)
+            {
+                foreach (var block in (attribute as NonResident).GetBytesBuffered())
+                    yield return block;
+
+                yield break;
+            }
+            else
+            {
+                throw new Exception("Not implemented");
             }
 
             throw new Exception("Could not locate file contents");

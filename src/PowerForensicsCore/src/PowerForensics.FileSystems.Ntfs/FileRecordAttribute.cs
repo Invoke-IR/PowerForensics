@@ -1356,6 +1356,59 @@ namespace PowerForensics.FileSystems.Ntfs
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<byte[]> GetBytesBuffered()
+        {
+            Helper.getVolumeName(ref this.Volume);
+            
+            long total_count = 0;
+            
+            using (FileStream streamToRead = Helper.getFileStream(this.Volume))
+            {
+                VolumeBootRecord VBR = VolumeBootRecord.Get(streamToRead);
+
+                foreach (DataRun dr in this.DataRun)
+                {
+                    if (dr.Sparse)
+                    {
+                        // Figure out how to add Sparse Bytes
+                    }
+                    else
+                    {
+                        long startOffset = VBR.BytesPerCluster * dr.StartCluster;
+                        
+                        // TODO: Count could be greater than 2GB
+                        long count = VBR.BytesPerCluster * dr.ClusterLength;
+                        byte[] buffer = Helper.readDrive(streamToRead, startOffset, count);
+                        
+                        long realSize = (long)this.RealSize;
+
+                        if (total_count + buffer.Length <= realSize)
+                        {
+                            total_count += buffer.Length;
+                            yield return buffer;
+                        }
+                        else
+                        {
+                            int leftOver = (int)(realSize - total_count);
+                            byte[] tmp = new byte[leftOver];
+                            Array.Copy(buffer, tmp, leftOver);
+                            yield return tmp;
+                            yield break;
+                        }
+                        
+
+                    }
+                }
+            }
+            
+            
+        }
+
         /// <summary>
         /// 
         /// </summary>
