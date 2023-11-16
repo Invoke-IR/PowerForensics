@@ -34,8 +34,8 @@ Get-ForensicAttrDef - gets definitions of MFT Attributes (parses $AttrDef)
 Get-ForensicBitmap - determines if a cluster is marked as in use (parses $Bitmap)
 Get-ForensicFileRecord - gets Master File Table entries (parses $MFT)
 Get-ForensicFileRecordIndex - gets a file's MFT record index number
-Get-ForensicUsnJrnl - getss Usn Journal Entries (parses $UsnJrnl:$J)
-Get-ForensicUsnJrnlInformation - getss UsnJrnl Metadata (parses $UsnJrnl:$Max)
+Get-ForensicUsnJrnl - gets Usn Journal Entries (parses $UsnJrnl:$J)
+Get-ForensicUsnJrnlInformation - gets UsnJrnl Metadata (parses $UsnJrnl:$Max)
 Get-ForensicVolumeBootRecord - gets the VolumeBootRecord from the first sector of the volume (parses $Boot)
 Get-ForensicVolumeInformation - gets the $Volume file's $VOLUME_INFORMATION attribute
 Get-ForensicVolumeName - gets the $Volume file's $VOLUME_NAME attribute
