@@ -46,7 +46,7 @@ Get-ForensicUnallocatedSpace - gets the unallocated space on the specified parti
 
 ### Windows Artifacts
 ```
-Get-AlternateDataStream - gets the NTFS Alternate Data Streams on the specified volume
+Get-ForensicAlternateDataStream - gets the NTFS Alternate Data Streams on the specified volume
 Get-ForensicEventLog - gets the events in an event log or in all event logs
 Get-ForensicExplorerTypedPath - gets the file paths that have been typed into the Windows Explorer application
 Get-ForensicNetworkList - gets a list of networks that the system has previously been connected to 
